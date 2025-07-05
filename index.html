@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>JSON Beautifier Pro</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <img src="logo.svg" class="logo" alt="JSON Beautifier Pro" />
+    <h1>JSON Beautifier <span class="pro-badge">PRO</span></h1>
+    <button id="toggle-theme" title="Cambiar modo claro/oscuro">🌗</button>
+  </header>
+  <main>
+    <section class="main-card">
+      <div class="input-panel">
+        <label for="json-input"><strong>JSON de entrada:</strong></label>
+        <textarea id="json-input" placeholder="Pega o arrastra tu JSON aquí..."></textarea>
+        <div class="autovalidate-bar">
+          <label>
+            <input type="checkbox" id="autovalidate-checkbox" />
+            Validar automáticamente mientras escribes
+          </label>
+        </div>
+        <div class="controls">
+          <button id="btn-file"><span>📂</span> Seleccionar archivo</button>
+          <input type="file" id="file-input" accept=".json" style="display:none">
+          <button id="btn-format">Formatear</button>
+          <button id="btn-validate">Validar</button>
+          <button id="btn-clear">Limpiar</button>
+          <button id="btn-undo" title="Deshacer">&#8630;</button>
+          <button id="btn-redo" title="Rehacer">&#8631;</button>
+          <select id="indent" title="Espacios de indentación">
+            <option value="2">2 espacios</option>
+            <option value="4">4 espacios</option>
+            <option value="6">6 espacios</option>
+          </select>
+        </div>
+        <div class="convert-controls">
+          <button id="btn-xml" class="free-badge">Convertir a XML <span class="badge-free">Gratis</span></button>
+          <button id="btn-csv" class="free-badge">Convertir a CSV <span class="badge-free">Gratis</span></button>
+          <button id="btn-excel" class="pro-badge-btn">Convertir a Excel <span class="badge-pro">PRO</span></button>
+          <button id="btn-yaml" class="pro-badge-btn">Convertir a YAML <span class="badge-pro">PRO</span></button>
+          <button id="btn-download" class="pro-badge-btn">Descargar JSON <span class="badge-pro">PRO</span></button>
+        </div>
+      </div>
+      <div class="output-panel">
+        <div class="output-tabs">
+          <button id="tab-formatted" class="active">Formateado</button>
+          <button id="tab-tree">Vista Árbol</button>
+          <button id="tab-convert">Convertido</button>
+          <button id="tab-favs" class="pro-badge-btn">Favoritos <span class="badge-pro">PRO</span></button>
+        </div>
+        <div class="output-views">
+          <pre id="json-output"></pre>
+          <div id="tree-output" class="hidden"></div>
+          <div id="converted-output" class="hidden"></div>
+          <div id="favs-output" class="hidden"></div>
+        </div>
+        <div class="output-actions">
+          <button id="btn-copy" title="Copiar al portapapeles">Copiar</button>
+          <button id="btn-fav" class="pro-badge-btn">Guardar favorito <span class="badge-pro">PRO</span></button>
+          <button id="btn-share">Compartir</button>
+        </div>
+      </div>
+      <div id="csv-table-panel" class="hidden"></div>
+    </section>
+    <section id="pro-panel" class="hidden">
+      <div class="pro-card">
+        <h2>Hazte usuario <span class="pro-badge">PRO</span></h2>
+        <ul>
+          <li>Convertir y exportar Excel, YAML</li>
+          <li>Descargar JSON formateado</li>
+          <li>Favoritos ilimitados</li>
+          <li>Acceso API para IT y empresas</li>
+        </ul>
+        <div id="paypal-button-container"></div>
+        <p class="pro-note">* Demo: compra simulada con PayPal Sandbox.</p>
+        <button id="close-pro-panel">Cerrar</button>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <div>
+      <span>Desarrollado por Óscar & ChatGPT — <b>JSON Beautifier Pro</b> &copy; 2025</span>
+    </div>
+  </footer>
+  <!-- PayPal SDK SANDBOX DEMO -->
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=EUR"></script>
+  <script src="app.js"></script>
+<div id="toast" class="toast"></div>
+</body>
+</html>
