@@ -8,11 +8,23 @@
   <link href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <img src="logo.svg" class="logo" alt="JSON Beautifier Pro" />
-    <h1>JSON Beautifier <span class="pro-badge">PRO</span></h1>
-    <button id="toggle-theme" title="Cambiar modo claro/oscuro">🌗</button>
+  <div id="toast" class="toast"></div>
+  <!-- HEADER PREMIUM -->
+  <header style="display:grid;grid-template-columns:1.5fr 1fr 1.5fr;align-items:center;">
+    <div style="display:flex;align-items:center;gap:.9em;">
+      <img src="logo.svg" class="logo" alt="JSON Beautifier Pro" />
+      <h1 style="margin:0;">JSON Beautifier <span class="pro-badge">PRO</span></h1>
+    </div>
+    <!-- BANNER DE ANUNCIOS CENTRADO -->
+<div class="ad-banner-header">
+  <img src="https://dummyimage.com/468x60/eeeeee/333&text=Banner+Anuncio+Ejemplo" alt="Banner anuncio" style="vertical-align:middle;border-radius:.5em;box-shadow:0 2px 10px #aaa2;">
+</div>
+<div style="display:flex;align-items:center;justify-content:flex-end;">
+      <button id="toggle-theme" title="Cambiar modo claro/oscuro" style="margin-right:1em;">🌗</button>
+    </div>
   </header>
+
+  <!-- MAIN DE TU APP -->
   <main>
     <section class="main-card">
       <div class="input-panel">
@@ -55,6 +67,7 @@
         </div>
         <div class="output-views">
           <pre id="json-output"></pre>
+          <!-- Árbol PRO -->
           <div id="tree-output" class="hidden"></div>
           <div id="converted-output" class="hidden"></div>
           <div id="favs-output" class="hidden"></div>
@@ -64,32 +77,36 @@
           <button id="btn-fav" class="pro-badge-btn">Guardar favorito <span class="badge-pro">PRO</span></button>
           <button id="btn-share">Compartir</button>
         </div>
+        <!-- Menú contextual de árbol PRO (invisible hasta que se usa) -->
+        <div id="tree-menu-contextual" class="tree-menu-contextual" style="display:none;">
+          <button class="ctx-copy-key">Copiar clave</button>
+          <button class="ctx-copy-value">Copiar valor</button>
+          <button class="ctx-copy-branch">Copiar rama</button>
+        </div>
       </div>
       <div id="csv-table-panel" class="hidden"></div>
     </section>
-    <section id="pro-panel" class="hidden">
-      <div class="pro-card">
-        <h2>Hazte usuario <span class="pro-badge">PRO</span></h2>
-        <ul>
-          <li>Convertir y exportar Excel, YAML</li>
-          <li>Descargar JSON formateado</li>
-          <li>Favoritos ilimitados</li>
-          <li>Acceso API para IT y empresas</li>
-        </ul>
-        <div id="paypal-button-container"></div>
-        <p class="pro-note">* Demo: compra simulada con PayPal Sandbox.</p>
-        <button id="close-pro-panel">Cerrar</button>
-      </div>
-    </section>
   </main>
+
+  <!-- PANEL DE DONACIONES ABAJO -->
+  <section class="donation-panel">
+    <div class="donation-content">
+      <span class="donation-msg">
+        Esta herramienta es <b>totalmente gratuita</b>. Si te ha ayudado, puedes apoyarla con una donación y contribuir a su mejora.
+      </span>
+      <a href="https://www.paypal.me/oscargrubio" target="_blank" class="paypal-btn">
+        <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png" alt="PayPal" style="height:1.5em;vertical-align:middle;margin-right:.4em;">
+        Invítame a un café
+      </a>
+    </div>
+  </section>
+
   <footer>
     <div>
-      <span>Desarrollado por Óscar & ChatGPT — <b>JSON Beautifier Pro</b> &copy; 2025</span>
+      <span><b>JSON Beautifier Pro</b> &copy; 2025</span>
     </div>
   </footer>
-  <!-- PayPal SDK SANDBOX DEMO -->
-  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=EUR"></script>
+
   <script src="app.js"></script>
-<div id="toast" class="toast"></div>
 </body>
 </html>

@@ -47,8 +47,11 @@ if (document.getElementById('close-pro-panel')) {
 
 // --- Copiar SIEMPRE habilitado (gratis) ---
 const output = document.getElementById('json-output');
+const treeOutput = document.getElementById('tree-output');
+const convertedOutput = document.getElementById('converted-output');
+const favsOutput = document.getElementById('favs-output');
+
 document.getElementById('btn-copy').onclick = () => {
-  // Detecta qué pestaña está activa
   if (document.getElementById('tab-formatted').classList.contains('active')) {
     navigator.clipboard.writeText(output.textContent);
     flashMsg('¡Copiado!', "#27d67c");
@@ -56,7 +59,6 @@ document.getElementById('btn-copy').onclick = () => {
     navigator.clipboard.writeText(convertedOutput.textContent);
     flashMsg('¡Convertido copiado!', "#27d67c");
   } else if (document.getElementById('tab-tree').classList.contains('active')) {
-    // Copiar la vista árbol como texto
     const plainTree = treeOutput.innerText || treeOutput.textContent;
     navigator.clipboard.writeText(plainTree.trim());
     flashMsg('¡Vista árbol copiada!', "#27d67c");
@@ -65,9 +67,6 @@ document.getElementById('btn-copy').onclick = () => {
   }
 };
 
-const treeOutput = document.getElementById('tree-output');
-const convertedOutput = document.getElementById('converted-output');
-const favsOutput = document.getElementById('favs-output');
 // Maneja los botones "Cargar" y "Eliminar" de favoritos con delegación de eventos
 favsOutput.onclick = function(e) {
   if (e.target.classList.contains('load-fav')) {
@@ -160,8 +159,19 @@ function show(tab) {
 }
 show('formatted');
 
-document.getElementById('tab-formatted').onclick = () => show('formatted');
-document.getElementById('tab-tree').onclick = () => show('tree');
+document.getElementById('tab-formatted').onclick = () => {
+  format();
+  show('formatted');
+};
+document.getElementById('tab-tree').onclick = () => {
+  try {
+    const json = JSON.parse(input.value);
+    drawTreePro(json);
+  } catch {
+    treeOutput.innerHTML = '<div style="color:#e95e5e;padding:1.2em;">❌ JSON no válido</div>';
+  }
+  show('tree');
+};
 document.getElementById('tab-convert').onclick = () => show('convert');
 document.getElementById('tab-favs').onclick = e => {
   if (!isPro) return showProPanel();
@@ -193,8 +203,6 @@ function showFavs() {
   show('favs');
 }
 
-
-
 window.deleteFav = name => {
   if (!isPro) return showProPanel();
   if (!confirm(`¿Seguro que quieres borrar el favorito "${name}"?`)) return;
@@ -202,8 +210,6 @@ window.deleteFav = name => {
   localStorage.setItem('favs', JSON.stringify(favs));
   showFavs();
 };
-
-
 // --- Compartir (si navegador lo soporta) ---
 shareBtn.onclick = () => {
   if (!navigator.share) return alert('No soportado');
@@ -213,6 +219,7 @@ shareBtn.onclick = () => {
     url: location.href
   });
 };
+
 // --- Exportar a CSV (Gratis) ---
 document.getElementById('btn-csv').onclick = () => {
   try {
@@ -220,7 +227,6 @@ document.getElementById('btn-csv').onclick = () => {
     const csv = jsonToCsv(json);
     convertedOutput.textContent = csv;
     show('convert');
-    // Visualizar tabla
     if (Array.isArray(json)) {
       renderCsvTable(json);
     } else {
@@ -283,7 +289,7 @@ document.getElementById('btn-xml').onclick = () => {
   }
 };
 
-// --- Helpers de conversión ---
+// --- Helpers de conversión (igual que ya tienes, sin cambios) ---
 function jsonToCsv(obj) {
   let arr = Array.isArray(obj) ? obj : [obj];
   if (!arr.length || typeof arr[0] !== 'object') throw new Error("No es un array válido para CSV");
@@ -304,7 +310,6 @@ function renderCsvTable(arr) {
   panel.innerHTML = html;
   panel.classList.remove('hidden');
 }
-// --- Excel aplanado PRO ---
 function exportToExcel(json) {
   if (!window.XLSX) {
     const script = document.createElement('script');
@@ -384,12 +389,7 @@ function formatXml(xml) {
   });
   return formatted.trim();
 }
-// --- Mensaje flash temporal ---
-function flashMsg(msg, color = "#32ba7c") {
-  output.textContent = msg;
-  output.style.color = color;
-  setTimeout(() => { output.textContent = lastJSON; output.style.color = "#fff"; }, 1800);
-}
+
 // --- Arrastrar y soltar archivos JSON ---
 input.addEventListener('dragover', e => {
   e.preventDefault();
@@ -406,71 +406,219 @@ input.addEventListener('drop', e => {
   const reader = new FileReader();
   reader.onload = evt => {
     input.value = evt.target.result;
-    // NO autoformatear; pulsa “Formatear”
   };
   reader.readAsText(file);
 });
-// --- Vista árbol PRO plegable/desplegable ---
+
+// --- NUEVA VISTA ÁRBOL PRO PREMIUM ---
 function drawTreePro(json) {
   treeOutput.innerHTML = '';
-  treeOutput.appendChild(buildTreeNode(json));
+  treeOutput.appendChild(buildTreeNodePro(json));
 }
-function buildTreeNode(obj, key = '', parentLevel = 0) {
+
+function buildTreeNodePro(obj, key = '', parentLevel = 0) {
   const node = document.createElement('div');
-  node.className = 'tree-node';
+  node.className = 'tree-node-pro';
+
   if (typeof obj === 'object' && obj !== null) {
     const isArray = Array.isArray(obj);
     const keys = isArray ? obj.map((_, i) => i) : Object.keys(obj);
-    const container = document.createElement('div');
-    container.className = 'tree-branch';
+
     const expander = document.createElement('span');
+    expander.className = 'expander-pro';
     expander.textContent = '▶';
-    expander.className = 'expander';
+    expander.title = 'Expandir/plegar';
+
+    const head = document.createElement('span');
+    head.className = 'tree-key-pro';
+    if (key !== '') {
+      head.innerHTML = `<b>${key}</b>: `;
+    }
+
+    const typeBadge = document.createElement('span');
+    typeBadge.className = 'tree-type-pro';
+    typeBadge.textContent = isArray ? `[${obj.length}]` : `{${keys.length}}`;
+
+    const branch = document.createElement('div');
+    branch.className = 'tree-children-pro';
+    for (let k of keys) {
+      branch.appendChild(buildTreeNodePro(obj[k], isArray ? `[${k}]` : k, parentLevel + 1));
+    }
+    if (parentLevel > 0) branch.classList.add('collapsed-pro');
+    expander.textContent = branch.classList.contains('collapsed-pro') ? '▶' : '▼';
     expander.onclick = function (e) {
       e.stopPropagation();
-      branch.classList.toggle('collapsed');
-      expander.textContent = branch.classList.contains('collapsed') ? '▶' : '▼';
+      branch.classList.toggle('collapsed-pro');
+      expander.textContent = branch.classList.contains('collapsed-pro') ? '▶' : '▼';
     };
-    const branch = document.createElement('div');
-    branch.className = 'tree-children';
-    // Cabecera
-    const head = document.createElement('span');
-    head.className = 'tree-key';
-    if (key !== '') head.innerHTML = `<b>${key}</b>: `;
-    head.innerHTML += isArray
-      ? `<span class="tree-type">[${obj.length}]</span>`
-      : `<span class="tree-type">{${keys.length}}</span>`;
-    container.appendChild(expander);
-    container.appendChild(head);
-    container.appendChild(branch);
-    node.appendChild(container);
-    // Hijos
-    for (let k of keys) {
-      branch.appendChild(buildTreeNode(obj[k], isArray ? `[${k}]` : k, parentLevel + 1));
-    }
-    if (parentLevel > 0) branch.classList.add('collapsed'); // Por defecto plegados salvo raíz
-    expander.textContent = branch.classList.contains('collapsed') ? '▶' : '▼';
-    // Toggle todo el nodo
-    container.onclick = function (e) {
-      if (e.target === expander) return;
-      branch.classList.toggle('collapsed');
-      expander.textContent = branch.classList.contains('collapsed') ? '▶' : '▼';
-    };
+
+    // --- Botón menú contextual (solo hover) ---
+    const menuBtn = document.createElement('button');
+    menuBtn.className = 'menu-btn-pro';
+    menuBtn.title = 'Más acciones';
+    menuBtn.innerHTML = '&#8942;'; // Unicode ⋮
+    menuBtn.onclick = (e) => showTreeContextMenu(e, key, obj);
+
+    const branchHeader = document.createElement('span');
+    branchHeader.className = 'branch-header-pro';
+    branchHeader.appendChild(expander);
+    branchHeader.appendChild(head);
+    branchHeader.appendChild(typeBadge);
+    branchHeader.appendChild(menuBtn);
+    branchHeader.onmouseenter = () => branchHeader.classList.add('hover-pro');
+    branchHeader.onmouseleave = () => branchHeader.classList.remove('hover-pro');
+    node.appendChild(branchHeader);
+    node.appendChild(branch);
+
   } else {
-    // Valor simple
-    node.innerHTML = key !== '' ? `<span class="tree-key"><b>${key}</b>:</span> ` : '';
-    node.innerHTML += `<span class="tree-value">${highlightValue(obj)}</span>`;
-    node.className += ' tree-leaf';
+    node.classList.add('tree-leaf-pro');
+    let valStr = '';
+    if (obj === null) valStr = `<span class="tree-null-pro">null</span>`;
+    else if (typeof obj === 'string') valStr = `<span class="tree-str-pro">"${obj}"</span>`;
+    else if (typeof obj === 'number') valStr = `<span class="tree-num-pro">${obj}</span>`;
+    else if (typeof obj === 'boolean') valStr = `<span class="tree-bool-pro">${obj}</span>`;
+    else valStr = `<span>${obj}</span>`;
+    if (key !== '') {
+      node.innerHTML = `<span class="tree-key-pro"><b>${key}</b>:</span> `;
+    }
+    const valueSpan = document.createElement('span');
+    valueSpan.innerHTML = valStr;
+    valueSpan.className = 'tree-value-pro';
+    if (typeof obj === 'string' && obj.match(/\.(jpg|jpeg|png|gif|webp|bmp)$/i)) {
+      valueSpan.classList.add('img-url-pro');
+      valueSpan.onmouseenter = (e) => showImgPreview(obj, e.target);
+      valueSpan.onmouseleave = hideImgPreview;
+    }
+
+    // Botón menú contextual (solo hover)
+    const menuBtn = document.createElement('button');
+    menuBtn.className = 'menu-btn-pro';
+    menuBtn.title = 'Más acciones';
+    menuBtn.innerHTML = '&#8942;';
+    menuBtn.onclick = (e) => showTreeContextMenu(e, key, obj);
+
+    node.appendChild(valueSpan);
+    node.appendChild(menuBtn);
   }
   return node;
 }
-function highlightValue(val) {
-  if (val === null) return `<span class="tree-null">null</span>`;
-  if (typeof val === 'string') return `<span class="tree-str">"${val}"</span>`;
-  if (typeof val === 'number') return `<span class="tree-num">${val}</span>`;
-  if (typeof val === 'boolean') return `<span class="tree-bool">${val}</span>`;
-  return `<span>${val}</span>`;
+
+// --- Menú contextual PRO ---
+function showTreeContextMenu(e, key, valueOrBranch) {
+  e.stopPropagation();
+  e.preventDefault();
+  const menu = document.getElementById('tree-menu-contextual');
+  if (!menu) return;
+  menu.style.display = 'flex';
+  menu.style.visibility = 'hidden'; // Oculta temporalmente para medir
+
+  // Posición inicial
+  let left = e.pageX;
+  let top = e.pageY;
+
+  // Espera a que se pinte para medir tamaño real
+  setTimeout(() => {
+    const { innerWidth, innerHeight } = window;
+    const rect = menu.getBoundingClientRect();
+    // Corrige si se sale por la derecha
+    if (left + rect.width > innerWidth - 10) {
+      left = innerWidth - rect.width - 12;
+    }
+    // Corrige si se sale por abajo
+    if (top + rect.height > innerHeight - 10) {
+      top = innerHeight - rect.height - 12;
+    }
+    // Nunca negativo
+    left = Math.max(8, left);
+    top = Math.max(8, top);
+
+    menu.style.left = left + 'px';
+    menu.style.top = top + 'px';
+    menu.style.visibility = 'visible';
+  }, 1);
+
+  // Limpia cualquier evento previo
+  menu.querySelector('.ctx-copy-key').onclick = () => {
+    if (key !== '') navigator.clipboard.writeText(key);
+    showTreeToast('Clave copiada');
+    menu.style.display = 'none';
+  };
+  menu.querySelector('.ctx-copy-value').onclick = () => {
+    if (typeof valueOrBranch === 'object') {
+      navigator.clipboard.writeText(JSON.stringify(valueOrBranch));
+    } else {
+      navigator.clipboard.writeText(String(valueOrBranch));
+    }
+    showTreeToast('Valor copiado');
+    menu.style.display = 'none';
+  };
+  menu.querySelector('.ctx-copy-branch').onclick = () => {
+    navigator.clipboard.writeText(JSON.stringify(valueOrBranch, null, 2));
+    showTreeToast('Rama copiada');
+    menu.style.display = 'none';
+  };
+
+  // Ocultar si clicas fuera
+  document.onclick = function(ev) {
+    if (!menu.contains(ev.target)) {
+      menu.style.display = 'none';
+      document.onclick = null;
+    }
+  };
 }
+
+
+// --- Toast premium para árbol ---
+function showTreeToast(msg) {
+  let toast = document.getElementById('toast-tree-pro');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'toast-tree-pro';
+    toast.className = 'toast-tree-pro';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.classList.add('show-tree-pro');
+  clearTimeout(showTreeToast.timeout);
+  showTreeToast.timeout = setTimeout(() => {
+    toast.classList.remove('show-tree-pro');
+  }, 1400);
+}
+
+// --- Preview imagen flotante ---
+let imgPreview;
+function showImgPreview(url, anchorEl) {
+  hideImgPreview();
+  imgPreview = document.createElement('img');
+  imgPreview.src = url;
+  imgPreview.className = 'img-preview-pro';
+  document.body.appendChild(imgPreview);
+  anchorEl.onmousemove = (e) => {
+    imgPreview.style.left = (e.pageX + 15) + 'px';
+    imgPreview.style.top = (e.pageY - 40) + 'px';
+  };
+}
+function hideImgPreview() {
+  if (imgPreview) {
+    imgPreview.remove();
+    imgPreview = null;
+  }
+}
+
+// Cierra menú contextual si cambias de pestaña
+document.getElementById('tab-formatted').addEventListener('click', ()=> {
+  const menu = document.getElementById('tree-menu-contextual');
+  if (menu) menu.style.display = 'none';
+});
+document.getElementById('tab-convert').addEventListener('click', ()=> {
+  const menu = document.getElementById('tree-menu-contextual');
+  if (menu) menu.style.display = 'none';
+});
+document.getElementById('tab-favs').addEventListener('click', ()=> {
+  const menu = document.getElementById('tree-menu-contextual');
+  if (menu) menu.style.display = 'none';
+});
+
 
 // --- Validación premium automática, casilla siempre visible ---
 const autovalChk = document.getElementById('autovalidate-checkbox');
@@ -480,13 +628,12 @@ autovalChk.onchange = function () {
   autoValidateEnabled = this.checked;
   if (autoValidateEnabled) {
     input.addEventListener('input', autoValidateHandler);
-    autoValidateHandler(); // Valida al activar
+    autoValidateHandler();
   } else {
     input.removeEventListener('input', autoValidateHandler);
   }
 };
 
-// Lógica de validación automática
 function autoValidateHandler() {
   try {
     JSON.parse(input.value);
@@ -502,7 +649,6 @@ function autoValidateHandler() {
   }
 }
 
-// Validación manual (botón)
 validateBtn.onclick = () => {
   try {
     JSON.parse(input.value);
@@ -518,7 +664,6 @@ validateBtn.onclick = () => {
   }
 };
 
-// Mensaje en el output principal
 function showValidationMsg(msg, color = "#32ba7c", html = false) {
   if (html) {
     output.innerHTML = msg;
@@ -527,8 +672,6 @@ function showValidationMsg(msg, color = "#32ba7c", html = false) {
   }
   output.style.color = color;
 }
-
-// Helper para línea y columna del error
 function getLineColumn(str, errorMsg) {
   const match = errorMsg.match(/at position (\d+)/) || errorMsg.match(/at (\d+)/);
   if (!match) return { line: null, column: null };
@@ -538,23 +681,6 @@ function getLineColumn(str, errorMsg) {
   const column = lines[lines.length - 1].length + 1;
   return { line, column };
 }
-// --- Botón Copiar multipestaña premium ---
-document.getElementById('btn-copy').onclick = () => {
-  // Detecta pestaña activa
-  if (document.getElementById('tab-formatted').classList.contains('active')) {
-    navigator.clipboard.writeText(document.getElementById('json-output').textContent);
-    flashMsg('¡Copiado!', "#32ba7c");
-  } else if (document.getElementById('tab-convert').classList.contains('active')) {
-    navigator.clipboard.writeText(document.getElementById('converted-output').textContent);
-    flashMsg('¡Convertido copiado!', "#32ba7c");
-  } else if (document.getElementById('tab-tree').classList.contains('active')) {
-    const plainTree = document.getElementById('tree-output').innerText || document.getElementById('tree-output').textContent;
-    navigator.clipboard.writeText(plainTree.trim());
-    flashMsg('¡Vista árbol copiada!', "#32ba7c");
-  } else {
-    flashMsg('Nada para copiar', "#e54d4d");
-  }
-};
 
 // --- Toast animado premium ---
 function flashMsg(msg, color = "#32ba7c") {
@@ -571,4 +697,14 @@ function flashMsg(msg, color = "#32ba7c") {
     : "linear-gradient(90deg, #32ba7c 80%, #3e89fa 100%)";
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 1500);
+}
+function showToast(msg, time = 2500) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(showToast.timeout);
+  showToast.timeout = setTimeout(() => {
+    toast.textContent = '';
+    toast.classList.remove('show');
+  }, time);
 }
