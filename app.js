@@ -182,12 +182,12 @@ document.getElementById('tab-favs').onclick = e => {
 favBtn.onclick = e => {
   if (!isPro) return showProPanel();
   if (!input.value.trim()) return;
-  const name = prompt("Nombre para el favorito:");
+  const name = prompt("Este favorito se guarda solo en tu navegador/Nombre para el favorito:");
   if (!name) return;
     favs.push({ name, json: input.value });
   localStorage.setItem('favs', JSON.stringify(favs));
   // Aquí mostramos el mensaje informativo
-  alert('Guardado en favoritos\n\nEste favorito se guarda solo en tu navegador. Nadie más puede acceder a él.');
+  alert('Guardado en favoritos\n\Este favorito se guarda solo en tu navegador. Nadie más puede acceder a él.');
 };
 
 // --- Favoritos visual (PRO) ---
