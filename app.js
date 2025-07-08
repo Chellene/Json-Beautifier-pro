@@ -184,9 +184,10 @@ favBtn.onclick = e => {
   if (!input.value.trim()) return;
   const name = prompt("Nombre para el favorito:");
   if (!name) return;
-  favs.push({ name, json: input.value });
+    favs.push({ name, json: input.value });
   localStorage.setItem('favs', JSON.stringify(favs));
-  alert('Guardado en favoritos');
+  // Aquí mostramos el mensaje informativo
+  alert('Guardado en favoritos\n\nEste favorito se guarda solo en tu navegador. Nadie más puede acceder a él.');
 };
 
 // --- Favoritos visual (PRO) ---
