@@ -6,17 +6,20 @@
   <title>JSON Beautifier Pro</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap" rel="stylesheet">
+  <!-- Script de AdSense solo UNA vez -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7902157674688237"
      crossorigin="anonymous"></script>
 </head>
 
 <body>
-<header style="display: flex; align-items: center; justify-content: space-between; gap: 1em;">
+  <!-- Barra superior con logo, nombre y anuncio manual -->
+  <header style="display: flex; align-items: center; justify-content: space-between; gap: 1em;">
     <div style="display: flex; align-items: center; gap: 0.8em;">
+      <button id="toggle-theme" title="Cambiar modo claro/oscuro" style="margin-right:1em;">🌗</button>
       <img src="logo.svg" class="logo" alt="Logo" style="width:40px;height:40px;">
-      <h1 style="margin:0;">JSON Beautifier PRO</h1>
+      <h1 style="margin:0;">JSON Beautifier <span class="pro-badge">PRO</span></h1>
     </div>
-    <!-- Bloque de anuncio AdSense manual -->
+    <!-- Banner AdSense (barra superior) -->
     <div class="ads-header" style="min-width:120px;max-width:220px;">
       <ins class="adsbygoogle"
            style="display:inline-block;width:220px;height:60px"
@@ -29,19 +32,9 @@
   <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
   </script>
+
   <div id="toast" class="toast"></div>
-  <!-- HEADER PREMIUM -->
-  <header style="display:grid;grid-template-columns:1.5fr 1fr 1.5fr;align-items:center;">
-    <div style="display:flex;align-items:center;gap:.9em;">
-      <button id="toggle-theme" title="Cambiar modo claro/oscuro" style="margin-right:1em;">🌗</button>
-      <img src="logo.svg" class="logo" alt="JSON Beautifier Pro" />
-      <h1 style="margin:0;">JSON Beautifier <span class="pro-badge">PRO</span></h1>
-    </div>
-    <!-- BANNER DE ANUNCIOS CENTRADO -->
-<div style="display:flex;align-items:center;justify-content:flex-end;">
-      </div>
-  </header>
-  <!-- MAIN DE TU APP -->
+
   <main>
     <section class="main-card">
       <div class="input-panel">
@@ -67,23 +60,23 @@
             <option value="6">6 espacios</option>
           </select>
         </div>
-	<!-- Anuncio cuadrado manual debajo de los botones -->
-<div style="margin:1.3em 0; text-align:center;">
-  <ins class="adsbygoogle"
-       style="display:inline-block;width:300px;height:300px"
-       data-ad-client="ca-pub-7902157674688237"
-       data-ad-slot="5421356170"
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-</div>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
-<div class="convert-controls">
+        <!-- Anuncio cuadrado debajo de los botones -->
+        <div style="margin:1.3em 0; text-align:center;">
+          <ins class="adsbygoogle"
+               style="display:inline-block;width:300px;height:300px"
+               data-ad-client="ca-pub-7902157674688237"
+               data-ad-slot="5421356170"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        </div>
+        <script>
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+        <div class="convert-controls">
           <button id="btn-xml" class="free-badge">Convertir a XML <span class="badge-free">Gratis</span></button>
           <button id="btn-csv" class="free-badge">Convertir a CSV <span class="badge-free">Gratis</span></button>
-	  <button id="btn-pdf" class="pro-badge-btn">Exportar a PDF <span class="badge-pro">Gratis</span></button>
-	  <button id="btn-excel" class="pro-badge-btn">Convertir a Excel <span class="badge-pro">Gratis</span></button>
+          <button id="btn-pdf" class="pro-badge-btn">Exportar a PDF <span class="badge-pro">Gratis</span></button>
+          <button id="btn-excel" class="pro-badge-btn">Convertir a Excel <span class="badge-pro">Gratis</span></button>
           <button id="btn-yaml" class="pro-badge-btn">Convertir a YAML <span class="badge-pro">Gratis</span></button>
           <button id="btn-download" class="pro-badge-btn">Descargar JSON <span class="badge-pro">Gratis</span></button>
         </div>
@@ -107,7 +100,7 @@
           <button id="btn-fav" class="pro-badge-btn">Guardar favorito <span class="badge-pro">Gratis</span></button>
           <button id="btn-share">Compartir</button>
         </div>
-        <!-- Menú contextual de árbol PRO (invisible hasta que se usa) -->
+        <!-- Menú contextual de árbol PRO -->
         <div id="tree-menu-contextual" class="tree-menu-contextual" style="display:none;">
           <button class="ctx-copy-key">Copiar clave</button>
           <button class="ctx-copy-value">Copiar valor</button>
@@ -118,7 +111,7 @@
     </section>
   </main>
 
-  <!-- PANEL DE DONACIONES ABAJO -->
+  <!-- PANEL DE DONACIONES -->
   <section class="donation-panel">
     <div class="donation-content">
       <span class="donation-msg">
