@@ -1434,3 +1434,28 @@ body.dark .donation-panel {
     padding: 0.54em 1.3em;
   }
 }
+header.main-header {
+  background: var(--main-bg, #fff);
+  transition: background 0.3s;
+}
+body.dark header.main-header {
+  background: #181a20 !important;
+}
+
+@media (max-width: 650px) {
+  header.main-header {
+    padding: 0.6em 0.4em !important;
+  }
+  .ads-header {
+    max-width: 100% !important;
+    min-width: 80px !important;
+    margin: 0.2em auto 0.4em auto !important;
+  }
+  .ads-panel {
+    max-width: 100vw !important;
+    margin: 0.6em auto !important;
+  }
+  header.main-header h1 {
+    font-size: 1.09em !important;
+  }
+}
