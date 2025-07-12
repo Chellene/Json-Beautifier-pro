@@ -1,5 +1,33 @@
 <!DOCTYPE html>
 <html lang="es">
+<!-- Banner de Cookies Chulo y Legal -->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+  window.cookieconsent.initialise({
+    palette: {
+      popup: {
+        background: "#6946e7",     // Morado premium a juego con tu web
+        text: "#fff"
+      },
+      button: {
+        background: "#fff",
+        text: "#6946e7"
+      }
+    },
+    theme: "edgeless",
+    position: "bottom",
+    content: {
+      message: "¡Aviso de cookies! Utilizamos cookies para mostrar anuncios y analizar el tráfico. ¿Te parece bien?",
+      dismiss: "Aceptar y seguir",
+      link: "Saber más",
+      href: "/privacidad.html" // Cambia por tu URL de privacidad si la tienes
+    }
+  })
+});
+</script>
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
