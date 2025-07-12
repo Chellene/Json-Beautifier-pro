@@ -3,12 +3,9 @@ let lastJSON = '';
 let undoStack = [];
 let redoStack = [];
 let favs = JSON.parse(localStorage.getItem('favs') || '[]');
-
-// PRO SIEMPRE ACTIVADO PARA PRUEBA DEMO
 let isPro = true;
 localStorage.setItem('jsonpro', '1');
 
-// Helpers de tema y botón modo oscuro
 function setTheme(dark) {
   document.body.classList.toggle('dark', dark);
   localStorage.setItem('theme', dark ? 'dark' : 'light');
@@ -17,7 +14,6 @@ function setTheme(dark) {
 document.getElementById('toggle-theme').onclick = () => setTheme(!document.body.classList.contains('dark'));
 setTheme(localStorage.getItem('theme') === 'dark');
 
-// --- Selección y carga de archivos ---
 const btnFile = document.getElementById('btn-file');
 const fileInput = document.getElementById('file-input');
 const input = document.getElementById('json-input');
@@ -28,12 +24,40 @@ fileInput.onchange = e => {
   const reader = new FileReader();
   reader.onload = evt => {
     input.value = evt.target.result;
-    // NO formatea automáticamente, espera a que pulses Formatear
+    flashMsg('Archivo cargado', "#32ba7c");
   };
   reader.readAsText(file);
 };
+// --- Bloquea drag & drop nativo que abre el archivo en el navegador ---
+window.addEventListener('dragover', function(e) {
+  e.preventDefault();
+});
+window.addEventListener('drop', function(e) {
+  e.preventDefault();
+});
 
-// --- Panel PRO ---
+// --- Permite cargar archivos arrastrados al área de entrada JSON ---
+input.addEventListener('drop', function(e) {
+  e.preventDefault();
+  if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+    const file = e.dataTransfer.files[0];
+    const reader = new FileReader();
+    reader.onload = evt => {
+      input.value = evt.target.result;
+      flashMsg('Archivo cargado por arrastrar', "#32ba7c");
+      // Si quieres, puedes llamar a format() aquí, pero mejor lo deja al usuario
+    };
+    reader.readAsText(file);
+  }
+});
+
+const autovalidateBox = document.getElementById('autovalidate-checkbox');
+input.addEventListener('input', () => {
+  if (autovalidateBox && autovalidateBox.checked) {
+    validateJSON();
+  }
+});
+
 function showProPanel() {
   document.getElementById('pro-panel').classList.remove('hidden');
   setTimeout(() => window.scrollTo(0, 0), 80);
@@ -45,7 +69,6 @@ if (document.getElementById('close-pro-panel')) {
   document.getElementById('close-pro-panel').onclick = hideProPanel;
 }
 
-// --- Copiar SIEMPRE habilitado (gratis) ---
 const output = document.getElementById('json-output');
 const treeOutput = document.getElementById('tree-output');
 const convertedOutput = document.getElementById('converted-output');
@@ -59,7 +82,8 @@ document.getElementById('btn-copy').onclick = () => {
     navigator.clipboard.writeText(convertedOutput.textContent);
     flashMsg('¡Convertido copiado!', "#27d67c");
   } else if (document.getElementById('tab-tree').classList.contains('active')) {
-    const plainTree = treeOutput.innerText || treeOutput.textContent;
+    const area = document.getElementById('tree-area-pro');
+    const plainTree = area ? area.innerText : (treeOutput.innerText || treeOutput.textContent);
     navigator.clipboard.writeText(plainTree.trim());
     flashMsg('¡Vista árbol copiada!', "#27d67c");
   } else {
@@ -67,7 +91,6 @@ document.getElementById('btn-copy').onclick = () => {
   }
 };
 
-// Maneja los botones "Cargar" y "Eliminar" de favoritos con delegación de eventos
 favsOutput.onclick = function(e) {
   if (e.target.classList.contains('load-fav')) {
     const name = decodeURIComponent(e.target.getAttribute('data-name'));
@@ -76,6 +99,7 @@ favsOutput.onclick = function(e) {
       input.value = fav.json;
       format();
       show('formatted');
+      flashMsg('Favorito cargado', "#32ba7c");
     }
   }
   if (e.target.classList.contains('del-fav')) {
@@ -85,6 +109,7 @@ favsOutput.onclick = function(e) {
     favs = favs.filter(f => f.name !== name);
     localStorage.setItem('favs', JSON.stringify(favs));
     showFavs();
+    flashMsg('Favorito eliminado', "#e54d4d");
   }
 };
 
@@ -97,6 +122,35 @@ const validateBtn = document.getElementById('btn-validate');
 const formatBtn = document.getElementById('btn-format');
 const indentSel = document.getElementById('indent');
 
+// --- Helper para línea y columna del error JSON ---
+function getLineColumn(text, msg) {
+  const match = msg.match(/position (\d+)/i);
+  if (!match) return { line: 1, column: 1 };
+  const pos = parseInt(match[1], 10);
+  const lines = text.slice(0, pos).split('\n');
+  return {
+    line: lines.length,
+    column: pos - (text.lastIndexOf('\n', pos - 1) + 1) + 1
+  };
+}
+
+// --- Validar JSON ---
+function validateJSON() {
+  if (!input.value.trim()) {
+    flashMsg('Nada que validar', "#e54d4d");
+    return;
+  }
+  try {
+    JSON.parse(input.value);
+    flashMsg("✅ JSON válido", "limegreen");
+  } catch (e) {
+    const { line, column } = getLineColumn(input.value, e.message);
+    flashMsg(`❌ No válido: ${e.message} (Línea ${line}, columna ${column})`, "#e54d4d");
+  }
+}
+validateBtn.onclick = validateJSON;
+
+
 // --- Undo / Redo / Limpiar ---
 function pushUndo() {
   undoStack.push(input.value);
@@ -107,6 +161,7 @@ function undo() {
     redoStack.push(input.value);
     input.value = undoStack.pop();
     format();
+    flashMsg('Deshecho', "#32ba7c");
   }
 }
 function redo() {
@@ -114,6 +169,7 @@ function redo() {
     pushUndo();
     input.value = redoStack.pop();
     format();
+    flashMsg('Rehecho', "#32ba7c");
   }
 }
 undoBtn.onclick = undo;
@@ -125,10 +181,17 @@ clearBtn.onclick = () => {
   treeOutput.innerHTML = "";
   convertedOutput.textContent = "";
   document.getElementById('csv-table-panel').classList.add('hidden');
+  flashMsg('Limpiado', "#e54d4d");
 };
 
 // --- Formatear ---
 function format() {
+  if (!input.value.trim()) {
+    output.textContent = "";
+    treeOutput.innerHTML = "";
+    convertedOutput.textContent = "";
+    return;
+  }
   try {
     const json = JSON.parse(input.value);
     lastJSON = JSON.stringify(json, null, +indentSel.value);
@@ -136,9 +199,11 @@ function format() {
     output.style.color = "#fff";
     show('formatted');
     drawTreePro(json);
+    flashMsg('JSON formateado', "#32ba7c");
   } catch (e) {
     output.textContent = "❌ Error: " + e.message;
     output.style.color = "#e95e5e";
+    flashMsg('Error de formato: ' + e.message, "#e54d4d");
   }
 }
 formatBtn.onclick = () => {
@@ -167,30 +232,37 @@ document.getElementById('tab-tree').onclick = () => {
   try {
     const json = JSON.parse(input.value);
     drawTreePro(json);
-  } catch {
-    treeOutput.innerHTML = '<div style="color:#e95e5e;padding:1.2em;">❌ JSON no válido</div>';
+    flashMsg('Vista árbol generada', "#32ba7c");
+  } catch (e) {
+    const { line, column } = getLineColumn(input.value, e.message);
+    treeOutput.innerHTML = `<div style="color:#e95e5e;padding:1.2em;font-weight:600;">
+      ❌ JSON no válido:<br>${e.message}
+      <br><span style="font-size:1em;font-weight:400;">
+        (Línea <b>${line}</b>, columna <b>${column}</b>)
+      </span>
+    </div>`;
+    flashMsg('JSON no válido para árbol', "#e54d4d");
   }
   show('tree');
 };
+
 document.getElementById('tab-convert').onclick = () => show('convert');
 document.getElementById('tab-favs').onclick = e => {
   if (!isPro) return showProPanel();
   showFavs();
+  flashMsg('Mostrando favoritos', "#32ba7c");
 };
-
 // --- Guardar favorito (PRO) ---
 favBtn.onclick = e => {
   if (!isPro) return showProPanel();
   if (!input.value.trim()) return;
   const name = prompt("Este favorito se guarda solo en tu navegador/Nombre para el favorito:");
   if (!name) return;
-    favs.push({ name, json: input.value });
+  favs.push({ name, json: input.value });
   localStorage.setItem('favs', JSON.stringify(favs));
-  // Aquí mostramos el mensaje informativo
-  alert('Guardado en favoritos\n\Este favorito se guarda solo en tu navegador. Nadie más puede acceder a él.');
+  flashMsg('Favorito guardado', "#32ba7c");
 };
 
-// --- Favoritos visual (PRO) ---
 function showFavs() {
   favsOutput.innerHTML = '<ul>' +
     favs.map(f =>
@@ -204,54 +276,43 @@ function showFavs() {
   show('favs');
 }
 
-window.deleteFav = name => {
-  if (!isPro) return showProPanel();
-  if (!confirm(`¿Seguro que quieres borrar el favorito "${name}"?`)) return;
-  favs = favs.filter(f => f.name !== name);
-  localStorage.setItem('favs', JSON.stringify(favs));
-  showFavs();
-};
-// --- Compartir (si navegador lo soporta) ---
 shareBtn.onclick = () => {
-  if (!navigator.share) return alert('No soportado');
+  if (!navigator.share) return flashMsg('No soportado', "#e54d4d");
   navigator.share({
     title: "JSON Beautifier PRO",
     text: input.value,
     url: location.href
   });
+  flashMsg('Compartido', "#32ba7c");
 };
 
-// --- Exportar a CSV (Gratis) ---
+// --- CONVERSIÓN Y EXPORTACIONES ---
+document.getElementById('btn-xml').onclick = () => {
+  try {
+    const json = JSON.parse(input.value);
+    const xml = jsonToXml(json, 0);
+    convertedOutput.textContent = xml;
+    show('convert');
+    flashMsg('Convertido a XML', "#32ba7c");
+  } catch (e) {
+    convertedOutput.textContent = "❌ Error: " + e.message;
+    show('convert');
+    flashMsg('Error al convertir', "#e54d4d");
+  }
+};
 document.getElementById('btn-csv').onclick = () => {
   try {
     const json = JSON.parse(input.value);
-    const csv = jsonToCsv(json);
+    const csv = jsonToCSV(json);
     convertedOutput.textContent = csv;
     show('convert');
-    if (Array.isArray(json)) {
-      renderCsvTable(json);
-    } else {
-      document.getElementById('csv-table-panel').classList.add('hidden');
-    }
+    flashMsg('Convertido a CSV', "#32ba7c");
   } catch (e) {
     convertedOutput.textContent = "❌ Error: " + e.message;
-    document.getElementById('csv-table-panel').classList.add('hidden');
     show('convert');
+    flashMsg('Error al convertir', "#e54d4d");
   }
 };
-
-// --- Exportar a Excel (.xlsx) (PRO, aplanado) ---
-document.getElementById('btn-excel').onclick = () => {
-  if (!isPro) return showProPanel();
-  try {
-    const json = JSON.parse(input.value);
-    exportToExcel(json);
-  } catch (e) {
-    alert("JSON no válido: " + e.message);
-  }
-};
-
-// --- Exportar a YAML (PRO) ---
 document.getElementById('btn-yaml').onclick = () => {
   if (!isPro) return showProPanel();
   try {
@@ -259,453 +320,443 @@ document.getElementById('btn-yaml').onclick = () => {
     const yaml = jsonToYaml(json);
     convertedOutput.textContent = yaml;
     show('convert');
+    flashMsg('Convertido a YAML', "#32ba7c");
   } catch (e) {
     convertedOutput.textContent = "❌ Error: " + e.message;
     show('convert');
+    flashMsg('Error al convertir', "#e54d4d");
   }
 };
-
-// --- Descargar JSON (PRO) ---
-document.getElementById('btn-download').onclick = () => {
+document.getElementById('btn-excel').onclick = () => {
   if (!isPro) return showProPanel();
-  const blob = new Blob([input.value], { type: "application/json" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = "archivo.json";
-  a.click();
-  URL.revokeObjectURL(url);
-};
-
-// --- Convertir a XML (Gratis) ---
-document.getElementById('btn-xml').onclick = () => {
   try {
     const json = JSON.parse(input.value);
-    const xml = jsonToXml(json, "root");
-    convertedOutput.textContent = formatXml(xml);
-    show('convert');
+    const csv = jsonToCSV(json);
+    const blob = new Blob([csv], {type: "text/csv"});
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = "archivo.csv"; // ← aquí el cambio clave
+    link.click();
+    flashMsg('Descargado como CSV (Excel)', "#32ba7c");
   } catch (e) {
-    convertedOutput.textContent = "❌ Error: " + e.message;
-    show('convert');
+    flashMsg('Error al exportar Excel', "#e54d4d");
   }
 };
 
-// --- Helpers de conversión (igual que ya tienes, sin cambios) ---
-function jsonToCsv(obj) {
-  let arr = Array.isArray(obj) ? obj : [obj];
-  if (!arr.length || typeof arr[0] !== 'object') throw new Error("No es un array válido para CSV");
-  const fields = Object.keys(arr.reduce((a, b) => ({ ...a, ...b }), {}));
-  const escape = v => `"${String(v).replace(/"/g, '""')}"`;
-  const rows = arr.map(row => fields.map(f => escape(row[f] ?? '')).join(','));
-  return fields.join(',') + '\n' + rows.join('\n');
-}
-function renderCsvTable(arr) {
-  if (!Array.isArray(arr) || !arr.length) return;
-  const fields = Object.keys(arr.reduce((a, b) => ({ ...a, ...b }), {}));
-  let html = `<table><thead><tr>${fields.map(f => `<th>${f}</th>`).join('')}</tr></thead><tbody>`;
-  for (const row of arr) {
-    html += `<tr>${fields.map(f => `<td>${row[f] !== undefined ? row[f] : ''}</td>`).join('')}</tr>`;
+document.getElementById('btn-download').onclick = () => {
+  if (!isPro) return showProPanel();
+  if (!input.value.trim()) return flashMsg('Nada para descargar', "#e54d4d");
+  const blob = new Blob([input.value], { type: "application/json" });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = "archivo.json";
+  link.click();
+  flashMsg('JSON descargado', "#32ba7c");
+};
+document.getElementById('btn-pdf').onclick = async () => {
+  if (!isPro) return showProPanel();
+
+  let ctxMenu = document.getElementById('tree-menu-contextual');
+  if (ctxMenu) ctxMenu.style.display = 'none';
+  let toast = document.getElementById('toast');
+  if (toast) {
+    toast.classList.remove('show');
+    toast.textContent = '';
   }
-  html += `</tbody></table>`;
-  const panel = document.getElementById('csv-table-panel');
-  panel.innerHTML = html;
-  panel.classList.remove('hidden');
-}
-function exportToExcel(json) {
-  if (!window.XLSX) {
-    const script = document.createElement('script');
-    script.src = "https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js";
-    script.onload = () => exportToExcel(json);
-    document.body.appendChild(script);
+  let toastTree = document.getElementById('toast-tree-pro');
+  if (toastTree) {
+    toastTree.classList.remove('show-tree-pro');
+    toastTree.textContent = '';
+  }
+
+  const tabFormatted = document.getElementById('tab-formatted');
+  const tabTree = document.getElementById('tab-tree');
+  const tabConvert = document.getElementById('tab-convert');
+  let text = "";
+  let filename = "archivo.pdf";
+
+  if (tabFormatted.classList.contains('active')) {
+    text = output.textContent || "";
+    filename = "json_formateado.pdf";
+  } else if (tabConvert.classList.contains('active')) {
+    text = convertedOutput.textContent || "";
+    filename = "convertido.pdf";
+  } else if (tabTree.classList.contains('active')) {
+    let jsonOk = true;
+    let jsonObj;
+    try {
+      jsonObj = JSON.parse(input.value);
+    } catch {
+      jsonOk = false;
+      text = "Árbol vacío o JSON inválido";
+    }
+    if (jsonOk) {
+      text = jsonToAsciiTree(jsonObj);
+      filename = "vista_arbol.pdf";
+    }
+    if (!text.trim()) text = "Árbol vacío o sin nodos";
+  } else {
+    flashMsg('Nada para exportar', "#e54d4d");
     return;
   }
-  const arr = Array.isArray(json) ? json : [json];
-  const flatArr = arr.map(flattenObject);
-  const ws = XLSX.utils.json_to_sheet(flatArr);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "Datos");
-  XLSX.writeFile(wb, "archivo.xlsx");
-}
-function flattenObject(obj, prefix = '') {
-  let result = {};
-  for (let key in obj) {
-    if (!Object.hasOwnProperty.call(obj, key)) continue;
-    const value = obj[key];
-    const pre = prefix.length ? prefix + '.' : '';
-    if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
-      Object.assign(result, flattenObject(value, pre + key));
-    } else if (Array.isArray(value)) {
-      value.forEach((v, i) => {
-        if (typeof v === 'object' && v !== null) {
-          Object.assign(result, flattenObject(v, `${pre}${key}.${i}`));
-        } else {
-          result[`${pre}${key}.${i}`] = v;
-        }
-      });
-    } else {
-      result[pre + key] = value;
-    }
+
+  if (!text.trim()) {
+    flashMsg('Nada para exportar', "#e54d4d");
+    return;
   }
-  return result;
+
+  // Cargar jsPDF si no está
+  if (typeof window.jspdf === "undefined") {
+    await new Promise(resolve => {
+      const script = document.createElement('script');
+      script.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+      script.onload = resolve;
+      document.body.appendChild(script);
+    });
+  }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: "portrait", unit: "pt", format: "a4" });
+  const left = 40;
+  const top = 50;
+  const width = 515;
+  const fontSize = 11;
+  doc.setFont("courier", "normal");
+  doc.setFontSize(fontSize);
+
+  let lines = doc.splitTextToSize(text, width);
+  doc.text(lines, left, top);
+
+  doc.save(filename);
+  flashMsg('PDF exportado', "#32ba7c");
+};
+
+// --- Árbol ASCII para PDF ---
+function jsonToAsciiTree(obj, indent = '', isLast = true) {
+  let output = '';
+  const pointer = isLast ? '`-- ' : '|-- ';
+  if (Array.isArray(obj)) {
+    output += indent + pointer + '[Array]\n';
+    obj.forEach((item, i) => {
+      const isLastItem = i === obj.length - 1;
+      output += jsonToAsciiTree(item, indent + (isLast ? '    ' : '|   '), isLastItem);
+    });
+  } else if (typeof obj === 'object' && obj !== null) {
+    output += indent + pointer + '{Object}\n';
+    const keys = Object.keys(obj);
+    keys.forEach((k, idx) => {
+      const isLastKey = idx === keys.length - 1;
+      let value = obj[k];
+      if (typeof value === 'object' && value !== null) {
+        output += indent + (isLast ? '    ' : '|   ') + (isLastKey ? '`-- ' : '|-- ') + k + ':\n';
+        output += jsonToAsciiTree(value, indent + (isLast ? '    ' : '|   ') + (isLastKey ? '    ' : '|   '), true);
+      } else {
+        output += indent + (isLast ? '    ' : '|   ') + (isLastKey ? '`-- ' : '|-- ') + k + ': ' + String(value) + '\n';
+      }
+    });
+  } else {
+    output += indent + pointer + String(obj) + '\n';
+  }
+  return output;
 }
-function jsonToYaml(obj, indent = 0) {
+
+// --- Conversores simples a XML, CSV, YAML (para ejemplo) ---
+function jsonToXml(obj, indent) {
+  let xml = '';
   const pad = '  '.repeat(indent);
   if (Array.isArray(obj)) {
-    return obj.map(item => `${pad}- ${typeof item === 'object' ? '\n' + jsonToYaml(item, indent + 1) : item}`).join('\n');
+    obj.forEach(item => xml += jsonToXml(item, indent));
   } else if (typeof obj === 'object' && obj !== null) {
-    return Object.entries(obj)
-      .map(([k, v]) => `${pad}${k}: ${typeof v === 'object' ? '\n' + jsonToYaml(v, indent + 1) : v}`)
-      .join('\n');
+    for (let key in obj) {
+      xml += `${pad}<${key}>${jsonToXml(obj[key], indent + 1)}</${key}>\n`;
+    }
   } else {
-    return pad + obj;
+    xml += obj;
   }
-}
-function jsonToXml(obj, nodeName) {
-  if (typeof obj !== 'object' || obj === null) {
-    return `<${nodeName}>${String(obj)}</${nodeName}>`;
-  }
-  if (Array.isArray(obj)) {
-    return obj.map(item => jsonToXml(item, nodeName)).join('');
-  }
-  let xml = `<${nodeName}>`;
-  for (let key in obj) {
-    xml += jsonToXml(obj[key], key);
-  }
-  xml += `</${nodeName}>`;
   return xml;
 }
-function formatXml(xml) {
-  let formatted = '';
-  const reg = /(>)(<)(\/*)/g;
-  xml = xml.replace(reg, '$1\r\n$2$3');
-  let pad = 0;
-  xml.split('\r\n').forEach(node => {
-    let indent = 0;
-    if (node.match(/.+<\/\w[^>]*>$/)) indent = 0;
-    else if (node.match(/^<\/\w/)) {
-      if (pad !== 0) pad -= 2;
-    } else if (node.match(/^<\w[^>]*[^\/]>.*$/)) indent = 2;
-    formatted += ' '.repeat(pad) + node + '\r\n';
-    pad += indent;
-  });
-  return formatted.trim();
+function jsonToCSV(obj) {
+  if (!Array.isArray(obj)) obj = [obj];
+  const keys = Object.keys(obj[0] || {});
+  const rows = obj.map(row => keys.map(k => JSON.stringify(row[k] ?? "")).join(","));
+  return keys.join(",") + "\n" + rows.join("\n");
 }
-
-// --- Arrastrar y soltar archivos JSON ---
-input.addEventListener('dragover', e => {
-  e.preventDefault();
-  input.style.border = "2.5px dashed var(--accent)";
-});
-input.addEventListener('dragleave', e => {
-  input.style.border = '';
-});
-input.addEventListener('drop', e => {
-  e.preventDefault();
-  input.style.border = '';
-  const file = e.dataTransfer.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = evt => {
-    input.value = evt.target.result;
-  };
-  reader.readAsText(file);
-});
-
-// --- NUEVA VISTA ÁRBOL PRO PREMIUM ---
-function drawTreePro(json) {
-  treeOutput.innerHTML = '';
-  treeOutput.appendChild(buildTreeNodePro(json));
-}
-
-function buildTreeNodePro(obj, key = '', parentLevel = 0) {
-  const node = document.createElement('div');
-  node.className = 'tree-node-pro';
-
-  if (typeof obj === 'object' && obj !== null) {
-    const isArray = Array.isArray(obj);
-    const keys = isArray ? obj.map((_, i) => i) : Object.keys(obj);
-
-    const expander = document.createElement('span');
-    expander.className = 'expander-pro';
-    expander.textContent = '▶';
-    expander.title = 'Expandir/plegar';
-
-    const head = document.createElement('span');
-    head.className = 'tree-key-pro';
-    if (key !== '') {
-      head.innerHTML = `<b>${key}</b>: `;
+function jsonToYaml(obj, indent = 0) {
+  let yaml = '';
+  const pad = '  '.repeat(indent);
+  if (Array.isArray(obj)) {
+    obj.forEach(item => {
+      yaml += pad + "- " + jsonToYaml(item, indent + 1).trim() + "\n";
+    });
+  } else if (typeof obj === 'object' && obj !== null) {
+    for (let key in obj) {
+      yaml += pad + key + ": " + jsonToYaml(obj[key], indent + 1).trim() + "\n";
     }
-
-    const typeBadge = document.createElement('span');
-    typeBadge.className = 'tree-type-pro';
-    typeBadge.textContent = isArray ? `[${obj.length}]` : `{${keys.length}}`;
-
-    const branch = document.createElement('div');
-    branch.className = 'tree-children-pro';
-    for (let k of keys) {
-      branch.appendChild(buildTreeNodePro(obj[k], isArray ? `[${k}]` : k, parentLevel + 1));
-    }
-    if (parentLevel > 0) branch.classList.add('collapsed-pro');
-    expander.textContent = branch.classList.contains('collapsed-pro') ? '▶' : '▼';
-    expander.onclick = function (e) {
-      e.stopPropagation();
-      branch.classList.toggle('collapsed-pro');
-      expander.textContent = branch.classList.contains('collapsed-pro') ? '▶' : '▼';
-    };
-
-    // --- Botón menú contextual (solo hover) ---
-    const menuBtn = document.createElement('button');
-    menuBtn.className = 'menu-btn-pro';
-    menuBtn.title = 'Más acciones';
-    menuBtn.innerHTML = '&#8942;'; // Unicode ⋮
-    menuBtn.onclick = (e) => showTreeContextMenu(e, key, obj);
-
-    const branchHeader = document.createElement('span');
-    branchHeader.className = 'branch-header-pro';
-    branchHeader.appendChild(expander);
-    branchHeader.appendChild(head);
-    branchHeader.appendChild(typeBadge);
-    branchHeader.appendChild(menuBtn);
-    branchHeader.onmouseenter = () => branchHeader.classList.add('hover-pro');
-    branchHeader.onmouseleave = () => branchHeader.classList.remove('hover-pro');
-    node.appendChild(branchHeader);
-    node.appendChild(branch);
-
   } else {
-    node.classList.add('tree-leaf-pro');
-    let valStr = '';
-    if (obj === null) valStr = `<span class="tree-null-pro">null</span>`;
-    else if (typeof obj === 'string') valStr = `<span class="tree-str-pro">"${obj}"</span>`;
-    else if (typeof obj === 'number') valStr = `<span class="tree-num-pro">${obj}</span>`;
-    else if (typeof obj === 'boolean') valStr = `<span class="tree-bool-pro">${obj}</span>`;
-    else valStr = `<span>${obj}</span>`;
-    if (key !== '') {
-      node.innerHTML = `<span class="tree-key-pro"><b>${key}</b>:</span> `;
-    }
-    const valueSpan = document.createElement('span');
-    valueSpan.innerHTML = valStr;
-    valueSpan.className = 'tree-value-pro';
-    if (typeof obj === 'string' && obj.match(/\.(jpg|jpeg|png|gif|webp|bmp)$/i)) {
-      valueSpan.classList.add('img-url-pro');
-      valueSpan.onmouseenter = (e) => showImgPreview(obj, e.target);
-      valueSpan.onmouseleave = hideImgPreview;
-    }
-
-    // Botón menú contextual (solo hover)
-    const menuBtn = document.createElement('button');
-    menuBtn.className = 'menu-btn-pro';
-    menuBtn.title = 'Más acciones';
-    menuBtn.innerHTML = '&#8942;';
-    menuBtn.onclick = (e) => showTreeContextMenu(e, key, obj);
-
-    node.appendChild(valueSpan);
-    node.appendChild(menuBtn);
+    yaml += String(obj);
   }
-  return node;
+  return yaml;
 }
 
-// --- Menú contextual PRO ---
-function showTreeContextMenu(e, key, valueOrBranch) {
-  e.stopPropagation();
-  e.preventDefault();
-  const menu = document.getElementById('tree-menu-contextual');
-  if (!menu) return;
-  menu.style.display = 'flex';
-  menu.style.visibility = 'hidden'; // Oculta temporalmente para medir
-
-  // Posición inicial
-  let left = e.pageX;
-  let top = e.pageY;
-
-  // Espera a que se pinte para medir tamaño real
-  setTimeout(() => {
-    const { innerWidth, innerHeight } = window;
-    const rect = menu.getBoundingClientRect();
-    // Corrige si se sale por la derecha
-    if (left + rect.width > innerWidth - 10) {
-      left = innerWidth - rect.width - 12;
-    }
-    // Corrige si se sale por abajo
-    if (top + rect.height > innerHeight - 10) {
-      top = innerHeight - rect.height - 12;
-    }
-    // Nunca negativo
-    left = Math.max(8, left);
-    top = Math.max(8, top);
-
-    menu.style.left = left + 'px';
-    menu.style.top = top + 'px';
-    menu.style.visibility = 'visible';
-  }, 1);
-
-  // Limpia cualquier evento previo
-  menu.querySelector('.ctx-copy-key').onclick = () => {
-    if (key !== '') navigator.clipboard.writeText(key);
-    showTreeToast('Clave copiada');
-    menu.style.display = 'none';
-  };
-  menu.querySelector('.ctx-copy-value').onclick = () => {
-    if (typeof valueOrBranch === 'object') {
-      navigator.clipboard.writeText(JSON.stringify(valueOrBranch));
-    } else {
-      navigator.clipboard.writeText(String(valueOrBranch));
-    }
-    showTreeToast('Valor copiado');
-    menu.style.display = 'none';
-  };
-  menu.querySelector('.ctx-copy-branch').onclick = () => {
-    navigator.clipboard.writeText(JSON.stringify(valueOrBranch, null, 2));
-    showTreeToast('Rama copiada');
-    menu.style.display = 'none';
-  };
-
-  // Ocultar si clicas fuera
-  document.onclick = function(ev) {
-    if (!menu.contains(ev.target)) {
-      menu.style.display = 'none';
-      document.onclick = null;
-    }
-  };
-}
-
-
-// --- Toast premium para árbol ---
-function showTreeToast(msg) {
-  let toast = document.getElementById('toast-tree-pro');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'toast-tree-pro';
-    toast.className = 'toast-tree-pro';
-    document.body.appendChild(toast);
-  }
-  toast.textContent = msg;
-  toast.classList.add('show-tree-pro');
-  clearTimeout(showTreeToast.timeout);
-  showTreeToast.timeout = setTimeout(() => {
-    toast.classList.remove('show-tree-pro');
-  }, 1400);
-}
-
-// --- Preview imagen flotante ---
-let imgPreview;
-function showImgPreview(url, anchorEl) {
-  hideImgPreview();
-  imgPreview = document.createElement('img');
-  imgPreview.src = url;
-  imgPreview.className = 'img-preview-pro';
-  document.body.appendChild(imgPreview);
-  anchorEl.onmousemove = (e) => {
-    imgPreview.style.left = (e.pageX + 15) + 'px';
-    imgPreview.style.top = (e.pageY - 40) + 'px';
-  };
-}
-function hideImgPreview() {
-  if (imgPreview) {
-    imgPreview.remove();
-    imgPreview = null;
-  }
-}
-
-// Cierra menú contextual si cambias de pestaña
-document.getElementById('tab-formatted').addEventListener('click', ()=> {
-  const menu = document.getElementById('tree-menu-contextual');
-  if (menu) menu.style.display = 'none';
-});
-document.getElementById('tab-convert').addEventListener('click', ()=> {
-  const menu = document.getElementById('tree-menu-contextual');
-  if (menu) menu.style.display = 'none';
-});
-document.getElementById('tab-favs').addEventListener('click', ()=> {
-  const menu = document.getElementById('tree-menu-contextual');
-  if (menu) menu.style.display = 'none';
-});
-
-
-// --- Validación premium automática, casilla siempre visible ---
-const autovalChk = document.getElementById('autovalidate-checkbox');
-let autoValidateEnabled = false;
-
-autovalChk.onchange = function () {
-  autoValidateEnabled = this.checked;
-  if (autoValidateEnabled) {
-    input.addEventListener('input', autoValidateHandler);
-    autoValidateHandler();
-  } else {
-    input.removeEventListener('input', autoValidateHandler);
-  }
-};
-
-function autoValidateHandler() {
-  try {
-    JSON.parse(input.value);
-    showValidationMsg("✅ JSON válido", "limegreen");
-  } catch (e) {
-    const { line, column } = getLineColumn(input.value, e.message);
-    showValidationMsg(
-      `❌ Error: ${e.message}` +
-      (line ? ` <b>(Línea ${line}, columna ${column})</b>` : ""),
-      "#e95e5e",
-      true
-    );
-  }
-}
-
-validateBtn.onclick = () => {
-  try {
-    JSON.parse(input.value);
-    showValidationMsg("✅ JSON válido", "limegreen");
-  } catch (e) {
-    const { line, column } = getLineColumn(input.value, e.message);
-    showValidationMsg(
-      `❌ Error: ${e.message}` +
-      (line ? ` <b>(Línea ${line}, columna ${column})</b>` : ""),
-      "#e95e5e",
-      true
-    );
-  }
-};
-
-function showValidationMsg(msg, color = "#32ba7c", html = false) {
-  if (html) {
-    output.innerHTML = msg;
-  } else {
-    output.textContent = msg;
-  }
-  output.style.color = color;
-}
-function getLineColumn(str, errorMsg) {
-  const match = errorMsg.match(/at position (\d+)/) || errorMsg.match(/at (\d+)/);
-  if (!match) return { line: null, column: null };
-  const pos = +match[1];
-  const lines = str.substring(0, pos).split('\n');
-  const line = lines.length;
-  const column = lines[lines.length - 1].length + 1;
-  return { line, column };
-}
-
-// --- Toast animado premium ---
-function flashMsg(msg, color = "#32ba7c") {
+// --- Toast siempre funcional ---
+function flashMsg(msg, color = "#32ba7c", time = 1800) {
   let toast = document.getElementById('toast');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'toast';
-    toast.className = 'toast';
-    document.body.appendChild(toast);
-  }
-  toast.textContent = msg;
+  if (!toast) return;
+  toast.classList.remove('show');
   toast.style.background = color.startsWith('#')
     ? color
     : "linear-gradient(90deg, #32ba7c 80%, #3e89fa 100%)";
-  toast.classList.add('show');
-  setTimeout(() => toast.classList.remove('show'), 1500);
-}
-function showToast(msg, time = 2500) {
-  const toast = document.getElementById('toast');
   toast.textContent = msg;
+  void toast.offsetWidth;
   toast.classList.add('show');
-  clearTimeout(showToast.timeout);
-  showToast.timeout = setTimeout(() => {
-    toast.textContent = '';
+  clearTimeout(flashMsg.timeout);
+  flashMsg.timeout = setTimeout(() => {
     toast.classList.remove('show');
+    toast.textContent = '';
   }, time);
+}
+// --- Árbol PRO AVANZADO (búsqueda, copiar, exportar rama, colores PRO) ---
+function drawTreePro(json) {
+  const container = document.getElementById('tree-output');
+  if (!container) return;
+  container.innerHTML = '';
+
+  // --- BÚSQUEDA INSTANTÁNEA ---
+  let searchBar = document.getElementById('tree-search-pro');
+  if (!searchBar) {
+    searchBar = document.createElement('input');
+    searchBar.type = "search";
+    searchBar.id = "tree-search-pro";
+    searchBar.placeholder = "🔍 Buscar clave o valor...";
+    searchBar.style = "width:98%;margin:0.5em auto 1.1em auto;display:block;font-size:1.1em;border-radius:0.5em;padding:0.25em 1em;";
+    container.appendChild(searchBar);
+  }
+  // Zona árbol real
+  let treeArea = document.createElement('div');
+  treeArea.id = 'tree-area-pro';
+  container.appendChild(treeArea);
+
+  // Menú contextual único para el árbol
+  let ctxMenu = document.getElementById('tree-menu-contextual');
+  if (!ctxMenu) {
+    ctxMenu = document.createElement('div');
+    ctxMenu.id = "tree-menu-contextual";
+    ctxMenu.className = "tree-menu-contextual";
+    ctxMenu.style.display = "none";
+    ctxMenu.innerHTML = `
+      <button class="ctx-copy-key">Copiar clave</button>
+      <button class="ctx-copy-value">Copiar valor</button>
+      <button class="ctx-copy-branch">Copiar rama</button>
+      <button class="ctx-export-branch">Exportar rama</button>
+    `;
+    document.body.appendChild(ctxMenu);
+
+    // LISTENERS SOLO AQUÍ
+    ctxMenu.querySelector('.ctx-copy-key').onclick = e => {
+      e.stopPropagation();
+      if (typeof ctxMenu.currentKey !== "undefined") {
+        navigator.clipboard.writeText(ctxMenu.currentKey);
+        flashMsg('Clave copiada', "#32ba7c");
+      }
+      hideCtxMenu();
+    };
+    ctxMenu.querySelector('.ctx-copy-value').onclick = e => {
+      e.stopPropagation();
+      navigator.clipboard.writeText(JSON.stringify(ctxMenu.currentValue));
+      flashMsg('Valor copiado', "#32ba7c");
+      hideCtxMenu();
+    };
+    ctxMenu.querySelector('.ctx-copy-branch').onclick = e => {
+      e.stopPropagation();
+      navigator.clipboard.writeText(JSON.stringify(ctxMenu.currentValue, null, 2));
+      flashMsg('Rama copiada', "#32ba7c");
+      hideCtxMenu();
+    };
+    ctxMenu.querySelector('.ctx-export-branch').onclick = e => {
+      e.stopPropagation();
+      const convertedOutput = document.getElementById('converted-output');
+      convertedOutput.textContent = JSON.stringify(ctxMenu.currentValue, null, 2);
+      show('convert');
+      flashMsg('Rama exportada a panel', "#3e89fa");
+      hideCtxMenu();
+    };
+  }
+
+  // Oculta menú contextual
+  function hideCtxMenu() { ctxMenu.style.display = "none"; }
+  window.addEventListener('click', hideCtxMenu);
+
+  function createNode(key, value, parentType, depth = 0) {
+    const node = document.createElement('div');
+    node.className = 'tree-node-pro';
+
+    if (typeof value === "object" && value !== null) {
+      const isArray = Array.isArray(value);
+      const branch = document.createElement('div');
+      branch.className = 'branch-header-pro';
+
+      const expander = document.createElement('span');
+      expander.className = 'expander-pro';
+      expander.textContent = '▼';
+      branch.appendChild(expander);
+
+      if (parentType !== 'array') {
+        const keyEl = document.createElement('span');
+        keyEl.className = 'tree-key-pro';
+        keyEl.textContent = key;
+        branch.appendChild(keyEl);
+        keyEl.ondblclick = e => {
+          e.stopPropagation();
+          navigator.clipboard.writeText(key);
+          flashMsg('Clave copiada', "#32ba7c");
+        };
+      }
+
+      const typeEl = document.createElement('span');
+      typeEl.className = 'tree-type-pro';
+      typeEl.textContent = isArray ? `[${value.length}]` : '{ }';
+      branch.appendChild(typeEl);
+
+      const menuBtn = document.createElement('button');
+      menuBtn.className = 'menu-btn-pro';
+      menuBtn.title = 'Más acciones';
+      menuBtn.innerHTML = '⋮';
+      branch.appendChild(menuBtn);
+
+      menuBtn.onclick = e => {
+        e.stopPropagation();
+        showCtxMenu(e, key, value, node, true);
+      };
+
+      branch.onclick = e => {
+        e.stopPropagation();
+        document.querySelectorAll('.branch-header-pro.selected-pro').forEach(el => el.classList.remove('selected-pro'));
+        branch.classList.add('selected-pro');
+      };
+
+      node.appendChild(branch);
+
+      const children = document.createElement('div');
+      children.className = 'tree-children-pro';
+
+      if (isArray) {
+        value.forEach((v, i) => {
+          children.appendChild(createNode(i, v, 'array', depth + 1));
+        });
+      } else {
+        Object.entries(value).forEach(([k, v]) => {
+          children.appendChild(createNode(k, v, 'object', depth + 1));
+        });
+      }
+      node.appendChild(children);
+
+      expander.onclick = e => {
+        e.stopPropagation();
+        const collapsed = children.classList.toggle('collapsed-pro');
+        expander.textContent = collapsed ? '▶' : '▼';
+      };
+    } else {
+      const leaf = document.createElement('div');
+      leaf.className = 'tree-leaf-pro';
+      if (parentType !== 'array') {
+        const keyEl = document.createElement('span');
+        keyEl.className = 'tree-key-pro';
+        keyEl.textContent = key;
+        leaf.appendChild(keyEl);
+        keyEl.ondblclick = e => {
+          e.stopPropagation();
+          navigator.clipboard.writeText(key);
+          flashMsg('Clave copiada', "#32ba7c");
+        };
+      }
+      const valEl = document.createElement('span');
+      valEl.className = 'tree-value-pro';
+
+      if (typeof value === 'string') {
+        valEl.classList.add('tree-str-pro');
+        valEl.textContent = `"${value}"`;
+        valEl.style.color = "#4ecb61";
+      } else if (typeof value === 'number') {
+        valEl.classList.add('tree-num-pro');
+        valEl.textContent = value;
+        valEl.style.color = "#32a4ed";
+      } else if (typeof value === 'boolean') {
+        valEl.classList.add('tree-bool-pro');
+        valEl.textContent = value ? 'true' : 'false';
+        valEl.style.color = "#eaa800";
+      } else if (value === null) {
+        valEl.classList.add('tree-null-pro');
+        valEl.textContent = 'null';
+        valEl.style.color = "#e24d4d";
+      } else {
+        valEl.textContent = String(value);
+      }
+      leaf.appendChild(valEl);
+
+      valEl.ondblclick = e => {
+        e.stopPropagation();
+        navigator.clipboard.writeText(value === null ? "null" : value.toString());
+        flashMsg('Valor copiado', "#32ba7c");
+      };
+
+      const menuBtn = document.createElement('button');
+      menuBtn.className = 'menu-btn-pro';
+      menuBtn.title = 'Más acciones';
+      menuBtn.innerHTML = '⋮';
+      leaf.appendChild(menuBtn);
+
+      menuBtn.onclick = e => {
+        e.stopPropagation();
+        showCtxMenu(e, key, value, leaf, false);
+      };
+
+      leaf.onclick = e => {
+        e.stopPropagation();
+        document.querySelectorAll('.tree-leaf-pro.selected-pro').forEach(el => el.classList.remove('selected-pro'));
+        leaf.classList.add('selected-pro');
+      };
+
+      node.appendChild(leaf);
+    }
+    return node;
+  }
+
+  function showCtxMenu(e, key, value, node, isBranch) {
+    ctxMenu.style.display = "flex";
+    ctxMenu.style.top = e.clientY + "px";
+    ctxMenu.style.left = e.clientX + "px";
+    ctxMenu.currentKey = key;
+    ctxMenu.currentValue = value;
+    ctxMenu.currentNode = node;
+    ctxMenu.currentIsBranch = isBranch;
+    setTimeout(() => {
+      ctxMenu.focus && ctxMenu.focus();
+    }, 50);
+    e.preventDefault();
+  }
+
+  searchBar.oninput = function() {
+    const q = this.value.trim().toLowerCase();
+    treeArea.querySelectorAll('.tree-key-pro, .tree-value-pro').forEach(el => {
+      el.style.background = '';
+      el.style.fontWeight = '';
+    });
+    if (q) {
+      treeArea.querySelectorAll('.tree-key-pro, .tree-value-pro').forEach(el => {
+        if (el.textContent.toLowerCase().includes(q)) {
+          el.style.background = '#e0f0fc';
+          el.style.fontWeight = 'bold';
+        }
+      });
+    }
+  };
+
+  let root;
+  if (Array.isArray(json)) {
+    root = createNode('(array)', json, 'root');
+  } else if (typeof json === "object" && json !== null) {
+    root = createNode('(objeto)', json, 'root');
+  } else {
+    root = createNode('valor', json, 'root');
+  }
+  treeArea.appendChild(root);
 }

@@ -1382,3 +1382,55 @@ body.dark .donation-panel {
   background: #005ea6;
   color: #fff;
 }
+@media (max-width: 600px) {
+  main, .main-card {
+    padding-left: 2vw;
+    padding-right: 2vw;
+  }
+  .input-panel, .output-panel {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+  .output-tabs button {
+    font-size: 1.01rem;
+    padding: 0.45em 0.7em;
+  }
+  .controls button, .output-actions button {
+    font-size: 0.98rem;
+    padding: 0.41em 1em;
+  }
+  .donation-panel {
+    flex-direction: column;
+    gap: 1em;
+    padding: 0.65em 0;
+    font-size: 1em;
+  }
+  .donation-content {
+    flex-direction: column;
+    gap: 0.7em;
+    align-items: flex-start;
+  }
+  .pro-card {
+    padding: 1.1em 0.5em 1.1em 0.5em;
+  }
+  header {
+    grid-template-columns: 1fr !important;
+    padding: 0.6rem 0.7rem;
+    text-align: center;
+  }
+  h1 {
+    font-size: 1.39rem;
+    flex-wrap: wrap;
+    gap: 0.2rem;
+  }
+  .logo {
+    width: 36px;
+    height: 36px;
+    margin-right: 0.6rem;
+  }
+  .toast {
+    bottom: 70px;
+    font-size: 1em;
+    padding: 0.54em 1.3em;
+  }
+}

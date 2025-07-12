@@ -6,10 +6,25 @@
   <title>JSON Beautifier Pro</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap" rel="stylesheet">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7902157674688237"
-     crossorigin="anonymous"></script>
-  <meta name="google-adsense-account" content="ca-pub-7902157674688237">
+  <script>
+    // Solo carga AdSense si NO es localhost, 127.0.0.1, ni file://
+    if (
+      !location.hostname.match(/^(localhost|127\.0\.0\.1)$/) &&
+      !location.protocol.startsWith('file')
+    ) {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7902157674688237";
+      document.head.appendChild(s);
+
+      var meta = document.createElement('meta');
+      meta.name = "google-adsense-account";
+      meta.content = "ca-pub-7902157674688237";
+      document.head.appendChild(meta);
+    }
+  </script>
 </head>
+
 <body>
   <div id="toast" class="toast"></div>
   <!-- HEADER PREMIUM -->
@@ -52,7 +67,8 @@
         <div class="convert-controls">
           <button id="btn-xml" class="free-badge">Convertir a XML <span class="badge-free">Gratis</span></button>
           <button id="btn-csv" class="free-badge">Convertir a CSV <span class="badge-free">Gratis</span></button>
-          <button id="btn-excel" class="pro-badge-btn">Convertir a Excel <span class="badge-pro">Gratis</span></button>
+	  <button id="btn-pdf" class="pro-badge-btn">Exportar a PDF <span class="badge-pro">Gratis</span></button>
+	  <button id="btn-excel" class="pro-badge-btn">Convertir a Excel <span class="badge-pro">Gratis</span></button>
           <button id="btn-yaml" class="pro-badge-btn">Convertir a YAML <span class="badge-pro">Gratis</span></button>
           <button id="btn-download" class="pro-badge-btn">Descargar JSON <span class="badge-pro">Gratis</span></button>
         </div>
@@ -62,7 +78,7 @@
           <button id="tab-formatted" class="active">Formateado</button>
           <button id="tab-tree">Vista Árbol</button>
           <button id="tab-convert">Convertido</button>
-          <button id="tab-favs" class="pro-badge-btn">Favoritos <span class="badge-pro">PRO</span></button>
+          <button id="tab-favs" class="pro-badge-btn">Favoritos <span class="badge-pro">Gratis</span></button>
         </div>
         <div class="output-views">
           <pre id="json-output"></pre>
