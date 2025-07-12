@@ -1459,3 +1459,10 @@ body.dark header.main-header {
     font-size: 1.09em !important;
   }
 }
+.ads-header:has(ins[style*="height: 0px"]) {
+  min-height: 0 !important;
+  max-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
