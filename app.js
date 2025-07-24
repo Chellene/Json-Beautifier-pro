@@ -760,3 +760,44 @@ function drawTreePro(json) {
   }
   treeArea.appendChild(root);
 }
+// === ACTUALIZACIÓN DINÁMICA PARA CONTRATO DE ALQUILER PRO ===
+document.addEventListener("DOMContentLoaded", () => {
+  const campos = {
+    arrendador: "p1",
+    dniArrendador: "p2",
+    inquilino: "p3",
+    dniInquilino: "p4",
+    direccion: "p5",
+    localidad: "p6",
+    duracion: "p7",
+    fechaInicio: "p8",
+    fechaFin: "p9",
+    renta: "p10",
+    fianza: "p11",
+    gastos: "p12",
+    mobiliario: "p13",
+    mascotas: "p14",
+  };
+
+  Object.entries(campos).forEach(([inputId, spanId]) => {
+    const input = document.getElementById(inputId);
+    const span = document.getElementById(spanId);
+    if (input && span) {
+      input.addEventListener("input", () => {
+        span.textContent = input.value || "";
+      });
+      input.dispatchEvent(new Event("input")); // Inicializa
+    }
+  });
+
+  // Mostrar cláusulas si se marca
+  const clausulaBox = document.getElementById("mostrarClausulas");
+  const clausulas = document.getElementById("clausulas");
+  if (clausulaBox && clausulas) {
+    clausulaBox.addEventListener("change", () => {
+      clausulas.style.display = clausulaBox.checked ? "block" : "none";
+    });
+    clausulas.style.display = clausulaBox.checked ? "block" : "none";
+  }
+});
+

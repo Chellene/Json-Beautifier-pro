@@ -18,5 +18,7 @@
   <url>
     <loc>https://www.jsonbeautifierpro.com/privacidad.html</loc>
   </url>
-  <!-- Añade aquí más URLs si creas más páginas -->
+  <url>
+    <loc>https://www.jsonbeautifierpro.com/contrato-alquiler.html</loc>
+  </url>
 </urlset>

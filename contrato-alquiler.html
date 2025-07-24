@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Contrato de Alquiler 2025 en PDF - JSON Beautifier PRO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Genera un contrato de alquiler profesional entre particulares válido en España. Rellena los campos, visualiza la vista previa protegida y descarga el PDF tras pagar 1 €. Incluye cláusulas legales opcionales.">
+  <meta name="keywords" content="contrato de alquiler 2025, modelo arrendamiento vivienda, contrato alquiler PDF, contrato legal, cláusulas alquiler, descarga contrato vivienda">
+  <link rel="canonical" href="https://www.jsonbeautifierpro.com/contrato-alquiler.html" />
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    .form-grid label {
+      display: block;
+      margin-bottom: 12px;
+    }
+    .json-box {
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      border-left: 2px solid #ccc;
+      padding-left: 1rem;
+    }
+    .btn-paypal {
+      background-color: #0070ba;
+      color: white;
+      padding: 14px 26px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 2rem;
+      font-weight: bold;
+    }
+    .btn-paypal:hover {
+      background-color: #005c99;
+    }
+    .main-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 2rem;
+    }
+    .main-header img.logo {
+      width: 48px;
+      height: auto;
+      flex-shrink: 0;
+      margin-right: 1rem;
+    }
+    .main-header h1 {
+      font-size: 2rem;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    #toggle-theme {
+  font-size: 2.3rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--fg);
+  margin-right: 3rem; /* ← aquí el ajuste */
+  transition: color 0.2s, background 0.2s;
+}
+
+    #toggle-theme:hover {
+      color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+  <header class="main-header">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <img src="logo.svg" class="logo" alt="JSON Beautifier Pro">
+      <h1>Contrato de Alquiler <span class="pro-badge">PRO</span></h1>
+    </div>
+    <button id="toggle-theme" title="Cambiar tema">🌗</button>
+  </header>
+
+  <main class="main">
+    <section class="main-card">
+      <div class="input-panel">
+        <h2>Completa los datos del contrato</h2>
+        <p>Este formulario genera un <strong>contrato legal de arrendamiento entre particulares válido en España</strong>. Puedes rellenar los datos, revisar la vista previa protegida y descargar el PDF profesional tras pagar 1 €.</p>
+        <div class="form-grid">
+          <label>Nombre del arrendador:<input id="arrendador" type="text"></label>
+          <label>DNI/NIE del arrendador:<input id="dniArrendador" type="text"></label>
+          <label>Nombre del inquilino:<input id="inquilino" type="text"></label>
+          <label>DNI/NIE del inquilino:<input id="dniInquilino" type="text"></label>
+          <label>Dirección del inmueble:<input id="direccion" type="text"></label>
+          <label>Localidad y código postal:<input id="localidad" type="text"></label>
+          <label>Fecha de inicio:<input id="fechaInicio" type="date"></label>
+          <label>Fecha de fin:<input id="fechaFin" type="date"></label>
+          <label>Duración (meses):<input id="duracion" type="number"></label>
+          <label>Renta mensual (€):<input id="renta" type="number"></label>
+          <label>Fianza (€):<input id="fianza" type="number"></label>
+          <label>¿Gastos de comunidad incluidos?<select id="gastos"><option>Sí</option><option>No</option></select></label>
+          <label>¿Incluye mobiliario?<select id="mobiliario"><option>Sí</option><option>No</option></select></label>
+          <label>¿Se permiten mascotas?<select id="mascotas"><option>Sí</option><option>No</option></select></label>
+          <label><input type="checkbox" id="mostrarClausulas"> Incluir cláusulas legales adicionales</label>
+        </div>
+        <form id="paypal-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_self" onsubmit="return handlePago()">
+  <input type="hidden" name="cmd" value="_xclick">
+  <input type="hidden" name="business" value="oscargrubio@live.com">
+  <input type="hidden" name="item_name" value="Contrato de alquiler PRO">
+  <input type="hidden" name="amount" value="1.00">
+  <input type="hidden" name="currency_code" value="EUR">
+  <input type="hidden" name="return" id="paypal-return-url" value="">
+  <button type="submit" class="btn-paypal">💳 Pagar 1 € con PayPal y descargar PDF</button>
+         </form>
+        </div>
+      <div class="output-panel">
+        <h2>Vista previa protegida</h2>
+        <div class="json-box" id="preview">
+          <p id="vistaContrato"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const actualizarVista = () => {
+        const arrendador = document.getElementById("arrendador").value;
+        const dniArrendador = document.getElementById("dniArrendador").value;
+        const inquilino = document.getElementById("inquilino").value;
+        const dniInquilino = document.getElementById("dniInquilino").value;
+        const direccion = document.getElementById("direccion").value;
+        const localidad = document.getElementById("localidad").value;
+        const fechaInicio = document.getElementById("fechaInicio").value;
+        const fechaFin = document.getElementById("fechaFin").value;
+        const duracion = document.getElementById("duracion").value;
+        const renta = document.getElementById("renta").value;
+        const fianza = document.getElementById("fianza").value;
+        const gastos = document.getElementById("gastos").value;
+        const mobiliario = document.getElementById("mobiliario").value;
+        const mascotas = document.getElementById("mascotas").value;
+        const incluirClausulas = document.getElementById("mostrarClausulas").checked;
+
+        let html = `<p>Este contrato de arrendamiento se celebra entre <strong>${arrendador}</strong> (DNI <strong>${dniArrendador}</strong>) y <strong>${inquilino}</strong> (DNI <strong>${dniInquilino}</strong>), como partes arrendadora y arrendataria respectivamente, en relación a la vivienda ubicada en <strong>${direccion}, ${localidad}</strong>.</p>`;
+        html += `<p>El arrendamiento tendrá una duración de <strong>${duracion}</strong> meses, comenzando el <strong>${fechaInicio}</strong> y finalizando el <strong>${fechaFin}</strong>.</p>`;
+        html += `<p>La renta mensual será de <strong>${renta} €</strong> con una fianza equivalente a <strong>${fianza} €</strong>.</p>`;
+        html += `<p>Gastos de comunidad incluidos: <strong>${gastos}</strong>. Mobiliario incluido: <strong>${mobiliario}</strong>. Mascotas permitidas: <strong>${mascotas}</strong>.</p>`;
+
+        if (incluirClausulas) {
+          html += `<h3>Cláusulas adicionales</h3><ul>`;
+          html += `<li>La renta podrá ser revisada anualmente conforme al IPC.</li>`;
+          html += `<li>El impago de dos mensualidades dará lugar a la resolución automática del contrato.</li>`;
+          html += `<li>El inquilino reconoce haber recibido el inmueble en buen estado de conservación.</li>`;
+          html += `<li>Los gastos de agua, luz y gas correrán a cargo del inquilino.</li>`;
+          html += `</ul>`;
+        }
+
+        html += `<div style="display:flex; justify-content: space-between; margin-top:40px;">
+          <div><hr style="width:200px"><p>Firma del arrendador</p></div>
+          <div><hr style="width:200px"><p>Firma del inquilino</p></div>
+        </div>`;
+
+        document.getElementById("vistaContrato").innerHTML = html;
+      };
+
+      document.querySelectorAll("input, select, textarea").forEach(el => {
+        el.addEventListener("input", actualizarVista);
+        el.addEventListener("change", actualizarVista);
+      });
+
+      actualizarVista();
+    });
+  </script>
+<script>
+async function generarPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+  const pageHeight = doc.internal.pageSize.getHeight();
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const margin = 20;
+  const width = pageWidth - margin * 2;
+  const lineHeight = 8;
+  let y = 25;
+
+  // Fuente y fecha
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(16);
+  doc.text("CONTRATO DE ARRENDAMIENTO", pageWidth / 2, y, { align: "center" });
+
+  y += 10;
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(11);
+  const fechaHoy = new Date().toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" });
+  doc.text(`Fecha: ${fechaHoy}`, margin, y);
+
+  y += 12;
+
+  // Datos del formulario
+  const datos = {
+    "Nombre del arrendador": document.getElementById("arrendador").value,
+    "DNI/NIE del arrendador": document.getElementById("dniArrendador").value,
+    "Nombre del inquilino": document.getElementById("inquilino").value,
+    "DNI/NIE del inquilino": document.getElementById("dniInquilino").value,
+    "Dirección del inmueble": document.getElementById("direccion").value,
+    "Localidad y código postal": document.getElementById("localidad").value,
+    "Fecha de inicio": document.getElementById("fechaInicio").value,
+    "Fecha de fin": document.getElementById("fechaFin").value,
+    "Duración del contrato (meses)": document.getElementById("duracion").value,
+    "Renta mensual (€)": document.getElementById("renta").value,
+    "Fianza (€)": document.getElementById("fianza").value,
+    "Gastos de comunidad incluidos": document.getElementById("gastos").value,
+    "Incluye mobiliario": document.getElementById("mobiliario").value,
+    "¿Se permiten mascotas?": document.getElementById("mascotas").value,
+  };
+
+  doc.setFontSize(12);
+  for (let [label, value] of Object.entries(datos)) {
+    doc.text(`${label}:`, margin, y);
+    doc.setFont("helvetica", "bold");
+    doc.text(`${value || "—"}`, margin + 70, y);
+    doc.setFont("helvetica", "normal");
+    y += lineHeight;
+  }
+
+  // Cláusulas adicionales
+  const incluirClausulas = document.getElementById("mostrarClausulas").checked;
+  if (incluirClausulas) {
+    y += 6;
+    doc.setFont("helvetica", "bold");
+    doc.text("Cláusulas adicionales:", margin, y);
+    doc.setFont("helvetica", "normal");
+    y += 6;
+
+    const clausulas = [
+      "La renta podrá ser revisada anualmente conforme al IPC.",
+      "El impago de dos mensualidades dará lugar a la resolución automática del contrato.",
+      "El inquilino reconoce haber recibido el inmueble en buen estado de conservación.",
+      "Los gastos de agua, luz y gas correrán a cargo del inquilino."
+    ];
+
+    clausulas.forEach(c => {
+      const lines = doc.splitTextToSize("• " + c, width);
+      doc.text(lines, margin, y);
+      y += lines.length * lineHeight - 2;
+    });
+  }
+
+  // Firmas colocadas abajo siempre
+  const firmaY = pageHeight - 40;
+  const firmaW = 60;
+
+  doc.line(margin, firmaY, margin + firmaW, firmaY);
+  doc.text("Firma del arrendador", margin, firmaY + 6);
+
+  doc.line(pageWidth - margin - firmaW, firmaY, pageWidth - margin, firmaY);
+  doc.text("Firma del inquilino", pageWidth - margin - firmaW, firmaY + 6);
+
+  // Descargar
+  doc.save("Contrato_Alquiler.pdf");
+}
+</script>
+<script>
+function handlePago() {
+  const url = new URL(window.location.href);
+  url.searchParams.set("pago_confirmado", "1");
+  document.getElementById("paypal-return-url").value = url.toString();
+  return true;
+}
+
+// Si viene de PayPal tras pago → generar el PDF automáticamente
+if (window.location.search.includes("pago_confirmado=1")) {
+  setTimeout(() => {
+    generarPDF();
+  }, 800); // da tiempo a que cargue la página
+}
+</script>
+</body>
+</html>
