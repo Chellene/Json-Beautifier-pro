@@ -1,57 +1,77 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<link rel="canonical" href="https://www.jsonbeautifierpro.com/cookies.html" />
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Política de Cookies - JSON Beautifier PRO</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Consulta nuestra política de cookies: qué tipos de cookies usamos, para qué sirven y cómo gestionarlas.">
   <link rel="stylesheet" href="style.css">
+  <link rel="canonical" href="https://www.jsonbeautifierpro.com/cookies.html">
   <style>
-    body {
-      padding: 2rem;
+    .legal {
       max-width: 800px;
-      margin: auto;
-      font-family: sans-serif;
-      line-height: 1.7;
+      margin: 3rem auto;
+      padding: 2rem;
+      background: var(--panel);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
     }
-    h1 {
-      text-align: center;
-      margin-bottom: 2rem;
+    .legal h1 {
+      margin-bottom: 1.5rem;
     }
-    .btn-volver {
-      display: block;
-      margin: 3rem auto 0;
-      padding: 0.8rem 1.5rem;
-      background-color: var(--primary, #3e89fa);
-      color: white;
-      border: none;
+    .legal h2 {
+      margin-top: 2rem;
+    }
+    .volver {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.6rem 1.2rem;
+      background: var(--accent);
+      color: #fff;
       border-radius: 8px;
-      text-align: center;
       text-decoration: none;
-      font-size: 1rem;
       font-weight: bold;
+      transition: background 0.2s;
+    }
+    .volver:hover {
+      background: #5635c4;
     }
   </style>
 </head>
 <body>
-  <h1>Política de Cookies</h1>
+  <header class="main-header">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <img src="logo.svg" class="logo" alt="Logo JSON Beautifier Pro">
+      <h1>JSON Beautifier Pro</h1>
+    </div>
+  </header>
 
-  <p>Esta web utiliza cookies técnicas necesarias para el correcto funcionamiento de la página. No se emplean cookies publicitarias, analíticas ni de terceros.</p>
+  <main class="legal">
+    <h1>Política de Cookies</h1>
 
-  <h2>¿Qué son las cookies?</h2>
-  <p>Las cookies son pequeños archivos de texto que se almacenan en el navegador del usuario al visitar un sitio web. Sirven para recordar información entre visitas, como preferencias o configuraciones.</p>
+    <p>Este sitio web utiliza cookies propias y de terceros para mejorar la experiencia de navegación del usuario, realizar análisis estadísticos y mostrar contenido personalizado.</p>
 
-  <h2>Cookies que usamos</h2>
-  <ul>
-    <li><strong>Cookies técnicas:</strong> necesarias para mostrar el contenido, gestionar formularios y recordar configuraciones como el modo claro/oscuro.</li>
-    <li><strong>Cookies de sesión:</strong> desaparecen al cerrar el navegador y permiten la funcionalidad temporal del sitio.</li>
-  </ul>
+    <h2>¿Qué son las cookies?</h2>
+    <p>Las cookies son pequeños archivos de texto que los sitios web instalan en el dispositivo del usuario para recopilar datos de navegación de forma anónima.</p>
 
-  <h2>Cómo gestionar cookies</h2>
-  <p>Puedes permitir, bloquear o eliminar las cookies instaladas mediante la configuración de tu navegador. Ten en cuenta que desactivar las cookies puede afectar al funcionamiento del sitio web.</p>
+    <h2>Tipos de cookies utilizadas</h2>
+    <ul>
+      <li><strong>Cookies técnicas:</strong> necesarias para el funcionamiento del sitio web.</li>
+      <li><strong>Cookies de análisis:</strong> permiten medir la actividad de los usuarios en la web para mejorar los servicios ofrecidos.</li>
+      <li><strong>Cookies de terceros:</strong> como las de Google Analytics, que recogen datos de navegación de forma anónima.</li>
+    </ul>
 
-  <p>Para más información sobre cómo configurar las cookies en tu navegador, puedes consultar la sección de ayuda del mismo.</p>
+    <h2>Gestión de cookies</h2>
+    <p>Al acceder a este sitio, se entiende que el usuario acepta el uso de cookies. El usuario puede desactivar o eliminar las cookies desde la configuración de su navegador.</p>
 
-  <a href="contrato-alquiler.html" class="btn-volver">← Volver al contrato</a>
+    <h2>Responsabilidad</h2>
+    <p>Este sitio no se hace responsable del contenido ni de la veracidad de las políticas de privacidad de terceros mencionados.</p>
+
+    <a class="volver" href="contrato-alquiler.html">← Volver al contrato</a>
+  </main>
+
+  <footer style="text-align: center; font-size: 0.85em; margin-top: 4rem; color: #888;">
+    JSON Beautifier Pro © 2025
+  </footer>
 </body>
 </html>
