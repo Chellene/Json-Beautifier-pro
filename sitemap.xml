@@ -1,24 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://www.jsonbeautifierpro.com/</loc>
-  </url>
-  <url>
-    <loc>https://www.jsonbeautifierpro.com/convertir-json-a-csv.html</loc>
-  </url>
-  <url>
-    <loc>https://www.jsonbeautifierpro.com/convertir-json-a-xml.html</loc>
-  </url>
-  <url>
-    <loc>https://www.jsonbeautifierpro.com/convertir-json-a-yaml.html</loc>
-  </url>
-  <url>
-    <loc>https://www.jsonbeautifierpro.com/validar-json.html</loc>
-  </url>
-  <url>
-    <loc>https://www.jsonbeautifierpro.com/privacidad.html</loc>
-  </url>
-  <url>
-    <loc>https://www.jsonbeautifierpro.com/contrato-alquiler.html</loc>
-  </url>
+  <url><loc>https://www.jsonbeautifierpro.com/</loc></url>
+  <url><loc>https://www.jsonbeautifierpro.com/convertir-json-a-csv.html</loc></url>
+  <url><loc>https://www.jsonbeautifierpro.com/convertir-json-a-xml.html</loc></url>
+  <url><loc>https://www.jsonbeautifierpro.com/convertir-json-a-yaml.html</loc></url>
+  <url><loc>https://www.jsonbeautifierpro.com/validar-json.html</loc></url>
+  <url><loc>https://www.jsonbeautifierpro.com/exif-debug.html</loc></url>
+  <url><loc>https://www.jsonbeautifierpro.com/contrato-alquiler.html</loc></url>
+  <url><loc>https://www.jsonbeautifierpro.com/privacidad.html</loc></url>
+  <url><loc>https://www.jsonbeautifierpro.com/privacidad-contrato.html</loc></url>
+  <url><loc>https://www.jsonbeautifierpro.com/aviso-legal.html</loc></url>
+  <url><loc>https://www.jsonbeautifierpro.com/cookies.html</loc></url>
+  <url><loc>https://www.jsonbeautifierpro.com/contacto.html</loc></url>
 </urlset>
