@@ -1,0 +1,30 @@
+{
+  "nombre": "Óscar",
+  "proyecto": "JSON Beautifier Pro",
+  "version": 1.0,
+  "pro": true,
+  "funciones": [
+    "Formatear",
+    "Descargar",
+    "Exportar PDF",
+    "Vista en árbol",
+    "Guardar JSON",
+    "Conversión formatos"
+  ],
+  "configuracion": {
+    "tema": "oscuro",
+    "indentacion": 2,
+    "idioma": "es"
+  },
+  "historial": [
+    {
+      "fecha": "2025-06-27",
+      "accion": "Inicio del proyecto"
+    },
+    {
+      "fecha": "2025-06-28",
+      "accion": "Añadida vista en árbol"
+    }
+  ],
+  "activo": null
+}
