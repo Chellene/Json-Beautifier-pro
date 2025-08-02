@@ -92,7 +92,11 @@
       "@type": "OfferShippingDetails",
       "shippingDestination": {
         "@type": "DefinedRegion",
-        "name": "España"
+        "name": "España",
+        "addressCountry": {
+          "@type": "Country",
+          "name": "ES"
+        }
       },
       "deliveryTime": {
         "@type": "ShippingDeliveryTime",
@@ -108,12 +112,17 @@
           "maxValue": 0,
           "unitCode": "DAY"
         }
+      },
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "0.00",
+        "currency": "EUR"
       }
     },
     "hasMerchantReturnPolicy": {
       "@type": "MerchantReturnPolicy",
       "applicableCountry": "ES",
-      "returnPolicyCategory": "https://schema.org/NoReturns"
+      "returnPolicyCategory": "https://schema.org/NoReturn"
     }
   }
 }
