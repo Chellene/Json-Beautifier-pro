@@ -83,20 +83,24 @@
   },
   "offers": {
     "@type": "Offer",
-    "url": "https://www.jsonbeautifierpro.com/contrato-alquiler.html",
-    "priceCurrency": "EUR",
     "price": "1.00",
-    "priceValidUntil": "2026-01-01",
+    "priceCurrency": "EUR",
     "availability": "https://schema.org/InStock",
+    "url": "https://www.jsonbeautifierpro.com/contrato-alquiler.html",
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "returnPolicyCategory": "MerchantReturnNotPermitted"
+    },
     "shippingDetails": {
       "@type": "OfferShippingDetails",
+      "shippingRate": {
+        "@type": "MonetaryAmount",
+        "value": "0.00",
+        "currency": "EUR"
+      },
       "shippingDestination": {
         "@type": "DefinedRegion",
-        "name": "España",
-        "addressCountry": {
-          "@type": "Country",
-          "name": "ES"
-        }
+        "addressCountry": "ES"
       },
       "deliveryTime": {
         "@type": "ShippingDeliveryTime",
@@ -112,17 +116,8 @@
           "maxValue": 0,
           "unitCode": "DAY"
         }
-      },
-      "shippingRate": {
-        "@type": "MonetaryAmount",
-        "value": "0.00",
-        "currency": "EUR"
       }
-    },
-    "hasMerchantReturnPolicy": {
-  "@type": "MerchantReturnPolicy",
-  "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted"
-}
+    }
   }
 }
 </script>
