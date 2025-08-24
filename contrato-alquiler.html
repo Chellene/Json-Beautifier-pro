@@ -22,16 +22,31 @@
   <meta name="twitter:image" content="https://www.jsonbeautifierpro.com/logo.svg" />
 
   <!-- Schema.org: Product -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Product",
-    "name":"Generador de contrato de alquiler de vivienda",
-    "description":"Crea un contrato profesional en minutos y descarga un PDF estilo notaría.",
-    "brand":{"@type":"Brand","name":"JSON Beautifier PRO"},
-    "offers":{"@type":"Offer","priceCurrency":"EUR","price":"1.00","availability":"https://schema.org/InStock"}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "@id": "https://www.jsonbeautifierpro.com/contrato-alquiler.html#product",
+  "name": "Generador de contrato de alquiler de vivienda",
+  "description": "Crea un contrato profesional en minutos y descarga un PDF estilo notaría.",
+  "brand": { "@type": "Brand", "name": "JSON Beautifier PRO" },
+  "url": "https://www.jsonbeautifierpro.com/contrato-alquiler.html",
+  "image": "https://www.jsonbeautifierpro.com/logo.svg",
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "EUR",
+    "price": "1.00",
+    "priceValidUntil": "2026-12-31",
+    "availability": "https://schema.org/InStock",
+    "url": "https://www.jsonbeautifierpro.com/contrato-alquiler.html",
+    "hasMerchantReturnPolicy": {
+      "@type": "MerchantReturnPolicy",
+      "returnPolicyCategory": "https://schema.org/NoReturn",
+      "applicableCountry": "ES"
+    }
   }
-  </script>
+}
+</script>
 
   <!-- Schema.org: BreadcrumbList -->
   <script type="application/ld+json">
@@ -357,6 +372,9 @@
                     <div id="paypal-buttons"></div>
                     <button type="button" class="btn btn-pay" id="btnPayClassic">Pagar con PayPal</button>
                     <p id="payError" class="err" aria-live="polite"></p>
+                    <p style="font-size:12px;color:#475569;margin-top:6px">
+  Producto digital. No admite devoluciones (art. 103.m TRLGDCU).
+</p>
 
                     <div class="actions">
                       <button type="button" class="btn btn-primary" id="btnDownload" style="display:none">Descargar PDF</button>
