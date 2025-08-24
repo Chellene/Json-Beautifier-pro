@@ -1,373 +1,1116 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<link rel="canonical" href="https://www.jsonbeautifierpro.com/contrato-alquiler.html">
-  <meta charset="UTF-8">
-  <title>Contrato de Alquiler 2025 en PDF - JSON Beautifier PRO</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Genera un contrato de alquiler profesional entre particulares válido en España. Rellena los campos, visualiza la vista previa protegida y descarga el PDF tras pagar 1 €. Incluye cláusulas legales completas.">
-  <meta name="keywords" content="contrato de alquiler 2025, modelo arrendamiento vivienda, contrato alquiler PDF, contrato legal, cláusulas alquiler, descarga contrato vivienda">
-  <link rel="stylesheet" href="style.css">
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <style>
-    .form-grid label {
-      display: block;
-      margin-bottom: 12px;
-    }
-    .json-box {
-      user-select: none;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      border-left: 2px solid #ccc;
-      padding-left: 1rem;
-      position: relative;
-      min-height: 300px;
-    }
-    .json-box::before {
-      content: "DOCUMENTO DE MUESTRA - JSON BEAUTIFIER PRO";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-30deg);
-      font-size: 2.4rem;
-      color: rgba(100, 100, 100, 0.15);
-      pointer-events: none;
-      white-space: nowrap;
-      z-index: 1;
-    }
-    .btn-paypal {
-      background-color: #0070ba;
-      color: white;
-      padding: 14px 26px;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 2rem;
-      font-weight: bold;
-    }
-    .btn-paypal:hover {
-      background-color: #005c99;
-    }
-    .main-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 1rem 2rem;
-    }
-    .main-header img.logo {
-      width: 48px;
-      height: auto;
-      flex-shrink: 0;
-      margin-right: 1rem;
-    }
-    .main-header h1 {
-      font-size: 2rem;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-  </style>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org/",
-  "@type": "Product",
-  "name": "Contrato de Alquiler PRO en PDF",
-  "description": "Genera un contrato de alquiler profesional editable entre particulares válido en España. Descarga inmediata en PDF tras completar el formulario y pagar.",
-  "image": "https://www.jsonbeautifierpro.com/img/preview-contrato-pdf.png",
-  "brand": {
-    "@type": "Brand",
-    "name": "JSON Beautifier PRO"
-  },
-  "aggregateRating": {
-    "@type": "AggregateRating",
-    "ratingValue": "5",
-    "reviewCount": "21"
-  },
-  "review": {
-    "@type": "Review",
-    "author": {
-      "@type": "Person",
-      "name": "Usuario verificado"
-    },
-    "datePublished": "2025-06-30",
-    "reviewBody": "Muy útil y fácil de usar. Me ha servido para hacer un contrato en minutos.",
-    "reviewRating": {
-      "@type": "Rating",
-      "ratingValue": "5",
-      "bestRating": "5"
-    }
-  },
-  "offers": {
-    "@type": "Offer",
-    "price": "1.00",
-    "priceCurrency": "EUR",
-    "availability": "https://schema.org/InStock",
-    "priceValidUntil": "2025-12-31",
-    "url": "https://www.jsonbeautifierpro.com/contrato-alquiler.html",
-    "hasMerchantReturnPolicy": {
-      "@type": "MerchantReturnPolicy",
-      "returnPolicyCategory": "MerchantReturnNotPermitted"
-    },
-    "shippingDetails": {
-      "@type": "OfferShippingDetails",
-      "shippingRate": {
-        "@type": "MonetaryAmount",
-        "value": "0.00",
-        "currency": "EUR"
-      },
-      "shippingDestination": {
-        "@type": "DefinedRegion",
-        "addressCountry": "ES"
-      },
-      "deliveryTime": {
-        "@type": "ShippingDeliveryTime",
-        "handlingTime": {
-          "@type": "QuantitativeValue",
-          "minValue": 0,
-          "maxValue": 0,
-          "unitCode": "DAY"
-        },
-        "transitTime": {
-          "@type": "QuantitativeValue",
-          "minValue": 0,
-          "maxValue": 0,
-          "unitCode": "DAY"
-        }
-      }
-    }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contrato de Vivienda PRO — Generador de PDF estilo notaría por 1 €</title>
+  <meta name="description" content="Genera un contrato de alquiler de vivienda profesional en minutos: rellena datos, elige cláusulas y descarga un PDF estilo notaría por 1 €. Pago seguro por PayPal." />
+  <link rel="canonical" href="https://www.jsonbeautifierpro.com/contrato-alquiler.html" />
+  <link rel="alternate" hreflang="es-ES" href="https://www.jsonbeautifierpro.com/contrato-alquiler.html">
+  <link rel="alternate" hreflang="x-default" href="https://www.jsonbeautifierpro.com/contrato-alquiler.html">
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="theme-color" content="#0ea5e9" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:title" content="Generador de contrato de vivienda — PDF estilo notaría (1 €)" />
+  <meta property="og:description" content="Crea tu contrato en minutos, todo en tu navegador. PDF profesional listo para firmar por 1 €." />
+  <meta property="og:image" content="https://www.jsonbeautifierpro.com/logo.svg" />
+  <meta property="og:url" content="https://www.jsonbeautifierpro.com/contrato-alquiler.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Generador de contrato de vivienda — PDF estilo notaría (1 €)" />
+  <meta name="twitter:description" content="Crea tu contrato en minutos, todo en tu navegador. PDF profesional listo para firmar por 1 €." />
+  <meta name="twitter:image" content="https://www.jsonbeautifierpro.com/logo.svg" />
+
+  <!-- Schema.org: Product -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Product",
+    "name":"Generador de contrato de alquiler de vivienda",
+    "description":"Crea un contrato profesional en minutos y descarga un PDF estilo notaría.",
+    "brand":{"@type":"Brand","name":"JSON Beautifier PRO"},
+    "offers":{"@type":"Offer","priceCurrency":"EUR","price":"1.00","availability":"https://schema.org/InStock"}
   }
-}
-</script>
+  </script>
+
+  <!-- Schema.org: BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[
+      {"@type":"ListItem","position":1,"name":"Inicio","item":"https://www.jsonbeautifierpro.com/"},
+      {"@type":"ListItem","position":2,"name":"Generadores","item":"https://www.jsonbeautifierpro.com/modelo-contrato-alquiler.html"},
+      {"@type":"ListItem","position":3,"name":"Contrato de vivienda PRO","item":"https://www.jsonbeautifierpro.com/contrato-alquiler.html"}
+    ]
+  }
+  </script>
+
+  <!-- Schema.org: FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {"@type":"Question","name":"¿Es válido legalmente este contrato?",
+       "acceptedAnswer":{"@type":"Answer","text":"Sí. Es un contrato privado entre particulares ajustado a la LAU vigente en España."}},
+      {"@type":"Question","name":"¿Necesito registrarme o subir datos?",
+       "acceptedAnswer":{"@type":"Answer","text":"No. Todo se genera en tu navegador y puedes descargarlo tras pagar 1 €."}},
+      {"@type":"Question","name":"¿Sirve para toda España?",
+       "acceptedAnswer":{"@type":"Answer","text":"Sí, el modelo está adaptado a la normativa española y es válido en todo el territorio nacional."}}
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+  :root{
+    --bg:#f6f8fc;--fg:#0f172a;--muted:#5b6a8a;--panel:#fff;--border:#dfe3f4;
+    --brand:#0ea5e9;--accent:#6366f1;--ok:#22c55e;--danger:#ef4444;
+    --radius:18px;--radius-sm:12px
+  }
+  *{box-sizing:border-box}html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+  a{color:#1f2a60;text-decoration:none}
+  .container{max-width:1200px;margin:0 auto;padding:0 16px}
+
+  .main-header{position:sticky;top:0;z-index:70;background:linear-gradient(180deg,#fff,rgba(255,255,255,.92));backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--border)}
+  .head-wrap{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:14px 0}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand h1{margin:0;font-family:Manrope,Inter;font-weight:800;letter-spacing:.3px;font-size:clamp(22px,2.8vw,34px);background:linear-gradient(90deg,#0ea5e9,#6366f1 45%,#22c55e);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .logo{height:40px}
+  /* CLS */
+  .logo{height:40px;width:120px}
+.cta{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+@media (max-width:480px){.head-wrap{grid-template-columns:1fr}.cta{align-items:flex-start}}
+
+  .btn{display:inline-flex;align-items:center;gap:.6rem;border:1px solid #cfd7e6;background:#fff;border-radius:999px;padding:.7rem 1rem;font-weight:800;cursor:pointer;font-size:14px;box-shadow:0 12px 30px rgba(23,30,70,.08);min-height:44px}
+  .btn-primary{background:linear-gradient(90deg,#0ea5e9,#6366f1);border:none;color:#fff}
+  .btn-ghost{background:#fff}
+  .btn-pay{background:#0070ba;color:#fff;border:none}
+
+  main{padding:26px 0}
+  .hero{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:0 12px 30px rgba(23,30,70,.08)}
+
+  .wizard{margin-top:16px;background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 12px 30px rgba(23,30,70,.08)}
+  .steps{display:flex}
+  .step{flex:1;padding:12px 8px;text-align:center;background:#f3f6ff;border-right:1px solid var(--border);font-weight:800;color:#3b4780}
+  .step:last-child{border-right:none}.step.active{background:#fff;color:#1e2a60}
+  .step .n{display:inline-flex;width:26px;height:26px;align-items:center;justify-content:center;border-radius:999px;border:2px solid #9db4ff;margin-right:6px;font-size:12px}
+  .step.active .n{border-color:#4c6fff;background:#4c6fff;color:#fff}
+  .progress{height:8px;background:#eef2ff}.bar{height:8px;width:0;background:linear-gradient(90deg,#0ea5e9,#6366f1);transition:width .25s}
+
+  .wizard-body{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:18px;align-items:start}
+  @media (max-width:980px){.wizard-body{grid-template-columns:1fr}}
+  .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;box-shadow:0 12px 30px rgba(23,30,70,.08)}
+  .left-col{display:flex;flex-direction:column}
+
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .form-grid.full{grid-template-columns:1fr}
+  .form-grid label{display:block;font-size:13.5px;color:#2b324f;font-weight:800}
+  .form-grid input,.form-grid select,.form-grid textarea{width:100%;margin-top:6px;padding:.7rem .85rem;border:1px solid #cfd7e6;border-radius:12px;font-size:15px;outline:none}
+  .form-grid textarea{resize:vertical;min-height:120px}
+  .form-grid input:focus,.form-grid select:focus,.form-grid textarea:focus{border-color:#4c6fff;box-shadow:0 0 0 3px #4c6fff25}
+  .is-invalid{border-color:var(--danger)!important;box-shadow:0 0 0 3px #ef444422!important}
+  .is-valid{border-color:var(--ok)!important;box-shadow:0 0 0 3px #22c55e22!important}
+  .err{font-size:12px;color:#ef4444;min-height:16px}
+
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;align-items:center}
+  .chip{position:relative;border:1px solid #cfd7e6;background:#f8fafc;border-radius:999px;padding:.45rem .85rem;font-size:12.5px;cursor:pointer;font-weight:800;color:#334155;transition:.15s}
+  .chip.active{border-color:#4c6fff;background:linear-gradient(90deg,#0ea5e9,#6366f1);box-shadow:0 6px 16px rgba(80,90,200,.28);color:#fff}
+  .chip input[type="checkbox"]{appearance:none;position:absolute;inset:0;opacity:0}
+
+  .search{flex:999 1 420px;min-width:280px;padding:.85rem 1.1rem;border:2px solid #cbd5e1;border-radius:12px;font-size:16px;font-weight:700;color:#0f172a}
+
+  .clause-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-top:8px}
+  @media (min-width:900px){.clause-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (min-width:1200px){.clause-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  .clause-card{border:1px solid #e5e7eb;border-radius:12px;padding:10px;background:#fff;display:flex;gap:10px;align-items:flex-start}
+  .clause-card h4{margin:.1rem 0;font-size:14px}
+  .clause-card p{margin:0;font-size:12.5px;color:#64748b}
+  label.clause-card.active{border-color:#4c6fff;box-shadow:0 0 0 3px #4c6fff22}
+  .tag{font-size:11px;border:1px solid #e2e8f0;border-radius:6px;padding:.15rem .4rem;background:#f8fafc;margin-left:6px}
+
+  aside.card{display:flex;flex-direction:column}
+  .preview{position:relative;min-height:520px;background:#fff;border:1px dashed #d7deee;border-radius:12px;padding:16px;overflow:auto}
+  .preview::before{content:"VISTA PREVIA PROTEGIDA — JSON BEAUTIFIER PRO";position:absolute;inset:50% auto auto 50%;transform:translate(-50%,-50%) rotate(-22deg);color:#9aa3b51f;font-weight:900;letter-spacing:.06em;font-size:clamp(22px,4vw,38px)}
+  .preview p{margin:.35rem 0;font-size:14px;line-height:1.45}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+
+  .summary-grid{display:grid;grid-template-columns:1fr;gap:16px}
+  .sum-card{border:1px solid #e6ebf4;border-radius:12px;padding:12px;background:#fff}
+  .sum-card h4{margin:.2rem 0 .4rem;font-size:14px}
+  .sum-line{font-size:13px;color:#334155;margin:.2rem 0}
+
+  .pay-card{border:2px solid #c7d2fe;background:linear-gradient(180deg,#fff,#f7f9ff);border-radius:14px;padding:14px;display:grid;gap:10px}
+  .pay-top{display:flex;justify-content:space-between;align-items:center}
+  .price{font-family:Manrope,Inter;font-weight:900;font-size:22px}
+  .benefits{display:grid;gap:6px;font-size:12.5px;color:#334155}
+  .benefits .tick{width:18px;height:18px;border-radius:999px;background:linear-gradient(90deg,#0ea5e9,#6366f1);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;margin-right:6px}
+
+  /* Radios “Jurídico/Claro” con look de chip azul al seleccionar */
+  .seg{display:flex;flex-direction:column;gap:8px;margin-left:auto}
+  .seg label{
+    display:flex;align-items:center;gap:8px;
+    border:1px solid #cfd7e6;border-radius:999px;background:#f8fafc;
+    padding:.45rem .85rem;font-weight:800;color:#334155;cursor:pointer;transition:.15s
+  }
+  .seg input[type=radio]{appearance:none;width:0;height:0;position:absolute;opacity:0}
+  .seg label.active{border-color:#4c6fff;background:linear-gradient(90deg,#0ea5e9,#6366f1);box-shadow:0 6px 16px rgba(80,90,200,.28);color:#fff}
+
+  /* Editores de anexos apilados (más espacio) */
+  .annex-grid{display:grid;grid-template-columns:1fr;gap:22px}
+  #anexosBox .form-grid{grid-template-columns:1fr 1fr;gap:12px}
+  #anexosBox h4{margin:.2rem 0 8px}
+  #anexosBox p{margin:.25rem 0 .6rem;color:#64748b}
+
+  footer{margin:28px 0 40px;text-align:center;color:#64748b;font-size:13px}
+  footer a{margin:0 8px}
+
+  .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:#0b1220cc; z-index:9999;}
+  .modal.active{ display:flex; }
+  .modal .sheet{position:relative; background:#fff; border:1px solid var(--border); border-radius:14px; max-width:940px; width:min(94vw,940px); max-height:92vh; overflow:auto; padding:18px 20px;}
+  .fs-topbar{ position:sticky; top:0; display:flex; gap:8px; background:#fff; padding:6px 0; z-index:2 }
+  .fs-btn{ border:1px solid #cbd5e1; background:#fff; border-radius:999px; padding:.45rem .7rem; cursor:pointer; font-weight:900 }
+
+  /* Extra mobile tweaks */
+  @media (max-width:400px){
+    .toolbar{flex-direction:column;align-items:stretch}
+    .seg{margin-left:0}
+  }
+  @media (max-width:360px){
+    .btn{min-height:48px;font-size:15px;padding:.8rem 1.1rem}
+    .search{font-size:15px}
+    .preview{min-height:420px}
+  }
+  </style>
+
+  <!-- PayPal SDK desactivado (evita 400 sin client-id).
+  <script src="https://www.paypal.com/sdk/js?client-id=TU_CLIENT_ID&currency=EUR" defer></script>
+  -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
   <header class="main-header">
-    <div style="display: flex; align-items: center; gap: 1rem;">
-      <img src="logo.svg" class="logo" alt="JSON Beautifier Pro">
-      <h1>Contrato de Alquiler <span class="pro-badge">PRO</span></h1>
+    <div class="container head-wrap">
+      <div class="brand">
+        <img class="logo" src="logo.svg" alt="Logo JSON Beautifier PRO" width="120" height="40" />
+        <h1>Contrato de Vivienda PRO</h1>
+      </div>
+      <div class="cta">
+  <button class="btn btn-primary" type="button" onclick="location.href='contrato-habitacion.html'">Ir a contrato de habitación</button>
+  <div class="trust" style="margin-top:8px">
+    <span class="chip"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Pago seguro</span>
+    <span class="chip"><i class="fa-solid fa-brain" aria-hidden="true"></i> Todo en tu navegador</span>
+    <span class="chip"><i class="fa-solid fa-file-signature" aria-hidden="true"></i> PDF estilo notaría</span>
+  </div>
+</div>
     </div>
   </header>
 
-  <main class="main">
-    <section class="preview-section" style="text-align:center; margin: 2rem auto;">
-    </section>
-    <section class="main-card">
-      <div class="input-panel">
-        <h2>Completa los datos del contrato</h2>
-        <p>Este formulario genera un <strong>contrato legal de arrendamiento entre particulares válido en España</strong>. Puedes rellenar los datos, revisar la vista previa protegida y descargar el PDF profesional tras pagar 1 €.</p>
-        <div class="form-grid">
-          <label>Nombre del arrendador:<input id="arrendador" type="text"></label>
-          <label>DNI/NIE del arrendador:<input id="dniArrendador" type="text"></label>
-          <label>Nombre del inquilino:<input id="inquilino" type="text"></label>
-          <label>DNI/NIE del inquilino:<input id="dniInquilino" type="text"></label>
-          <label>Dirección del inmueble:<input id="direccion" type="text"></label>
-          <label>Localidad y código postal:<input id="localidad" type="text"></label>
-          <label>Fecha de inicio:<input id="fechaInicio" type="date"></label>
-          <label>Fecha de fin:<input id="fechaFin" type="date"></label>
-          <label>Duración (meses):<input id="duracion" type="number"></label>
-          <label>Renta mensual (€):<input id="renta" type="number"></label>
-          <label>Fianza (€):<input id="fianza" type="number"></label>
-          <label>¿Gastos de comunidad incluidos?<select id="gastos"><option>Sí</option><option>No</option></select></label>
-          <label>¿Incluye mobiliario?<select id="mobiliario"><option>Sí</option><option>No</option></select></label>
-          <label>¿Se permiten mascotas?<select id="mascotas"><option>Sí</option><option>No</option></select></label>
+  <main>
+    <div class="container hero">
+      <h2>Generador de contrato de alquiler de vivienda</h2>
+      <p class="sub">Crea un contrato profesional en minutos: datos guiados, packs de cláusulas editables, anexos opcionales y descarga en PDF.</p>
+      <div class="wizard" role="region" aria-label="Generador de contrato">
+        <div class="steps" aria-label="Pasos">
+          <div class="step active" data-step="1" aria-current="step"><span class="n">1</span>Datos</div>
+          <div class="step" data-step="2"><span class="n">2</span>Cláusulas</div>
+          <div class="step" data-step="3"><span class="n">3</span>Resumen y pago</div>
         </div>
-        <form id="paypal-form" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_self" onsubmit="return handlePago()">
-          <input type="hidden" name="cmd" value="_xclick">
-          <input type="hidden" name="business" value="oscargrubio@live.com">
-          <input type="hidden" name="item_name" value="Contrato de alquiler PRO completo">
-          <input type="hidden" name="amount" value="1.00">
-          <input type="hidden" name="currency_code" value="EUR">
-          <input type="hidden" name="return" id="paypal-return-url" value="">
-          <button type="submit" class="btn-paypal">💳 Pagar 1 € con PayPal y descargar PDF completo</button>
-        </form>
-      </div>
-      <div class="output-panel">
-        <h2>Vista previa protegida</h2>
-        <div class="json-box" id="preview">
-          <p id="vistaContrato"></p>
+        <div class="progress" aria-hidden="true"><div class="bar" style="width:0%"></div></div>
+
+        <div class="wizard-body">
+          <section class="card left-col">
+            <div class="toolbar">
+              <button class="btn btn-ghost" id="btnClear" type="button">Limpiar</button>
+              <label class="chip" id="chipPersist"><input type="checkbox" id="persistToggle" checked> Guardar datos en tu navegador</label>
+            </div>
+
+            <form id="contratoForm" novalidate autocomplete="on" style="flex:1">
+              <!-- PASO 1 -->
+              <div id="step1" class="form-grid" aria-labelledby="s1">
+                <h3 id="s1" style="grid-column:1/-1;margin:.2rem 0">Datos del contrato</h3>
+
+                <label>Dirección completa
+                  <input id="direccion" required autocomplete="street-address" aria-describedby="e-dir" />
+                </label><div></div><div id="e-dir" class="err" aria-live="polite"></div>
+
+                <label>Nombre del arrendador
+                  <input id="arrendador" required autocomplete="name" aria-describedby="e-arr" />
+                </label>
+                <label>DNI/NIE del arrendador
+                  <input id="dniArrendador" required aria-describedby="e-dna" />
+                </label>
+                <div id="e-arr" class="err"></div><div id="e-dna" class="err"></div>
+
+                <label>Nombre del inquilino
+                  <input id="inquilino" required autocomplete="name" aria-describedby="e-inq" />
+                </label>
+                <label>DNI/NIE del inquilino
+                  <input id="dniInquilino" required aria-describedby="e-dni" />
+                </label>
+                <div id="e-inq" class="err"></div><div id="e-dni" class="err"></div>
+
+                <label>Localidad
+                  <input id="localidad" required aria-describedby="e-loc" />
+                </label>
+                <label>Duración (meses)
+                  <input id="duracion" type="number" min="1" required aria-describedby="e-dur" />
+                </label>
+                <div id="e-loc" class="err"></div><div id="e-dur" class="err"></div>
+
+                <label>Fecha de inicio
+                  <input id="fechaInicio" type="date" required aria-describedby="e-fi" />
+                </label>
+                <label>Fecha de fin
+                  <input id="fechaFin" type="date" required aria-describedby="e-ff" />
+                </label>
+                <div id="e-fi" class="err"></div><div id="e-ff" class="err"></div>
+
+                <label>Precio mensual (€)
+                  <input id="renta" type="number" min="0" step="0.01" required aria-describedby="e-renta" />
+                </label>
+                <label>Fianza (€)
+                  <input id="fianza" type="number" min="0" step="0.01" required aria-describedby="e-fianza" />
+                </label>
+                <div id="e-renta" class="err"></div><div id="e-fianza" class="err"></div>
+              </div>
+              <!-- PASO 2 -->
+              <div id="step2" class="form-grid full" style="display:none" aria-labelledby="s2">
+                <h3 id="s2" style="margin:.2rem 0">Cláusulas y anexos</h3>
+                <div>
+                  <div class="toolbar">
+                    <input type="search" id="clauseSearch" class="search" placeholder="Buscar cláusulas (ruidos, llaves, obras, IPC, mascotas…)" />
+
+                    <button type="button" class="chip" data-preset="obligatorias" id="presetObl">Obligatorias</button>
+                    <button type="button" class="chip" data-preset="estandar" id="presetEst">Estándar</button>
+                    <button type="button" class="chip" data-preset="proteccion" id="presetPro">Protección extra</button>
+                    <button type="button" class="chip" data-preset="premium" id="presetPre">Pack Premium</button>
+
+                    <label class="chip" id="chipInv"><input type="checkbox" id="anexoInventario" /> Anexo I: Inventario (opcional)</label>
+                    <label class="chip" id="chipCont"><input type="checkbox" id="anexoContadores" /> Anexo II: Lecturas de contadores (opcional)</label>
+
+                    <div class="seg" id="langSeg" role="group" aria-label="Modo de lenguaje">
+                      <label for="langJ"><input type="radio" name="lang" id="langJ" value="juridico" checked> Jurídico</label>
+                      <label for="langC"><input type="radio" name="lang" id="langC" value="claro"> Claro</label>
+                    </div>
+
+                    <span id="clauseCount" style="font-weight:800;color:#334155">0 cláusulas extra</span>
+                  </div>
+
+                  <div id="mandatoryList" class="clause-grid" aria-label="Cláusulas obligatorias"></div>
+                  <div id="clauseList" class="clause-grid" aria-label="Cláusulas opcionales"></div>
+
+                  <div id="anexosBox" class="card" style="display:none;margin-top:10px">
+                    <div class="annex-grid">
+                      <div id="anexoInvBox" style="display:none">
+                        <h4>Anexo I — Inventario</h4>
+                        <p><b>Columnas por comas</b> (o | / — tab). Cada línea o “;” = nuevo elemento → <b>Elemento, Estado, Observaciones</b>.</p>
+                        <label>Inventario (uno por línea o separado por “;”)
+                          <textarea id="inventarioTxt" placeholder="Sofá, Bueno, Sin rozaduras&#10;Cama, Muy bueno, Colchón 1,35&#10;Mesa comedor, Buena, 6 sillas a juego"></textarea>
+                        </label>
+                      </div>
+
+                      <div id="anexoContBox" style="display:none">
+                        <h4>Anexo II — Lecturas de contadores</h4>
+                        <div class="form-grid">
+                          <label>Agua (m³)<input id="contAgua" type="number" min="0" step="0.01" /></label>
+                          <label>Nº contador (Agua)<input id="contAguaNum" type="text" /></label>
+                          <label>Luz (kWh)<input id="contLuz" type="number" min="0" step="0.01" /></label>
+                          <label>Nº contador (Luz)<input id="contLuzNum" type="text" /></label>
+                          <label>Gas (m³)<input id="contGas" type="number" min="0" step="0.01" /></label>
+                          <label>Nº contador (Gas)<input id="contGasNum" type="text" /></label>
+                        </div>
+                        <label>Observaciones
+                          <textarea id="contObs" placeholder="Incidencias o lecturas adicionales…"></textarea>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- PASO 3 -->
+              <div id="step3" class="form-grid full" style="display:none" aria-labelledby="s3">
+                <h3 id="s3" style="margin:.2rem 0">Resumen y pago</h3>
+                <div class="summary-grid">
+                  <div id="resumenBox" class="sum-card" aria-live="polite"></div>
+
+                  <div class="pay-card" id="payCard">
+                    <div class="pay-top">
+                      <div>
+                        <div style="font-weight:900">Descarga PDF estilo notaría</div>
+                        <div style="font-size:12.5px;color:#334155">Se habilita al confirmar el pago</div>
+                      </div>
+                      <div class="price">1 €</div>
+                    </div>
+                    <div class="benefits">
+                      <div><span class="tick">✓</span> Sello “Pago verificado”</div>
+                      <div><span class="tick">✓</span> Sin registros ni subir datos</div>
+                      <div><span class="tick">✓</span> Guardado local opcional</div>
+                    </div>
+
+                    <div id="paypal-buttons"></div>
+                    <button type="button" class="btn btn-pay" id="btnPayClassic">Pagar con PayPal</button>
+                    <p id="payError" class="err" aria-live="polite"></p>
+
+                    <div class="actions">
+                      <button type="button" class="btn btn-primary" id="btnDownload" style="display:none">Descargar PDF</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Navegación -->
+              <div class="actions">
+                <button type="button" class="btn btn-ghost" id="btnPrev" disabled>← Atrás</button>
+                <div style="flex:1"></div>
+                <button type="button" class="btn btn-primary" id="btnNext">Siguiente →</button>
+              </div>
+            </form>
+          </section>
+
+          <aside class="card">
+            <h3 style="margin:0 0 8px 0;">Vista previa protegida</h3>
+            <div class="preview" id="vistaContrato"></div>
+            <div class="actions"><button class="btn" type="button" id="btnFullSide">Pantalla completa</button></div>
+            <div style="margin-top:6px"><meter id="meter" min="0" max="100" value="0"></meter> <b id="pct">0 % completado</b></div>
+          </aside>
         </div>
       </div>
-    </section>
-<h2 style="font-size: 1.4rem; margin-bottom: 1rem;">Vista previa del contrato PDF</h2>
-  <img src="img/preview-contrato-pdf.png" alt="Vista previa contrato PDF" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 1px solid #ccc;">
+    </div>
   </main>
 
+  <footer class="container">
+  <a href="aviso-legal.html?from=vivienda">Aviso legal</a> •
+  <a href="privacidad-contrato.html?from=vivienda">Privacidad</a> •
+  <a href="cookies.html?from=vivienda">Cookies</a> •
+  <a href="contacto.html?from=vivienda">Contacto</a>
+</footer>
+
+
+  <!-- Modal fullscreen -->
+  <div class="modal" id="fs">
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Vista previa a pantalla completa">
+      <div class="fs-topbar">
+        <button class="fs-btn" id="zoomOut" type="button">−</button>
+        <button class="fs-btn" id="zoomIn"  type="button">＋</button>
+        <button class="fs-btn" id="fsClose" type="button">✕</button>
+      </div>
+      <div id="fsFrame"></div>
+    </div>
+  </div>
+
+  <!-- ====================== JS UI (sin PDF) ====================== -->
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const actualizarVista = () => {
-        const arrendador = document.getElementById("arrendador").value;
-        const dniArrendador = document.getElementById("dniArrendador").value;
-        const inquilino = document.getElementById("inquilino").value;
-        const dniInquilino = document.getElementById("dniInquilino").value;
-        const direccion = document.getElementById("direccion").value;
-        const localidad = document.getElementById("localidad").value;
-        const fechaInicio = document.getElementById("fechaInicio").value;
-        const fechaFin = document.getElementById("fechaFin").value;
-        const duracion = document.getElementById("duracion").value;
-        const renta = document.getElementById("renta").value;
-        const fianza = document.getElementById("fianza").value;
-        const gastos = document.getElementById("gastos").value;
-        const mobiliario = document.getElementById("mobiliario").value;
-        const mascotas = document.getElementById("mascotas").value;
+  (() => {
+    const LSKEY   = "contratoVivienda_pro_STABLE";
+    const STEP_K  = LSKEY + "_step";
+    const $  = (id) => document.getElementById(id);
+    const qsa= (s)  => Array.from(document.querySelectorAll(s));
 
-        let html = `<p>Este contrato de arrendamiento se celebra entre <strong>${arrendador}</strong> (DNI <strong>${dniArrendador}</strong>) y <strong>${inquilino}</strong> (DNI <strong>${dniInquilino}</strong>), en relación con la vivienda ubicada en <strong>${direccion}, ${localidad}</strong>.</p>`;
-        html += `<p>La duración del contrato será de <strong>${duracion}</strong> meses, con inicio el <strong>${fechaInicio}</strong> y finalización el <strong>${fechaFin}</strong>.</p>`;
-        html += `<p>La renta mensual será de <strong>${renta} €</strong>, con una fianza de <strong>${fianza} €</strong>.</p>`;
-        html += `<p>Gastos de comunidad incluidos: <strong>${gastos}</strong>. Mobiliario: <strong>${mobiliario}</strong>. Mascotas permitidas: <strong>${mascotas}</strong>.</p>`;
+    let currentStep = Number(localStorage.getItem(STEP_K) || 1);
+    let hasPaid  = JSON.parse(localStorage.getItem(LSKEY + "_paid") || "false");
+    let orderId  = localStorage.getItem(LSKEY + "_order") || "";
+    let langMode = localStorage.getItem(LSKEY + "_lang")  || "juridico";
 
-        html += `<h3>Cláusulas legales adicionales</h3><ol style="padding-left: 1rem;">`;
-        html += `<li>El arrendatario se compromete a abonar puntualmente la renta mensual. El impago de una mensualidad dará lugar a intereses del 5% y, si se acumulan dos o más, a la resolución automática del contrato.</li>`;
-        html += `<li>El inquilino deberá conservar la vivienda y responderá de los daños causados por uso indebido. Se compromete a mantener el inmueble en perfecto estado.</li>`;
-        html += `<li>No se podrá realizar ninguna obra o modificación sin autorización escrita del arrendador. El incumplimiento podrá dar lugar a la rescisión del contrato.</li>`;
-        html += `<li>Queda expresamente prohibido subarrendar total o parcialmente la vivienda, así como ceder el contrato a terceros.</li>`;
-        html += `<li>En caso de resolución anticipada del contrato por parte del inquilino sin el preaviso legal de 30 días o antes del plazo mínimo, deberá abonar una indemnización proporcional al tiempo restante.</li>`;
-        html += `<li>El inquilino deberá devolver la vivienda en el mismo estado en que la recibió, salvo el desgaste por uso normal. Se adjunta inventario de mobiliario si procede.</li>`;
-        html += `<li>Serán por cuenta del inquilino los gastos de luz, agua, gas, internet, y aquellos suministros individualizados.</li>`;
-        html += `<li>Ambas partes acuerdan que este contrato se regirá por lo dispuesto en la Ley de Arrendamientos Urbanos vigente en España. Para cualquier controversia se someten a los juzgados del domicilio del arrendador.</li>`;
-        html += `</ol>`;
+    // Retorno PayPal clásico (con email personal)
+    const url = new URL(location.href);
+    if (url.searchParams.get("pago_confirmado")==="1"){
+      hasPaid = true; orderId = "PAYPAL-OK";
+      localStorage.setItem(LSKEY+"_paid","true");
+      localStorage.setItem(LSKEY+"_order",orderId);
+      currentStep = 3; localStorage.setItem(STEP_K,"3");
+      try{ url.searchParams.delete("pago_confirmado"); history.replaceState({}, "", url.toString()); }catch{}
+    }
+    if (url.searchParams.get("pago_cancelado")==="1"){
+      currentStep = 3; localStorage.setItem(STEP_K,"3");
+      try{ url.searchParams.delete("pago_cancelado"); history.replaceState({}, "", url.toString()); }catch{}
+    }
 
-        html += `<div style="display:flex; justify-content: space-between; margin-top:40px;">`;
-        html += `<div><hr style="width:200px"><p>Firma del arrendador</p></div>`;
-        html += `<div><hr style="width:200px"><p>Firma del inquilino</p></div>`;
-        html += `</div>`;
+    // --------- Cláusulas ----------
+    window.CLAUSES_MANDATORY = [
+      {title:"Objeto y destino", J:"La vivienda se destina a residencia habitual del arrendatario.", C:"La vivienda es para vivir habitualmente."},
+      {title:"Duración y prórrogas", J:"Duración pactada con prórrogas legales conforme a la LAU.", C:"Dura lo acordado y se prorroga según Ley."},
+      {title:"Precio y forma de pago", J:"La renta se abona mensualmente por adelantado entre los días 1 y 5.", C:"Se paga cada mes por adelantado (día 1 al 5)."},
+      {title:"Fianza", J:"Se entrega la fianza legal; se devolverá según proceda.", C:"Se deja fianza y se devuelve si corresponde."},
+      {title:"Conservación y reparaciones (art. 21 LAU)", J:"El arrendador realizará las reparaciones necesarias para conservar la vivienda en condiciones de habitabilidad; el arrendatario asumirá las pequeñas reparaciones por el uso ordinario.", C:"El casero repara lo importante; el inquilino lo menor por uso."},
+      {title:"Entrega y devolución del inmueble (CC 1554 y 1561)", J:"El arrendador entrega la vivienda apta para el uso; al final, el arrendatario la restituirá en el estado recibido salvo el desgaste normal.", C:"Se entrega apta y se devuelve como se recibió (salvo desgaste)."}
+    ];
+    window.CLAUSES_EXTRA = [
+      {id:"ipc",         title:"Actualización por IPC",        J:"La renta podrá actualizarse anualmente conforme al índice legal aplicable.", C:"Ajuste anual según índice legal."},
+      {id:"mascotas",    title:"Mascotas",                     J:"Se permite la tenencia responsable de mascotas sin causar daños o molestias.", C:"Mascotas sí, sin daños ni molestias."},
+      {id:"subarriendo", title:"Subarriendo y cesión",         J:"Prohibido el subarriendo o cesión sin autorización escrita.", C:"No subarrendar sin permiso escrito."},
+      {id:"obras",       title:"Obras y modificaciones",       J:"No se permitirán obras sin consentimiento escrito del arrendador.", C:"No hagas obras sin permiso."},
+      {id:"pintura",     title:"Pintura y pequeños arreglos",  J:"Las mejoras cosméticas requieren consentimiento previo.", C:"Pintar/cambios menores, con permiso."},
+      {id:"ruidos",      title:"Ruidos y convivencia",         J:"Se evitarán ruidos molestos y se respetarán horarios de descanso.", C:"Respeta horarios y vecinos."},
+      {id:"llaves",      title:"Llaves y duplicados",          J:"El duplicado de llaves requiere autorización; pérdida a cargo del arrendatario.", C:"Copias solo con permiso; pérdida a tu cargo."},
+      {id:"retrasos",    title:"Retraso en el pago",           J:"El impago devengará intereses y podrá resolverse el contrato.", C:"Retrasos con recargo y posible resolución."},
+      {id:"suministros", title:"Suministros",                  J:"Los suministros serán a cargo del arrendatario salvo pacto expreso.", C:"Recibos a cargo del inquilino."},
+      {id:"energia",     title:"Eficiencia energética",        J:"Uso eficiente y diligente de equipos.", C:"Usa los equipos con eficiencia."},
+      {id:"internet",    title:"Internet y equipos",           J:"Uso responsable de la red; prohibido uso ilícito.", C:"Nada ilegal en internet."},
+      {id:"comunidad",   title:"Normas de comunidad",          J:"Obligación de cumplir Estatutos y normas internas.", C:"Cumple normas de comunidad."},
+      {id:"visitas",     title:"Visitas y pernoctas",          J:"Visitas razonables; pernoctas prolongadas requieren consentimiento.", C:"Pernoctas prolongadas con permiso."},
+      {id:"inventario",  title:"Inventario anexo",             J:"Se adjunta inventario de mobiliario y estado de conservación.", C:"Se añade inventario adjunto."},
+      {id:"datos",       title:"Protección de datos",          J:"Tratamiento de datos conforme a normativa vigente.", C:"Datos según ley."},
+      {id:"seguro",      title:"Seguro y daños",               J:"El arrendatario responderá por daños causados por uso negligente.", C:"Respondes por daños por mal uso."},
+      {id:"notifica",    title:"Notificaciones",               J:"Notificaciones al domicilio y/o email designado.", C:"Avisos al domicilio/email acordados."},
+      {id:"desist",      title:"Desistimiento (art. 11 LAU)",  J:"El arrendatario podrá desistir del contrato cumplidos 6 meses, con preaviso de 30 días; se pacta indemnización proporcional si procede.", C:"Puedes irte tras 6 meses con 30 días de aviso; puede haber indemnización proporcional."}
+    ];
+    let selectedClauses = new Set();
+    window.selectedClauses = selectedClauses; // usado por el PDF
 
-        document.getElementById("vistaContrato").innerHTML = html;
+    // --------- Validación (verde/rojo) + DNI/NIE ----------
+    const DNI_LETTERS="TRWAGMYFPDXBNJZSQVHLCKE";
+    const normalizeId = v => (v||"").toUpperCase().replace(/\s+/g,"").trim();
+    const calcD = n => DNI_LETTERS[Number(n)%23];
+    function validateDNIorNIE(raw){
+      const v = normalizeId(raw);
+      if (/^\d{8}[A-Z]$/.test(v)) return calcD(v.slice(0,8))===v.slice(8);
+      if (/^[XYZ]\d{7}[A-Z]$/.test(v)) {
+        const n=v.replace(/^X/,"0").replace(/^Y/,"1").replace(/^Z/,"2");
+        return calcD(n.slice(0,8))===v.slice(-1);
+      }
+      return false;
+    }
+    const fmtFecha = v => !v ? "" : new Date(v+"T00:00:00").toLocaleDateString("es-ES",{day:"numeric",month:"long",year:"numeric"});
+    const requiredIds = ["direccion","arrendador","dniArrendador","inquilino","dniInquilino","localidad","duracion","fechaInicio","fechaFin","renta","fianza"];
+    function setErr(id,msg="Revisa este campo.") {
+      const map={direccion:"e-dir",arrendador:"e-arr",dniArrendador:"e-dna",inquilino:"e-inq",dniInquilino:"e-dni",localidad:"e-loc",duracion:"e-dur",fechaInicio:"e-fi",fechaFin:"e-ff",renta:"e-renta",fianza:"e-fianza"};
+      const eid=map[id]; if(eid) document.getElementById(eid).textContent = msg;
+    }
+    function validar(){
+      let ok=true; const fi=$("fechaInicio")?.value, ff=$("fechaFin")?.value;
+      const check=(id,cond,msg)=>{ const el=$(id);
+        if(!cond){ ok=false; setErr(id,msg||"Revisa este campo."); el?.classList.add("is-invalid"); el?.classList.remove("is-valid"); }
+        else     { el?.classList.remove("is-invalid"); el?.classList.add("is-valid"); }
       };
+      check("direccion", !!$("direccion")?.value?.trim());
+      check("arrendador", !!$("arrendador")?.value?.trim());
+      check("dniArrendador", validateDNIorNIE($("dniArrendador")?.value), "DNI/NIE no válido.");
+      check("inquilino", !!$("inquilino")?.value?.trim());
+      check("dniInquilino", validateDNIorNIE($("dniInquilino")?.value), "DNI/NIE no válido.");
+      check("localidad", !!$("localidad")?.value?.trim());
+      check("duracion", Number($("duracion")?.value)>=1, "Mínimo 1 mes.");
+      check("fechaInicio", !!fi);
+      check("fechaFin", !!ff && new Date(ff)>=new Date(fi), "La fecha fin debe ser posterior.");
+      check("renta", Number($("renta")?.value)>=0);
+      check("fianza", Number($("fianza")?.value)>=0);
+      return ok;
+    }
+    function validateField(el){
+      if (!el) return;
+      const id = el.id;
+      let ok = true;
+      switch(id){
+        case "dniArrendador":
+        case "dniInquilino":
+          el.value = (el.value||"").toUpperCase().replace(/\s+/g,"");
+          ok = el.value.length>=9 && validateDNIorNIE(el.value);
+          break;
+        case "duracion":
+          ok = Number(el.value) >= 1; break;
+        case "renta":
+        case "fianza":
+          ok = el.value !== "" && Number(el.value) >= 0; break;
+        case "fechaInicio":
+        case "fechaFin": {
+          const fi = $("fechaInicio")?.value, ff = $("fechaFin")?.value;
+          const pairOk = !!fi && !!ff && new Date(ff) >= new Date(fi);
+          $("fechaInicio")?.classList.toggle("is-valid", pairOk);
+          $("fechaInicio")?.classList.toggle("is-invalid", !pairOk);
+          $("fechaFin")?.classList.toggle("is-valid", pairOk);
+          $("fechaFin")?.classList.toggle("is-invalid", !pairOk);
+          return;
+        }
+        default:
+          ok = (el.value || "").trim().length > 0;
+      }
+      el.classList.toggle("is-valid", ok);
+      el.classList.toggle("is-invalid", !ok);
+    }
+    function validateLive(){
+      requiredIds.forEach(id=> validateField($(id)));
+    }
+    function progress(){
+      let n=0; requiredIds.forEach(id=>{ const el=$(id); if(el && el.value) n++; });
+      const pct=Math.round(n*100/requiredIds.length);
+      document.querySelector(".bar").style.width = pct+"%";
+      $("pct").textContent=pct+" % completado";
+      $("meter").value=pct;
+    }
 
-      document.querySelectorAll("input, select").forEach(el => {
-        el.addEventListener("input", actualizarVista);
-        el.addEventListener("change", actualizarVista);
+    // --------- Render de cláusulas ----------
+    function textFor(c){ return (langMode==="claro" ? (c.C||c.J) : c.J); }
+    function renderMandatory(){
+      $("mandatoryList").innerHTML = window.CLAUSES_MANDATORY.map(c=>`
+        <div class="clause-card"><div><h4>✔ ${c.title} <span class="tag">obligatoria</span></h4><p>${textFor(c)}</p></div></div>`).join("");
+    }
+    function renderPicker(filter=""){
+      const f=(filter||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+      $("clauseList").innerHTML = window.CLAUSES_EXTRA
+        .filter(c => !f || (c.title+textFor(c)).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").includes(f))
+        .map(c=>`<label class="clause-card">
+            <input type="checkbox" ${selectedClauses.has(c.id)?'checked':''} data-id="${c.id}">
+            <div><h4>${c.title}</h4><p>${textFor(c)}</p></div>
+          </label>`).join("");
+
+      $("clauseList").querySelectorAll('label.clause-card').forEach(lbl=>{
+        const cb = lbl.querySelector('input[type="checkbox"]');
+        const sync = ()=> lbl.classList.toggle('active', cb.checked);
+        cb.addEventListener("change", e=>{
+          const id=e.target.getAttribute("data-id");
+          if (e.target.checked) selectedClauses.add(id); else selectedClauses.delete(id);
+          window.selectedClauses = selectedClauses;
+          countClauses(); saveState(); refreshResumen(); refreshPreview(); sync();
+        });
+        sync();
+      });
+    }
+    function countClauses(){ $("clauseCount").textContent = `${selectedClauses.size} cláusula${selectedClauses.size===1?"":"s"} extra`; }
+
+    // --------- Anexos ----------
+    const anInv = $("anexoInventario");
+    const anCon = $("anexoContadores");
+    const chipPersistLbl = document.querySelector('label#chipPersist');
+    const chipInv = $("chipInv");
+    const chipCont = $("chipCont");
+    function toggleAnexEditors(){
+      const showInv = !!anInv?.checked, showCon = !!anCon?.checked;
+      $("anexosBox").style.display = (showInv||showCon) ? "block" : "none";
+      $("anexoInvBox").style.display = showInv ? "block" : "none";
+      $("anexoContBox").style.display = showCon ? "block" : "none";
+    }
+    function syncChipStyles(){
+      chipInv?.classList.toggle("active", !!anInv?.checked);
+      chipCont?.classList.toggle("active", !!anCon?.checked);
+      chipPersistLbl?.classList.toggle("active", !!$("persistToggle")?.checked);
+    }
+
+    // --------- Resumen + preview ----------
+    const escH = s => String(s ?? "")
+      .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+    function clausesForPreview(){
+      const arr=[]; window.CLAUSES_MANDATORY.forEach(c=>arr.push({t:c.title, p:textFor(c)}));
+      window.CLAUSES_EXTRA.forEach(c=>{ if(selectedClauses.has(c.id) && c.id!=="inventario") arr.push({t:c.title, p:textFor(c)}); });
+      if (selectedClauses.has("inventario")) arr.push({t:"Inventario anexo", p:"Se adjunta inventario en Anexo I."});
+      return arr;
+    }
+    function resumenHTML(){
+      const g=id=>($(id)?.value||"");
+      return `
+        <div class="sum-card"><h4>Partes</h4>
+          <div class="sum-line"><b>Arrendador:</b> ${escH(g("arrendador"))} · ${escH((g("dniArrendador")||"").toUpperCase().replace(/\s+/g,""))}</div>
+          <div class="sum-line"><b>Inquilino:</b> ${escH(g("inquilino"))} · ${escH((g("dniInquilino")||"").toUpperCase().replace(/\s+/g,""))}</div>
+        </div>
+        <div class="sum-card"><h4>Inmueble</h4>
+          <div class="sum-line">${escH(g("direccion")||"—")}</div>
+          <div class="sum-line">${escH(g("localidad")||"")}</div>
+        </div>
+        <div class="sum-card"><h4>Condiciones</h4>
+          <div class="sum-line">Duración: <b>${escH(g("duracion")||"—")}</b> meses</div>
+          <div class="sum-line">Fechas: ${escH(fmtFecha(g("fechaInicio")))} → ${escH(fmtFecha(g("fechaFin")))}</div>
+        </div>
+        <div class="sum-card"><h4>Importes</h4>
+          <div class="sum-line">Precio mensual: <b>${escH(g("renta")||"—")} €</b></div>
+          <div class="sum-line">Fianza: <b>${escH(g("fianza")||"—")} €</b></div>
+        </div>`;
+    }
+    function previewHTML(){
+      const g=id=>($(id)?.value||"");
+      const cls = clausesForPreview();
+      let html="";
+      html += `<p><strong>Arrendador:</strong> ${escH(g("arrendador"))} — <strong>DNI:</strong> ${escH((g("dniArrendador")||"").toUpperCase().replace(/\s+/g,""))}</p>`;
+      html += `<p><strong>Inquilino:</strong> ${escH(g("inquilino"))} — <strong>DNI:</strong> ${escH((g("dniInquilino")||"").toUpperCase().replace(/\s+/g,""))}</p>`;
+      html += `<p><strong>Dirección:</strong> ${escH(g("direccion"))}</p>`;
+      html += `<p><strong>Localidad:</strong> ${escH(g("localidad"))} — <strong>Duración:</strong> ${escH(g("duracion")||"—")} meses</p>`;
+      html += `<p><strong>Fechas:</strong> ${escH(fmtFecha(g("fechaInicio")))} → ${escH(fmtFecha(g("fechaFin")))}</p>`;
+      html += `<p><strong>Precio:</strong> ${escH(g("renta")||"—")} € — <strong>Fianza:</strong> ${escH(g("fianza")||"—")} €</p>`;
+      html += `<hr><p><b>Cláusulas:</b></p><ol>${cls.map(c=>`<li><b>${escH(c.t)}</b> — ${escH(c.p)}</li>`).join("")}</ol>`;
+      return html;
+    }
+    function refreshResumen(){ $("resumenBox").innerHTML = resumenHTML(); }
+    function refreshPreview(){ $("vistaContrato").innerHTML = previewHTML(); }
+
+    // --------- Persistencia ----------
+    function serialize(){
+      const o={};
+      qsa("#contratoForm input, #contratoForm select, #contratoForm textarea").forEach(el=>{
+        if (el.type==="radio") return;
+        if (el.type==="checkbox") o[el.id]=!!el.checked; else o[el.id]=el.value||"";
+      });
+      o.clSel = Array.from(selectedClauses);
+      o.lang  = langMode;
+      o.anexos = {
+        inventario: !!$("anexoInventario")?.checked,
+        contadores: !!$("anexoContadores")?.checked,
+        inventarioTxt: $("inventarioTxt")?.value || "",
+        lecturas: {
+          agua:$("contAgua")?.value||"", luz:$("contLuz")?.value||"", gas:$("contGas")?.value||"",
+          numAgua:$("contAguaNum")?.value||"", numLuz:$("contLuzNum")?.value||"", numGas:$("contGasNum")?.value||""
+        }
+      };
+      return JSON.stringify(o);
+    }
+    function populate(){
+      const raw=localStorage.getItem(LSKEY); if(!raw) return;
+      try{
+        const o=JSON.parse(raw);
+        qsa("#contratoForm input, #contratoForm select, #contratoForm textarea").forEach(el=>{
+          if (o[el.id]==null) return;
+          if (el.type==="checkbox") el.checked=!!o[el.id]; else el.value=o[el.id];
+        });
+        selectedClauses = new Set(Array.isArray(o.clSel)?o.clSel:[]);
+        window.selectedClauses = selectedClauses;
+        if (o.lang) langMode=o.lang;
+        $("inventarioTxt").value = o.anexos?.inventarioTxt || "";
+        $("contAgua").value=o.anexos?.lecturas?.agua||"";
+        $("contLuz").value=o.anexos?.lecturas?.luz||"";
+        $("contGas").value=o.anexos?.lecturas?.gas||"";
+        $("contAguaNum").value=o.anexos?.lecturas?.numAgua||"";
+        $("contLuzNum").value=o.anexos?.lecturas?.numLuz||"";
+        $("contGasNum").value=o.anexos?.lecturas?.numGas||"";
+      }catch{}
+    }
+    function saveState(){
+      if ($("persistToggle")?.checked) localStorage.setItem(LSKEY, serialize());
+      else localStorage.removeItem(LSKEY);
+    }
+
+    // --------- Navegación ----------
+    function go(n){
+      currentStep = Math.max(1, Math.min(3, n));
+      localStorage.setItem(STEP_K,String(currentStep));
+      ["step1","step2","step3"].forEach((id,i)=>{ const on=(i+1)===currentStep; $(id).style.display = on?"grid":"none"; });
+      qsa(".step").forEach((s,i)=> s.classList.toggle("active", (i+1)===currentStep));
+      $("btnPrev").disabled = currentStep===1;
+      $("btnNext").style.display = (currentStep===3 ? "none" : "inline-flex");
+      if (currentStep===3) { $("payError").textContent=""; refreshResumen(); gateDownload(); }
+    }
+    function gateDownload(){
+  // Mostrar/ocultar DESCARGA
+  const btn = document.getElementById("btnDownload");
+  if (btn) btn.style.display = (currentStep === 3 && hasPaid) ? "inline-flex" : "none";
+
+  // 👇 NUEVO: ocultar botón de PAGO si ya está pagado
+  const payBtn = document.getElementById("btnPayClassic");
+  if (payBtn) payBtn.style.display = hasPaid ? "none" : "inline-flex";
+
+  // Sello “Pago verificado”
+  let seal = document.getElementById("paidSeal");
+  if (!seal){
+    seal = document.createElement("div");
+    seal.id = "paidSeal";
+    seal.className = "chip active";
+    seal.textContent = "Pago verificado";
+    document.querySelector("#payCard .pay-top")?.appendChild(seal);
+  }
+  seal.style.display = hasPaid ? "inline-flex" : "none";
+}
+
+    // --------- Modal fullscreen ----------
+    function openFS(){
+      $("fs").classList.add("active");
+      $("fsFrame").innerHTML = `<div style="padding:18px">${$("vistaContrato").innerHTML}</div>`;
+    }
+    function closeFS(){ $("fs").classList.remove("active"); }
+    function zoom(delta){
+      const el = $("fsFrame").firstElementChild; if (!el) return;
+      const cur = Number(el.dataset.z||"1"); const next = Math.max(.5, Math.min(2.2, cur + delta));
+      el.style.transform = `scale(${next})`; el.style.transformOrigin="top left"; el.dataset.z = String(next);
+    }
+
+    // --------- Pago PayPal (clásico con email) ----------
+    function onClassicPay(){
+      if (currentStep===1 && !validar()){ $("payError").textContent="Revisa los datos antes de pagar."; return; }
+      saveState(); localStorage.setItem(STEP_K,"3");
+      const ok = new URL(location.href); ok.searchParams.set("pago_confirmado","1");
+      const ko = new URL(location.href); ko.searchParams.set("pago_cancelado","1");
+      const url = "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick" +
+                  "&business="+encodeURIComponent("oscargrubio@live.com")+
+                  "&item_name="+encodeURIComponent("Contrato vivienda PRO (PDF)")+
+                  "&currency_code=EUR&amount=1.00"+
+                  "&return="+encodeURIComponent(ok.toString())+
+                  "&cancel_return="+encodeURIComponent(ko.toString());
+      location.href = url;
+    }
+
+    // --------- Limpiar todo ----------
+    function clearAll(){
+      qsa("#contratoForm input, #contratoForm select, #contratoForm textarea").forEach(el=>{
+        if (el.type==="checkbox") el.checked=false;
+        else if (el.type!=="radio") el.value="";
+        el.classList.remove("is-valid","is-invalid");
+      });
+      // radios
+      $("langJ").checked=true; $("langC").checked=false; langMode="juridico";
+      // chips / anexos
+      selectedClauses.clear(); window.selectedClauses = selectedClauses;
+      toggleAnexEditors(); syncChipStyles();
+      // storage
+      localStorage.removeItem(LSKEY);
+      localStorage.removeItem(LSKEY+"_paid");
+      localStorage.removeItem(LSKEY+"_order");
+      // estado
+      hasPaid=false; orderId="";
+      currentStep=1; localStorage.setItem(STEP_K,"1");
+      refreshResumen(); refreshPreview(); progress();
+      go(1);
+    }
+
+    // --------- Carga diferida de librerías PDF ----------
+    async function ensurePDFLibs(){
+      if (window.jspdf && window.jspdf.jsPDF && window.jspdf.autoTable) return;
+      await new Promise(r=>{
+        const s1=document.createElement("script");
+        s1.src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+        s1.onload=r; document.head.appendChild(s1);
+      });
+      await new Promise(r=>{
+        const s2=document.createElement("script");
+        s2.src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js";
+        s2.onload=r; document.head.appendChild(s2);
+      });
+    }
+
+    // --------- Eventos ----------
+    document.addEventListener("DOMContentLoaded", ()=>{
+      populate(); renderMandatory(); renderPicker(); countClauses(); toggleAnexEditors();
+      progress(); refreshResumen(); refreshPreview();
+
+      // inputs + validación en vivo (todos los campos)
+      qsa("#contratoForm input, #contratoForm select, #contratoForm textarea").forEach(el=>{
+        el.addEventListener("input", ()=>{
+          if (el.id==="dniArrendador" || el.id==="dniInquilino"){
+            el.value = (el.value||"").toUpperCase().replace(/\s+/g,"");
+          }
+          validateField(el);
+          saveState(); progress(); refreshResumen(); refreshPreview();
+        });
+        el.addEventListener("change", ()=>{
+          toggleAnexEditors(); syncChipStyles(); saveState(); refreshResumen(); refreshPreview();
+          validateField(el);
+        });
+        el.addEventListener("blur", ()=> validateField(el));
+      });
+      validateLive(); // estado inicial verde/rojo
+
+      // persist chip
+      $("persistToggle")?.addEventListener("change", ()=>{ syncChipStyles(); saveState(); });
+
+      // presets
+      qsa('.toolbar .chip[data-preset]').forEach(b=> b.addEventListener("click", ()=>{
+        const p=b.dataset.preset;
+        if (p==="obligatorias") selectedClauses=new Set();
+        if (p==="estandar")     selectedClauses=new Set(["llaves","datos","suministros"]);
+        if (p==="proteccion")   selectedClauses=new Set(["llaves","ruidos","visitas","retrasos","subarriendo","comunidad","datos","seguro"]);
+        if (p==="premium")      selectedClauses=new Set(window.CLAUSES_EXTRA.map(c=>c.id));
+        window.selectedClauses = selectedClauses;
+        qsa('.toolbar .chip[data-preset]').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        countClauses(); saveState(); refreshResumen(); refreshPreview(); renderPicker($("clauseSearch").value||"");
+      }));
+
+      // búsqueda
+      $("clauseSearch")?.addEventListener("input", e=> renderPicker(e.target.value));
+
+      // radios jurídico/claro → look chip azul
+      qsa('input[name="lang"]').forEach(r=> r.addEventListener("change",(e)=>{
+        langMode=e.target.value; localStorage.setItem(LSKEY+"_lang", langMode);
+        qsa('.seg label').forEach(l=>l.classList.remove('active'));
+        const lab = document.querySelector(`label[for="${e.target.id}"]`); if (lab) lab.classList.add('active');
+        renderMandatory(); renderPicker($("clauseSearch").value||""); refreshPreview();
+      }));
+      const initLab = document.querySelector(`label[for="lang${langMode==="claro"?"C":"J"}"]`);
+      if (initLab) initLab.classList.add('active');
+
+      // anexos chips
+      $("anexoInventario")?.addEventListener("change", ()=>{ toggleAnexEditors(); syncChipStyles(); saveState(); });
+      $("anexoContadores")?.addEventListener("change", ()=>{ toggleAnexEditors(); syncChipStyles(); saveState(); });
+      syncChipStyles();
+
+      // navegación
+      $("btnPrev")?.addEventListener("click", ()=> go(currentStep-1));
+      $("btnNext")?.addEventListener("click", async ()=>{
+        if (currentStep<3){
+          if (currentStep===1 && !validar()) return;
+          go(currentStep+1);
+          if (currentStep===3) { /* precarga opcional */ ensurePDFLibs().catch(()=>{}); }
+        }
       });
 
-      actualizarVista();
+      // PayPal (clásico)
+      $("btnPayClassic")?.addEventListener("click", onClassicPay);
+
+      // preview fullscreen
+      $("btnFullSide")?.addEventListener("click", openFS);
+      $("fsClose")?.addEventListener("click", closeFS);
+      $("fs")?.addEventListener("click", (e)=>{ if(e.target.id==="fs") closeFS(); });
+      $("zoomIn")?.addEventListener("click", ()=>zoom(+0.1));
+      $("zoomOut")?.addEventListener("click", ()=>zoom(-0.1));
+
+      // limpiar
+      $("btnClear")?.addEventListener("click", clearAll);
+
+      // Autocheck Anexo Inventario al escribir
+      const invTxt = document.getElementById("inventarioTxt");
+      const invChk = document.getElementById("anexoInventario");
+      if (invTxt && invChk) {
+        invTxt.addEventListener("input", () => {
+          if (invTxt.value.trim() && !invChk.checked) {
+            invChk.checked = true;
+            if (typeof toggleAnexEditors === "function") toggleAnexEditors();
+            if (typeof syncChipStyles === "function") syncChipStyles();
+          }
+        });
+      }
+
+      // arranque
+      go(currentStep);
+      // Paso 3: muestra botón si ya pagó y precarga libs
+      if (currentStep===3) { ensurePDFLibs().catch(()=>{}); }
+      gateDownload();
     });
-
-    function handlePago() {
-      const url = new URL(window.location.href);
-      url.searchParams.set("pago_confirmado", "1");
-      document.getElementById("paypal-return-url").value = url.toString();
-      return true;
-    }
-
-    if (window.location.search.includes("pago_confirmado=1")) {
-      setTimeout(() => {
-        generarPDF();
-      }, 800);
-    }
+  })();
   </script>
-<footer style="text-align: center; font-size: 0.9em; margin-top: 4rem;">
-    <p>
-      <a href="/aviso-legal.html">Aviso legal</a> · 
-      <a href="/privacidad-contrato.html">Privacidad</a> · 
-      <a href="/cookies.html">Cookies</a> · 
-      <a href="/contacto.html">Contacto</a>
-    </p>
-    <p style="margin-top: 0.5rem; font-size: 0.85em; color: #888;">JSON Beautifier Pro © 2025</p>
-  </footer>
+<!-- === PDF: jsPDF + AutoTable (lazy-load en runtime) === -->
 <script>
-async function generarPDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+(function(){
+  const LSKEY = "contratoVivienda_pro_STABLE";
+  const $  = id => document.getElementById(id);
+  const esc = t => String(t ?? "").replace(/\s+/g," ").trim();
+  const get = id => esc($(id)?.value || "");
 
-  const margin = 20;
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const width = pageWidth - margin * 2;
-  const lineHeight = 8;
-  let y = 25;
-
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(16);
-  doc.text("CONTRATO DE ARRENDAMIENTO", pageWidth / 2, y, { align: "center" });
-
-  y += 10;
-  doc.setFontSize(11);
-  const fechaHoy = new Date().toLocaleDateString("es-ES", { day: "numeric", month: "long", year: "numeric" });
-  doc.text(`Fecha: ${fechaHoy}`, margin, y);
-
-  y += 12;
-
-  const datos = {
-    "Nombre del arrendador": document.getElementById("arrendador").value,
-    "DNI/NIE del arrendador": document.getElementById("dniArrendador").value,
-    "Nombre del inquilino": document.getElementById("inquilino").value,
-    "DNI/NIE del inquilino": document.getElementById("dniInquilino").value,
-    "Dirección del inmueble": document.getElementById("direccion").value,
-    "Localidad y código postal": document.getElementById("localidad").value,
-    "Fecha de inicio": document.getElementById("fechaInicio").value,
-    "Fecha de fin": document.getElementById("fechaFin").value,
-    "Duración (meses)": document.getElementById("duracion").value,
-    "Renta mensual (€)": document.getElementById("renta").value,
-    "Fianza (€)": document.getElementById("fianza").value,
-    "Gastos comunidad incluidos": document.getElementById("gastos").value,
-    "Mobiliario incluido": document.getElementById("mobiliario").value,
-    "Mascotas permitidas": document.getElementById("mascotas").value
+  // Estética notaría
+  const T = {
+    headStyles: { fillColor:[232,242,255], textColor:[0,0,0], lineColor:[180,200,240], lineWidth:0.4, halign:"left" },
+    bodyStyles: { textColor:[0,0,0], lineColor:[200,210,235], lineWidth:0.2, halign:"left" },
+    altRow:     { fillColor:[245,250,255] },
+    font:       { font:"times", fontSize:11, cellPadding:4, valign:"middle" }
   };
 
-  doc.setFontSize(12);
-  for (let [campo, valor] of Object.entries(datos)) {
-  if (y + lineHeight > doc.internal.pageSize.getHeight() - 30) {
-    doc.addPage();
-    y = margin;
+  // Carga diferida
+  async function ensurePDFLibs(){
+    if (window.jspdf && window.jspdf.jsPDF && window.jspdf.autoTable) return;
+    await new Promise(r=>{
+      const s1=document.createElement("script");
+      s1.src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+      s1.onload=r; document.head.appendChild(s1);
+    });
+    await new Promise(r=>{
+      const s2=document.createElement("script");
+      s2.src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js";
+      s2.onload=r; document.head.appendChild(s2);
+    });
   }
-  doc.setFont("helvetica", "normal");
-  doc.text(`${campo}:`, margin, y);
-  doc.setFont("helvetica", "bold");
-  doc.text(`${valor || "—"}`, margin + 70, y);
-  y += lineHeight;
-}
 
-
-  // Cláusulas legales
-  y += 10;
-  doc.setFont("helvetica", "bold");
-  doc.text("Cláusulas legales adicionales:", margin, y);
-  y += 6;
-  doc.setFont("helvetica", "normal");
-
-  const clausulas = [
-  "El arrendatario se compromete a abonar puntualmente la renta mensual por adelantado, antes del día 5 de cada mes. El impago de una mensualidad dará lugar a intereses del 5% y, si se acumulan dos o más, a la resolución automática del contrato.",
-  "El inquilino deberá conservar la vivienda y responderá de los daños causados por uso indebido.",
-  "No se podrá realizar ninguna obra o modificación sin autorización escrita del arrendador.",
-  "Queda expresamente prohibido subarrendar total o parcialmente la vivienda, así como ceder el contrato a terceros.",
-  "En caso de resolución anticipada sin preaviso de 30 días, se abonará indemnización proporcional.",
-  "El inquilino deberá devolver la vivienda en el mismo estado salvo desgaste normal.",
-  "Gastos de luz, agua, gas, internet e individualizados irán a cargo del inquilino.",
-  "Este contrato se regirá por la Ley de Arrendamientos Urbanos y las partes se someten a los juzgados del domicilio del arrendador.",
-  "La renta podrá ser revisada anualmente conforme al IPC oficial publicado por el INE.",
-  "En caso de que el inquilino incurra en morosidad reiterada, el arrendador podrá iniciar acciones judiciales inmediatas sin necesidad de requerimiento previo.",
-  "El arrendatario no podrá cambiar la cerradura sin consentimiento expreso del arrendador.",
-  "Cualquier desacuerdo sobre reparaciones deberá resolverse conforme al artículo 21 de la Ley de Arrendamientos Urbanos.",
-  "El arrendador podrá realizar visitas periódicas, previo aviso, para verificar el estado del inmueble.",
-  "La fianza se devolverá en un plazo máximo de 30 días desde la entrega de llaves, descontando daños o impagos si los hubiera.",
-  "El incumplimiento de cualquiera de estas cláusulas podrá dar lugar a la resolución del contrato por causa imputable."
-];
-
-
-  clausulas.forEach(cl => {
-  const lines = doc.splitTextToSize("• " + cl, width);
-  if (y + lines.length * lineHeight > doc.internal.pageSize.getHeight() - 30) {
-    doc.addPage();
-    y = margin;
+  // INVENTARIO — líneas o “;” = filas. Comas (o | / — tab) = columnas
+  function parseInventario(invRaw){
+    if (!invRaw) return [];
+    const lines = invRaw.split(/\r?\n|;\s*/g).map(s=>s.trim()).filter(Boolean);
+    const rows = [];
+    lines.forEach(line=>{
+      const parts = line.split(/\s*(?:,|\||\/|—|\t)\s*/g).map(s=>s.trim()).filter(Boolean);
+      if (!parts.length) return;
+      const [elem="", estado="", ...rest] = parts;
+      const obs = rest.join(" — ");
+      rows.push([elem, estado, obs]);
+    });
+    return rows.filter(r => r.some(c => (c||"").trim() !== ""));
   }
-  doc.text(lines, margin, y);
-  y += lines.length * lineHeight;
-});
 
+  function buildContadores(){
+    const obs = get("contObs");
+    const rows = [];
+    [
+      ["Agua (m³)", get("contAgua"), get("contAguaNum")],
+      ["Luz (kWh)", get("contLuz"),  get("contLuzNum") ],
+      ["Gas (m³)",  get("contGas"),  get("contGasNum") ]
+    ].forEach(([tipo, lectura, num])=>{
+      if (tipo || lectura || num) rows.push([tipo||"—", lectura||"—", num||"—"]);
+    });
+    return { rows, obs };
+  }
 
-  // Firmas al final
-  const firmaY = doc.internal.pageSize.getHeight() - 40;
-  const firmaW = 60;
+  function paginate(doc){
+    const total = doc.getNumberOfPages();
+    for (let i=1;i<=total;i++){
+      doc.setPage(i);
+      doc.setFont("times","normal"); doc.setFontSize(9);
+      const W = doc.internal.pageSize.getWidth();
+      const H = doc.internal.pageSize.getHeight();
+      doc.text(`Página ${i} / ${total}`, W/2, H-28, {align:"center"});
+    }
+  }
 
-  doc.line(margin, firmaY, margin + firmaW, firmaY);
-  doc.text("Firma del arrendador", margin, firmaY + 6);
+  function drawFirmas(doc){
+    const W = doc.internal.pageSize.getWidth();
+    const H = doc.internal.pageSize.getHeight();
+    const M = 60;
+    let y = H - 160;
+    doc.setFont("times","normal"); doc.setFontSize(11);
+    doc.text("Firmado en ____________________________, a ____ de __________________ de ________", M, y);
+    y += 56;
+    const colW = (W - M*2)/2;
+    doc.line(M+20, y, M+colW-20, y); doc.text("Arrendador", M+20, y+14);
+    doc.line(M+colW+20, y, M+colW+colW-20, y); doc.text("Arrendatario", M+colW+20, y+14);
+  }
 
-  doc.line(pageWidth - margin - firmaW, firmaY, pageWidth - margin, firmaY);
-  doc.text("Firma del inquilino", pageWidth - margin - firmaW, firmaY + 6);
+  window._generarPDFCore = async function(){
+    await ensurePDFLibs();
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({unit:"pt", format:"a4"});
+    const W = doc.internal.pageSize.getWidth();
+    const H = doc.internal.pageSize.getHeight();
+    const M = 60;
+    let y = M;
 
-  doc.save("Contrato_Alquiler.pdf");
-}
+    // Datos
+    const arr = get("arrendador"), dniA = get("dniArrendador");
+    const inq = get("inquilino"),  dniI = get("dniInquilino");
+    const dir = get("direccion"),  loc  = get("localidad");
+    const dur = get("duracion"),   fi   = get("fechaInicio");
+    const ff  = get("fechaFin"),   renta= get("renta");
+    const fian= get("fianza");
+
+    // Cabecera
+    doc.setFont("times","bold"); doc.setFontSize(18);
+    doc.text("CONTRATO DE ARRENDAMIENTO DE VIVIENDA", W/2, y, {align:"center"}); y += 30;
+    doc.setFont("times","normal"); doc.setFontSize(11);
+    doc.text("Conforme a la Ley 29/1994 de Arrendamientos Urbanos y sus modificaciones vigentes (incl. RDL 7/2019 y Ley 12/2023).", W/2, y, {align:"center"});
+    y += 18;
+
+    // PARTES (tabla sin cabecera)
+    doc.setFont("times","bold"); doc.setFontSize(13); doc.text("PARTES DEL CONTRATO", M, y); y += 10;
+    const partesBody = [
+      ["Arrendador", arr],
+      ["DNI/NIE (Arrendador)", dniA],
+      ["Arrendatario", inq],
+      ["DNI/NIE (Arrendatario)", dniI],
+      ["Dirección", dir],
+      ["Localidad", loc],
+      ["Duración", `${dur} meses`],
+      ["Fechas", `del ${fi} al ${ff}`],
+      ["Renta (€)", renta],
+      ["Fianza (€)", fian]
+    ];
+    doc.autoTable({
+      startY: y,
+      head: [["",""]],
+      body: partesBody,
+      styles: {...T.font, ...T.bodyStyles},
+      headStyles: T.headStyles,
+      alternateRowStyles: T.altRow,
+      theme: "grid",
+      showHead: "never",
+      tableWidth: "auto",
+      columnStyles: { 0:{cellWidth:170, fontStyle:"bold"}, 1:{cellWidth: W - (M*2) - 170} },
+      margin: {left:M, right:M}
+    });
+    y = doc.lastAutoTable.finalY + 18;
+
+    // CLÁUSULAS (6 obligatorias + extra)
+    const langKey = (localStorage.getItem(LSKEY+"_lang")==="claro") ? "C" : "J";
+    const mand = (window.CLAUSES_MANDATORY||[]).map(c=>({t:c.title,p:c[langKey]||c.J}));
+    const selIds = (window.selectedClauses ? Array.from(window.selectedClauses) : []);
+    const extra = (window.CLAUSES_EXTRA||[])
+      .filter(c=> selIds.includes(c.id) && c.id!=="inventario")
+      .map(c=>({t:c.title,p:c[langKey]||c.J}));
+    if (selIds.includes("inventario")) extra.push({t:"Inventario anexo", p:"Se adjunta inventario — Anexo I."});
+    const CLS = [...mand, ...extra];
+
+    doc.setFont("times","bold"); doc.setFontSize(13); doc.text("CLÁUSULAS", M, y); y += 14;
+    doc.setFont("times","normal"); doc.setFontSize(11);
+    const MAXW = W - M*2, L = 15;
+    const wrap = (t)=> doc.splitTextToSize(t, MAXW);
+    const need = (h)=>{ if (y + h > H - 200){ doc.addPage(); y = M; } };
+    CLS.forEach((c,i)=>{
+      wrap(`${i+1}. ${c.t} — ${c.p}`).forEach(r=>{ need(L); doc.text(r, M, y); y += L; });
+      y += 4;
+    });
+
+    if (y > H - 240){ doc.addPage(); y = M; }
+    drawFirmas(doc);
+
+    // ANEXO I — INVENTARIO (con fallback de localStorage)
+    const invChecked = $("#anexoInventario")?.checked;
+    let invRaw = ($("#inventarioTxt")?.value ?? "").trim();
+    if (!invRaw){
+      try{
+        const saved = JSON.parse(localStorage.getItem(LSKEY) || "{}");
+        invRaw = (saved?.anexos?.inventarioTxt || "").trim();
+      }catch{}
+    }
+    const invRows = parseInventario(invRaw);
+    const invClause  = Array.isArray(selIds) && selIds.includes("inventario");
+    if (invChecked || invRows.length || invClause){
+      doc.addPage();
+      doc.setFont("times","bold"); doc.setFontSize(13); doc.text("ANEXO I — INVENTARIO", M, M);
+      doc.autoTable({
+        startY: M+12,
+        head: [ ["Elemento","Estado","Observaciones"] ],
+        body: invRows.length ? invRows : [["—","—","—"]],
+        styles: {...T.font, ...T.bodyStyles},
+        headStyles: T.headStyles,
+        alternateRowStyles: T.altRow,
+        theme: "grid",
+        margin: {left:M, right:M},
+        columnStyles: {0:{cellWidth:200},1:{cellWidth:130},2:{cellWidth:"auto"}}
+      });
+    }
+
+    // ANEXO II — CONTADORES
+    const hasCont = $("#anexoContadores")?.checked
+                 || get("contAgua") || get("contLuz") || get("contGas")
+                 || get("contAguaNum") || get("contLuzNum") || get("contGasNum") || get("contObs");
+    if (hasCont){
+      doc.addPage();
+      doc.setFont("times","bold"); doc.setFontSize(13); doc.text("ANEXO II — LECTURAS DE CONTADORES", M, M);
+      const { rows, obs } = buildContadores();
+      doc.autoTable({
+        startY: M+12,
+        head: [ ["Tipo","Lectura","Nº contador"] ],
+        body: rows.length ? rows : [["—","—","—"]],
+        styles: {...T.font, ...T.bodyStyles},
+        headStyles: T.headStyles,
+        alternateRowStyles: T.altRow,
+        theme: "grid",
+        margin: {left:M, right:M},
+        columnStyles: {0:{cellWidth:180},1:{cellWidth:120},2:{cellWidth:"auto"}}
+      });
+      if (obs){
+        const yObs = doc.lastAutoTable.finalY + 10;
+        doc.setFont("times","bold"); doc.setFontSize(11); doc.text("Observaciones:", M, yObs);
+        doc.setFont("times","normal"); doc.setFontSize(11);
+        const txt = doc.splitTextToSize(obs, W - M*2);
+        doc.text(txt, M, yObs+14);
+      }
+    }
+
+    if (localStorage.getItem(LSKEY+"_paid")==="true"){
+      const H2 = doc.internal.pageSize.getHeight();
+      doc.setFont("times","bold"); doc.setFontSize(13); doc.setTextColor(180,0,0);
+      doc.text("PAGO VERIFICADO — PDF OFICIAL", W/2, H2-40, {align:"center"});
+      doc.setTextColor(0,0,0);
+    }
+
+    paginate(doc);
+    doc.save("Contrato_Vivienda.pdf");
+  };
+
+  // Botón y pruebas en consola
+  document.addEventListener("DOMContentLoaded", ()=>{
+    const btn = document.getElementById("btnDownload");
+    if (btn) btn.addEventListener("click", async ()=> window._generarPDFCore && await window._generarPDFCore());
+    window.generarPDF   = async ()=> window._generarPDFCore && await window._generarPDFCore();
+    window.descargarPDF = window.generarPDF;
+  });
+})();
 </script>
 
 </body>

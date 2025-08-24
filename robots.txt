@@ -1,9 +1,10 @@
-# robots.txt para JSON Beautifier PRO - Julio 2025
+# robots.txt — JSON Beautifier PRO (2025)
 User-agent: *
 Disallow:
 
+# Recursos estáticos (permitidos)
+Allow: /assets/
+Allow: /og/
+
 # Sitemap principal
 Sitemap: https://www.jsonbeautifierpro.com/sitemap.xml
-
-# Permitir explícitamente el contrato
-Allow: /contrato-alquiler.html

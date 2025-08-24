@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contrato de Habitación PRO — Generador PDF estilo notaría (1 €)</title>
+  <meta name="description" content="Genera un contrato de alquiler de habitación profesional en minutos. Rellena datos, elige cláusulas y descarga un PDF estilo notaría por 1 €. Pago seguro por PayPal." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="theme-color" content="#0ea5e9" />
+  <link rel="canonical" href="https://www.jsonbeautifierpro.com/contrato-habitacion.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+  :root{ --bg:#f6f8fc; --fg:#0f172a; --muted:#5b6a8a; --panel:#fff; --border:#dfe3f4; --brand:#0ea5e9; --accent:#6366f1; --ok:#22c55e; --danger:#ef4444; --radius:18px; --radius-sm:12px }
+  *{box-sizing:border-box} html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+  a{color:#1f2a60;text-decoration:none}
+  .container{max-width:1200px;margin:0 auto;padding:0 16px}
+
+  .main-header{position:sticky;top:0;z-index:70;background:linear-gradient(180deg,#fff,rgba(255,255,255,.92));backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--border)}
+  .head-wrap{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:14px 0}
+  .brand{display:flex;align-items:center;gap:12px;min-width:0}
+  .brand h1{margin:0;font-family:Manrope,Inter;font-weight:800;letter-spacing:.3px;font-size:clamp(22px,2.8vw,34px);background:linear-gradient(90deg,#0ea5e9,#6366f1 45%,#22c55e);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .logo{height:40px;width:120px}
+  .cta{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+  .cta p{margin:0;font-size:13px;color:#64748b}
+
+  .btn{display:inline-flex;align-items:center;gap:.6rem;border:1px solid #cfd7e6;background:#fff;border-radius:999px;padding:.7rem 1rem;font-weight:800;cursor:pointer;font-size:14px;box-shadow:0 12px 30px rgba(23,30,70,.08);min-height:44px}
+  .btn-primary{background:linear-gradient(90deg,#0ea5e9,#6366f1);border:none;color:#fff}
+  .btn-ghost{background:#fff}
+  .btn-pay{background:#0070ba;color:#fff;border:none}
+
+  main{padding:26px 0}
+  .hero{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:0 12px 30px rgba(23,30,70,.08);position:relative;overflow:hidden}
+  .hero::after{content:"";position:absolute;inset:auto -10% -1px -10%;height:10px;background:linear-gradient(90deg,#22c55e,#6366f1,#0ea5e9);opacity:.18;filter:blur(1px)}
+  .hero h2{margin:.4rem 0 .2rem;font-family:Manrope,Inter;font-weight:900;font-size:clamp(20px,2.6vw,30px)}
+  .sub{color:#334155;margin:0 0 12px;font-size:15px;font-weight:700}
+
+  .wizard{margin-top:16px;background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 12px 30px rgba(23,30,70,.08)}
+  .steps{display:flex}
+  .step{flex:1;padding:12px 8px;text-align:center;background:#f3f6ff;border-right:1px solid var(--border);font-weight:800;color:#3b4780}
+  .step:last-child{border-right:none}
+  .step.active{background:#fff;color:#1e2a60}
+  .step .n{display:inline-flex;width:26px;height:26px;align-items:center;justify-content:center;border-radius:999px;border:2px solid #9db4ff;margin-right:6px;font-size:12px}
+  .step.active .n{border-color:#4c6fff;background:#4c6fff;color:#fff}
+  .progress{height:8px;background:#eef2ff}
+  .bar{height:8px;width:0;background:linear-gradient(90deg,#0ea5e9,#6366f1);transition:width .25s}
+
+  .wizard-body{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:18px;align-items:stretch}
+  @media (max-width:980px){.wizard-body{grid-template-columns:1fr}}
+  .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;box-shadow:0 12px 30px rgba(23,30,70,.08)}
+  .left-col{display:flex;flex-direction:column;min-height:100%}
+
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .form-grid.full{grid-template-columns:1fr}
+  .form-grid label{display:block;font-size:13.5px;color:#2b324f;font-weight:800}
+  .form-grid input,.form-grid select,.form-grid textarea{width:100%;margin-top:6px;padding:.7rem .85rem;border:1px solid #cfd7e6;border-radius:12px;font-size:15px;outline:none}
+  .form-grid textarea{resize:vertical;min-height:120px}
+  .form-grid input:focus,.form-grid select:focus,.form-grid textarea:focus{border-color:#4c6fff;box-shadow:0 0 0 3px #4c6fff25}
+  .is-valid{border-color:var(--ok)!important;box-shadow:0 0 0 3px #22c55e22!important}
+  .is-invalid{border-color:var(--danger)!important;box-shadow:0 0 0 3px #ef444422!important}
+  .err{font-size:12px;color:#ef4444;min-height:16px}
+
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;align-items:center}
+  .chip{position:relative;border:1px solid #cfd7e6;background:#f8fafc;border-radius:999px;padding:.45rem .85rem;font-size:12.5px;cursor:pointer;font-weight:800;color:#334155;transition:.15s}
+  .chip.active{border-color:#4c6fff;background:linear-gradient(90deg,#0ea5e9,#6366f1);box-shadow:0 6px 16px rgba(80,90,200,.28);color:#fff}
+  .chip input[type="checkbox"]{appearance:none;position:absolute;inset:0;opacity:0}
+
+  .search{flex:999 1 420px;min-width:280px;padding:.85rem 1.1rem;border:2px solid #cbd5e1;border-radius:12px;font-size:16px;font-weight:700;color:#0f172a}
+
+  /* Radios “Jurídico/Claro” como Vivienda */
+  .seg{display:flex;flex-direction:column;gap:8px;margin-left:auto}
+  .seg label{display:flex;align-items:center;gap:8px;border:1px solid #cfd7e6;border-radius:999px;background:#f8fafc;padding:.45rem .85rem;font-weight:800;color:#334155;cursor:pointer;transition:.15s}
+  .seg input[type=radio]{appearance:none;width:0;height:0;position:absolute;opacity:0}
+  .seg label.active{border-color:#4c6fff;background:linear-gradient(90deg,#0ea5e9,#6366f1);box-shadow:0 6px 16px rgba(80,90,200,.28);color:#fff}
+
+  .clause-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-top:8px}
+  @media (min-width:900px){.clause-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (min-width:1200px){.clause-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+  .clause-card{border:1px solid #e5e7eb;border-radius:12px;padding:10px;background:#fff;display:flex;gap:10px;align-items:flex-start}
+  .clause-card h4{margin:.1rem 0;font-size:14px}
+  .clause-card p{margin:0;font-size:12.5px;color:#64748b}
+  .tag{font-size:11px;border:1px solid #e2e8f0;border-radius:6px;padding:.15rem .4rem;background:#f8fafc;margin-left:6px}
+
+  aside.card{display:flex;flex-direction:column}
+  .preview{position:relative;min-height:640px;flex:1;background:#fff;border:1px dashed #d7deee;border-radius:12px;padding:16px;overflow:auto;user-select:none;-webkit-user-select:none}
+  .preview::before{content:"VISTA PREVIA PROTEGIDA — JSON BEAUTIFIER PRO";position:absolute;inset:50% auto auto 50%;transform:translate(-50%,-50%) rotate(-22deg);color:#9aa3b51f;font-weight:900;letter-spacing:.06em;font-size:clamp(22px,4vw,38px);pointer-events:none;white-space:nowrap}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+
+  .summary-grid{display:grid;grid-template-columns:1fr;gap:16px}
+  .sum-card{border:1px solid #e6ebf4;border-radius:12px;padding:12px;background:#fff}
+  .sum-card h4{margin:.2rem 0 .4rem;font-size:14px}
+  .sum-line{font-size:13px;color:#334155;margin:.2rem 0}
+
+  .pay-card{border:2px solid #c7d2fe;background:linear-gradient(180deg,#fff,#f7f9ff);border-radius:14px;padding:14px;display:grid;gap:10px}
+  .pay-top{display:flex;justify-content:space-between;align-items:center}
+  .price{font-family:Manrope,Inter;font-weight:900;font-size:22px}
+  .benefits{display:grid;gap:6px;font-size:12.5px;color:#334155}
+  .benefits .tick{width:18px;height:18px;border-radius:999px;background:linear-gradient(90deg,#0ea5e9,#6366f1);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:12px;margin-right:6px}
+
+  footer{margin:28px 0 40px;text-align:center;color:#64748b;font-size:13px}
+  footer a{margin:0 8px}
+
+  .modal{position:fixed;inset:0;background:#0b1220cc;display:none;align-items:center;justify-content:center;z-index:120}
+  .modal.active{display:flex}
+  .modal .sheet{background:#fff;border-radius:14px;max-width:940px;max-height:92vh;overflow:auto;padding:18px 20px;border:1px solid var(--border);position:relative;width:min(94vw,940px)}
+  .fs-topbar{position:sticky;top:0;display:flex;gap:8px;background:#fff;padding:6px 0;z-index:2}
+  .fs-btn{border:1px solid #cbd5e1;background:#fff;border-radius:999px;padding:.45rem .7rem;cursor:pointer;font-weight:900}
+
+  @media (max-width:480px){.head-wrap{grid-template-columns:1fr}.cta{align-items:flex-start}.search{min-width:0}}
+  </style>
+<!-- SEO: Product + FAQ + Breadcrumbs (Habitación) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Product",
+      "@id": "https://www.jsonbeautifierpro.com/contrato-habitacion.html#product",
+      "name": "Contrato de arrendamiento de habitación (PDF)",
+      "description": "Generador de contrato de habitación estilo notaría: rellena tus datos y descarga el PDF listo para firmar. Incluye inventario opcional.",
+      "category": "LegalForms",
+      "sku": "contrato-habitacion-pdf",
+      "brand": { "@type": "Brand", "name": "JSON Beautifier PRO" },
+      "url": "https://www.jsonbeautifierpro.com/contrato-habitacion.html",
+      "image": "https://www.jsonbeautifierpro.com/logo.svg",
+      "isFamilyFriendly": true,
+      "audience": { "@type": "PeopleAudience", "audienceType": "Particulares en España" },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "EUR",
+        "price": "1.00",
+        "availability": "https://schema.org/InStock",
+        "url": "https://www.jsonbeautifierpro.com/contrato-habitacion.html"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.jsonbeautifierpro.com/contrato-habitacion.html#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Este contrato de habitación está bajo LAU o Código Civil?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Por norma general, el arrendamiento de habitación se rige por el Código Civil (arts. 1542 y ss.), salvo supuestos concretos. En el PDF se indica el marco legal correspondiente."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Incluye inventario?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí, puedes activar el Anexo I — Inventario. Si lo activas, el PDF añade 'Acceso al inventario' en Condiciones específicas y genera el anexo con los ítems que indiques."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Necesito firma electrónica para que sea válido?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. No ofrecemos firma electrónica integrada. Puedes imprimir el PDF y firmarlo manuscrito entre las partes. Si lo preferís, podéis usar una herramienta externa de firma electrónica, pero no forma parte del servicio."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuánto cuesta y cómo se paga?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cuesta 1 €. El pago se realiza online y, al completarlo, se desbloquea la descarga del PDF."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Qué datos necesito para generarlo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dirección, nombres y DNI/NIE de arrendador e inquilino, localidad, duración, fechas de inicio/fin, renta y fianza. Opcionalmente, zonas/servicios incluidos y un inventario."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://www.jsonbeautifierpro.com/contrato-habitacion.html#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.jsonbeautifierpro.com/" },
+        { "@type": "ListItem", "position": 2, "name": "Generadores", "item": "https://www.jsonbeautifierpro.com/modelo-contrato-alquiler.html" },
+        { "@type": "ListItem", "position": 3, "name": "Contrato de habitación", "item": "https://www.jsonbeautifierpro.com/contrato-habitacion.html" }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+  <header class="main-header">
+    <div class="container head-wrap">
+      <div class="brand">
+        <img class="logo" src="logo.svg" alt="Logo JSON Beautifier PRO" width="120" height="40" />
+        <h1>Contrato de Habitación PRO</h1>
+      </div>
+      <div class="cta">
+        <p>¿Necesitas un contrato de vivienda?</p>
+        <button class="btn btn-primary" type="button" onclick="location.href='contrato-alquiler.html'"><i class="fa-solid fa-house"></i> Ir a contrato de vivienda</button>
+        <div class="trust" style="margin-top:8px">
+          <span class="chip"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Pago seguro</span>
+          <span class="chip"><i class="fa-solid fa-brain" aria-hidden="true"></i> Todo en tu navegador</span>
+          <span class="chip"><i class="fa-solid fa-file-signature" aria-hidden="true"></i> PDF estilo notaría</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container hero">
+      <h2>Generador de contrato de alquiler de habitación</h2>
+      <p class="sub">Crea un contrato profesional en minutos: datos guiados, packs de cláusulas editables, anexos opcionales y descarga en PDF lista para firmar por 1 €.</p>
+
+      <div class="wizard" role="region" aria-label="Generador de contrato">
+        <div class="steps" aria-label="Pasos">
+          <div class="step active" data-step="1" aria-current="step"><span class="n">1</span>Datos</div>
+          <div class="step" data-step="2"><span class="n">2</span>Cláusulas</div>
+          <div class="step" data-step="3"><span class="n">3</span>Resumen y pago</div>
+        </div>
+        <div class="progress" aria-hidden="true"><div class="bar" style="width:0%"></div></div>
+
+        <div class="wizard-body">
+          <section class="card left-col">
+            <div class="toolbar">
+              <button class="btn btn-ghost" id="btnClear" type="button">Limpiar</button>
+              <label class="chip" id="chipPersist"><input type="checkbox" id="persistToggle" checked> Guardar datos en tu navegador</label>
+            </div>
+
+            <form id="contratoForm" novalidate autocomplete="on" style="flex:1">
+              <!-- PASO 1 -->
+              <div id="step1" class="form-grid" aria-labelledby="s1">
+                <h3 id="s1" style="grid-column:1/-1;margin:.2rem 0">Datos del contrato</h3>
+
+                <label>Dirección completa
+                  <input id="direccion" required autocomplete="street-address" aria-describedby="e-dir" />
+                </label><div></div><div id="e-dir" class="err" aria-live="polite"></div>
+
+                <label>Nombre del arrendador
+                  <input id="arrendador" required autocomplete="name" aria-describedby="e-arr" />
+                </label>
+                <label>DNI/NIE del arrendador
+                  <input id="dniArrendador" required inputmode="text" aria-describedby="e-dna" />
+                </label>
+                <div id="e-arr" class="err"></div><div id="e-dna" class="err"></div>
+
+                <label>Nombre del inquilino
+                  <input id="inquilino" required autocomplete="name" aria-describedby="e-inq" />
+                </label>
+                <label>DNI/NIE del inquilino
+                  <input id="dniInquilino" required inputmode="text" aria-describedby="e-dni" />
+                </label>
+                <div id="e-inq" class="err"></div><div id="e-dni" class="err"></div>
+
+                <label>Localidad
+                  <input id="localidad" required autocomplete="address-level2" aria-describedby="e-loc" />
+                </label>
+                <label>Duración (meses)
+                  <input id="duracion" type="number" min="1" required aria-describedby="e-dur" />
+                </label>
+                <div id="e-loc" class="err"></div><div id="e-dur" class="err"></div>
+
+                <label>Fecha de inicio
+                  <input id="fechaInicio" type="date" required aria-describedby="e-fi" />
+                </label>
+                <label>Fecha de fin
+                  <input id="fechaFin" type="date" required aria-describedby="e-ff" />
+                </label>
+                <div id="e-fi" class="err"></div><div id="e-ff" class="err"></div>
+
+                <label>Precio mensual (€)
+                  <input id="renta" type="number" min="0" step="0.01" required aria-describedby="e-renta" />
+                </label>
+                <label>Fianza (€)
+                  <input id="fianza" type="number" min="0" step="0.01" required aria-describedby="e-fianza" />
+                </label>
+                <div id="e-renta" class="err"></div><div id="e-fianza" class="err"></div>
+
+                <!-- Zonas comunes y suministros -->
+                <div class="form-grid full" style="grid-column:1/-1">
+                  <div class="card" style="padding:12px">
+                    <h4 style="margin:.2rem 0 .6rem">Zonas comunes incluidas</h4>
+                    <div class="toolbar" id="zonasChips">
+                      <label class="chip"><input type="checkbox" name="zc" value="Cocina"> Cocina</label>
+                      <label class="chip"><input type="checkbox" name="zc" value="Salón"> Salón</label>
+                      <label class="chip"><input type="checkbox" name="zc" value="Baño"> Baño</label>
+                      <label class="chip"><input type="checkbox" name="zc" value="Terraza"> Terraza</label>
+                      <label class="chip"><input type="checkbox" name="zc" value="Lavadero"> Lavadero</label>
+                      <label class="chip"><input type="checkbox" name="zc" value="Trastero"> Trastero</label>
+                      <label class="chip"><input type="checkbox" name="zc" value="Garaje"> Garaje</label>
+                      <label class="chip"><input type="checkbox" name="zc" value="Piscina"> Piscina</label>
+                      <label class="chip"><input type="checkbox" name="zc" value="Gimnasio"> Gimnasio</label>
+                    </div>
+
+                    <div class="form-grid" style="margin-top:12px">
+                      <label>Wi-Fi incluido
+                        <select id="wifi"><option value="no">No</option><option value="si">Sí</option></select>
+                      </label>
+                      <label>¿Se permite fumar?
+                        <select id="fumar"><option value="no">No</option><option value="si">Sí</option></select>
+                      </label>
+
+                      <label style="grid-column:1/-1">Suministros incluidos (marca los que incluye la renta)</label>
+                      <div class="toolbar" id="sumiChips" style="grid-column:1/-1">
+                        <label class="chip"><input type="checkbox" id="incAgua" value="Agua"> Agua</label>
+                        <label class="chip"><input type="checkbox" id="incLuz"  value="Luz"> Luz</label>
+                        <label class="chip"><input type="checkbox" id="incGas"  value="Gas"> Gas</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /Zonas comunes y suministros -->
+              </div>
+
+              <!-- PASO 2 -->
+              <div id="step2" class="form-grid full" style="display:none" aria-labelledby="s2">
+                <h3 id="s2" style="margin:.2rem 0">Cláusulas y anexos</h3>
+                <div>
+                  <div class="toolbar">
+                    <input type="search" id="clauseSearch" class="search" placeholder="Buscar cláusulas (ruidos, llaves, obras, mascotas…)" />
+
+                    <button type="button" class="chip" data-preset="obligatorias">Obligatorias</button>
+                    <button type="button" class="chip" data-preset="estandar">Estándar</button>
+                    <button type="button" class="chip" data-preset="proteccion">Protección extra</button>
+                    <button type="button" class="chip" data-preset="premium">Pack Premium</button>
+
+                    <label class="chip" id="chipInv"><input type="checkbox" id="anexoInventario" /> Anexo I: Inventario (opcional)</label>
+
+                    <div class="seg" id="langSeg" role="group" aria-label="Modo de lenguaje">
+                      <label for="langJ"><input type="radio" name="lang" id="langJ" value="juridico" checked> Jurídico</label>
+                      <label for="langC"><input type="radio" name="lang" id="langC" value="claro"> Claro</label>
+                    </div>
+
+                    <span id="clauseCount" style="font-weight:800;color:#334155">0 cláusulas extra</span>
+                  </div>
+
+                  <div id="mandatoryList" class="clause-grid" aria-label="Cláusulas obligatorias"></div>
+                  <div id="clauseList" class="clause-grid" aria-label="Cláusulas opcionales"></div>
+
+                  <div id="anexosBox" class="card" style="display:none;margin-top:10px">
+                    <h4 style="margin:.2rem 0 8px">Anexos</h4>
+                    <div id="anexoInvBox" style="display:none;margin-bottom:8px">
+                      <b>Anexo I — Inventario</b>
+                      <p style="margin:.4rem 0;color:#64748b">Escribe cada línea como <i>Elemento | Estado | Observaciones</i> o separa con <code>|</code>, <code>;</code>, <code>/</code>, <code>-</code>, <code>—</code>, coma o tabulador.</p>
+                      <div class="form-grid full">
+                        <label>Inventario (uno por línea)
+                          <textarea id="inventarioTxt" placeholder="Sofá | Bueno | Sin rozaduras&#10;Cama / Muy bueno / Colchón 1,35"></textarea>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+                           <!-- PASO 3 -->
+              <div id="step3" class="form-grid full" style="display:none" aria-labelledby="s3">
+                <h3 id="s3" style="margin:.2rem 0">Resumen y pago</h3>
+                <div class="summary-grid">
+                  <div id="resumenBox" class="sum-card" aria-live="polite"></div>
+                  <div class="pay-card" id="payCard">
+                    <div class="pay-top">
+                      <div>
+                        <div style="font-weight:900">Descarga PDF estilo notaría</div>
+                        <div style="font-size:12.5px;color:#334155">Se habilita al confirmar el pago</div>
+                      </div>
+                      <div class="price">1 €</div>
+                    </div>
+                    <div class="benefits">
+                      <div><span class="tick">✓</span> Sello “Pago verificado”</div>
+                      <div><span class="tick">✓</span> Sin registros ni subir datos</div>
+                      <div><span class="tick">✓</span> Guardado local opcional</div>
+                    </div>
+
+                    <!-- Botón de descarga (se muestra solo con pago confirmado) -->
+                    <button type="button" class="btn btn-primary" id="btnDownload" style="display:none">Descargar PDF</button>
+
+                    <!-- Botón de pago (el form real de PayPal está fuera del wizard) -->
+                    <button type="button" class="btn btn-pay" id="btnPayClassic">Pagar 1 € con PayPal</button>
+                    <p id="payError" class="err" aria-live="polite"></p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Navegación -->
+              <div class="actions">
+                <button type="button" class="btn btn-ghost" id="btnPrev" disabled>← Atrás</button>
+                <div style="flex:1"></div>
+                <button type="button" class="btn btn-primary" id="btnNext">Siguiente →</button>
+              </div>
+            </form>
+          </section>
+
+          <aside class="card">
+            <h3 style="margin:0 0 8px 0;">Vista previa protegida</h3>
+            <div class="preview" id="vistaContrato" aria-label="Vista previa (no copiable)"></div>
+            <div class="actions"><button class="btn" type="button" id="btnFullSide">Pantalla completa</button></div>
+            <div style="margin-top:6px"><meter id="meter" min="0" max="100" value="0"></meter> <b id="pct">0 % completado</b></div>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <section id="faq-habitacion" class="container" style="max-width:820px;margin:28px auto">
+      <h2 class="text-xl" style="font-weight:800;margin:.2rem 0 12px">Preguntas frecuentes</h2>
+
+      <details class="mb-3" open>
+        <summary class="font-medium">¿Este contrato de habitación está bajo LAU o Código Civil?</summary>
+        <div class="mt-2 text-sm" style="line-height:1.65">
+          Por norma general, el arrendamiento de habitación se rige por el <em>Código Civil</em> (arts. 1542 y ss.), salvo supuestos concretos. En el PDF se indica el marco legal correspondiente.
+        </div>
+      </details>
+
+      <details class="mb-3">
+        <summary class="font-medium">¿Incluye inventario?</summary>
+        <div class="mt-2 text-sm" style="line-height:1.65">
+          Sí, puedes activar el <strong>Anexo I — Inventario</strong>. Si lo activas, el PDF añade “Acceso al inventario” en Condiciones específicas y genera el anexo con los ítems que indiques.
+        </div>
+      </details>
+
+      <details class="mb-3">
+        <summary class="font-medium">¿Necesito firma electrónica para que sea válido?</summary>
+        <div class="mt-2 text-sm" style="line-height:1.65">
+          <strong>No</strong>. No ofrecemos firma electrónica integrada. Puedes imprimir el PDF y firmarlo manuscrito entre las partes. Si lo preferís, podéis usar una herramienta externa de firma electrónica, pero no forma parte del servicio.
+        </div>
+      </details>
+
+      <details class="mb-3">
+        <summary class="font-medium">¿Cuánto cuesta y cómo se paga?</summary>
+        <div class="mt-2 text-sm" style="line-height:1.65">
+          Cuesta <strong>1 €</strong>. El pago se realiza online y, al completarlo, se desbloquea la descarga del PDF.
+        </div>
+      </details>
+
+      <details class="mb-3">
+        <summary class="font-medium">¿Qué datos necesito para generarlo?</summary>
+        <div class="mt-2 text-sm" style="line-height:1.65">
+          Dirección, nombres y DNI/NIE de arrendador e inquilino, localidad, duración, fechas de inicio/fin, renta y fianza. Opcionalmente, zonas/servicios incluidos y un inventario.
+        </div>
+      </details>
+    </section>
+
+  </main>
+
+  <footer class="container">
+    <a href="aviso-legal.html?from=habitacion">Aviso legal</a> •
+    <a href="privacidad-contrato.html?from=habitacion">Privacidad</a> •
+    <a href="cookies.html?from=habitacion">Cookies</a> •
+    <a href="contacto.html?from=habitacion">Contacto</a>
+  </footer>
+
+  <!-- Modal fullscreen -->
+  <div class="modal" id="fs">
+    <div class="sheet" role="dialog" aria-modal="true" aria-label="Vista previa a pantalla completa">
+      <div class="fs-topbar">
+        <button class="fs-btn" id="zoomOut" type="button">−</button>
+        <button class="fs-btn" id="zoomIn"  type="button">＋</button>
+        <button class="fs-btn" id="fsClose" type="button">✕</button>
+      </div>
+      <div id="fsFrame" data-watermark="VISTA PREVIA PROTEGIDA — JSON BEAUTIFIER PRO"></div>
+    </div>
+  </div>
+
+  <!-- === PARTE 2/3 — SCRIPT UI (validación, vista previa, presets, navegación, pago) === -->
+  <script>
+  // ---------- Helpers DOM ----------
+  const $   = (id)=>document.getElementById(id);
+  const qsa = (sel)=> Array.from(document.querySelectorAll(sel));
+
+  // ---------- Estado ----------
+  const LSKEY  = "contrato_habitacion_v2";
+  const STEP_K = "HAB_STEP";
+  let currentStep = Number(localStorage.getItem(STEP_K) || "1");
+  window.hasPaid  = localStorage.getItem("HAB_PAID") === "1";   // controla visibilidad botón descarga
+  window.orderId  = localStorage.getItem("HAB_ORDER") || "";
+  window.langMode = localStorage.getItem(LSKEY+"_lang") || "juridico"; // 'juridico' | 'claro'
+
+  // ---------- Cláusulas ----------
+  const CLAUSES_MANDATORY = [
+    {id:"objeto",   title:"Objeto y partes", J:"El arrendador cede al arrendatario el uso de una habitación en la vivienda indicada, junto con el uso de las zonas comunes acordadas.", C:"El propietario cede una habitación al inquilino y el uso de las zonas comunes pactadas."},
+    {id:"duracion", title:"Duración",        J:"El arrendamiento tendrá la duración establecida en el formulario y se prorrogará conforme a la normativa vigente salvo pacto en contrario.", C:"El contrato dura lo indicado; después puede prorrogarse según la ley."},
+    {id:"precio",   title:"Precio y fianza", J:"La renta mensual y la fianza se fijan según el formulario. El impago faculta la resolución del contrato.", C:"La renta y la fianza son las que has indicado. Si no se paga, el contrato puede resolverse."}
+  ];
+  const CLAUSES_EXTRA = [
+    {id:"zonas",        title:"Zonas comunes",               J:"El arrendatario tendrá derecho a usar las zonas comunes señaladas, respetando su correcta utilización.", C:"Puedes usar las zonas comunes marcadas, con buen uso."},
+    {id:"llaves",       title:"Llaves y accesos",            J:"Se entregan las llaves necesarias. Su pérdida conlleva el coste de reposición y podrá exigirse un cargo por duplicado.", C:"Se entregan llaves; si se pierden, se paga la copia."},
+    {id:"ruidos",       title:"Ruidos y convivencia",        J:"El arrendatario evitará actividades molestas, insalubres o ilícitas y observará las normas de la comunidad.", C:"Nada de ruidos ni actividades molestas o ilegales. Cumple las normas de la comunidad."},
+    {id:"visitas",      title:"Visitas y pernoctas",         J:"Las visitas serán razonables. Las pernoctas prolongadas requerirán autorización expresa del arrendador.", C:"Visitas sí; pernoctas largas, solo con autorización."},
+    {id:"mascotas",     title:"Mascotas",                    J:"Se prohíbe la tenencia de animales salvo autorización escrita del arrendador. En caso de autorización, el arrendatario responderá de daños y limpieza.", C:"No se permiten mascotas salvo permiso por escrito; si las hay, respondes de daños y limpieza."},
+    {id:"obras",        title:"Obras y modificaciones",      J:"Queda prohibida la realización de obras o modificaciones sin consentimiento por escrito del arrendador.", C:"No hagas obras ni cambios sin permiso por escrito."},
+    {id:"limpieza",     title:"Limpieza y mantenimiento",    J:"El arrendatario mantendrá la habitación y zonas comunes en correcto estado de limpieza, retirando residuos y colaborando en turnos si existieran.", C:"Mantén limpia tu habitación y ayuda en la limpieza de zonas comunes."},
+    {id:"reparaciones", title:"Reparaciones y averías",      J:"Las pequeñas reparaciones derivadas del uso ordinario serán a cargo del arrendatario; las estructurales o por vicios ocultos, del arrendador.", C:"Las pequeñas reparaciones por uso normal las pagas tú; las grandes o de estructura, el propietario."},
+    {id:"paqueteria",   title:"Correspondencia y paquetería",J:"El arrendador no será responsable de la pérdida o deterioro de envíos. El arrendatario autoriza la recepción en portería o vecinos cuando sea preciso.", C:"No nos hacemos responsables de paquetes perdidos; autorizas recepción en portería o vecinos si hace falta."}
+  ];
+  const getClauseText = (c) => (window.langMode==="claro" ? (c.C || c.J) : c.J);
+
+  // Preset por defecto (3 extras)
+  window.selectedClauses = new Set(["zonas","llaves","ruidos"]);
+  let selectedPreset = "estandar";
+
+  // ---------- Render cláusulas ----------
+  function renderMandatory(){
+    const html = CLAUSES_MANDATORY.map(c=>`
+      <div class="clause-card">
+        <input type="checkbox" checked disabled>
+        <div><h4>✔ ${c.title} <span class="tag">obligatoria</span></h4><p>${getClauseText(c)}</p></div>
+      </div>`).join("");
+    const box = $("mandatoryList"); if (box) box.innerHTML = html;
+  }
+  function renderClausePicker(filter=""){
+    const norm = (s)=> (s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+    const t = norm(filter);
+    const html = CLAUSES_EXTRA
+      .filter(c => !t || norm(c.title+getClauseText(c)).includes(t))
+      .map(c=>`
+        <label class="clause-card">
+          <input type="checkbox" ${window.selectedClauses.has(c.id)?'checked':''} data-id="${c.id}">
+          <div><h4>${c.title}</h4><p>${getClauseText(c)}</p></div>
+        </label>`).join("");
+    const box = $("clauseList"); if (box) box.innerHTML = html;
+
+    qsa('#clauseList label.clause-card input[type="checkbox"]').forEach(cb=>{
+      const lbl = cb.closest('label.clause-card');
+      const sync=()=> lbl && lbl.classList.toggle('active', cb.checked);
+      sync();
+      cb.addEventListener('change', e=>{
+        const id = e.target.getAttribute('data-id');
+        if (e.target.checked) window.selectedClauses.add(id);
+        else window.selectedClauses.delete(id);
+        updateClauseCount(); actualizarVista(); saveState();
+        sync();
+      });
+    });
+  }
+  function updateClauseCount(){
+    const n = window.selectedClauses.size;
+    const el = $("clauseCount");
+    if (el) el.textContent = `${n} cláusula${n===1?"":"s"} extra`;
+  }
+  function applyPreset(name){
+    selectedPreset = name;
+    if (name==="obligatorias") window.selectedClauses = new Set();
+    if (name==="estandar")     window.selectedClauses = new Set(["zonas","llaves","ruidos"]); // 3
+    if (name==="proteccion")   window.selectedClauses = new Set(["zonas","llaves","ruidos","visitas","limpieza","reparaciones"]); // 6
+    if (name==="premium")      window.selectedClauses = new Set(CLAUSES_EXTRA.map(c=>c.id)); // 9
+    qsa('[data-preset]').forEach(b=> b.classList.toggle('active', b.getAttribute('data-preset')===name));
+    renderClausePicker($("clauseSearch")?.value || ""); updateClauseCount(); actualizarVista(); saveState();
+  }
+
+  // ---------- Zonas/servicios ----------
+  function wireChipGroup(sel){
+    qsa(sel+' input[type="checkbox"]').forEach(chk=>{
+      const lab = chk.closest("label.chip");
+      const sync=()=> lab && lab.classList.toggle("active", chk.checked);
+      sync();
+      chk.addEventListener("change", ()=>{ sync(); actualizarVista(); saveState(); });
+    });
+  }
+  function getZonas(){ return qsa('input[name="zc"]').filter(e=>e.checked).map(e=>e.value); }
+  function getServiciosIncluidos(){
+    const arr=[]; if ($("incAgua")?.checked) arr.push("Agua");
+    if ($("incLuz")?.checked) arr.push("Luz");
+    if ($("incGas")?.checked) arr.push("Gas");
+    if (( $("wifi")?.value||"no")==="si") arr.push("Wi-Fi");
+    return arr;
+  }
+
+  // ---------- Resumen + Vista protegida ----------
+  const fmtFecha = (v) => !v ? "—" : new Date(v+"T00:00:00").toLocaleDateString("es-ES",{day:"numeric",month:"long",year:"numeric"});
+  function resumenHTML(){
+    const g=id=>($(id)?.value||""); const N=v=>(v||"").toUpperCase().replace(/\s+/g,"");
+    const zonas = getZonas(), serv=getServiciosIncluidos();
+    const fumar = (( $("fumar")?.value)||"no")==="si" ? "Permitido" : "No permitido";
+    const anex = $("anexoInventario")?.checked ? "Inventario" : "—";
+    return `
+      <div class="sum-card"><h4>Partes</h4>
+        <div class="sum-line"><b>Arrendador:</b> ${g("arrendador")} · ${N(g("dniArrendador"))}</div>
+        <div class="sum-line"><b>Inquilino:</b> ${g("inquilino")} · ${N(g("dniInquilino"))}</div>
+      </div>
+      <div class="sum-card"><h4>Inmueble</h4>
+        <div class="sum-line">${g("direccion")||"—"}</div>
+        <div class="sum-line">${g("localidad")||"—"}</div>
+      </div>
+      <div class="sum-card"><h4>Condiciones</h4>
+        <div class="sum-line">Duración: <b>${g("duracion")||"—"}</b> meses</div>
+        <div class="sum-line">Fechas: ${fmtFecha(g("fechaInicio"))} - ${fmtFecha(g("fechaFin"))}</div>
+        <div class="sum-line">Fumar: ${fumar}</div>
+      </div>
+      <div class="sum-card"><h4>Importes</h4>
+        <div class="sum-line">Precio mensual: <b>${g("renta")||"—"} €</b></div>
+        <div class="sum-line">Fianza: <b>${g("fianza")||"—"} €</b></div>
+      </div>
+      <div class="sum-card"><h4>Zonas y servicios</h4>
+        <div class="sum-line"><b>Zonas comunes:</b> ${zonas.length? zonas.join(", ") : "—"}</div>
+        <div class="sum-line"><b>Servicios incluidos:</b> ${serv.length? serv.join(", ") : "—"}</div>
+      </div>
+      <div class="sum-card"><h4>Anexos</h4>
+        <div class="sum-line">${anex}</div>
+      </div>`;
+  }
+  function construirClausulas(){
+    const blocks=[]; CLAUSES_MANDATORY.forEach(c=>blocks.push({title:c.title,text:getClauseText(c)}));
+    CLAUSES_EXTRA.forEach(c=>{ if(window.selectedClauses.has(c.id)) blocks.push({title:c.title,text:getClauseText(c)}); });
+    return blocks;
+  }
+  function vistaHTML(){
+    const g=id=>($(id)?.value||"");
+    const claus = construirClausulas();
+    const zonas = getZonas(), serv=getServiciosIncluidos();
+    const fumar = (( $("fumar")?.value)||"no")==="si" ? "Permitido" : "No permitido";
+    const anex = $("anexoInventario")?.checked ? ["Inventario"] : [];
+
+    let html = "";
+    html += `<p><strong>Arrendador:</strong> ${g("arrendador")} — <strong>DNI:</strong> ${(g("dniArrendador")||"").toUpperCase().replace(/\s+/g,"")}</p>`;
+    html += `<p><strong>Inquilino:</strong> ${g("inquilino")} — <strong>DNI:</strong> ${(g("dniInquilino")||"").toUpperCase().replace(/\s+/g,"")}</p>`;
+    html += `<p><strong>Dirección:</strong> ${g("direccion")}</p>`;
+    html += `<p><strong>Localidad:</strong> ${g("localidad")} — <strong>Duración:</strong> ${g("duracion")||"—"} meses</p>`;
+    html += `<p><strong>Fechas:</strong> ${fmtFecha(g("fechaInicio"))} - ${fmtFecha(g("fechaFin"))}</p>`;
+    html += `<p><strong>Precio:</strong> ${g("renta")||"—"} € — <strong>Fianza:</strong> ${g("fianza")||"—"} €</p>`;
+
+    html += `<p><strong>Condiciones específicas:</strong></p><ul>`;
+    html += `<li><b>Zonas comunes incluidas:</b> ${zonas.length? zonas.join(", ") : "—"}</li>`;
+    html += `<li><b>Servicios incluidos:</b> ${serv.length? serv.join(", ") : "—"}</li>`;
+    html += `<li><b>Fumar:</b> ${fumar}</li>`;
+    html += `</ul>`;
+
+    html += `<p><strong>Cláusulas:</strong></p><ol>` + claus.map(c=>`<li><b>${c.title}:</b> ${c.text}</li>`).join("") + `</ol>`;
+
+    if (anex.length){
+      html += `<p><strong>Anexos:</strong> ${anex.join(", ")} (se incorporarán al PDF en página aparte).</p>`;
+    }
+    // Firmas orientativas (solo preview)
+    html += `<p style="display:flex;justify-content:space-between;font-weight:bold;margin-top:2rem"><span>Arrendador: _____________________</span><span>Arrendatario: _____________________</span></p>`;
+    html += `<p style="display:flex;justify-content:space-between"><span>${g("arrendador")}</span><span>${g("inquilino")}</span></p>`;
+    return html;
+  }
+  function lockPreviewEvents(el){ if (!el || el.dataset.locked) return; ["copy","cut","paste","contextmenu"].forEach(ev => el.addEventListener(ev, e=>e.preventDefault())); el.onselectstart = () => false; el.dataset.locked = "1"; }
+
+  function renderResumen(){ const box=$("resumenBox"); if(box) box.innerHTML = resumenHTML(); }
+  function actualizarVista(){
+    const v=$("vistaContrato"); if(!v) return;
+    v.innerHTML = vistaHTML();
+    lockPreviewEvents(v);
+    renderResumen();
+
+    // progreso
+    const pct = progress();
+    if($("meter")) $("meter").value=pct;
+    if($("pct"))   $("pct").textContent = pct+" % completado";
+
+    // Botón descarga visible solo si hasPaid y estás en paso 3 (PARTE 3 añade listener real)
+    const btn=$("btnDownload");
+    if(btn) btn.style.display = ((window.hasPaid) && currentStep===3) ? "inline-flex" : "none";
+
+    // Sello de pago si existe ensurePaidSeal (PARTE 3)
+    if (typeof ensurePaidSeal === "function") ensurePaidSeal();
+  }
+  window.actualizarVista = actualizarVista; // consola
+
+  // ---------- Validación ----------
+  const DNI_LETTERS = "TRWAGMYFPDXBNJZSQVHLCKE";
+  const normalizeId = (v) => (v || "").toUpperCase().replace(/\s+/g, "").trim();
+  const calcDNILetter = (num) => { const n = Number(num); return Number.isFinite(n) ? DNI_LETTERS[n % 23] : null; };
+  function validateDNIorNIE(raw){
+    const v = normalizeId(raw);
+    if (/^\d{8}[A-Z]$/.test(v)) return calcDNILetter(v.slice(0, 8)) === v.slice(8);
+    if (/^[XYZ]\d{7}[A-Z]$/.test(v)) { const n = v.replace(/^X/,"0").replace(/^Y/,"1").replace(/^Z/,"2"); return calcDNILetter(n.slice(0, 8)) === v.slice(-1); }
+    return false;
+  }
+  const requiredIds = ["direccion","arrendador","dniArrendador","inquilino","dniInquilino","localidad","duracion","fechaInicio","fechaFin","renta","fianza"];
+  function setErr(id,msg=""){ const map={direccion:"e-dir",arrendador:"e-arr",dniArrendador:"e-dna",inquilino:"e-inq",dniInquilino:"e-dni",localidad:"e-loc",duracion:"e-dur",fechaInicio:"e-fi",fechaFin:"e-ff",renta:"e-renta",fianza:"e-fianza"}; const eid=map[id]; if(eid) $(eid).textContent = msg; }
+  function validar(){
+    let ok=true; const fi=$("fechaInicio")?.value, ff=$("fechaFin")?.value;
+    const check=(id,cond,msg)=>{
+      const el=$(id);
+      if(!cond){ ok=false; setErr(id,msg||"Revisa este campo."); el?.classList.add("is-invalid"); el?.classList.remove("is-valid"); }
+      else     { setErr(id,"");                 el?.classList.remove("is-invalid"); el?.classList.add("is-valid"); }
+    };
+    check("direccion", !!$("direccion")?.value?.trim());
+    check("arrendador", !!$("arrendador")?.value?.trim());
+    check("dniArrendador", validateDNIorNIE($("dniArrendador")?.value), "DNI/NIE no válido.");
+    check("inquilino", !!$("inquilino")?.value?.trim());
+    check("dniInquilino", validateDNIorNIE($("dniInquilino")?.value), "DNI/NIE no válido.");
+    check("localidad", !!$("localidad")?.value?.trim());
+    check("duracion", Number($("duracion")?.value)>=1, "Mínimo 1 mes.");
+    check("fechaInicio", !!fi);
+    check("fechaFin", !!ff && new Date(ff)>=new Date(fi), "La fecha fin debe ser posterior.");
+    check("renta", Number($("renta")?.value)>=0);
+    check("fianza", Number($("fianza")?.value)>=0);
+    return ok;
+  }
+  window.validar = validar; // consola
+  function validateField(el){
+    if (!el) return; const id=el.id; let ok=true;
+    switch(id){
+      case "dniArrendador":
+      case "dniInquilino":
+        el.value=(el.value||"").toUpperCase().replace(/\s+/g,"");
+        ok=el.value.length>=9 && validateDNIorNIE(el.value);
+        break;
+      case "duracion": ok=Number(el.value)>=1; break;
+      case "renta":
+      case "fianza":  ok=el.value!=="" && Number(el.value)>=0; break;
+      case "fechaInicio":
+      case "fechaFin": {
+        const fi=$("fechaInicio")?.value, ff=$("fechaFin")?.value;
+        const pairOk=!!fi && !!ff && new Date(ff)>=new Date(fi);
+        ["fechaInicio","fechaFin"].forEach(id2=>{
+          $(id2)?.classList.toggle("is-valid", pairOk);
+          $(id2)?.classList.toggle("is-invalid", !pairOk);
+        });
+        setErr("fechaFin", pairOk?"":"La fecha fin debe ser posterior.");
+        return;
+      }
+      default: ok=(el.value||"").trim().length>0;
+    }
+    el.classList.toggle("is-valid", ok);
+    el.classList.toggle("is-invalid", !ok);
+    if(ok) setErr(id,"");
+  }
+  function progress(){
+    let n=0; requiredIds.forEach(id=>{ const el=$(id); if(el && (el.type==='number'? el.value!=='' : el.value)) n++; });
+    const pct=Math.round(n*100/requiredIds.length);
+    const bar=document.querySelector('.bar'); if(bar) bar.style.width=pct+"%";
+    return pct;
+  }
+  window.progress = progress;
+
+  // ---------- Persistencia ----------
+  function serialize(){
+    const o={};
+    qsa('#contratoForm input, #contratoForm select, #contratoForm textarea').forEach(el=>{
+      if(el.type==='radio') return;
+      if(el.type==='checkbox') o[el.id]=!!el.checked; else o[el.id]=el.value||'';
+    });
+    o._zc=qsa('input[name="zc"]').map(el=>({value:el.value,checked:el.checked}));
+    o.clSel=Array.from(window.selectedClauses);
+    o.preset=selectedPreset;
+    o.anexos={inventario:$("anexoInventario")?.checked||false, inventarioTxt:$("inventarioTxt")?.value||""};
+    o.lang=window.langMode;
+    return JSON.stringify(o);
+  }
+  function saveState(){ if(!$("persistToggle")?.checked) return; try{ localStorage.setItem(LSKEY, serialize()); localStorage.setItem(LSKEY+"_lang", window.langMode); }catch{} }
+  function populate(){
+    const raw=localStorage.getItem(LSKEY); if(!raw) return;
+    try{
+      const o=JSON.parse(raw);
+      qsa('#contratoForm input, #contratoForm select, #contratoForm textarea').forEach(el=>{
+        const v=o[el.id]; if(v==null) return; if(el.type==='checkbox') el.checked=!!v; else el.value=v;
+      });
+      if(Array.isArray(o._zc)){
+        qsa('input[name="zc"]').forEach(el=>{ const f=o._zc.find(z=>z.value===el.value); if(f) el.checked=!!f.checked; });
+      }
+      window.selectedClauses=new Set(Array.isArray(o.clSel)?o.clSel:["zonas","llaves","ruidos"]);
+      if(o.preset) selectedPreset=o.preset;
+      if(o.anexos){ if($("anexoInventario")) $("anexoInventario").checked = !!o.anexos.inventario; if($("inventarioTxt")) $("inventarioTxt").value = o.anexos.inventarioTxt || ""; }
+      if(o.lang) window.langMode=o.lang;
+    }catch(e){}
+  }
+  function syncPersistUI(){
+    const lab = $("chipPersist"); const cb  = $("persistToggle");
+    if (lab && cb) lab.classList.toggle("active", !!cb.checked);
+  }
+
+  // ---------- Navegación ----------
+  function goStep(n){
+    currentStep=Math.max(1,Math.min(3,n));
+    try { localStorage.setItem(STEP_K,String(currentStep)); } catch{}
+    qsa('.step').forEach((s,i)=> s.classList.toggle('active', (i+1)===currentStep));
+    $("step1").style.display = currentStep===1? 'grid':'none';
+    $("step2").style.display = currentStep===2? 'grid':'none';
+    $("step3").style.display = currentStep===3? 'grid':'none';
+    $("btnPrev")?.toggleAttribute('disabled', currentStep===1);
+    const next=$("btnNext"); if(next) next.style.display = (currentStep===3? 'none' : 'inline-flex');
+     actualizarVista();
+     refreshPayUI?.();
+
+  // Precarga jsPDF al entrar en Paso 3 (mejora UX de "Descargar PDF")
+  if (currentStep === 3 && typeof ensurePDFLibs === "function") {
+    // no bloquea la UI; si ya estaba cargado, ensurePDFLibs() sale rápido
+    Promise.resolve().then(() => ensurePDFLibs()).catch(()=>{});
+  }
+}
+
+  window.goStep = goStep;
+
+  // ---------- Pantalla completa ----------
+  function openFull(){ const cont=$("fsFrame"); if(!cont) return; $("fs").classList.add('active'); document.body.style.overflow='hidden'; cont.innerHTML = `<div style="padding:18px; transform-origin: top left;">${$("vistaContrato").innerHTML}</div>`; cont.firstElementChild.dataset.z='1'; }
+  function closeFull(){ $("fs").classList.remove('active'); document.body.style.overflow=''; }
+  function zoom(delta){ const el=$("fsFrame").firstElementChild; if(!el) return; const cur=Number(el.dataset.z||'1'); const nx=Math.max(.5,Math.min(2.2,cur+delta)); el.style.transform=`scale(${nx})`; el.dataset.z=String(nx); }
+
+  // === PAGO PAYPAL CLÁSICO (wire + return) ===
+  function setPaid(order){ try{ localStorage.setItem("HAB_PAID","1"); if(order) localStorage.setItem("HAB_ORDER",order); window.hasPaid=true; window.orderId=order||"PAYPAL-OK"; }catch{} }
+  function parsePayReturn(){
+    const u = new URL(location.href);
+    if (u.searchParams.get("pago_confirmado")==="1"){
+      setPaid("PAYPAL-OK");
+      try{ u.searchParams.delete("pago_confirmado"); history.replaceState({}, "", u.toString()); }catch{}
+    }
+    if (u.searchParams.get("pago_cancelado")==="1"){
+      try{ u.searchParams.delete("pago_cancelado"); history.replaceState({}, "", u.toString()); }catch{}
+    }
+  }
+  function ensurePaidSeal(){
+    const top = document.querySelector("#payCard .pay-top");
+    if (!top) return;
+    let s = document.getElementById("paidSeal");
+    if (!s){ s=document.createElement("div"); s.id="paidSeal"; s.className="chip active"; s.textContent="Pago verificado"; top.appendChild(s); }
+    s.style.display = window.hasPaid ? "inline-flex" : "none";
+  }
+  function refreshPayUI(){
+  const btnD = document.getElementById("btnDownload");
+  if (btnD) btnD.style.display = (window.hasPaid && currentStep===3) ? "inline-flex" : "none";
+
+  const btnP = document.getElementById("btnPayClassic");
+  if (btnP) btnP.style.display = window.hasPaid ? "none" : "inline-flex";
+
+  ensurePaidSeal();
+}
+
+  parsePayReturn();
+
+  // ---------- Inicio ----------
+  document.addEventListener('DOMContentLoaded', ()=>{
+    // Preferencia del toggle "Guardar datos"
+    const pFlag = localStorage.getItem('HAB_PERSIST'); // '1' o '0'
+    if (pFlag === '0') { $("persistToggle").checked = false; }
+    if (pFlag === '1') { $("persistToggle").checked = true;  }
+    syncPersistUI();
+
+    $("persistToggle")?.addEventListener('change', ()=>{
+      syncPersistUI();
+      if ($("persistToggle").checked) {
+        try { localStorage.setItem('HAB_PERSIST','1'); saveState(); } catch{}
+      } else {
+        try { localStorage.setItem('HAB_PERSIST','0'); localStorage.removeItem(LSKEY); } catch{}
+      }
+    });
+
+    // Cargar datos guardados y render inicial
+    populate();
+    renderMandatory(); renderClausePicker(); updateClauseCount();
+
+    // Lang segment
+    const lJ= $("langJ"), lC=$("langC");
+    const syncLang=()=>{ $("langJ")?.closest("label")?.classList.toggle("active", window.langMode==="juridico"); $("langC")?.closest("label")?.classList.toggle("active", window.langMode==="claro"); };
+    if(window.langMode==="claro") { lC.checked = true; } else { lJ.checked = true; }
+    lJ?.addEventListener('change', ()=>{ window.langMode='juridico'; renderMandatory(); renderClausePicker($("clauseSearch")?.value||''); actualizarVista(); saveState(); syncLang(); });
+    lC?.addEventListener('change', ()=>{ window.langMode='claro';    renderMandatory(); renderClausePicker($("clauseSearch")?.value||''); actualizarVista(); saveState(); syncLang(); });
+    syncLang();
+
+    // Mostrar paso actual
+    goStep(currentStep||1);
+if (window.hasPaid) { goStep(3); }
+refreshPayUI();
+    
+    // Inputs (validación en vivo + guardado)
+    qsa('#contratoForm input, #contratoForm select, #contratoForm textarea').forEach(el=>{
+      el.addEventListener('input', ()=>{
+        if(el.id==='dniArrendador' || el.id==='dniInquilino'){ el.value=(el.value||'').toUpperCase().replace(/\s+/g,''); }
+        validateField(el); actualizarVista(); saveState();
+      });
+      el.addEventListener('change', ()=>{
+        if(el.id==='anexoInventario'){
+          const on = $("anexoInventario")?.checked;
+          $("anexosBox").style.display  = on ? "block":"none";
+          $("anexoInvBox").style.display = on ? "block":"none";
+          $("chipInv")?.classList.toggle("active", !!on);
+        }
+        actualizarVista(); saveState();
+      });
+    });
+
+    // chips zonas/suministros
+    wireChipGroup('#zonasChips'); wireChipGroup('#sumiChips');
+
+    // presets + búsqueda
+    qsa('[data-preset]').forEach(b=> b.addEventListener('click', ()=> applyPreset(b.getAttribute('data-preset'))));
+    $("clauseSearch")?.addEventListener('input', e=> renderClausePicker(e.target.value));
+
+    // navegación
+    $("btnPrev")?.addEventListener('click', ()=> goStep(currentStep-1));
+    $("btnNext")?.addEventListener('click', ()=>{ if(currentStep<3){ if(currentStep===1 && !validar()) return; goStep(currentStep+1); } });
+
+    // fullscreen
+    $("btnFullSide")?.addEventListener('click', openFull);
+    $("fsClose")?.addEventListener('click', closeFull);
+    $("zoomIn")?.addEventListener('click', ()=> zoom(+.1));
+    $("zoomOut")?.addEventListener('click', ()=> zoom(-.1));
+
+    // limpiar
+    $("btnClear")?.addEventListener('click', ()=>{
+      qsa('#contratoForm input, #contratoForm select, #contratoForm textarea').forEach(el=>{
+        if(el.type==='checkbox') el.checked=false;
+        else if(el.type!=='radio') el.value='';
+        el.classList.remove('is-valid','is-invalid');
+      });
+      window.selectedClauses = new Set(["zonas","llaves","ruidos"]); selectedPreset='estandar';
+      try{ localStorage.removeItem(LSKEY); localStorage.setItem(STEP_K,'1'); localStorage.removeItem('HAB_PAID'); localStorage.removeItem('HAB_ORDER'); }catch{}
+      window.hasPaid=false; window.orderId='';
+      goStep(1); actualizarVista();
+    });
+
+    // Inicializar anexos UI
+    const invOn = $("anexoInventario")?.checked;
+    $("anexosBox").style.display  = invOn ? "block":"none";
+    $("anexoInvBox").style.display = invOn ? "block":"none";
+    $("chipInv")?.classList.toggle("active", !!invOn);
+
+    // Pago PayPal clásico (botón → submit del form oculto con return/cancel)
+    $("btnPayClassic")?.addEventListener("click", ()=>{
+      if (currentStep===1 && !validar()){ $("payError").textContent="Revisa los datos antes de pagar."; return; }
+      const ok = new URL(location.href); ok.searchParams.set("pago_confirmado","1");
+      const ko = new URL(location.href); ko.searchParams.set("pago_cancelado","1");
+      $("ppReturn").value = ok.toString();
+      $("ppCancel").value = ko.toString();
+      $("paypalClassicForm").submit();
+    });
+
+    // Render final
+    actualizarVista();
+  });
+  </script>
+
+  <!-- === PDF: INICIO — Bloque “nivel notaría” (líneas solo en 4 cabeceras; sin zebra; sin verticales) === -->
+  <script>
+  // Silenciar ruido de extensiones
+  window.addEventListener('unhandledrejection', ev=>{
+    const m = String((ev.reason && ev.reason.message) || ev.reason || "");
+    if (m.includes("A listener indicated an asynchronous response")) ev.preventDefault();
+  });
+
+  // ====== DEV / Pago ======
+  window.__DEV_MODE = window.__DEV_MODE || false;
+  window.__DEV_ON   = function(){ window.__DEV_MODE = true; console.info("DEV ON: generar PDF sin pago."); };
+
+  // ====== Carga jsPDF ======
+  async function ensurePDFLibs(){
+    if (window.jspdf && window.jspdf.jsPDF) return;
+    const src = "https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js";
+    await new Promise((ok,ko)=>{ const s=document.createElement('script'); s.src=src; s.onload=ok; s.onerror=ko; document.head.appendChild(s); });
+    if (!window.jspdf || !window.jspdf.jsPDF) throw new Error("No se pudo cargar jsPDF.");
+  }
+
+  // ====== Parámetros “notaría” ======
+  const NT = {
+    FONT: "times",
+    FONT_SIZE: 12,
+    LINEH: 18,
+    PAGE: { margin: 85, bottomSafe: 220 }, // pie amplio; evita invasión de firmas
+    COLOR: { text:"#0f172a", brand:"#1f2937", line:"#d2d6e0" }
+  };
+  const EUR = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' });
+
+  // ====== Helpers tipográficos / maquetación ======
+  function setFont(doc, weight, size){ doc.setFont(NT.FONT, weight==="bold"?"bold":"normal").setFontSize(size ?? NT.FONT_SIZE); }
+  function sanitize(s){ return String(s||"").replace(/\u00A0/g," ").replace(/[\u2013\u2014]/g,"-"); }
+  function hr(doc, x, y, w){ doc.setDrawColor(NT.COLOR.line); doc.setLineWidth(0.6); doc.line(x, y, x+w, y); }
+  function paginate(doc, S, needed){
+    const pageH = doc.internal.pageSize.getHeight(), bottom = pageH - NT.PAGE.bottomSafe;
+    if (S.y + needed <= bottom) return false;
+    doc.addPage(); S.y = NT.PAGE.margin; return true;
+  }
+  function flowPara(doc, text, x, y, w, opts={}){
+    const lines = doc.splitTextToSize(sanitize(text), w);
+    const lh = opts.lh || NT.LINEH;
+    for (let i=0; i<lines.length; i++){ paginate(doc, opts.S, lh); doc.text(lines[i], x, opts.S.y, { maxWidth:w, align:(opts.align||"left") }); opts.S.y += lh; }
+    return opts.S.y;
+  }
+
+  // Cabecera de sección con línea **solo** en 4 títulos
+  function band(doc, title, x, S, w){
+    setFont(doc,"bold",12.5); doc.setTextColor(NT.COLOR.brand);
+    const T = String(title).toUpperCase();
+    doc.text(T, x, S.y);
+    doc.setTextColor(NT.COLOR.text);
+    S.y += 14;
+    const needLine = (
+      T==="CONTRATO DE ARRENDAMIENTO DE HABITACIÓN" ||
+      T==="CONDICIONES ESPECÍFICAS" ||
+      T==="CLÁUSULAS" ||
+      T==="ANEXO I — INVENTARIO"
+    );
+    if (needLine){ hr(doc, x, S.y, w); S.y += 14; }
+    return S.y;
+  }
+  // Cabecera “suave” (SIN línea)
+  function bandSoft(doc, title, x, S, w){
+    setFont(doc,"bold",12.5); doc.setTextColor(NT.COLOR.brand);
+    doc.text(String(title).toUpperCase(), x, S.y);
+    doc.setTextColor(NT.COLOR.text);
+    S.y += 16;
+    return S.y;
+  }
+
+  // ====== Fila clave:valor (Zonas/Servicios en horizontal) ======
+  function rowKV(doc, key, value, x, w, S){
+    const keyW=160, lh=NT.LINEH, xVal = x + keyW, wVal = w - keyW;
+
+    paginate(doc, S, lh);
+    setFont(doc,"bold"); doc.setTextColor(NT.COLOR.brand); doc.text(sanitize(key)+":", x, S.y);
+    setFont(doc,"normal"); doc.setTextColor(NT.COLOR.text);
+
+    if (Array.isArray(value) && value.length && /Zonas comunes incluidas|Servicios incluidos/i.test(key)){
+      const lines = doc.splitTextToSize(sanitize(value.join(" · ")), wVal);
+      for (let i=0; i<lines.length; i++){ paginate(doc, S, lh); doc.text(lines[i], xVal, S.y, {maxWidth:wVal}); S.y += lh; }
+      S.y += 6; return S.y;
+    }
+
+    if (Array.isArray(value) && value.length){
+      const b="• ", bW = doc.getTextWidth(b);
+      for (let i=0; i<value.length; i++){
+        const lines = doc.splitTextToSize(sanitize(value[i]||"—"), wVal - bW);
+        for (let li=0; li<lines.length; li++){
+          paginate(doc,S,lh);
+          if (li===0){ doc.text(b, xVal, S.y); doc.text(lines[li], xVal+bW, S.y, {maxWidth:wVal-bW}); }
+          else        { doc.text(lines[li],      xVal+bW, S.y, {maxWidth:wVal-bW}); }
+          S.y += lh;
+        }
+      }
+    }else{
+      const lines = doc.splitTextToSize(sanitize(value||"—"), wVal);
+      for (let i=0; i<lines.length; i++){ paginate(doc, S, lh); doc.text(lines[i], xVal, S.y, {maxWidth:wVal}); S.y += lh; }
+    }
+    S.y += 6; return S.y;
+  }
+
+  // ====== Tabla del Anexo — sin líneas verticales, sin zebra ======
+  function tableSimple(doc, headers, rows, x, S, w){
+    const lh = NT.LINEH, padX=4;
+    paginate(doc,S,lh);
+    setFont(doc,"bold"); doc.setTextColor(NT.COLOR.brand);
+    const colW = headers.map((_,i)=> (i===0? w*0.5 : (i===1? w*0.18 : w*0.32)));
+    let cx=x; headers.forEach((h,i)=>{ doc.text(String(h), cx, S.y); cx += colW[i]; });
+    setFont(doc,"normal"); doc.setTextColor(NT.COLOR.text);
+    S.y += 16;
+
+    rows.forEach(cols=>{
+      const cellLines = cols.map((t,i)=> doc.splitTextToSize(sanitize(String(t||"—")), colW[i]-padX*2));
+      const maxL = Math.max.apply(null, cellLines.map(a=>a.length));
+      for(let li=0; li<maxL; li++){
+        paginate(doc,S,lh);
+        let cx2=x;
+        cellLines.forEach((arr,i)=>{ doc.text(arr[li]||"", cx2, S.y, {maxWidth: colW[i]-padX*2}); cx2 += colW[i]; });
+        S.y += lh;
+      }
+      S.y += 6;
+    });
+    return S.y;
+  }
+
+  // ====== Firmas ======
+  function drawSignaturesFooter(doc, loc, arrendador, inquilino){
+    const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
+    const m     = NT.PAGE.margin;
+    const ySign = pageH - 220;
+    const gap=48, colW=(pageW - 2*m - gap)/2;
+
+    setFont(doc,"bold");   doc.text(sanitize(arrendador||" "), m, ySign - 8);
+    setFont(doc,"normal"); doc.text("Arrendador/a", m, ySign + 20);
+    doc.setLineWidth(0.9); doc.line(m, ySign, m + colW, ySign);
+
+    const x2 = m + colW + gap;
+    setFont(doc,"bold");   doc.text(sanitize(inquilino||" "), x2, ySign - 8);
+    setFont(doc,"normal"); doc.text("Inquilino/a", x2, ySign + 20);
+    doc.setLineWidth(0.9); doc.line(x2, ySign, x2 + colW, ySign);
+
+    const hoy = new Date();
+    const fES = hoy.toLocaleDateString("es-ES",{day:"numeric",month:"long",year:"numeric"});
+    doc.text(`En ${sanitize(loc||"________")}, a ${fES}`, m, ySign + 100);
+  }
+  function reserveSignatures(doc, S, minGap=90){
+    const pageH = doc.internal.pageSize.getHeight();
+    const ySignTop = (pageH - 220);
+    if (S.y > (ySignTop - minGap)){ doc.addPage(); S.y = NT.PAGE.margin; }
+  }
+  function addPageNumbers(doc){
+    const n = doc.getNumberOfPages();
+    for (let i=1; i<=n; i++){
+      doc.setPage(i);
+      setFont(doc,"normal",10);
+      const pageW = doc.internal.pageSize.getWidth(), pageH = doc.internal.pageSize.getHeight();
+      const label = `${i} / ${n}`, width = doc.getTextWidth(label);
+      doc.text(label, (pageW-width)/2, pageH-30);
+    }
+  }
+  function getClauseTextFromUI(c){ try{ return (window.langMode === "claro" ? (c.C || c.J || c.text) : (c.J || c.C || c.text)); }catch(e){ return c.text || ""; } }
+  function buildClausesFromUI(){
+    try{
+      const base = (typeof CLAUSES_MANDATORY!=="undefined" ? CLAUSES_MANDATORY : []);
+      const extras = (typeof CLAUSES_EXTRA!=="undefined" ? CLAUSES_EXTRA : []);
+      const sel = (window.selectedClauses ? Array.from(window.selectedClauses) : []);
+      const map = new Map(extras.map(c=>[c.id,c]));
+      const out = [];
+      base.forEach(c => out.push([c.title || c.titulo || "Cláusula", getClauseTextFromUI(c)]));
+      sel.forEach(id => { const c = map.get(id); if (c) out.push([c.title || c.titulo || "Cláusula", getClauseTextFromUI(c)]); });
+      if (out.length) return out;
+    }catch(e){}
+    return [
+      ["Objeto y partes","..."],["Régimen jurídico","..."],["Duración","..."],["Renta y pagos","..."],
+      ["Fianza","..."],["Uso debido y convivencia","..."],["Llaves y accesos","..."],["Visitas","..."],
+      ["Suministros","..."],["Resolución","..."]
+    ];
+  }
+
+  // ====== Núcleo PDF ======
+  async function __genPDF(force){
+    if (!window.hasPaid && !force && !window.__DEV_MODE){ alert("Completa el pago para habilitar la descarga."); return false; }
+    await ensurePDFLibs();
+    const jsPDF = window.jspdf.jsPDF;
+
+    try{
+      const doc = new jsPDF({ unit:"pt", format:"a4" });
+      setFont(doc,"normal",NT.FONT_SIZE);
+
+      const pageW = doc.internal.pageSize.getWidth();
+      const m  = NT.PAGE.margin, W = pageW - m*2;
+      const S  = { y: NT.PAGE.margin };
+
+      // ===== Título principal (con línea) =====
+      setFont(doc,"bold",15.5);
+      S.y = band(doc, "CONTRATO DE ARRENDAMIENTO DE HABITACIÓN", m, S, W);
+
+      // Marco legal (sin línea)
+      setFont(doc,"normal");
+      S.y = flowPara(doc,
+        "El arrendamiento de habitación suele regirse por el Código Civil (arts. 1542 y ss.), al no encajar en el concepto de arrendamiento de vivienda del art. 2 LAU. Existen resoluciones con criterios distintos; este contrato se formula bajo régimen civil salvo pacto en contrario.",
+        m, S.y, W, { S, lh: NT.LINEH, align: "left" }
+      );
+      S.y += 8;
+
+      const g   = id => (document.getElementById(id)?.value || "");
+      const N   = v  => (v||"").toUpperCase().replace(/\s+/g,"");
+      const fmt = v  => v ? new Date(v+"T00:00:00").toLocaleDateString("es-ES",{day:"numeric",month:"long",year:"numeric"}) : "—";
+
+      // ===== Partes (SIN línea) =====
+      S.y = bandSoft(doc,"Partes", m, S, W);
+      rowKV(doc, "Arrendador/a", g("arrendador"), m, W, S);
+      rowKV(doc, "DNI/NIE",      N(g("dniArrendador")), m, W, S);
+      rowKV(doc, "Inquilino/a",  g("inquilino"), m, W, S);
+      rowKV(doc, "DNI/NIE",      N(g("dniInquilino")), m, W, S);
+
+      // ===== Inmueble (SIN línea) =====
+      S.y = bandSoft(doc,"Inmueble", m, S, W);
+      rowKV(doc, "Dirección", g("direccion"), m, W, S);
+      rowKV(doc, "Localidad", g("localidad"), m, W, S);
+
+      // ===== Condiciones (SIN línea) =====
+      S.y = bandSoft(doc,"Condiciones", m, S, W);
+      rowKV(doc, "Duración",        (g("duracion") || "—")+" meses", m, W, S);
+      rowKV(doc, "Inicio del plazo", fmt(g("fechaInicio")), m, W, S);
+      rowKV(doc, "Fin del plazo",    fmt(g("fechaFin")), m, W, S);
+      rowKV(doc, "Renta mensual",    (g("renta")  ? EUR.format(Number(g("renta")))  : "—"), m, W, S);
+      rowKV(doc, "Fianza",           (g("fianza") ? EUR.format(Number(g("fianza"))) : "—"), m, W, S);
+
+      // ===== Condiciones específicas (CON línea) =====
+      const zonas = Array.from(document.querySelectorAll('input[name="zc"]:checked')).map(e=>e.value);
+      const serv  = [];
+      if (document.getElementById("incAgua")?.checked) serv.push("Agua");
+      if (document.getElementById("incLuz")?.checked)  serv.push("Luz");
+      if (document.getElementById("incGas")?.checked)  serv.push("Gas");
+      if ((document.getElementById("wifi")?.value||"no")==="si") serv.push("Wi-Fi");
+      const fumar = ((document.getElementById("fumar")?.value||"no")==="si") ? "Permitido" : "No permitido";
+      const invOn = !!document.getElementById("anexoInventario")?.checked;
+
+      S.y = band(doc,"Condiciones específicas", m, S, W);
+      rowKV(doc, "Zonas comunes incluidas", zonas.length? zonas : ["—"], m, W, S);
+      rowKV(doc, "Servicios incluidos",     serv.length?  serv  : ["—"], m, W, S);
+      rowKV(doc, "Política de fumar",       fumar, m, W, S);
+
+      if (invOn){
+        const jumped = paginate(doc, S, NT.LINEH * 2);
+        if (jumped){ S.y = band(doc, "Condiciones específicas (cont.)", m, S, W); }
+        rowKV(doc, "Acceso al inventario", "Sí (Anexo I — Inventario)", m, W, S);
+      }
+
+      // ===== Cláusulas (CON línea) =====
+      const claus = buildClausesFromUI();
+      S.y = band(doc,"Cláusulas", m, S, W);
+      for (let i=0; i<claus.length; i++){
+        const [tit, cuerpo] = claus[i];
+        paginate(doc,S,NT.LINEH);
+        setFont(doc,"bold"); doc.text(`${i+1}. ${tit}`, m, S.y); S.y += 10;
+        setFont(doc,"normal"); S.y = flowPara(doc, cuerpo, m, S.y, W, { S, lh: NT.LINEH, align: "left" });
+        S.y += 8;
+      }
+
+      // ===== Firmas =====
+      reserveSignatures(doc, S, 90);
+      drawSignaturesFooter(doc, g("localidad"), g("arrendador"), g("inquilino"));
+
+      // ===== Anexo I =====
+      const invTxt = (document.getElementById("inventarioTxt")?.value || "");
+      const items  = invOn ? String(invTxt)
+        .split(/\r?\n/)
+        .map(s=>s.trim()).filter(Boolean)
+        .map(l=>{
+          const p = l.split(/\s*[|;,\/—-]\s*/);
+          return [p[0]||"—", p[1]||"—", p[2]||""];
+        }) : [];
+
+      if (items.length){
+        doc.addPage(); S.y = NT.PAGE.margin;
+        S.y = band(doc, "ANEXO I — INVENTARIO", m, S, W);
+        tableSimple(doc, ["Elemento","Estado","Observaciones"], items, m, S, W);
+      }
+
+      // ===== Numeración =====
+      addPageNumbers(doc);
+
+      // Guardar
+      try{ doc.save("Contrato-habitacion.pdf"); }
+      catch{
+        const blob=doc.output('blob'); const url=URL.createObjectURL(blob);
+        const a=document.createElement('a'); a.href=url; a.download="Contrato-habitacion.pdf"; document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(()=>URL.revokeObjectURL(url), 15000);
+      }
+      return true;
+
+    }catch(err){
+      console.error(err);
+      alert("No se pudo generar el PDF. Revisa la consola.");
+      return false;
+    }
+  }
+
+  // API pública / botón
+  window.generarPDF = function(forceOverride){
+    const force = !!forceOverride || !!window.__DEV_MODE;
+    return __genPDF(force);
+  };
+  window.generarPDFForce = function(){ return __genPDF(true); };
+
+  document.getElementById('btnDownload')?.addEventListener('click', ()=>{ void __genPDF(false); });
+  try{ refreshPayUI(); }catch{}
+  </script>
+  <!-- === PDF: FIN === -->
+
+  <!-- === PayPal form FUERA del wizard (POST) === -->
+  <form id="paypalClassicForm" action="https://www.paypal.com/cgi-bin/webscr" method="POST" target="_top" style="display:none">
+    <input type="hidden" name="cmd" value="_xclick">
+    <input type="hidden" name="business" value="oscargrubio@live.com">
+    <input type="hidden" name="item_name" value="Contrato habitación PRO (PDF)">
+    <input type="hidden" name="currency_code" value="EUR">
+    <input type="hidden" name="amount" value="1.00">
+    <input type="hidden" name="no_note" value="1">
+    <input type="hidden" name="no_shipping" value="1">
+    <input type="hidden" id="ppReturn" name="return" value="">
+    <input type="hidden" id="ppCancel" name="cancel_return" value="">
+  </form>
+
+</body>
+</html>

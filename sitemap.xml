@@ -1,18 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://www.jsonbeautifierpro.com/</loc></url>
-  <url><loc>https://www.jsonbeautifierpro.com/convertir-json-a-csv.html</loc></url>
-  <url><loc>https://www.jsonbeautifierpro.com/convertir-json-a-xml.html</loc></url>
-  <url><loc>https://www.jsonbeautifierpro.com/convertir-json-a-yaml.html</loc></url>
-  <url><loc>https://www.jsonbeautifierpro.com/validar-json.html</loc></url>
-  <url><loc>https://www.jsonbeautifierpro.com/exif-debug.html</loc></url>
-  <url><loc>https://www.jsonbeautifierpro.com/contrato-alquiler.html</loc></url>
-  <url><loc>https://www.jsonbeautifierpro.com/privacidad.html</loc></url>
-  <url><loc>https://www.jsonbeautifierpro.com/privacidad-contrato.html</loc></url>
-  <url><loc>https://www.jsonbeautifierpro.com/aviso-legal.html</loc></url>
-  <url><loc>https://www.jsonbeautifierpro.com/cookies.html</loc></url>
-  <url><loc>https://www.jsonbeautifierpro.com/contacto.html</loc></url>
-  <url><loc>https://www.jsonbeautifierpro.com/modelo-contrato-alquiler.html</loc></url>
-  <url><loc>https://www.jsonbeautifierpro.com/contrato-arrendamiento-vivienda.html</loc></url>
-  <url><loc>https://www.jsonbeautifierpro.com/como-hacer-contrato-alquiler.html</loc></url>
+  <!-- Generadores (core) -->
+  <url>
+    <loc>https://www.jsonbeautifierpro.com/contrato-alquiler.html</loc>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://www.jsonbeautifierpro.com/contrato-habitacion.html</loc>
+    <priority>1.00</priority>
+  </url>
+
+  <!-- Landing / guía / modelo -->
+  <url>
+    <loc>https://www.jsonbeautifierpro.com/contrato-arrendamiento-vivienda.html</loc>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.jsonbeautifierpro.com/modelo-contrato-alquiler.html</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://www.jsonbeautifierpro.com/como-hacer-contrato-alquiler.html</loc>
+    <priority>0.80</priority>
+  </url>
+
+  <!-- Home -->
+  <url>
+    <loc>https://www.jsonbeautifierpro.com/</loc>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- Legales -->
+  <url>
+    <loc>https://www.jsonbeautifierpro.com/aviso-legal.html</loc>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://www.jsonbeautifierpro.com/privacidad-contrato.html</loc>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://www.jsonbeautifierpro.com/cookies.html</loc>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://www.jsonbeautifierpro.com/contacto.html</loc>
+    <priority>0.70</priority>
+  </url>
 </urlset>
