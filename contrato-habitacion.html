@@ -177,7 +177,9 @@ label.clause-card.active{
 
 /* 5) Cabecera más resiliente en pantallas estrechas */
 .brand{ min-width: 0; }
-.brand h1{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Ellipsis solo en ≥481px; en móvil dejamos saltos de línea */
+@media (min-width: 481px){
+  .brand h1{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 /* 6) Steps con scroll horizontal táctil */
 .steps{ overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 0; }

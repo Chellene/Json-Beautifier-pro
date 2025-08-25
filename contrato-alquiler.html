@@ -236,7 +236,9 @@
 
 /* Cabecera: evitar que el H1 empuje el CTA */
 .brand{ min-width: 0; }
-.brand h1{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (min-width: 481px){
+  .brand h1{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
 
 /* Steps con scroll horizontal táctil */
 .steps{ overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 0; }
