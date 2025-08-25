@@ -27,7 +27,15 @@
   .logo{height:40px;width:120px}
   .cta{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
   .cta p{margin:0;font-size:13px;color:#64748b}
-
+/* Chips del header: que envuelvan y no se corten */
+.main-header .trust{
+  display:flex; flex-wrap:wrap; gap:6px 8px; align-items:center; max-width:100%;
+}
+.main-header .trust .chip{
+  display:inline-flex; align-items:center; gap:6px;
+  padding:.35rem .7rem; border:1px solid #cfd7e6; border-radius:999px;
+  background:#f8fafc; font-weight:800; color:#334155; line-height:1;
+}
   .btn{display:inline-flex;align-items:center;gap:.6rem;border:1px solid #cfd7e6;background:#fff;border-radius:999px;padding:.7rem 1rem;font-weight:800;cursor:pointer;font-size:14px;box-shadow:0 12px 30px rgba(23,30,70,.08);min-height:44px}
   .btn-primary{background:linear-gradient(90deg,#0ea5e9,#6366f1);border:none;color:#fff}
   .btn-ghost{background:#fff}
@@ -83,6 +91,15 @@
   .clause-card{border:1px solid #e5e7eb;border-radius:12px;padding:10px;background:#fff;display:flex;gap:10px;align-items:flex-start}
   .clause-card h4{margin:.1rem 0;font-size:14px}
   .clause-card p{margin:0;font-size:12.5px;color:#64748b}
+/* Ocultar checkbox interno y resaltar activo (igual que chips) */
+label.clause-card{ cursor: pointer; position: relative; }
+label.clause-card input[type="checkbox"]{
+  appearance: none; position: absolute; inset: 0; opacity: 0;
+}
+label.clause-card.active{
+  border-color:#4c6fff; box-shadow:0 0 0 3px #4c6fff22;
+}
+
   .tag{font-size:11px;border:1px solid #e2e8f0;border-radius:6px;padding:.15rem .4rem;background:#f8fafc;margin-left:6px}
 
   aside.card{display:flex;flex-direction:column}
@@ -110,7 +127,106 @@
   .fs-topbar{position:sticky;top:0;display:flex;gap:8px;background:#fff;padding:6px 0;z-index:2}
   .fs-btn{border:1px solid #cbd5e1;background:#fff;border-radius:999px;padding:.45rem .7rem;cursor:pointer;font-weight:900}
 
-  @media (max-width:480px){.head-wrap{grid-template-columns:1fr}.cta{align-items:flex-start}.search{min-width:0}}
+  @media (max-width:480px){
+  .head-wrap{ grid-template-columns:1fr; }
+  .cta{ align-items:flex-start; }
+  .search{ min-width:0; flex:999 1 auto; }
+  .main-header .trust{ max-width:100%; }
+  .main-header .trust .chip{ font-size:12.5px; }
+}
+
+/* === Paridad móvil con Vivienda + protección de copia === */
+
+/* 1) Formulario a 1 columna en móviles (no apelotonar) */
+@media (max-width: 720px){
+  .form-grid{ grid-template-columns: 1fr; }
+  .seg{ margin-left: 0; }
+}
+/* CONTRAPEADO en móvil (como Vivienda): #step1 vuelve a 2 columnas */
+@media (max-width: 720px){
+  #step1.form-grid{ grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width:360px){
+  #step1.form-grid{ grid-template-columns: 1fr; }
+}
+
+
+/* 2) Toolbar apilada como en Vivienda (<=400px) */
+@media (max-width: 400px){
+  .toolbar{ flex-direction: column; align-items: stretch; }
+}
+/* Altura de la previa en 361–480px (no afecta a <=360px) */
+@media (min-width: 361px) and (max-width: 480px){
+  .preview{ min-height: 480px; }
+}
+
+
+/* 3) Tweaks finos <=360px (idéntico a Vivienda) */
+@media (max-width: 360px){
+  .btn{ min-height: 48px; font-size: 15px; padding: .8rem 1.1rem; }
+  .search{ font-size: 15px; }
+  .preview{ min-height: 420px; } /* Habitación venía con 640px */
+}
+
+/* 4) Inputs iOS sin zoom al enfocar */
+@media (max-width: 480px){
+  .form-grid input, .form-grid select, .form-grid textarea{ font-size: 16px; }
+}
+
+/* 5) Cabecera más resiliente en pantallas estrechas */
+.brand{ min-width: 0; }
+.brand h1{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* 6) Steps con scroll horizontal táctil */
+.steps{ overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 0; }
+.step{ flex: 0 0 auto; padding: 12px 10px; }
+
+/* 7) Rejilla de cláusulas sin desbordar en 320–360px */
+.clause-grid{ grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
+.clause-card, .sum-line, .preview p{ overflow-wrap: anywhere; word-break: normal; }
+/* Evitar que algún hijo fuerce anchuras raras */
+.clause-grid > *{ min-width: 0; }
+
+
+/* Desktop: columnas fijas para uniformidad */
+@media (min-width: 900px){
+  .clause-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1200px){
+  .clause-grid{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* 8) Botones de acción cómodos en móvil y modal con safe-area */
+@media (max-width: 480px){
+  .actions .btn{ width: 100%; }
+}
+.modal .sheet{ padding-bottom: calc(18px + env(safe-area-inset-bottom)); }
+
+/* 9) Anticopia/antiselección también en fullscreen */
+.preview, .preview * , #fsFrame, #fsFrame *{
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -webkit-touch-callout: none; /* iOS: sin menú copiar por long-press */
+}
+#fsFrame{ position: relative; }
+#fsFrame::before{
+  content: attr(data-watermark);
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%) rotate(-22deg);
+  color: #9aa3b51f;
+  font-weight: 900;
+  letter-spacing: .06em;
+  font-size: clamp(22px, 4vw, 38px);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* 10) Mejor tacto (evita retraso de tap) */
+button, .chip, .seg label{ touch-action: manipulation; }
+
   </style>
 <!-- SEO: Product + FAQ + Breadcrumbs (Habitación) -->
 <script type="application/ld+json">
@@ -642,6 +758,22 @@
     return html;
   }
   function lockPreviewEvents(el){ if (!el || el.dataset.locked) return; ["copy","cut","paste","contextmenu"].forEach(ev => el.addEventListener(ev, e=>e.preventDefault())); el.onselectstart = () => false; el.dataset.locked = "1"; }
+// Bloqueo de atajos de copiar/cortar/seleccionar mientras esté abierto el fullscreen
+function toggleCopyGuard(on){
+  const block = (e)=>{
+    if ((e.ctrlKey || e.metaKey) && ["c","x","a","p","s"].includes((e.key||"").toLowerCase())){
+      e.preventDefault();
+    }
+  };
+  if (on){
+    document.addEventListener('keydown', block, true);
+    document._copyGuard = block;
+  }else if (document._copyGuard){
+    document.removeEventListener('keydown', document._copyGuard, true);
+    document._copyGuard = null;
+  }
+}
+
 
   function renderResumen(){ const box=$("resumenBox"); if(box) box.innerHTML = resumenHTML(); }
   function actualizarVista(){
@@ -792,8 +924,20 @@
   window.goStep = goStep;
 
   // ---------- Pantalla completa ----------
-  function openFull(){ const cont=$("fsFrame"); if(!cont) return; $("fs").classList.add('active'); document.body.style.overflow='hidden'; cont.innerHTML = `<div style="padding:18px; transform-origin: top left;">${$("vistaContrato").innerHTML}</div>`; cont.firstElementChild.dataset.z='1'; }
-  function closeFull(){ $("fs").classList.remove('active'); document.body.style.overflow=''; }
+  function openFull(){
+  const cont = $("fsFrame"); if (!cont) return;
+  $("fs").classList.add('active');
+  document.body.style.overflow = 'hidden';
+  cont.innerHTML = `<div style="padding:18px; transform-origin: top left;">${$("vistaContrato").innerHTML}</div>`;
+  cont.firstElementChild.dataset.z = '1';
+  lockPreviewEvents(cont);   // protege copia/selección en fullscreen
+  toggleCopyGuard(true);     // bloquea Cmd/Ctrl+C/X/A/P/S mientras esté abierto
+}
+  function closeFull(){
+  $("fs").classList.remove('active');
+  document.body.style.overflow = '';
+  toggleCopyGuard(false);    // restaura atajos
+}
   function zoom(delta){ const el=$("fsFrame").firstElementChild; if(!el) return; const cur=Number(el.dataset.z||'1'); const nx=Math.max(.5,Math.min(2.2,cur+delta)); el.style.transform=`scale(${nx})`; el.dataset.z=String(nx); }
 
   // === PAGO PAYPAL CLÁSICO (wire + return) ===
@@ -860,6 +1004,33 @@
     goStep(currentStep||1);
 if (window.hasPaid) { goStep(3); }
 refreshPayUI();
+
+// === Sincroniza aria-current con el paso activo (accesibilidad) ===
+(function setupAriaSteps(){
+  const steps = document.querySelectorAll(".steps .step");
+  if (!steps.length) return;
+
+  const sync = () => {
+    let foundActive = false;
+    steps.forEach((el) => {
+      const isActive = el.classList.contains("active");
+      if (isActive && !foundActive) {
+        el.setAttribute("aria-current", "step");
+        foundActive = true;
+      } else {
+        el.removeAttribute("aria-current");
+      }
+    });
+  };
+
+  // Estado inicial (ya con el paso fijado por goStep)
+  sync();
+
+  // Observa cambios de clase cuando cambias de paso
+  const mo = new MutationObserver(sync);
+  steps.forEach(el => mo.observe(el, { attributes: true, attributeFilter: ["class"] }));
+})();
+
     
     // Inputs (validación en vivo + guardado)
     qsa('#contratoForm input, #contratoForm select, #contratoForm textarea').forEach(el=>{
