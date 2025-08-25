@@ -100,6 +100,8 @@
   /* CLS */
   .logo{height:40px;width:120px}
 .cta{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.cta p{ margin:0; font-size:13px; color:#64748b; }
+
 @media (max-width:480px){.head-wrap{grid-template-columns:1fr}.cta{align-items:flex-start}}
 
   .btn{display:inline-flex;align-items:center;gap:.6rem;border:1px solid #cfd7e6;background:#fff;border-radius:999px;padding:.7rem 1rem;font-weight:800;cursor:pointer;font-size:14px;box-shadow:0 12px 30px rgba(23,30,70,.08);min-height:44px}
@@ -228,6 +230,7 @@
   .cta{ align-items:flex-start; }
   .main-header .trust{ max-width:100%; }
   .main-header .trust .chip{ font-size:12.5px; }
+  .brand h1{ white-space: normal; overflow: visible; text-overflow: clip; }
 }
 /* === Protección de copia en previa y fullscreen + mejoras móviles suaves === */
 
@@ -307,6 +310,7 @@ button, .chip, .seg label{ touch-action: manipulation; }
         <h1>Contrato de Vivienda PRO</h1>
       </div>
       <div class="cta">
+  <p>¿Necesitas un contrato de habitación?</p>
   <button class="btn btn-primary" type="button" onclick="location.href='contrato-habitacion.html'">Ir a contrato de habitación</button>
   <div class="trust" style="margin-top:8px">
     <span class="chip"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Pago seguro</span>
