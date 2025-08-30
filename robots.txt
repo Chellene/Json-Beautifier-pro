@@ -1,5 +1,7 @@
 # robots.txt — JSON Beautifier PRO (2025)
 User-agent: *
+Disallow: /*?dev=
+Disallow: /*?from=
 Disallow:
 
 # Recursos estáticos (permitidos)

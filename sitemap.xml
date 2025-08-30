@@ -1,50 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Generadores (core) -->
+  <url>
+    <loc>https://www.jsonbeautifierpro.com/</loc>
+    <lastmod>2025-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
   <url>
     <loc>https://www.jsonbeautifierpro.com/contrato-alquiler.html</loc>
+    <lastmod>2025-08-29</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.00</priority>
-  </url>
-  <url>
-    <loc>https://www.jsonbeautifierpro.com/contrato-habitacion.html</loc>
-    <priority>1.00</priority>
-  </url>
-
-  <!-- Landing / guía / modelo -->
-  <url>
-    <loc>https://www.jsonbeautifierpro.com/contrato-arrendamiento-vivienda.html</loc>
-    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.jsonbeautifierpro.com/modelo-contrato-alquiler.html</loc>
-    <priority>0.80</priority>
+    <lastmod>2025-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://www.jsonbeautifierpro.com/contrato-arrendamiento-vivienda.html</loc>
+    <lastmod>2025-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.90</priority>
   </url>
   <url>
     <loc>https://www.jsonbeautifierpro.com/como-hacer-contrato-alquiler.html</loc>
-    <priority>0.80</priority>
+    <lastmod>2025-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
   </url>
-
-  <!-- Home -->
   <url>
-    <loc>https://www.jsonbeautifierpro.com/</loc>
+    <loc>https://www.jsonbeautifierpro.com/contrato-habitacion.html</loc>
+    <lastmod>2025-08-29</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>0.90</priority>
   </url>
-
-  <!-- Legales -->
   <url>
     <loc>https://www.jsonbeautifierpro.com/aviso-legal.html</loc>
+    <lastmod>2025-08-29</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.70</priority>
   </url>
   <url>
     <loc>https://www.jsonbeautifierpro.com/privacidad-contrato.html</loc>
-    <priority>0.70</priority>
+    <lastmod>2025-08-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.jsonbeautifierpro.com/cookies.html</loc>
+    <lastmod>2025-08-29</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.70</priority>
   </url>
   <url>
     <loc>https://www.jsonbeautifierpro.com/contacto.html</loc>
+    <lastmod>2025-08-29</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.70</priority>
   </url>
 </urlset>

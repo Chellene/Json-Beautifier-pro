@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="shortcut icon" href="favicon.ico"> <!-- opcional: fallback si algún navegador lo usa -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contrato de Vivienda PRO — Generador de PDF estilo notaría por 1 €</title>
@@ -20,6 +22,19 @@
   <meta name="twitter:title" content="Generador de contrato de vivienda — PDF estilo notaría (1 €)" />
   <meta name="twitter:description" content="Crea tu contrato en minutos, todo en tu navegador. PDF profesional listo para firmar por 1 €." />
   <meta name="twitter:image" content="https://www.jsonbeautifierpro.com/logo.svg" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://www.jsonbeautifierpro.com/#org",
+  "name": "JSON Beautifier PRO",
+  "url": "https://www.jsonbeautifierpro.com/",
+  "logo": "https://www.jsonbeautifierpro.com/logo.svg"
+}
+</script>
+<meta property="og:site_name" content="JSON Beautifier PRO" />
+
+
 
   <!-- Schema.org: Product -->
 <script type="application/ld+json">
@@ -47,36 +62,58 @@
   }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Generador de contrato de alquiler de vivienda",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": "1.00",
+    "priceCurrency": "EUR",
+    "availability": "https://schema.org/InStock",
+    "url": "https://www.jsonbeautifierpro.com/contrato-alquiler.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "@id": "https://www.jsonbeautifierpro.com/#org"
+  },
+  "url": "https://www.jsonbeautifierpro.com/contrato-alquiler.html"
+}
+</script>
 
-  <!-- Schema.org: BreadcrumbList -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"BreadcrumbList",
-    "itemListElement":[
-      {"@type":"ListItem","position":1,"name":"Inicio","item":"https://www.jsonbeautifierpro.com/"},
-      {"@type":"ListItem","position":2,"name":"Generadores","item":"https://www.jsonbeautifierpro.com/modelo-contrato-alquiler.html"},
-      {"@type":"ListItem","position":3,"name":"Contrato de vivienda PRO","item":"https://www.jsonbeautifierpro.com/contrato-alquiler.html"}
-    ]
-  }
-  </script>
 
-  <!-- Schema.org: FAQPage -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"FAQPage",
-    "mainEntity":[
-      {"@type":"Question","name":"¿Es válido legalmente este contrato?",
-       "acceptedAnswer":{"@type":"Answer","text":"Sí. Es un contrato privado entre particulares ajustado a la LAU vigente en España."}},
-      {"@type":"Question","name":"¿Necesito registrarme o subir datos?",
-       "acceptedAnswer":{"@type":"Answer","text":"No. Todo se genera en tu navegador y puedes descargarlo tras pagar 1 €."}},
-      {"@type":"Question","name":"¿Sirve para toda España?",
-       "acceptedAnswer":{"@type":"Answer","text":"Sí, el modelo está adaptado a la normativa española y es válido en todo el territorio nacional."}}
-    ]
-  }
-  </script>
+<!-- Schema.org: FAQPage -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {
+      "@type":"Question",
+      "name":"¿Es válido legalmente este contrato?",
+      "acceptedAnswer":{"@type":"Answer","text":"Sí. Es un contrato privado entre particulares ajustado a la LAU vigente en España."}
+    },
+    {
+      "@type":"Question",
+      "name":"¿Necesito registrarme o subir datos?",
+      "acceptedAnswer":{"@type":"Answer","text":"No. Todo se genera en tu navegador y puedes descargarlo tras pagar 1 €."}
+    },
+    {
+      "@type":"Question",
+      "name":"¿Sirve para toda España?",
+      "acceptedAnswer":{"@type":"Answer","text":"Sí, el modelo está adaptado a la normativa española y es válido en todo el territorio nacional."}
+    }
+  ]
+}
+</script>
 
+
+
+
+ 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
@@ -297,12 +334,41 @@
 /* Safe-area en modal + mejor tacto */
 .modal .sheet{ padding-bottom: calc(18px + env(safe-area-inset-bottom)); }
 button, .chip, .seg label{ touch-action: manipulation; }
+/* Toggle "Incluir sello": aspecto de checkbox visible dentro del chip */
+#sealToggle{
+  display:inline-flex; align-items:center; gap:8px;
+  cursor:pointer; user-select:none;
+}
+#sealToggle .box{
+  position:relative; width:18px; height:18px; border:2px solid #cbd5e1;
+  border-radius:4px; display:inline-block; flex:0 0 18px; background:#fff;
+}
+#sealToggle input[type="checkbox"]{
+  appearance:none; position:absolute; inset:0; opacity:0;
+}
+#sealToggle input[type="checkbox"]:focus + .box{
+  outline: 2px solid #4c6fff; outline-offset: 2px;
+}
+#sealToggle input[type="checkbox"]:checked + .box{
+  background:#4c6fff; border-color:#4c6fff;
+}
+#sealToggle input[type="checkbox"]:checked + .box::after{
+  content:""; position:absolute; left:5px; top:2px;
+  width:4px; height:8px; border-right:2px solid #fff; border-bottom:2px solid #fff;
+  transform:rotate(45deg);
+}
+
+/* "Pago verificado" como insignia informativa, no botón */
+#paidSeal{
+  cursor:default; pointer-events:none;
+  background:#eef2ff; border-color:#cfd7e6; color:#1e293b; box-shadow:none;
+}
+
   </style>
 
   <!-- PayPal SDK desactivado (evita 400 sin client-id).
   <script src="https://www.paypal.com/sdk/js?client-id=TU_CLIENT_ID&currency=EUR" defer></script>
   -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
   <header class="main-header">
@@ -315,9 +381,29 @@ button, .chip, .seg label{ touch-action: manipulation; }
   <p>¿Necesitas un contrato de habitación?</p>
   <button class="btn btn-primary" type="button" onclick="location.href='contrato-habitacion.html'">Ir a contrato de habitación</button>
   <div class="trust" style="margin-top:8px">
-    <span class="chip"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Pago seguro</span>
-    <span class="chip"><i class="fa-solid fa-brain" aria-hidden="true"></i> Todo en tu navegador</span>
-    <span class="chip"><i class="fa-solid fa-file-signature" aria-hidden="true"></i> PDF estilo notaría</span>
+    <span class="chip">
+  <!-- Escudo -->
+  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" role="img">
+    <path d="M12 2l7 3v6c0 5-3.4 9-7 11-3.6-2-7-6-7-11V5l7-3zM7 8v3c0 3.9 2.6 7.3 5 9 2.4-1.7 5-5.1 5-9V6.6L12 4.6 7 6.6V8z"></path>
+  </svg>
+  Pago seguro
+</span>
+<span class="chip">
+  <!-- Cerebro -->
+  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" role="img">
+    <path d="M8.5 3A3.5 3.5 0 0 0 5 6.5V7a3 3 0 0 0-2 2.8c0 1 .5 1.9 1.3 2.4A3 3 0 0 0 6 16v.5A3.5 3.5 0 0 0 9.5 20H10V8a5 5 0 0 0-1.5-5zM14.5 3A5 5 0 0 0 13 8v12h.5A3.5 3.5 0 0 0 17 16.5V16a3 3 0 0 0 1.7-3.8 2.9 2.9 0 0 0 1.3-2.3A3 3 0 0 0 18 7v-.5A3.5 3.5 0 0 0 14.5 3z"></path>
+  </svg>
+  Todo en tu navegador
+</span>
+<span class="chip">
+  <!-- Firma -->
+  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" role="img">
+    <path d="M4 19h16v2H4zM7 13c.8-1.6 2.1-2.4 3.1-2.2.8.2 1.4.9 1.9 2 .5-1 1.2-1.8 2-2 .9-.2 2 .4 3 2l-1.7 1c-.6-.9-1-.9-1.2-.9-.4.1-.8.7-1.2 1.9l-1.8-.7c-.5-1.2-.9-1.7-1.2-1.8-.3 0-.9.4-1.5 1.6L7 13z"></path>
+  </svg>
+  PDF estilo notaría
+</span>
+
+
   </div>
 </div>
     </div>
@@ -339,41 +425,179 @@ button, .chip, .seg label{ touch-action: manipulation; }
           <section class="card left-col">
             <div class="toolbar">
               <button class="btn btn-ghost" id="btnClear" type="button">Limpiar</button>
-              <label class="chip" id="chipPersist"><input type="checkbox" id="persistToggle" checked> Guardar datos en tu navegador</label>
+              <label class="chip" id="chipPersist">
+  <input type="checkbox" id="persistToggle"> Guardar datos en tu navegador
+</label>
             </div>
 
             <form id="contratoForm" novalidate autocomplete="on" style="flex:1">
               <!-- PASO 1 -->
               <div id="step1" class="form-grid" aria-labelledby="s1">
                 <h3 id="s1" style="grid-column:1/-1;margin:.2rem 0">Datos del contrato</h3>
+                <h3 style="grid-column:1/-1;margin:.2rem 0">Partes del contrato</h3>
+                 <label>Nombre del arrendador
+  <input id="arrendador" name="arrendador" required
+         autocomplete="section-arr name" aria-describedby="e-arrendador" />
+</label>
+<label>DNI/NIE del arrendador
+  <input id="dniArrendador" name="dniArrendador" required
+         autocomplete="off"
+         placeholder="Ej.: 12345678Z o X1234567L" />
+</label>
+<div id="e-arrendador" class="err"></div>
+<div id="e-dniArrendador" class="err"></div>
 
-                <label>Dirección completa
-                  <input id="direccion" required autocomplete="street-address" aria-describedby="e-dir" />
-                </label><div></div><div id="e-dir" class="err" aria-live="polite"></div>
 
-                <label>Nombre del arrendador
-                  <input id="arrendador" required autocomplete="name" aria-describedby="e-arr" />
-                </label>
-                <label>DNI/NIE del arrendador
-                  <input id="dniArrendador" required aria-describedby="e-dna" />
-                </label>
-                <div id="e-arr" class="err"></div><div id="e-dna" class="err"></div>
+<!-- Tipo de persona (Arrendador) + campos de empresa (se muestran solo si es jurídica) -->
+<label>Tipo de persona (arrendador)
+  <select id="tipoArrendador">
+    <option value="fisica" selected>Persona física</option>
+    <option value="juridica">Persona jurídica (empresa)</option>
+  </select>
+</label>
+<label class="onlyJ" data-for="arr">Razón social (si es empresa)
+  <input id="razonArr" placeholder="Ej.: Inmobiliaria XYZ, S.L." />
+</label>
+<div class="err"></div><div class="err"></div>
+
+<label class="onlyJ" data-for="arr">CIF/NIF empresa
+  <input id="cifArr" name="cifArr" autocomplete="off" placeholder="Ej.: B12345678" />
+</label>
+<label class="onlyJ" data-for="arr">Representante
+  <input id="repArr" name="repArr" autocomplete="off" placeholder="Nombre y apellidos" />
+</label>
+<div class="err"></div><div class="err"></div>
+<label class="onlyJ" data-for="arr">DNI del representante
+  <input id="dniRepArr" name="dniRepArr" autocomplete="off" placeholder="Ej.: 12345678Z" />
+</label>
+<label>Domicilio arrendador (opcional)
+  <input id="domicilioArr" placeholder="C/ …, nº…, localidad" />
+</label>
+<div class="err"></div><div class="err"></div>
+
+<!-- Contacto a efectos de notificaciones -->
+<label>Email arrendador (notificaciones)
+  <input id="emailArr" type="email" placeholder="ejemplo@mail.com" />
+</label>
+<label>Teléfono arrendador
+  <input id="telArr" inputmode="tel" placeholder="+34 …" />
+</label>
+<div class="err"></div><div class="err"></div>
+
 
                 <label>Nombre del inquilino
-                  <input id="inquilino" required autocomplete="name" aria-describedby="e-inq" />
+                  <input id="inquilino" name="inquilino" required
+       autocomplete="section-inq name" aria-describedby="e-inq" />
+
                 </label>
                 <label>DNI/NIE del inquilino
-                  <input id="dniInquilino" required aria-describedby="e-dni" />
-                </label>
+  <input id="dniInquilino" name="dniInquilino" required
+       autocomplete="off" aria-describedby="e-dni"
+       placeholder="Ej.: 12345678Z o X1234567L" />
+</label>
                 <div id="e-inq" class="err"></div><div id="e-dni" class="err"></div>
+<!-- Tipo de persona (Inquilino) -->
+<label>Tipo de persona (inquilino)
+  <select id="tipoInquilino">
+    <option value="fisica" selected>Persona física</option>
+    <option value="juridica">Persona jurídica (empresa)</option>
+  </select>
+</label>
+<label class="onlyJ" data-for="inq">Razón social (si es empresa)
+  <input id="razonInq" />
+</label>
+<div class="err"></div><div class="err"></div>
+<label class="onlyJ" data-for="inq">CIF/NIF empresa
+  <input id="cifInq" name="cifInq" autocomplete="off" placeholder="Ej.: B12345678" />
+</label>
+<label class="onlyJ" data-for="inq">Representante
+  <input id="repInq" name="repInq" autocomplete="off" placeholder="Nombre y apellidos" /></label>
+<div class="err"></div><div class="err"></div>
 
-                <label>Localidad
-                  <input id="localidad" required aria-describedby="e-loc" />
-                </label>
-                <label>Duración (meses)
+<label class="onlyJ" data-for="inq">DNI del representante
+  <input id="dniRepInq" name="dniRepInq" autocomplete="off" placeholder="Ej.: 12345678Z" />
+</label>
+
+<label>Email inquilino (notificaciones)
+  <input id="emailInq" type="email" placeholder="ejemplo@mail.com" />
+</label>
+<div class="err"></div><div class="err"></div>
+
+<label>Teléfono inquilino
+  <input id="telInq" inputmode="tel" placeholder="+34 …" />
+</label><div class="err"></div><div class="err"></div>
+<h3 style="grid-column:1/-1;margin:.2rem 0">Datos de la vivienda</h3>
+<label>Dirección completa
+  <input id="direccion" name="direccion" required
+         autocomplete="section-inmueble street-address" aria-describedby="e-dir" />
+</label>
+<label>Localidad
+  <input id="localidad" name="localidad" required
+         autocomplete="section-inmueble address-level2" aria-describedby="e-loc" />
+</label>
+<div id="e-dir" class="err" aria-live="polite"></div>
+<div id="e-loc" class="err"></div>
+
+
+
+                
+		<!-- ——— Datos registrales / catastrales ——— -->
+<h3 style="grid-column:1/-1;margin:.2rem 0">Datos registrales / catastrales (opcional)</h3>
+
+<label>Referencia catastral
+  <input id="refCatastral" placeholder="Ej.: 1234567AB1234C0001DE">
+</label>
+<label title="Oficina/circunscripción registral">Registro de la Propiedad
+  <input id="regPropiedad"
+         placeholder="Ej.: Madrid nº 12"
+         title="Oficina/circunscripción registral">
+</label>
+
+<div class="err"></div><div class="err"></div>
+
+<label>Tomo
+  <input id="regTomo" placeholder="Ej.: 215">
+</label>
+<label>Libro
+  <input id="regLibro" placeholder="Ej.: 87">
+</label>
+<div class="err"></div><div class="err"></div>
+
+<label>Folio
+  <input id="regFolio" placeholder="Ej.: 192">
+</label>
+<label>Finca
+  <input id="regFinca" placeholder="Ej.: 12345">
+</label>
+<div class="err"></div><div class="err"></div>
+
+<h3 style="grid-column:1/-1;margin:.2rem 0">Situación del mercado y CEE (opcional)</h3>
+
+<label>Zona tensionada
+  <select id="zonaTensionada">
+    <option value="">—</option>
+    <option value="si">Sí</option>
+    <option value="no">No</option>
+  </select>
+</label>
+<label>CEE — Clase / Letra
+  <input id="ceeLetra" placeholder="Ej.: C">
+</label>
+<div class="err"></div><div class="err"></div>
+
+<label>CEE — Nº de registro
+  <input id="ceeRegistro" placeholder="Ej.: CLM-2025-000123">
+</label>
+<label>CEE — Fecha de emisión
+  <input id="ceeFecha" type="date">
+</label>
+<div class="err"></div><div class="err"></div>
+<h3 style="grid-column:1/-1;margin:.2rem 0">Condiciones económicas</h3>
+<label>Duración (meses)
                   <input id="duracion" type="number" min="1" required aria-describedby="e-dur" />
                 </label>
-                <div id="e-loc" class="err"></div><div id="e-dur" class="err"></div>
+                <div id="e-dur" class="err"></div>
+
 
                 <label>Fecha de inicio
                   <input id="fechaInicio" type="date" required aria-describedby="e-fi" />
@@ -405,6 +629,8 @@ button, .chip, .seg label{ touch-action: manipulation; }
 
                     <label class="chip" id="chipInv"><input type="checkbox" id="anexoInventario" /> Anexo I: Inventario (opcional)</label>
                     <label class="chip" id="chipCont"><input type="checkbox" id="anexoContadores" /> Anexo II: Lecturas de contadores (opcional)</label>
+<label class="chip" id="chipNotas"><input type="checkbox" id="anexoNotas" /> Anexo III: Notas explicativas (opcional)</label>
+
 
                     <div class="seg" id="langSeg" role="group" aria-label="Modo de lenguaje">
                       <label for="langJ"><input type="radio" name="lang" id="langJ" value="juridico" checked> Jurídico</label>
@@ -437,10 +663,14 @@ button, .chip, .seg label{ touch-action: manipulation; }
                           <label>Gas (m³)<input id="contGas" type="number" min="0" step="0.01" /></label>
                           <label>Nº contador (Gas)<input id="contGasNum" type="text" /></label>
                         </div>
-                        <label>Observaciones
+                     <label>Observaciones
                           <textarea id="contObs" placeholder="Incidencias o lecturas adicionales…"></textarea>
                         </label>
                       </div>
+<div id="anexoNotasBox" style="display:none">
+  <h4>Anexo III — Notas explicativas</h4>
+  <p>Se adjuntará un anexo con notas informativas (LAU, duración y prórrogas, desistimiento, gastos, fianza, prórroga tácita, resolución y jurisdicción, CEE y zona tensionada), tomando como referencia el modelo oficial.</p>
+</div>
                     </div>
                   </div>
                 </div>
@@ -451,7 +681,7 @@ button, .chip, .seg label{ touch-action: manipulation; }
                 <h3 id="s3" style="margin:.2rem 0">Resumen y pago</h3>
                 <div class="summary-grid">
                   <div id="resumenBox" class="sum-card" aria-live="polite"></div>
-
+		  <div id="sumAnexos" class="sum-card" aria-live="polite"></div>
                   <div class="pay-card" id="payCard">
                     <div class="pay-top">
                       <div>
@@ -466,8 +696,22 @@ button, .chip, .seg label{ touch-action: manipulation; }
                       <div><span class="tick">✓</span> Guardado local opcional</div>
                     </div>
 
-                    <div id="paypal-buttons"></div>
-                    <button type="button" class="btn btn-pay" id="btnPayClassic">Pagar con PayPal</button>
+<div id="ppNcpWrap" style="display:inline-grid;justify-items:center;align-content:start;gap:0.5rem;">
+  <style>
+    .pp-ZGPA6FGJKB4DW{ text-align:center;border:none;border-radius:.25rem;min-width:11.625rem;
+      padding:0 2rem;height:2.625rem;font-weight:bold;background:#FFD140;color:#000; font-family:"Helvetica Neue",Arial,sans-serif;font-size:1rem;line-height:1.25rem;cursor:pointer; }
+  </style>
+  <!-- el botón referencia al form real por id -->
+  <button class="pp-ZGPA6FGJKB4DW" type="submit" form="ppNcpForm">Comprar ahora</button>
+  <img src="https://www.paypalobjects.com/images/Debit_Credit_APM.svg" alt="cards" />
+  <section style="font-size:.75rem;">
+    Tecnología de <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="paypal" style="height:.875rem;vertical-align:middle;"/>
+  </section>
+</div>
+
+
+
+                   
                     <p id="payError" class="err" aria-live="polite"></p>
                     <p style="font-size:12px;color:#475569;margin-top:6px">
   Producto digital. No admite devoluciones (art. 103.m TRLGDCU).
@@ -487,13 +731,18 @@ button, .chip, .seg label{ touch-action: manipulation; }
                 <button type="button" class="btn btn-primary" id="btnNext">Siguiente →</button>
               </div>
             </form>
+<form id="ppNcpForm"
+                  action="https://www.paypal.com/ncp/payment/ZGPA6FGJKB4DW"
+                  method="post"
+                  target="_blank"></form>
           </section>
 
           <aside class="card">
             <h3 style="margin:0 0 8px 0;">Vista previa protegida</h3>
             <div class="preview" id="vistaContrato"></div>
             <div class="actions"><button class="btn" type="button" id="btnFullSide">Pantalla completa</button></div>
-            <div style="margin-top:6px"><meter id="meter" min="0" max="100" value="0"></meter> <b id="pct">0 % completado</b></div>
+            <div style="margin-top:6px"><meter id="meter" min="0" max="100" value="0" aria-label="Progreso de completado del formulario"></meter>
+ <b id="pct">0 % completado</b></div>
           </aside>
         </div>
       </div>
@@ -509,19 +758,13 @@ button, .chip, .seg label{ touch-action: manipulation; }
   </details>
 
   <details class="mb-3">
-    <summary class="font-medium">¿Necesito registrarme o subir datos?</summary>
+    <summary class="font-medium">¿Necesito notario o registro?</summary>
     <div class="mt-2 text-sm" style="line-height:1.65">
-      No. Todo se genera en tu navegador y puedes descargarlo tras pagar 1 €.
-    </div>
-  </details>
-
-  <details class="mb-3">
-    <summary class="font-medium">¿Sirve para toda España?</summary>
-    <div class="mt-2 text-sm" style="line-height:1.65">
-      Sí, el modelo está adaptado a la normativa española y es válido en todo el territorio nacional.
+      No, no es obligatorio. El contrato privado firmado por ambas partes es válido.
     </div>
   </details>
 </section>
+
   </main>
 
   <footer class="container">
@@ -529,6 +772,7 @@ button, .chip, .seg label{ touch-action: manipulation; }
   <a href="privacidad-contrato.html?from=vivienda">Privacidad</a> •
   <a href="cookies.html?from=vivienda">Cookies</a> •
   <a href="contacto.html?from=vivienda">Contacto</a>
+• <span>JSON Beautifier PRO © 2025</span>
 </footer>
 
 
@@ -550,6 +794,25 @@ button, .chip, .seg label{ touch-action: manipulation; }
     const LSKEY   = "contratoVivienda_pro_STABLE";
     const STEP_K  = LSKEY + "_step";
     const $  = (id) => document.getElementById(id);
+    const PRESET_K = LSKEY + "_preset";
+window.LSKEY   = LSKEY;
+window.STEP_K  = STEP_K;
+window.PRESET_K= PRESET_K;
+
+
+// — Vinculación del pago a los datos (sin backend) —
+function bindStr(){
+  const g=id=> (document.getElementById(id)?.value || "").trim().toUpperCase();
+  // Solo campos “núcleo” que definen el contrato
+  return JSON.stringify({
+    tA:g("tipoArrendador"), arr:g("arrendador"), rzA:g("razonArr"), cifA:g("cifArr"), repA:g("repArr"), dniRA:g("dniRepArr"),
+    tI:g("tipoInquilino"), inq:g("inquilino"), rzI:g("razonInq"), cifI:g("cifInq"), repI:g("repInq"), dniRI:g("dniRepInq"),
+    dir:g("direccion"), loc:g("localidad"),
+    fi:g("fechaInicio"), ff:g("fechaFin"),
+    renta:g("renta"), fianza:g("fianza")
+  });
+}
+
 // Bloqueo de copia/selección dentro de un scope concreto (fullscreen)
 function lockCopyScope(root){
   if (!root || root.dataset.locked) return;
@@ -583,26 +846,13 @@ function toggleCopyGuard(on){
     let orderId  = localStorage.getItem(LSKEY + "_order") || "";
     let langMode = localStorage.getItem(LSKEY + "_lang")  || "juridico";
 
-    // Retorno PayPal clásico (con email personal)
-    const url = new URL(location.href);
-    if (url.searchParams.get("pago_confirmado")==="1"){
-      hasPaid = true; orderId = "PAYPAL-OK";
-      localStorage.setItem(LSKEY+"_paid","true");
-      localStorage.setItem(LSKEY+"_order",orderId);
-      currentStep = 3; localStorage.setItem(STEP_K,"3");
-      try{ url.searchParams.delete("pago_confirmado"); history.replaceState({}, "", url.toString()); }catch{}
-    }
-    if (url.searchParams.get("pago_cancelado")==="1"){
-      currentStep = 3; localStorage.setItem(STEP_K,"3");
-      try{ url.searchParams.delete("pago_cancelado"); history.replaceState({}, "", url.toString()); }catch{}
-    }
+    
 
     // --------- Cláusulas ----------
     window.CLAUSES_MANDATORY = [
       {title:"Objeto y destino", J:"La vivienda se destina a residencia habitual del arrendatario.", C:"La vivienda es para vivir habitualmente."},
       {title:"Duración y prórrogas", J:"Duración pactada con prórrogas legales conforme a la LAU.", C:"Dura lo acordado y se prorroga según Ley."},
-      {title:"Precio y forma de pago", J:"La renta se abona mensualmente por adelantado entre los días 1 y 5.", C:"Se paga cada mes por adelantado (día 1 al 5)."},
-      {title:"Fianza", J:"Se entrega la fianza legal; se devolverá según proceda.", C:"Se deja fianza y se devuelve si corresponde."},
+      {title:"Precio y forma de pago", J:"La renta se abona mensualmente por adelantado dentro de los días 1 a 7.", C:"Se paga cada mes por adelantado (del día 1 al 7)."},      {title:"Fianza", J:"Se entrega la fianza legal; se devolverá según proceda.", C:"Se deja fianza y se devuelve si corresponde."},
       {title:"Conservación y reparaciones (art. 21 LAU)", J:"El arrendador realizará las reparaciones necesarias para conservar la vivienda en condiciones de habitabilidad; el arrendatario asumirá las pequeñas reparaciones por el uso ordinario.", C:"El casero repara lo importante; el inquilino lo menor por uso."},
       {title:"Entrega y devolución del inmueble (CC 1554 y 1561)", J:"El arrendador entrega la vivienda apta para el uso; al final, el arrendatario la restituirá en el estado recibido salvo el desgaste normal.", C:"Se entrega apta y se devuelve como se recibió (salvo desgaste)."}
     ];
@@ -624,7 +874,15 @@ function toggleCopyGuard(on){
       {id:"datos",       title:"Protección de datos",          J:"Tratamiento de datos conforme a normativa vigente.", C:"Datos según ley."},
       {id:"seguro",      title:"Seguro y daños",               J:"El arrendatario responderá por daños causados por uso negligente.", C:"Respondes por daños por mal uso."},
       {id:"notifica",    title:"Notificaciones",               J:"Notificaciones al domicilio y/o email designado.", C:"Avisos al domicilio/email acordados."},
-      {id:"desist",      title:"Desistimiento (art. 11 LAU)",  J:"El arrendatario podrá desistir del contrato cumplidos 6 meses, con preaviso de 30 días; se pacta indemnización proporcional si procede.", C:"Puedes irte tras 6 meses con 30 días de aviso; puede haber indemnización proporcional."}
+      {id:"desist",      title:"Desistimiento (art. 11 LAU)",  J:"El arrendatario podrá desistir del contrato cumplidos 6 meses, con preaviso de 30 días; se pacta indemnización proporcional si procede.", C:"Puedes irte tras 6 meses con 30 días de aviso; puede haber indemnización proporcional."},
+{ id:"resol_jurisdiccion", title:"Resolución y jurisdicción",
+  J:"El incumplimiento grave facultará la resolución del contrato (art. 1124 CC y art. 27 LAU). Para controversias, las partes se someten a los Juzgados del partido judicial donde radique la finca, salvo norma imperativa en contrario.",
+  C:"Si hay incumplimiento grave, el contrato puede resolverse. Los conflictos se verán en los Juzgados de la localidad del inmueble (salvo que la ley diga otra cosa)." },
+
+{ id:"adr", title:"Solución amistosa / ADR",
+  J:"Las partes procurarán resolver amistosamente cualquier controversia. Podrán acudir a mecanismos de resolución alternativa de conflictos (mediación/ADR) antes de la vía judicial.",
+  C:"Antes de ir a juicio, intentaremos una solución amistosa o mediación (ADR)." }
+
     ];
     let selectedClauses = new Set();
     window.selectedClauses = selectedClauses; // usado por el PDF
@@ -633,6 +891,7 @@ function toggleCopyGuard(on){
     const DNI_LETTERS="TRWAGMYFPDXBNJZSQVHLCKE";
     const normalizeId = v => (v||"").toUpperCase().replace(/\s+/g,"").trim();
     const calcD = n => DNI_LETTERS[Number(n)%23];
+
     function validateDNIorNIE(raw){
       const v = normalizeId(raw);
       if (/^\d{8}[A-Z]$/.test(v)) return calcD(v.slice(0,8))===v.slice(8);
@@ -640,31 +899,209 @@ function toggleCopyGuard(on){
         const n=v.replace(/^X/,"0").replace(/^Y/,"1").replace(/^Z/,"2");
         return calcD(n.slice(0,8))===v.slice(-1);
       }
+
+
       return false;
     }
+
+function validateCIF(raw){
+  const v = (raw||"").toUpperCase().replace(/\s+/g,"");
+  if (!/^[ABCDEFGHJKLMNPQRSUVW]\d{7}[0-9A-J]$/.test(v)) return false;
+
+  const body = v.slice(1,8);
+  const sumEven = body.split("").map(Number).filter((_,i)=>i%2===1).reduce((a,b)=>a+b,0);
+  const sumOdd  = body.split("").map(Number).filter((_,i)=>i%2===0)
+                     .map(d=>{ const x=d*2; return Math.floor(x/10)+(x%10); })
+                     .reduce((a,b)=>a+b,0);
+  const t = sumEven + sumOdd;
+  const cd = (10 - (t % 10)) % 10;               // dígito control
+  const cl = "JABCDEFGHI"[cd];                   // letra control
+
+  const last = v.slice(-1);
+  return (last === String(cd) || last === cl);
+}
     const fmtFecha = v => !v ? "" : new Date(v+"T00:00:00").toLocaleDateString("es-ES",{day:"numeric",month:"long",year:"numeric"});
-    const requiredIds = ["direccion","arrendador","dniArrendador","inquilino","dniInquilino","localidad","duracion","fechaInicio","fechaFin","renta","fianza"];
-    function setErr(id,msg="Revisa este campo.") {
-      const map={direccion:"e-dir",arrendador:"e-arr",dniArrendador:"e-dna",inquilino:"e-inq",dniInquilino:"e-dni",localidad:"e-loc",duracion:"e-dur",fechaInicio:"e-fi",fechaFin:"e-ff",renta:"e-renta",fianza:"e-fianza"};
-      const eid=map[id]; if(eid) document.getElementById(eid).textContent = msg;
+const fmtEUR = v => {
+  const n = Number(String(v).replace(",","."));
+  return Number.isFinite(n) ? n.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : (v||"—");
+};
+
+    function requiredIds(){
+  const tA = $("tipoArrendador")?.value || "fisica";
+  const tI = $("tipoInquilino")?.value || "fisica";
+  const base = ["direccion","localidad","duracion","fechaInicio","fechaFin","renta","fianza"];
+  const parteA = (tA==="juridica") ? ["razonArr","cifArr","repArr","dniRepArr"] : ["arrendador","dniArrendador"];
+  const parteI = (tI==="juridica") ? ["razonInq","cifInq","repInq","dniRepInq"] : ["inquilino","dniInquilino"];
+  return [...base, ...parteA, ...parteI];
+}
+// Busca el mejor "slot" <div class="err"> para un campo dado
+function nearestErrSlot(inputEl){
+  if (!inputEl) return null;
+
+  // 1) Mapeo explícito: <div id="e-<id>>…</div>
+  const explicit = document.getElementById("e-" + inputEl.id);
+  if (explicit) return explicit;
+
+  // 2) Detectar patrón grid: label, label, err, err  (asignar 1er err al 1er label y 2º err al 2º label)
+  const label = inputEl.closest("label");
+  if (label){
+    const next = label.nextElementSibling;
+    if (next && next.tagName && next.tagName.toUpperCase()==="LABEL"){
+      const firstErr  = next.nextElementSibling;
+      const secondErr = firstErr?.nextElementSibling;
+      if (firstErr?.classList?.contains("err") && secondErr?.classList?.contains("err")){
+        const isSecond = (label.previousElementSibling && label.previousElementSibling.tagName && label.previousElementSibling.tagName.toUpperCase()==="LABEL");
+        return isSecond ? secondErr : firstErr;
+      }
     }
+
+    // 3) Escanear varios hermanos hacia delante (salta <div> “espaciadores”)
+    let probe = label.nextElementSibling;
+    for (let i=0; i<6 && probe; i++, probe = probe.nextElementSibling){
+      if (probe.classList && probe.classList.contains("err")) return probe;
+    }
+
+    // 4) (raro) mirar 1–2 hermanos hacia atrás
+    probe = label.previousElementSibling;
+    for (let i=0; i<2 && probe; i++, probe = probe.previousElementSibling){
+      if (probe.classList && probe.classList.contains("err")) return probe;
+    }
+
+    // 5) Fallback: dentro del mismo grid, coge el .err posterior más cercano y vacío
+    const grid = label.parentElement;
+    if (grid){
+      const errs = Array.from(grid.querySelectorAll(".err"));
+      // uno que esté DESPUÉS de la etiqueta y vacío
+      const afterEmpty = errs.find(e =>
+  (label.compareDocumentPosition(e) & Node.DOCUMENT_POSITION_FOLLOWING) && !e.textContent.trim()
+);
+      if (afterEmpty) return afterEmpty;
+      // cualquier vacío
+      const anyEmpty = errs.find(e => !e.textContent.trim());
+      if (anyEmpty) return anyEmpty;
+      // el primero del grid como último recurso
+      return errs[0] || null;
+    }
+  }
+
+  return null;
+}
+// Crea mapeo explícito e-<id> ⇄ .err para todos los campos del Paso 1
+function wireErrorSlots(){
+  const grid = document.getElementById("step1");
+  if (!grid) return;
+  const used = new Set();
+
+  // Recorremos TODOS los labels del grid y les buscamos el .err siguiente libre
+  const labels = Array.from(grid.querySelectorAll(":scope > label"));
+  labels.forEach(label=>{
+    const input = label.querySelector("input, select, textarea");
+    if (!input || document.getElementById("e-"+input.id)) return; // ya tiene slot explícito
+
+    // Busca el primer .err después del label que NO esté usado
+    let probe = label.nextElementSibling;
+    let slot = null, hops = 0;
+    while (probe && hops < 8){ // 8 hermanos es suficiente para tu rejilla
+      if (probe.classList && probe.classList.contains("err") && !used.has(probe)){
+        slot = probe; break;
+      }
+      probe = probe.nextElementSibling; hops++;
+    }
+    if (slot){
+      slot.id = "e-"+input.id;
+      used.add(slot);
+      // Accesibilidad: enlaza el slot al input
+      const d = (input.getAttribute("aria-describedby")||"").split(/\s+/).filter(Boolean);
+      if (!d.includes(slot.id)) input.setAttribute("aria-describedby", (d.concat(slot.id)).join(" "));
+    }
+  });
+}
+
+
+function errMsg(id){
+  switch(id){
+    case "dniArrendador":
+    case "dniInquilino": return "DNI/NIE no válido.";
+    case "dniRepArr":
+    case "dniRepInq":    return "NIF del representante no válido.";
+    case "renta":        return "Importe mensual obligatorio.";
+    case "fianza":       return "Fianza obligatoria.";
+    case "duracion":     return "Duración obligatoria.";
+    case "fechaInicio":  return "Fecha de inicio obligatoria.";
+    case "fechaFin":     return "Fecha de fin obligatoria.";
+case "cifArr":
+case "cifInq":     return "CIF no válido.";
+    default:             return "Campo obligatorio";
+  }
+}
+
+
+  function setErr(id, ok, msg){
+  const el = document.getElementById(id);
+  const slot = nearestErrSlot(el);
+
+  // pintar/quitar mensaje
+  if (slot){
+    slot.textContent = ok ? "" : (msg || "Campo obligatorio");
+  }
+
+  // estados de accesibilidad / estilo
+  if (el){
+    el.classList.toggle("bad", !ok);
+    el.setAttribute("aria-invalid", (!ok).toString());
+  }
+}
+
     function validar(){
       let ok=true; const fi=$("fechaInicio")?.value, ff=$("fechaFin")?.value;
-      const check=(id,cond,msg)=>{ const el=$(id);
-        if(!cond){ ok=false; setErr(id,msg||"Revisa este campo."); el?.classList.add("is-invalid"); el?.classList.remove("is-valid"); }
-        else     { el?.classList.remove("is-invalid"); el?.classList.add("is-valid"); }
-      };
+      const check = (id, cond, msg) => {
+  const el = $(id);
+  // 👉 clave: pasa el booleano a setErr para que pinte/borre el mensaje
+  setErr(id, !!cond, msg);
+
+  if (!cond) {
+    ok = false;
+    el?.classList.add("is-invalid");
+    el?.classList.remove("is-valid");
+  } else {
+    el?.classList.remove("is-invalid");
+    el?.classList.add("is-valid");
+  }
+};
+
       check("direccion", !!$("direccion")?.value?.trim());
-      check("arrendador", !!$("arrendador")?.value?.trim());
-      check("dniArrendador", validateDNIorNIE($("dniArrendador")?.value), "DNI/NIE no válido.");
-      check("inquilino", !!$("inquilino")?.value?.trim());
-      check("dniInquilino", validateDNIorNIE($("dniInquilino")?.value), "DNI/NIE no válido.");
+      // NUEVO: validación dinámica según tipo de persona
+const tA = $("tipoArrendador")?.value || "fisica";
+const tI = $("tipoInquilino")?.value || "fisica";
+
+// Arrendador
+if (tA==="juridica"){
+  check("razonArr", !!$("razonArr")?.value?.trim());
+  check("cifArr", validateCIF($("cifArr")?.value), "CIF no válido."); // (si quieres, aquí puedes añadir regex de CIF)
+  check("repArr",   !!$("repArr")?.value?.trim());
+  check("dniRepArr", validateDNIorNIE($("dniRepArr")?.value), "NIF del representante no válido.");
+} else {
+  check("arrendador", !!$("arrendador")?.value?.trim());
+  check("dniArrendador", validateDNIorNIE($("dniArrendador")?.value), "DNI/NIE no válido.");
+}
+
+// Inquilino
+if (tI==="juridica"){
+  check("razonInq", !!$("razonInq")?.value?.trim());
+  check("cifInq", validateCIF($("cifInq")?.value), "CIF no válido.");
+  check("repInq",   !!$("repInq")?.value?.trim());
+  check("dniRepInq", validateDNIorNIE($("dniRepInq")?.value), "NIF del representante no válido.");
+} else {
+  check("inquilino", !!$("inquilino")?.value?.trim());
+  check("dniInquilino", validateDNIorNIE($("dniInquilino")?.value), "DNI/NIE no válido.");
+}
       check("localidad", !!$("localidad")?.value?.trim());
       check("duracion", Number($("duracion")?.value)>=1, "Mínimo 1 mes.");
       check("fechaInicio", !!fi);
       check("fechaFin", !!ff && new Date(ff)>=new Date(fi), "La fecha fin debe ser posterior.");
       check("renta", Number($("renta")?.value)>=0);
       check("fianza", Number($("fianza")?.value)>=0);
+if (!ok){ scrollToFirstInvalidInStep(); }
       return ok;
     }
     function validateField(el){
@@ -672,42 +1109,153 @@ function toggleCopyGuard(on){
       const id = el.id;
       let ok = true;
       switch(id){
-        case "dniArrendador":
-        case "dniInquilino":
-          el.value = (el.value||"").toUpperCase().replace(/\s+/g,"");
-          ok = el.value.length>=9 && validateDNIorNIE(el.value);
-          break;
+        case "dniArrendador": {
+  const tA = $("tipoArrendador")?.value || "fisica";
+  el.value = (el.value||"").toUpperCase().replace(/\s+/g,"");
+  ok = (tA==="juridica") ? true : (el.value.length>=9 && validateDNIorNIE(el.value));
+  break;
+}
+case "dniInquilino": {
+  const tI = $("tipoInquilino")?.value || "fisica";
+  el.value = (el.value||"").toUpperCase().replace(/\s+/g,"");
+  ok = (tI==="juridica") ? true : (el.value.length>=9 && validateDNIorNIE(el.value));
+  break;
+}
+case "cifArr": {
+  const tA = $("tipoArrendador")?.value || "fisica";
+  el.value = (el.value||"").toUpperCase().replace(/\s+/g,"");
+  // En jurídica es obligatorio y debe ser válido; en física, se ignora
+  const need = (tA === "juridica");
+  const filled = !!el.value;
+  const okCIF = filled && validateCIF(el.value);
+  // pinta mensaje correcto
+  setErr("cifArr", need ? okCIF : true, need && !okCIF ? "CIF no válido." : "");
+  ok = need ? okCIF : true;
+  break;
+}
+case "dniRepArr": {
+  const tA = $("tipoArrendador")?.value || "fisica";
+  el.value = (el.value||"").toUpperCase().replace(/\s+/g,"");
+  const need = (tA === "juridica");
+  const okRep = need ? validateDNIorNIE(el.value) : true;
+  setErr("dniRepArr", okRep, okRep ? "" : "NIF del representante no válido.");
+  ok = okRep;
+  break;
+}
+case "cifInq": {
+  const tI = $("tipoInquilino")?.value || "fisica";
+  el.value = (el.value||"").toUpperCase().replace(/\s+/g,"");
+  const need = (tI === "juridica");
+  const filled = !!el.value;
+  const okCIF = filled && validateCIF(el.value);
+  setErr("cifInq", need ? okCIF : true, need && !okCIF ? "CIF no válido." : "");
+  ok = need ? okCIF : true;
+  break;
+}
+case "dniRepInq": {
+  const tI = $("tipoInquilino")?.value || "fisica";
+  el.value = (el.value||"").toUpperCase().replace(/\s+/g,"");
+  const need = (tI === "juridica");
+  const okRep = need ? validateDNIorNIE(el.value) : true;
+  setErr("dniRepInq", okRep, okRep ? "" : "NIF del representante no válido.");
+  ok = okRep;
+  break;
+}
         case "duracion":
           ok = Number(el.value) >= 1; break;
         case "renta":
         case "fianza":
           ok = el.value !== "" && Number(el.value) >= 0; break;
         case "fechaInicio":
-        case "fechaFin": {
-          const fi = $("fechaInicio")?.value, ff = $("fechaFin")?.value;
-          const pairOk = !!fi && !!ff && new Date(ff) >= new Date(fi);
-          $("fechaInicio")?.classList.toggle("is-valid", pairOk);
-          $("fechaInicio")?.classList.toggle("is-invalid", !pairOk);
-          $("fechaFin")?.classList.toggle("is-valid", pairOk);
-          $("fechaFin")?.classList.toggle("is-invalid", !pairOk);
-          return;
-        }
-        default:
-          ok = (el.value || "").trim().length > 0;
-      }
+case "fechaFin": {
+  const fi = $("fechaInicio")?.value || "";
+  const ff = $("fechaFin")?.value || "";
+
+  const bothFilled = !!fi && !!ff;
+  const orderOk    = bothFilled ? (new Date(ff) >= new Date(fi)) : false;
+
+  // Marca visual en ambos campos
+  $("fechaInicio")?.classList.toggle("is-valid",   bothFilled && orderOk);
+  $("fechaInicio")?.classList.toggle("is-invalid", !(bothFilled && orderOk));
+  $("fechaFin")?.classList.toggle("is-valid",      bothFilled && orderOk);
+  $("fechaFin")?.classList.toggle("is-invalid",    !(bothFilled && orderOk));
+
+  // Mensajes específicos en cada campo
+  if (!fi) {
+    setErr("fechaInicio", false, errMsg("fechaInicio"));
+  } else {
+    setErr("fechaInicio", bothFilled && orderOk, bothFilled && orderOk ? "" : "");
+  }
+
+  if (!ff) {
+    setErr("fechaFin", false, errMsg("fechaFin"));
+  } else if (bothFilled && !orderOk) {
+    setErr("fechaFin", false, "La fecha de fin debe ser posterior o igual a la de inicio.");
+  } else {
+    setErr("fechaFin", true, "");
+  }
+
+  // define 'ok' para el campo que se está validando ahora
+  ok = (fi && ff && orderOk);
+  return; // salimos aquí porque ya hicimos setErr() para ambos
+}
+
+       default: {
+  const val = (el.value || "").trim();
+
+  // Requisitos dinámicos + atributo HTML required
+  const reqSet = new Set(requiredIds());
+  const isRequired = reqSet.has(id) || el.hasAttribute("required");
+
+  if (!isRequired && !val) {
+    // ——— OPCIONAL VACÍO: estado neutro y sin mensaje ———
+    el.classList.remove("is-invalid");
+    el.classList.remove("is-valid");
+    setErr(id, true, "");     // limpiar mensaje
+    return true;              // ¡salimos! para que NO lo pinte en verde abajo
+  }
+
+  // ——— REQUERIDO (o opcional con valor): obligamos a no vacío ———
+  ok = val.length > 0;
+  break;
+}
+}
       el.classList.toggle("is-valid", ok);
       el.classList.toggle("is-invalid", !ok);
+// Pintar/limpiar mensaje (para el resto de campos)
+setErr(el.id, ok, ok ? "" : errMsg(el.id));
+return ok;
+
     }
-    function validateLive(){
-      requiredIds.forEach(id=> validateField($(id)));
-    }
+    function validateLive(full=false){
+  const ids = full
+    ? Array.from(document.querySelectorAll('#step1 input, #step1 select, #step1 textarea'))
+        .map(el=>el.id).filter(Boolean)
+    : requiredIds();
+  ids.forEach(id => validateField($(id)));
+}
+
+
     function progress(){
-      let n=0; requiredIds.forEach(id=>{ const el=$(id); if(el && el.value) n++; });
-      const pct=Math.round(n*100/requiredIds.length);
-      document.querySelector(".bar").style.width = pct+"%";
-      $("pct").textContent=pct+" % completado";
-      $("meter").value=pct;
-    }
+  let n=0;
+  const req = requiredIds();
+  req.forEach(id=>{ const el=$(id); if(el && el.value) n++; });
+  const pct=Math.round(n*100/req.length);
+  document.querySelector(".bar").style.width = pct+"%";
+  $("pct").textContent=pct+" % completado";
+  $("meter").value=pct;
+}
+function scrollToFirstInvalidInStep(){
+  const scope = document.getElementById("step"+currentStep) || document;
+  const first = scope.querySelector(".is-invalid, .bad, input[aria-invalid='true']");
+  if (first){
+    first.scrollIntoView({ behavior:"smooth", block:"center" });
+    setTimeout(()=>{ try{ first.focus({preventScroll:true}); }catch{} }, 200);
+    return true;
+  }
+  return false;
+}
+
 
     // --------- Render de cláusulas ----------
     function textFor(c){ return (langMode==="claro" ? (c.C||c.J) : c.J); }
@@ -716,26 +1264,45 @@ function toggleCopyGuard(on){
         <div class="clause-card"><div><h4>✔ ${c.title} <span class="tag">obligatoria</span></h4><p>${textFor(c)}</p></div></div>`).join("");
     }
     function renderPicker(filter=""){
-      const f=(filter||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-      $("clauseList").innerHTML = window.CLAUSES_EXTRA
-        .filter(c => !f || (c.title+textFor(c)).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").includes(f))
-        .map(c=>`<label class="clause-card">
-            <input type="checkbox" ${selectedClauses.has(c.id)?'checked':''} data-id="${c.id}">
-            <div><h4>${c.title}</h4><p>${textFor(c)}</p></div>
-          </label>`).join("");
+  const f=(filter||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 
-      $("clauseList").querySelectorAll('label.clause-card').forEach(lbl=>{
-        const cb = lbl.querySelector('input[type="checkbox"]');
-        const sync = ()=> lbl.classList.toggle('active', cb.checked);
-        cb.addEventListener("change", e=>{
-          const id=e.target.getAttribute("data-id");
-          if (e.target.checked) selectedClauses.add(id); else selectedClauses.delete(id);
-          window.selectedClauses = selectedClauses;
-          countClauses(); saveState(); refreshResumen(); refreshPreview(); sync();
-        });
-        sync();
-      });
-    }
+  // 👇 lee el tipo de arrendador ANTES de pintar la rejilla
+  const tipoArr = (document.getElementById("tipoArrendador")?.value || "fisica");
+
+  $("clauseList").innerHTML = window.CLAUSES_EXTRA
+    .filter(c => !f || (c.title+textFor(c)).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").includes(f))
+    .map(c=>{
+      const isNecesidad = (c.id === "necesidad");
+      const disabled = isNecesidad && (tipoArr === "juridica"); // 🔒 bloquea si arrendador=jurídica
+      const checked  = selectedClauses.has(c.id) && !disabled;
+
+      return `<label class="clause-card${checked?' active':''}" ${disabled?'title="Solo aplicable si el arrendador es persona física"':''}>
+        <input type="checkbox" ${checked?'checked':''} ${disabled?'disabled':''} data-id="${c.id}">
+        <div><h4>${c.title}</h4><p>${textFor(c)}</p></div>
+      </label>`;
+    }).join("");
+
+  // Wiring habitual
+  $("clauseList").querySelectorAll('label.clause-card').forEach(lbl=>{
+    const cb = lbl.querySelector('input[type="checkbox"]');
+    const sync = ()=> lbl.classList.toggle('active', cb.checked);
+    cb.addEventListener("change", e=>{
+      const id=e.target.getAttribute("data-id");
+      if (e.target.checked) selectedClauses.add(id); else selectedClauses.delete(id);
+      window.selectedClauses = selectedClauses;
+      countClauses(); saveState(); refreshResumen(); refreshPreview(); sync();
+    });
+    sync();
+  });
+
+  // 👇 Si cambió a "jurídica", borra "necesidad" del set seleccionado
+  if (tipoArr === "juridica" && selectedClauses.has("necesidad")){
+    selectedClauses.delete("necesidad");
+    window.selectedClauses = selectedClauses;
+    countClauses(); saveState(); refreshResumen(); refreshPreview();
+  }
+}
+
     function countClauses(){ $("clauseCount").textContent = `${selectedClauses.size} cláusula${selectedClauses.size===1?"":"s"} extra`; }
 
     // --------- Anexos ----------
@@ -744,16 +1311,24 @@ function toggleCopyGuard(on){
     const chipPersistLbl = document.querySelector('label#chipPersist');
     const chipInv = $("chipInv");
     const chipCont = $("chipCont");
-    function toggleAnexEditors(){
-      const showInv = !!anInv?.checked, showCon = !!anCon?.checked;
-      $("anexosBox").style.display = (showInv||showCon) ? "block" : "none";
-      $("anexoInvBox").style.display = showInv ? "block" : "none";
-      $("anexoContBox").style.display = showCon ? "block" : "none";
-    }
+   function toggleAnexEditors(){
+  const showInv   = !!anInv?.checked;
+  const showCon   = !!anCon?.checked;
+  const showNotas = !!$("anexoNotas")?.checked;
+
+  $("anexosBox").style.display   = (showInv || showCon || showNotas) ? "block" : "none";
+  $("anexoInvBox").style.display = showInv ? "block" : "none";
+  $("anexoContBox").style.display= showCon ? "block" : "none";
+  $("anexoNotasBox").style.display= showNotas ? "block" : "none";
+}
+
+
     function syncChipStyles(){
       chipInv?.classList.toggle("active", !!anInv?.checked);
       chipCont?.classList.toggle("active", !!anCon?.checked);
       chipPersistLbl?.classList.toggle("active", !!$("persistToggle")?.checked);
+const chipNotas = $("chipNotas");
+chipNotas?.classList.toggle("active", !!$("anexoNotas")?.checked);
     }
 
     // --------- Resumen + preview ----------
@@ -761,46 +1336,155 @@ function toggleCopyGuard(on){
       .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
       .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
     function clausesForPreview(){
-      const arr=[]; window.CLAUSES_MANDATORY.forEach(c=>arr.push({t:c.title, p:textFor(c)}));
-      window.CLAUSES_EXTRA.forEach(c=>{ if(selectedClauses.has(c.id) && c.id!=="inventario") arr.push({t:c.title, p:textFor(c)}); });
-      if (selectedClauses.has("inventario")) arr.push({t:"Inventario anexo", p:"Se adjunta inventario en Anexo I."});
-      return arr;
-    }
+  const lang = (typeof langMode==="string" ? langMode : "juridico");
+  const MUST  = Array.isArray(window.CLAUSES_MANDATORY) ? window.CLAUSES_MANDATORY : [];
+  const EXTRA = Array.isArray(window.CLAUSES_EXTRA) ? window.CLAUSES_EXTRA : [];
+  const sel   = (window.selectedClauses instanceof Set) ? window.selectedClauses : new Set();
+  const textFor = c => (lang==="claro" ? (c.C||c.J||"") : (c.J||c.C||""));
+  return [
+    ...MUST.map(c=>({ t:c.title, p:textFor(c) })),
+    ...EXTRA.filter(c=>sel.has(c.id)).map(c=>({ t:c.title, p:textFor(c) }))
+  ];
+}
+
     function resumenHTML(){
       const g=id=>($(id)?.value||"");
+const tA = g("tipoArrendador") || "fisica";
+const tI = g("tipoInquilino") || "fisica";
+const docALabel = (tA==="juridica" ? "CIF" : "NIF/NIE");
+const docILabel = (tI==="juridica" ? "CIF" : "NIF/NIE");
+
+const sumA = (tA==="juridica")
+  ? `${escH(g("razonArr")||"—")} · ${docALabel}: ${escH((g("cifArr")||"—").toUpperCase())} · Rep.: ${escH(g("repArr")||"—")} (NIF ${escH((g("dniRepArr")||"—").toUpperCase())})`
+  : `${escH(g("arrendador"))} · ${docALabel}: ${escH((g("dniArrendador")||"—").toUpperCase().replace(/\s+/g,""))}`;
+
+const sumI = (tI==="juridica")
+  ? `${escH(g("razonInq")||"—")} · ${docILabel}: ${escH((g("cifInq")||"—").toUpperCase())} · Rep.: ${escH(g("repInq")||"—")} (NIF ${escH((g("dniRepInq")||"—").toUpperCase())})`
+  : `${escH(g("inquilino"))} · ${docILabel}: ${escH((g("dniInquilino")||"—").toUpperCase().replace(/\s+/g,""))}`;
+
       return `
         <div class="sum-card"><h4>Partes</h4>
-          <div class="sum-line"><b>Arrendador:</b> ${escH(g("arrendador"))} · ${escH((g("dniArrendador")||"").toUpperCase().replace(/\s+/g,""))}</div>
-          <div class="sum-line"><b>Inquilino:</b> ${escH(g("inquilino"))} · ${escH((g("dniInquilino")||"").toUpperCase().replace(/\s+/g,""))}</div>
-        </div>
+  <div class="sum-line"><b>Arrendador:</b> ${sumA}</div>
+  <div class="sum-line"><b>Inquilino:</b> ${sumI}</div>
+  <div class="sum-line"><b>Contacto arrendador:</b> ${escH(g("emailArr")||"—")} · ${escH(g("telArr")||"—")}</div>
+  <div class="sum-line"><b>Contacto inquilino:</b> ${escH(g("emailInq")||"—")} · ${escH(g("telInq")||"—")}</div>
+</div>
         <div class="sum-card"><h4>Inmueble</h4>
           <div class="sum-line">${escH(g("direccion")||"—")}</div>
           <div class="sum-line">${escH(g("localidad")||"")}</div>
+	<div class="sum-line">Ref. catastral: <b>${escH(g("refCatastral")||"—")}</b></div>
+<div class="sum-line">Zona de mercado residencial tensionado: <b>${escH(g("zonaTensionada")==="si"?"Sí":(g("zonaTensionada")==="no"?"No":"—"))}</b></div>
+<div class="sum-line">CEE: <b>${escH([g("ceeLetra")&&("Clase "+g("ceeLetra")),
+                                         g("ceeRegistro")&&("Registro "+g("ceeRegistro")),
+                                         g("ceeFecha")&&("Fecha "+fmtFecha(g("ceeFecha")))]
+                                         .filter(Boolean).join(" · ")||"—")}</b></div>
+<div class="sum-line">Datos registrales: <b>${
+  escH(
+    [ g("regPropiedad") && ("Registro: "+g("regPropiedad")),
+      g("regTomo")      && ("Tomo: "+g("regTomo")),
+      g("regLibro")     && ("Libro: "+g("regLibro")),
+      g("regFolio")     && ("Folio: "+g("regFolio")),
+      g("regFinca")     && ("Finca: "+g("regFinca")) ]
+    .filter(Boolean).join(" · ")
+  || "—")
+}</b></div>
+
         </div>
         <div class="sum-card"><h4>Condiciones</h4>
           <div class="sum-line">Duración: <b>${escH(g("duracion")||"—")}</b> meses</div>
           <div class="sum-line">Fechas: ${escH(fmtFecha(g("fechaInicio")))} → ${escH(fmtFecha(g("fechaFin")))}</div>
         </div>
         <div class="sum-card"><h4>Importes</h4>
-          <div class="sum-line">Precio mensual: <b>${escH(g("renta")||"—")} €</b></div>
-          <div class="sum-line">Fianza: <b>${escH(g("fianza")||"—")} €</b></div>
+          <div class="sum-line">Precio mensual: <b>${escH(fmtEUR(g("renta")))} €</b></div>
+<div class="sum-line">Fianza: <b>${escH(fmtEUR(g("fianza")))} €</b></div>
         </div>`;
     }
     function previewHTML(){
       const g=id=>($(id)?.value||"");
       const cls = clausesForPreview();
       let html="";
-      html += `<p><strong>Arrendador:</strong> ${escH(g("arrendador"))} — <strong>DNI:</strong> ${escH((g("dniArrendador")||"").toUpperCase().replace(/\s+/g,""))}</p>`;
-      html += `<p><strong>Inquilino:</strong> ${escH(g("inquilino"))} — <strong>DNI:</strong> ${escH((g("dniInquilino")||"").toUpperCase().replace(/\s+/g,""))}</p>`;
-      html += `<p><strong>Dirección:</strong> ${escH(g("direccion"))}</p>`;
+      // Personas (física/jurídica) + contactos
+const tA = g("tipoArrendador") || "fisica";
+const tI = g("tipoInquilino") || "fisica";
+const docALabel = (tA==="juridica" ? "CIF" : "NIF/NIE");
+const docILabel = (tI==="juridica" ? "CIF" : "NIF/NIE");
+
+const lineaA = (tA==="juridica")
+  ? `<p><strong>Arrendador (persona jurídica):</strong> ${escH(g("razonArr")||"—")} — <strong>${docALabel}:</strong> ${escH((g("cifArr")||"").toUpperCase())}<br><em>Representante:</em> ${escH(g("repArr")||"—")} — NIF: ${escH((g("dniRepArr")||"").toUpperCase())}</p>`
+  : `<p><strong>Arrendador (persona física):</strong> ${escH(g("arrendador"))} — <strong>${docALabel}:</strong> ${escH((g("dniArrendador")||"").toUpperCase().replace(/\s+/g,""))}</p>`;
+
+const lineaI = (tI==="juridica")
+  ? `<p><strong>Arrendatario (persona jurídica):</strong> ${escH(g("razonInq")||"—")} — <strong>${docILabel}:</strong> ${escH((g("cifInq")||"").toUpperCase())}<br><em>Representante:</em> ${escH(g("repInq")||"—")} — NIF: ${escH((g("dniRepInq")||"").toUpperCase())}</p>`
+  : `<p><strong>Arrendatario (persona física):</strong> ${escH(g("inquilino"))} — <strong>${docILabel}:</strong> ${escH((g("dniInquilino")||"").toUpperCase().replace(/\s+/g,""))}</p>`;
+
+html += lineaA + lineaI;
+html += `<p><strong>Contacto arrendador:</strong> ${escH(g("emailArr")||"—")} · ${escH(g("telArr")||"—")}</p>`;
+html += `<p><strong>Contacto arrendatario:</strong> ${escH(g("emailInq")||"—")} · ${escH(g("telInq")||"—")}</p>`;
+      html += `<p><strong>Dirección de la vivienda arrendada:</strong> ${escH(g("direccion"))}</p>`;
       html += `<p><strong>Localidad:</strong> ${escH(g("localidad"))} — <strong>Duración:</strong> ${escH(g("duracion")||"—")} meses</p>`;
       html += `<p><strong>Fechas:</strong> ${escH(fmtFecha(g("fechaInicio")))} → ${escH(fmtFecha(g("fechaFin")))}</p>`;
-      html += `<p><strong>Precio:</strong> ${escH(g("renta")||"—")} € — <strong>Fianza:</strong> ${escH(g("fianza")||"—")} €</p>`;
+      html += `<p><strong>Precio:</strong> ${escH(fmtEUR(g("renta")))} € — <strong>Fianza:</strong> ${escH(fmtEUR(g("fianza")))} €</p>`;
+
+html += `<p><strong>Ref. catastral:</strong> ${escH(g("refCatastral")||"—")}</p>`;
+const zt = g("zonaTensionada");
+html += `<p><strong>Zona de mercado residencial tensionado:</strong> ${zt ? (zt==="si"?"Sí":"No") : "—"}</p>`;
+let cee = [];
+if (g("ceeLetra")) cee.push(`Clase ${escH(g("ceeLetra"))}`);
+if (g("ceeRegistro")) cee.push(`Registro ${escH(g("ceeRegistro"))}`);
+if (g("ceeFecha")) cee.push(`Fecha ${escH(fmtFecha(g("ceeFecha")))}`);
+html += `<p><strong>CEE:</strong> ${cee.length? escH(cee.join(" · ")) : "—"}</p>`;
+let reg = [];
+if (g("regPropiedad")) reg.push(`Registro: ${escH(g("regPropiedad"))}`);
+if (g("regTomo")) reg.push(`Tomo: ${escH(g("regTomo"))}`);
+if (g("regLibro")) reg.push(`Libro: ${escH(g("regLibro"))}`);
+if (g("regFolio")) reg.push(`Folio: ${escH(g("regFolio"))}`);
+if (g("regFinca")) reg.push(`Finca: ${escH(g("regFinca"))}`);
+html += `<p><strong>Datos registrales:</strong> ${reg.length? escH(reg.join(" · ")) : "—"}</p>`;
+
       html += `<hr><p><b>Cláusulas:</b></p><ol>${cls.map(c=>`<li><b>${escH(c.t)}</b> — ${escH(c.p)}</li>`).join("")}</ol>`;
       return html;
     }
     function refreshResumen(){ $("resumenBox").innerHTML = resumenHTML(); }
     function refreshPreview(){ $("vistaContrato").innerHTML = previewHTML(); }
+function renderSumAnexos(){
+  const box = document.getElementById("sumAnexos");
+  if (!box) return;
+
+  const inv = !!document.getElementById("anexoInventario")?.checked;
+  const con = !!document.getElementById("anexoContadores")?.checked;
+  const not = !!document.getElementById("anexoNotas")?.checked;
+
+  const lines = [];
+  if (inv) lines.push("Anexo I: Inventario");
+  if (con) lines.push("Anexo II: Lecturas de contadores");
+  if (not) lines.push("Anexo III: Notas explicativas");
+
+  const paidSeal = (typeof hasPaid !== "undefined" && hasPaid)
+    ? `<div class="sum-line">✓ <b>Pago verificado</b></div>`
+    : "";
+
+  const listado = lines.length
+    ? lines.map(t => `<div class="sum-line">• ${t}</div>`).join("")
+    : `<div class="sum-line">— Ninguno</div>`;
+
+  // En Paso 3 solo informamos; opcional: acceso rápido para editar en Paso 2
+  const edit = `
+    <div class="sum-line" style="margin-top:6px;">
+      <button type="button" id="editAnexos" class="btn btn-ghost" style="padding:.35rem .7rem;font-size:12px">
+        Editar anexos
+      </button>
+    </div>`;
+
+  box.innerHTML = `<h4>Anexos seleccionados</h4>${paidSeal}${listado}${edit}`;
+
+  // Si hacen clic, ir al Paso 2 y enfocar la caja de anexos
+  document.getElementById("editAnexos")?.addEventListener("click", ()=>{
+    go(2);
+    document.getElementById("anexosBox")?.scrollIntoView({behavior:"smooth", block:"start"});
+  });
+}
+
+
 
     // --------- Persistencia ----------
     function serialize(){
@@ -814,13 +1498,19 @@ function toggleCopyGuard(on){
       o.anexos = {
         inventario: !!$("anexoInventario")?.checked,
         contadores: !!$("anexoContadores")?.checked,
+        notas: !!$("anexoNotas")?.checked,
         inventarioTxt: $("inventarioTxt")?.value || "",
         lecturas: {
           agua:$("contAgua")?.value||"", luz:$("contLuz")?.value||"", gas:$("contGas")?.value||"",
           numAgua:$("contAguaNum")?.value||"", numLuz:$("contLuzNum")?.value||"", numGas:$("contGasNum")?.value||""
         }
       };
-      return JSON.stringify(o);
+const _PK  = (typeof PRESET_K !== "undefined") ? PRESET_K : (LSKEY + "_preset");
+const _det = (typeof window.detectPresetFromSelection === "function")
+  ? window.detectPresetFromSelection(selectedClauses)
+  : "";
+
+o.preset = localStorage.getItem(_PK) || _det;      return JSON.stringify(o);
     }
     function populate(){
       const raw=localStorage.getItem(LSKEY); if(!raw) return;
@@ -833,7 +1523,24 @@ function toggleCopyGuard(on){
         selectedClauses = new Set(Array.isArray(o.clSel)?o.clSel:[]);
         window.selectedClauses = selectedClauses;
         if (o.lang) langMode=o.lang;
+if (o.preset) {
+  localStorage.setItem(PRESET_K, o.preset);
+  if (typeof window.markPresetChip === "function") window.markPresetChip(o.preset);
+} else {
+  const detected = (typeof window.detectPresetFromSelection === "function")
+    ? window.detectPresetFromSelection(window.selectedClauses || new Set())
+    : "";
+  if (detected){
+    localStorage.setItem(PRESET_K, detected);
+    if (typeof window.markPresetChip === "function") window.markPresetChip(detected);
+  } else {
+    if (typeof window.markPresetChip === "function") window.markPresetChip("");
+  }
+}
+
+
         $("inventarioTxt").value = o.anexos?.inventarioTxt || "";
+        $("anexoNotas").checked = !!o.anexos?.notas; // ← NUEVO
         $("contAgua").value=o.anexos?.lecturas?.agua||"";
         $("contLuz").value=o.anexos?.lecturas?.luz||"";
         $("contGas").value=o.anexos?.lecturas?.gas||"";
@@ -855,29 +1562,84 @@ function toggleCopyGuard(on){
       qsa(".step").forEach((s,i)=> s.classList.toggle("active", (i+1)===currentStep));
       $("btnPrev").disabled = currentStep===1;
       $("btnNext").style.display = (currentStep===3 ? "none" : "inline-flex");
-      if (currentStep===3) { $("payError").textContent=""; refreshResumen(); gateDownload(); }
+      if (currentStep===3) {
+  $("payError").textContent="";
+  refreshResumen();
+  renderSumAnexos();
+  gateDownload();
+}
+
+// Al cambiar de paso, sube al principio del asistente
+setTimeout(()=>{
+  document.querySelector('.wizard')?.scrollIntoView({ behavior:'smooth', block:'start' });
+}, 0);
+
     }
     function gateDownload(){
-  // Mostrar/ocultar DESCARGA
+  // Mostrar/ocultar DESCARGA (vinculada a los datos pagados)
   const btn = document.getElementById("btnDownload");
-  if (btn) btn.style.display = (currentStep === 3 && hasPaid) ? "inline-flex" : "none";
+  const paidBind = localStorage.getItem(LSKEY+"_paid_bind") || "";
+  const sameBind = (paidBind && paidBind === bindStr());
+  const show = (currentStep === 3 && hasPaid && sameBind);
+  if (btn) {
+    btn.style.display = show ? "inline-flex" : "none";
+    btn.disabled = !show;
+  }
 
-  // 👇 NUEVO: ocultar botón de PAGO si ya está pagado
-  const payBtn = document.getElementById("btnPayClassic");
-  if (payBtn) payBtn.style.display = hasPaid ? "none" : "inline-flex";
+  // Ocultar bloque PayPal NCP si ya está pagado
+  const ncp = document.getElementById("ppNcpWrap");
+  if (ncp) ncp.style.display = hasPaid ? "none" : "block";
 
-  // Sello “Pago verificado”
+  // Insignia “Pago verificado”
   let seal = document.getElementById("paidSeal");
   if (!seal){
     seal = document.createElement("div");
     seal.id = "paidSeal";
-    seal.className = "chip active";
-    seal.textContent = "Pago verificado";
+    seal.className = "chip";
+    seal.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l7 4v6c0 5-3 8-7 10-4-2-7-5-7-10V6l7-4z"/></svg> Pago verificado`;
     document.querySelector("#payCard .pay-top")?.appendChild(seal);
   }
   seal.style.display = hasPaid ? "inline-flex" : "none";
+
+  // Toggle “Incluir sello” en el PDF
+  let sealWrap = document.getElementById("sealToggle");
+  if (!sealWrap){
+    sealWrap = document.createElement("label");
+    sealWrap.id = "sealToggle";
+    sealWrap.className = "chip";
+    sealWrap.innerHTML = `
+      <input type="checkbox" id="sealOpt" role="switch" aria-checked="false"
+             aria-label="Incluir sello Pago verificado en el PDF">
+      <span class="box" aria-hidden="true"></span>
+      <span class="txt">Incluir sello “Pago verificado” en el PDF</span>
+    `;
+    document.querySelector("#payCard .benefits")?.appendChild(sealWrap);
+
+    const cb = document.getElementById("sealOpt");
+    const saved = localStorage.getItem(LSKEY+"_seal")==="1";
+    cb.checked = saved;
+
+    const syncUI = () => {
+      sealWrap.classList.toggle("active", cb.checked);
+      cb.setAttribute("aria-checked", cb.checked ? "true" : "false");
+    };
+    syncUI();
+
+    cb.addEventListener("change",(e)=>{
+      localStorage.setItem(LSKEY+"_seal", e.target.checked ? "1" : "0");
+      syncUI();
+      // Si quisieras regenerar automáticamente el PDF si el botón está visible:
+      // if (document.getElementById("btnDownload")?.style.display !== "none") { void window.generarPDF(); }
+    });
+  }
+  sealWrap.style.display = hasPaid ? "inline-flex" : "none";
+
+  // Actualiza la tarjeta “Anexos seleccionados” (marca ✓ Pago verificado ahí)
+  renderSumAnexos();
 }
 
+
+ 
     // --------- Modal fullscreen ----------
     function openFS(){
   $("fs").classList.add("active");
@@ -895,21 +1657,7 @@ function toggleCopyGuard(on){
       el.style.transform = `scale(${next})`; el.style.transformOrigin="top left"; el.dataset.z = String(next);
     }
 
-    // --------- Pago PayPal (clásico con email) ----------
-    function onClassicPay(){
-      if (currentStep===1 && !validar()){ $("payError").textContent="Revisa los datos antes de pagar."; return; }
-      saveState(); localStorage.setItem(STEP_K,"3");
-      const ok = new URL(location.href); ok.searchParams.set("pago_confirmado","1");
-      const ko = new URL(location.href); ko.searchParams.set("pago_cancelado","1");
-      const url = "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick" +
-                  "&business="+encodeURIComponent("oscargrubio@live.com")+
-                  "&item_name="+encodeURIComponent("Contrato vivienda PRO (PDF)")+
-                  "&currency_code=EUR&amount=1.00"+
-                  "&return="+encodeURIComponent(ok.toString())+
-                  "&cancel_return="+encodeURIComponent(ko.toString());
-      location.href = url;
-    }
-
+   
     // --------- Limpiar todo ----------
     function clearAll(){
       qsa("#contratoForm input, #contratoForm select, #contratoForm textarea").forEach(el=>{
@@ -922,6 +1670,12 @@ function toggleCopyGuard(on){
       // chips / anexos
       selectedClauses.clear(); window.selectedClauses = selectedClauses;
       toggleAnexEditors(); syncChipStyles();
+// Auto-activar Notas explicativas por defecto si no hay snapshot previo
+if (!localStorage.getItem(LSKEY)) {
+  const n = document.getElementById("anexoNotas");
+  if (n && !n.checked) { n.checked = true; toggleAnexEditors(); syncChipStyles(); }
+}
+
       // storage
       localStorage.removeItem(LSKEY);
       localStorage.removeItem(LSKEY+"_paid");
@@ -950,15 +1704,30 @@ function toggleCopyGuard(on){
 
     // --------- Eventos ----------
     document.addEventListener("DOMContentLoaded", ()=>{
-      populate(); renderMandatory(); renderPicker(); countClauses(); toggleAnexEditors();
-      progress(); refreshResumen(); refreshPreview();
+      // Preferencia del toggle "Guardar datos" ANTES de rehidratar
+const PERSIST_K = LSKEY + "_persist";
+const pFlag = localStorage.getItem(PERSIST_K); // '1' ó '0'
+
+if (pFlag === "1") { $("persistToggle").checked = true; }
+if (pFlag === "0") { $("persistToggle").checked = false; }
+
+// Solo rehidrata si el usuario lo consintió
+if (localStorage.getItem(PERSIST_K) === "1") {
+  populate();
+}
+
+renderMandatory(); renderPicker(); countClauses(); toggleAnexEditors();
+progress(); refreshResumen(); refreshPreview(); wireErrorSlots();
+
 
       // inputs + validación en vivo (todos los campos)
       qsa("#contratoForm input, #contratoForm select, #contratoForm textarea").forEach(el=>{
         el.addEventListener("input", ()=>{
-          if (el.id==="dniArrendador" || el.id==="dniInquilino"){
-            el.value = (el.value||"").toUpperCase().replace(/\s+/g,"");
-          }
+          // Normaliza identificadores de persona/empresa al vuelo
+if (["dniArrendador","dniInquilino","dniRepArr","dniRepInq","cifArr","cifInq"].includes(el.id)){
+  el.value = normalizeId(el.value); // mismo helper que usan DNI/NIE
+}
+
           validateField(el);
           saveState(); progress(); refreshResumen(); refreshPreview();
         });
@@ -970,24 +1739,187 @@ function toggleCopyGuard(on){
       });
       validateLive(); // estado inicial verde/rojo
 
-      // persist chip
-      $("persistToggle")?.addEventListener("change", ()=>{ syncChipStyles(); saveState(); });
+// Si cambian datos núcleo, invalida vinculación de pago
+["tipoArrendador","arrendador","razonArr","cifArr","repArr","dniRepArr",
+ "tipoInquilino","inquilino","razonInq","cifInq","repInq","dniRepInq",
+ "direccion","localidad","fechaInicio","fechaFin","renta","fianza"]
+.forEach(id=>{
+  const el = document.getElementById(id);
+  el?.addEventListener("input", ()=>{
+    const paidBind = localStorage.getItem(LSKEY+"_paid_bind") || "";
+    if (paidBind && paidBind !== bindStr()){
+      localStorage.removeItem(LSKEY+"_paid");
+      localStorage.removeItem(LSKEY+"_order");
+      localStorage.removeItem(LSKEY+"_paid_bind");
+      hasPaid = false; orderId = "";
+      gateDownload(); // oculta descargar
+    }
+  });
+});
+
+// NCP: guardar snapshot SIEMPRE antes de abrir PayPal (pestaña nueva)
+document.getElementById("ppNcpForm")?.addEventListener("submit", () => {
+  try {
+    // 1) Snapshot temporal independiente del toggle de privacidad
+    const snap = serialize();
+    localStorage.setItem(LSKEY + "_tmp", snap);
+
+    // 2) Snapshot “normal” si el usuario consintió
+    saveState();
+
+    // 3) Al volver, que arranque en Paso 3
+    localStorage.setItem(STEP_K, "3");
+  } catch (e) {}
+});
+
+
+
+
+     
+syncChipStyles();
+
+
+// Al cambiar el toggle, guardamos la preferencia y actuamos
+$("persistToggle")?.addEventListener("change", ()=>{
+  const on = !!$("persistToggle")?.checked;
+  localStorage.setItem(PERSIST_K, on ? "1" : "0");
+  syncChipStyles();
+  if (on) {
+    // guardamos todo el estado actual (incluye cláusulas y lang)
+    saveState();
+  } else {
+    // si el usuario apaga el guardado, borramos el snapshot
+    localStorage.removeItem(LSKEY);
+  }
+});
+
+if (!localStorage.getItem(LSKEY)) {
+  const n = document.getElementById("anexoNotas");
+  if (n && !n.checked) { n.checked = true; toggleAnexEditors(); syncChipStyles(); }
+}
+
+document.getElementById("btnDownload")?.addEventListener("click", () => {
+  void window.generarPDF();
+});
+
 
       // presets
+// ====== PRESETS: definición + helpers ======
+const PRESET_SETS = {
+  obligatorias: new Set(), // sin extra
+  estandar:     new Set(["llaves","datos","suministros","resol_jurisdiccion"]),
+  proteccion:   new Set(["llaves","ruidos","visitas","retrasos","subarriendo","comunidad","datos","seguro","adr"]),
+  premium:      new Set((window.CLAUSES_EXTRA||[]).map(c=>c.id)) // todos los extra vigentes
+};
+
+
+// Compara dos Sets por contenido
+const eqSets = (a,b) => a.size===b.size && Array.from(a).every(v=>b.has(v));
+function detectPresetFromSelection(sel){
+  for (const [id,set] of Object.entries(PRESET_SETS)){ if (eqSets(sel,set)) return id; }
+  return ""; // combinación personalizada
+}
+function markPresetChip(id){
+  qsa('.toolbar .chip[data-preset]').forEach(x=>x.classList.remove('active'));
+  if (id) document.querySelector(`.toolbar .chip[data-preset="${id}"]`)?.classList.add('active');
+}
+
+(function restorePresetChipOnLoad(){
+  const savedP   = localStorage.getItem(PRESET_K) || "";
+  const detected = detectPresetFromSelection(window.selectedClauses || new Set());
+  markPresetChip(savedP || detected);
+  if (!savedP && detected) localStorage.setItem(PRESET_K, detected);
+})();
+
       qsa('.toolbar .chip[data-preset]').forEach(b=> b.addEventListener("click", ()=>{
-        const p=b.dataset.preset;
-        if (p==="obligatorias") selectedClauses=new Set();
-        if (p==="estandar")     selectedClauses=new Set(["llaves","datos","suministros"]);
-        if (p==="proteccion")   selectedClauses=new Set(["llaves","ruidos","visitas","retrasos","subarriendo","comunidad","datos","seguro"]);
-        if (p==="premium")      selectedClauses=new Set(window.CLAUSES_EXTRA.map(c=>c.id));
-        window.selectedClauses = selectedClauses;
-        qsa('.toolbar .chip[data-preset]').forEach(x=>x.classList.remove('active'));
-        b.classList.add('active');
-        countClauses(); saveState(); refreshResumen(); refreshPreview(); renderPicker($("clauseSearch").value||"");
-      }));
+  const p=b.dataset.preset;
+  if (p==="obligatorias") selectedClauses=new Set();
+  if (p==="estandar")     selectedClauses=new Set(["llaves","datos","suministros","resol_jurisdiccion"]);
+  if (p==="proteccion")   selectedClauses=new Set(["llaves","ruidos","visitas","retrasos","subarriendo","comunidad","datos","seguro","adr"]);
+  if (p==="premium")      selectedClauses=new Set((window.CLAUSES_EXTRA||[]).map(c=>c.id));
+
+  window.selectedClauses = selectedClauses;
+  localStorage.setItem(PRESET_K, p);      // << guarda el pack
+  markPresetChip(p);                      // << pinta el chip activo
+
+  countClauses(); saveState(); refreshResumen(); refreshPreview();
+  renderPicker($("clauseSearch").value||"");
+}));
 
       // búsqueda
       $("clauseSearch")?.addEventListener("input", e=> renderPicker(e.target.value));
+// tras el DOMContentLoaded de Vivienda, añade:
+["ceeLetra","ceeRegistro","ceeFecha"].forEach(id=>{
+  document.getElementById(id)?.addEventListener("change", ()=>{
+    const filled = (document.getElementById("ceeLetra")?.value
+                 || document.getElementById("ceeRegistro")?.value
+                 || document.getElementById("ceeFecha")?.value);
+    if (filled) {
+      
+      window.selectedClauses = selectedClauses;
+      countClauses();
+      renderPicker(document.getElementById("clauseSearch")?.value || "");
+      refreshPreview();
+      saveState();
+    }
+
+  });
+});
+// Auto-cláusula por ZONA TENSIONADA
+document.getElementById("zonaTensionada")?.addEventListener("change", (e)=>{
+  const v = e.target.value;
+  const ZT_ID = "zona_tensionada";
+  countClauses();
+  renderPicker(document.getElementById("clauseSearch")?.value || "");
+  refreshPreview();
+  saveState();
+});
+
+// --- Mostrar/ocultar campos "solo jurídica" ---
+function toggleJuridica(which){
+  const selId = (which==="arr" ? "tipoArrendador" : "tipoInquilino");
+  const val = (document.getElementById(selId)?.value) || "fisica";
+
+  // Mostrar/ocultar grupo "solo jurídica"
+  document.querySelectorAll(`.onlyJ[data-for="${which}"]`)
+    .forEach(el => el.style.display = (val==="juridica" ? "block" : "none"));
+
+  // Limpia estados/mensajes de los campos que se ocultan
+  if (val !== "juridica"){ // pasa a FÍSICA => oculto los de empresa
+    document.querySelectorAll(`.onlyJ[data-for="${which}"] input`)
+      .forEach(inp=>{
+        inp.classList.remove("is-invalid","is-valid","bad");
+        inp.removeAttribute("aria-invalid");
+        setErr(inp.id, true, ""); // borra mensaje en su <div class="err">
+      });
+  } else {
+    // Pasa a JURÍDICA => los de persona física ya no son obligatorios; límpialos
+    const ids = (which==="arr" ? ["arrendador","dniArrendador"] : ["inquilino","dniInquilino"]);
+    ids.forEach(id=>{
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove("is-invalid","is-valid","bad");
+      el.removeAttribute("aria-invalid");
+      setErr(id, true, "");
+    });
+  }
+}
+
+document.getElementById("tipoArrendador")?.addEventListener("change", ()=>{ 
+  toggleJuridica("arr"); saveState(); refreshResumen(); refreshPreview(); 
+  validateLive(true); // << revalida TODO para limpiar avisos viejos
+  renderPicker($("clauseSearch")?.value || "");
+});
+document.getElementById("tipoInquilino")?.addEventListener("change", ()=>{ 
+  toggleJuridica("inq"); saveState(); refreshResumen(); refreshPreview(); 
+  validateLive(true); // << idem
+});
+
+
+// Primera pasada
+toggleJuridica("arr"); toggleJuridica("inq");
+validateLive(true);// asegura estado neutro en opcionales y válido en requeridos
+
 
       // radios jurídico/claro → look chip azul
       qsa('input[name="lang"]').forEach(r=> r.addEventListener("change",(e)=>{
@@ -998,10 +1930,26 @@ function toggleCopyGuard(on){
       }));
       const initLab = document.querySelector(`label[for="lang${langMode==="claro"?"C":"J"}"]`);
       if (initLab) initLab.classList.add('active');
+// Sincroniza radios con el lang restaurado
+const rJ = $("langJ"), rC = $("langC");
+if (langMode === "claro") {
+  if (rC) rC.checked = true;
+  if (rJ) rJ.checked = false;
+} else {
+  if (rJ) rJ.checked = true;
+  if (rC) rC.checked = false;
+}
+// Refresca el "look" azul de los chips por si acaso
+qsa('.seg label').forEach(l=>l.classList.remove('active'));
+const labInit = document.querySelector(`label[for="lang${langMode==="claro"?"C":"J"}"]`);
+if (labInit) labInit.classList.add('active');
+
 
       // anexos chips
-      $("anexoInventario")?.addEventListener("change", ()=>{ toggleAnexEditors(); syncChipStyles(); saveState(); });
-      $("anexoContadores")?.addEventListener("change", ()=>{ toggleAnexEditors(); syncChipStyles(); saveState(); });
+      $("anexoInventario")?.addEventListener("change", ()=>{ toggleAnexEditors(); syncChipStyles(); saveState(); renderSumAnexos(); });
+$("anexoContadores")?.addEventListener("change", ()=>{ toggleAnexEditors(); syncChipStyles(); saveState(); renderSumAnexos(); });
+$("anexoNotas")?.addEventListener("change", ()=>{ toggleAnexEditors(); syncChipStyles(); saveState(); renderSumAnexos(); });
+
       syncChipStyles();
 
       // navegación
@@ -1013,9 +1961,6 @@ function toggleCopyGuard(on){
           if (currentStep===3) { /* precarga opcional */ ensurePDFLibs().catch(()=>{}); }
         }
       });
-
-      // PayPal (clásico)
-      $("btnPayClassic")?.addEventListener("click", onClassicPay);
 
       // preview fullscreen
       $("btnFullSide")?.addEventListener("click", openFS);
@@ -1042,6 +1987,65 @@ lockCopyScope(document.getElementById("vistaContrato"));
           }
         });
       }
+// Retorno PayPal (NCP) — robusto y sin depender de referrer
+{
+  const url = new URL(location.href);
+
+  if (url.searchParams.get("pago_confirmado") === "1") {
+    // A estas alturas populate() ya corrió ⇒ DOM con datos reales
+   hasPaid = true;
+orderId = "PAYPAL-OK";
+localStorage.setItem(LSKEY + "_paid", "true");
+localStorage.setItem(LSKEY + "_order", orderId);
+
+// 1) Rehidrata SIEMPRE desde snapshot temporal si existe
+try {
+  const tmp = localStorage.getItem(LSKEY + "_tmp");
+  if (tmp && tmp.length > 50) {
+    // ⬅️ promoción incondicional: lo que se pagó es la fuente de verdad
+    localStorage.setItem(LSKEY, tmp);
+    localStorage.removeItem(LSKEY + "_tmp");
+  }
+  if (localStorage.getItem(LSKEY)) {
+    populate();                // ← repuebla campos (incluye Anexo III)
+    toggleAnexEditors();
+    syncChipStyles();
+    refreshResumen();
+    refreshPreview();
+  }
+} catch (e) {}
+
+// 2) AHORA sí, vincula el pago a los datos reales ya rehidratados
+try { localStorage.setItem(LSKEY + "_paid_bind", bindStr()); } catch (e) {}
+
+currentStep = 3;
+localStorage.setItem(STEP_K, "3");
+gateDownload();
+
+
+    // Vuelve a Paso 3 y pinta la UI (ocultar PayPal, mostrar “Descargar PDF”)
+    currentStep = 3;
+    localStorage.setItem(STEP_K, "3");
+    gateDownload();
+
+    // Limpia el querystring
+    try {
+      url.searchParams.delete("pago_confirmado");
+      history.replaceState({}, "", url.toString());
+    } catch (e) {}
+  }
+
+  // (Opcional) manejo de cancelación
+  if (url.searchParams.get("pago_cancelado") === "1") {
+    currentStep = 3;
+    localStorage.setItem(STEP_K, "3");
+    try {
+      url.searchParams.delete("pago_cancelado");
+      history.replaceState({}, "", url.toString());
+    } catch (e) {}
+  }
+}
+
 
       // arranque
       go(currentStep);
@@ -1076,242 +2080,1055 @@ lockCopyScope(document.getElementById("vistaContrato"));
 })();
 
     });
+  // Helpers visibles en consola (solo pruebas)
+  window.bindStr = bindStr;
+  window.gateDownload = gateDownload;
+  window.go = go;
   })();
   </script>
-<!-- === PDF: jsPDF + AutoTable (lazy-load en runtime) === -->
 <script>
-(function(){
-  const LSKEY = "contratoVivienda_pro_STABLE";
-  const $  = id => document.getElementById(id);
-  const esc = t => String(t ?? "").replace(/\s+/g," ").trim();
-  const get = id => esc($(id)?.value || "");
-
-  // Estética notaría
-  const T = {
-    headStyles: { fillColor:[232,242,255], textColor:[0,0,0], lineColor:[180,200,240], lineWidth:0.4, halign:"left" },
-    bodyStyles: { textColor:[0,0,0], lineColor:[200,210,235], lineWidth:0.2, halign:"left" },
-    altRow:     { fillColor:[245,250,255] },
-    font:       { font:"times", fontSize:11, cellPadding:4, valign:"middle" }
+(() => {
+  // === Tema notaría (colores, tipografía, estilos tabla) ===
+  const THEME = {
+    head: { fillColor:[232,242,255], textColor:[0,0,0], lineColor:[180,200,240], lineWidth:0.4, halign:"left" },
+    body: { textColor:[0,0,0], lineColor:[200,210,235], lineWidth:0.2, halign:"left" },
+    alt : { fillColor:[245,250,255] },
+    font: { font:"times", fontSize:11, cellPadding:4, valign:"middle" }
   };
+  window.__PDF_THEME = THEME;
 
-  // Carga diferida
+  // === Carga jsPDF + AutoTable (idempotente) ===
   async function ensurePDFLibs(){
-    if (window.jspdf && window.jspdf.jsPDF && window.jspdf.autoTable) return;
-    await new Promise(r=>{
-      const s1=document.createElement("script");
-      s1.src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
-      s1.onload=r; document.head.appendChild(s1);
-    });
-    await new Promise(r=>{
-      const s2=document.createElement("script");
-      s2.src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js";
-      s2.onload=r; document.head.appendChild(s2);
-    });
+    if (window.jspdf?.jsPDF && window.jspdf?.autoTable) return;
+    await new Promise(r=>{ const s=document.createElement("script");
+      s.src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"; s.onload=r; document.head.appendChild(s); });
+    await new Promise(r=>{ const s=document.createElement("script");
+      s.src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"; s.onload=r; document.head.appendChild(s); });
   }
 
-  // INVENTARIO — líneas o “;” = filas. Comas (o | / — tab) = columnas
-  function parseInventario(invRaw){
-    if (!invRaw) return [];
-    const lines = invRaw.split(/\r?\n|;\s*/g).map(s=>s.trim()).filter(Boolean);
-    const rows = [];
-    lines.forEach(line=>{
-      const parts = line.split(/\s*(?:,|\||\/|—|\t)\s*/g).map(s=>s.trim()).filter(Boolean);
-      if (!parts.length) return;
-      const [elem="", estado="", ...rest] = parts;
-      const obs = rest.join(" — ");
-      rows.push([elem, estado, obs]);
-    });
-    return rows.filter(r => r.some(c => (c||"").trim() !== ""));
+  // === Utilidades comunes ===
+  function setFont(doc, weight="normal", size=11){ doc.setFont("times", weight==="bold"?"bold":"normal"); doc.setFontSize(size); }
+  function pageNumbers(doc){
+    const n = doc.internal.getNumberOfPages(), W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight();
+    setFont(doc,"normal",10);
+    for(let i=1;i<=n;i++){ doc.setPage(i); doc.text(`${i} / ${n}`, W/2, H-28, {align:"center"}); }
+  }
+  function fmtFechaPDF(s){
+    if (!s) return "_______ de __________________ de ________";
+    try{ return new Date(s+"T00:00:00").toLocaleDateString("es-ES",{day:"numeric",month:"long",year:"numeric"}); }
+    catch{ return s; }
   }
 
-  function buildContadores(){
-    const obs = get("contObs");
-    const rows = [];
-    [
-      ["Agua (m³)", get("contAgua"), get("contAguaNum")],
-      ["Luz (kWh)", get("contLuz"),  get("contLuzNum") ],
-      ["Gas (m³)",  get("contGas"),  get("contGasNum") ]
-    ].forEach(([tipo, lectura, num])=>{
-      if (tipo || lectura || num) rows.push([tipo||"—", lectura||"—", num||"—"]);
-    });
-    return { rows, obs };
-  }
+  // === Firmas estilo modelo (líneas, sin caja), con “En <lugar>, a <fecha>” ===
+function drawSignatures(doc, opts){
+  const M = opts.M || 60;
+  const W = doc.internal.pageSize.getWidth();
+  let y = opts.y || M;
 
-  function paginate(doc){
-    const total = doc.getNumberOfPages();
-    for (let i=1;i<=total;i++){
-      doc.setPage(i);
-      doc.setFont("times","normal"); doc.setFontSize(9);
-      const W = doc.internal.pageSize.getWidth();
-      const H = doc.internal.pageSize.getHeight();
-      doc.text(`Página ${i} / ${total}`, W/2, H-28, {align:"center"});
-    }
-  }
+  const LINE = 12;
+  // — Líneas de firma —
+  const lineW = 180, xL = M, xR = W - M - lineW;
+  doc.setLineWidth(0.6); doc.setDrawColor(0);
+  doc.line(xL, y, xL+lineW, y);
+  doc.line(xR, y, xR+lineW, y);
 
-  function drawFirmas(doc){
-    const W = doc.internal.pageSize.getWidth();
-    const H = doc.internal.pageSize.getHeight();
-    const M = 60;
-    let y = H - 160;
-    doc.setFont("times","normal"); doc.setFontSize(11);
-    doc.text("Firmado en ____________________________, a ____ de __________________ de ________", M, y);
-    y += 56;
-    const colW = (W - M*2)/2;
-    doc.line(M+20, y, M+colW-20, y); doc.text("Arrendador", M+20, y+14);
-    doc.line(M+colW+20, y, M+colW+colW-20, y); doc.text("Arrendatario", M+colW+20, y+14);
-  }
+  // — Etiquetas —
+  y += 12;
+  window.__PDF_UTILS.setFont(doc,"bold",10);
+  doc.text((opts.labelA || "ARRENDADOR").toUpperCase(), xL, y);
+  doc.text((opts.labelI || "ARRENDATARIO").toUpperCase(), xR, y);
 
-  window._generarPDFCore = async function(){
-    await ensurePDFLibs();
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({unit:"pt", format:"a4"});
-    const W = doc.internal.pageSize.getWidth();
-    const H = doc.internal.pageSize.getHeight();
-    const M = 60;
-    let y = M;
+  // — Nombres / razón social —
+  y += 16;
+  window.__PDF_UTILS.setFont(doc,"normal",10);
+  const linesA = Array.isArray(opts.nombreA) ? opts.nombreA : [String(opts.nombreA||"—")];
+  const linesI = Array.isArray(opts.nombreI) ? opts.nombreI : [String(opts.nombreI||"—")];
+  const maxL = Math.max(linesA.length, linesI.length);
+  doc.text(linesA, xL, y);
+  doc.text(linesI, xR, y);
+  y += LINE * maxL;
 
-    // Datos
-    const arr = get("arrendador"), dniA = get("dniArrendador");
-    const inq = get("inquilino"),  dniI = get("dniInquilino");
-    const dir = get("direccion"),  loc  = get("localidad");
-    const dur = get("duracion"),   fi   = get("fechaInicio");
-    const ff  = get("fechaFin"),   renta= get("renta");
-    const fian= get("fianza");
+  // — Aire y FECHA DEBAJO —
+  y += 18;
+  const fechaTxt = window.__PDF_UTILS.fmtFechaPDF(opts.fecha);
+  window.__PDF_UTILS.setFont(doc,"normal",11);
+  doc.text(`En ${opts.lugar || "__________"}, a ${fechaTxt}`, M, y);
 
-    // Cabecera
-    doc.setFont("times","bold"); doc.setFontSize(18);
-    doc.text("CONTRATO DE ARRENDAMIENTO DE VIVIENDA", W/2, y, {align:"center"}); y += 30;
-    doc.setFont("times","normal"); doc.setFontSize(11);
-    doc.text("Conforme a la Ley 29/1994 de Arrendamientos Urbanos y sus modificaciones vigentes (incl. RDL 7/2019 y Ley 12/2023).", W/2, y, {align:"center"});
-    y += 18;
+  return y + 24; // margen inferior del bloque
+}
 
-    // PARTES (tabla sin cabecera)
-    doc.setFont("times","bold"); doc.setFontSize(13); doc.text("PARTES DEL CONTRATO", M, y); y += 10;
-    const partesBody = [
-      ["Arrendador", arr],
-      ["DNI/NIE (Arrendador)", dniA],
-      ["Arrendatario", inq],
-      ["DNI/NIE (Arrendatario)", dniI],
-      ["Dirección", dir],
-      ["Localidad", loc],
-      ["Duración", `${dur} meses`],
-      ["Fechas", `del ${fi} al ${ff}`],
-      ["Renta (€)", renta],
-      ["Fianza (€)", fian]
-    ];
+
+  // === Export utilidades ===
+  window.__PDF_ENSURE = ensurePDFLibs;
+  window.__PDF_UTILS  = { setFont, pageNumbers, drawSignatures, fmtFechaPDF };
+})();
+</script>
+<script>
+(() => {
+  const T = window.__PDF_THEME;
+  const { setFont } = window.__PDF_UTILS;
+
+  // Tabla K/V con AutoTable (zebrado real)
+  function tableKV(doc, rows, startY, widths, margin){
     doc.autoTable({
-      startY: y,
+      startY,
       head: [["",""]],
-      body: partesBody,
-      styles: {...T.font, ...T.bodyStyles},
-      headStyles: T.headStyles,
-      alternateRowStyles: T.altRow,
+      body: rows,
+      styles: T.font,
+      headStyles: T.head,
+      alternateRowStyles: T.alt,
       theme: "grid",
       showHead: "never",
       tableWidth: "auto",
-      columnStyles: { 0:{cellWidth:170, fontStyle:"bold"}, 1:{cellWidth: W - (M*2) - 170} },
-      margin: {left:M, right:M}
+      margin,
+      columnStyles: { 0:{cellWidth:widths[0], fontStyle:"bold"}, 1:{cellWidth: widths[1]} }
     });
-    y = doc.lastAutoTable.finalY + 18;
+    return doc.lastAutoTable.finalY;
+  }
 
-    // CLÁUSULAS (6 obligatorias + extra)
-    const langKey = (localStorage.getItem(LSKEY+"_lang")==="claro") ? "C" : "J";
-    const mand = (window.CLAUSES_MANDATORY||[]).map(c=>({t:c.title,p:c[langKey]||c.J}));
-    const selIds = (window.selectedClauses ? Array.from(window.selectedClauses) : []);
-    const extra = (window.CLAUSES_EXTRA||[])
-      .filter(c=> selIds.includes(c.id) && c.id!=="inventario")
-      .map(c=>({t:c.title,p:c[langKey]||c.J}));
-    if (selIds.includes("inventario")) extra.push({t:"Inventario anexo", p:"Se adjunta inventario — Anexo I."});
-    const CLS = [...mand, ...extra];
+ // Lista numerada de cláusulas (título y nombre en negrita; cuerpo normal + más aire)
+function drawClausulas(doc, y, W, M, clauses){
+  const H = doc.internal.pageSize.getHeight();
+  const MAXW = W - M*2;
+  const LINE = 15;        // altura de línea del cuerpo
+  const GAP  = 6;         // aire entre cláusulas
+  const FOOT_GUARD = M + 48; // espacio mínimo libre al pie (coherente con anexos)
 
-    doc.setFont("times","bold"); doc.setFontSize(13); doc.text("CLÁUSULAS", M, y); y += 14;
-    doc.setFont("times","normal"); doc.setFontSize(11);
-    const MAXW = W - M*2, L = 15;
-    const wrap = (t)=> doc.splitTextToSize(t, MAXW);
-    const need = (h)=>{ if (y + h > H - 200){ doc.addPage(); y = M; } };
-    CLS.forEach((c,i)=>{
-      wrap(`${i+1}. ${c.t} — ${c.p}`).forEach(r=>{ need(L); doc.text(r, M, y); y += L; });
+  const needMin = (lines) => {
+    // altura para "título + 2 líneas" (si hay menos de 2, usa las que haya)
+    const n = Math.min(lines, 2);
+    return 10 /*título*/ + n*LINE + 8;
+  };
+
+  const MIN_HEAD = 10 + 2*LINE + 8; // título CLÁUSULAS + 2 líneas mín.
+  if (y + MIN_HEAD > H - FOOT_GUARD){ doc.addPage(); y = M; }
+
+  // Encabezado de la sección
+  setFont(doc,"bold",13);
+  doc.text("CLÁUSULAS", M, y);
+  y += 12;
+
+  // Cada cláusula
+  clauses.forEach((c, idx)=>{
+    const head  = `${idx+1}. ${c.t}`;
+    const lines = doc.splitTextToSize(c.p, MAXW);
+
+    // Si no cabe "título + 2 líneas" en esta página, salto antes
+    if (y + needMin(lines.length) > H - FOOT_GUARD){
+      doc.addPage(); y = M;
+    }
+
+    // Título de cláusula en negrita
+    setFont(doc,"bold",11);
+    doc.text(head, M, y);
+    y += 10;
+
+    // Cuerpo NORMAL (no negrita)
+    setFont(doc,"normal",11);
+    for (let i=0; i<lines.length; i++){
+      const left = lines.length - i;
+
+      // Antihuérfanas al inicio (no empezar con una sola línea suelta)
+      if (left === 2 && (y + 2*LINE > H - FOOT_GUARD)) { doc.addPage(); y = M; }
+      else if (y + LINE > H - FOOT_GUARD) { doc.addPage(); y = M; }
+
+      doc.text(lines[i], M, y);
+      y += LINE;
+    }
+
+    // Aire extra entre cláusulas (como en Notas)
+    y += GAP;
+  });
+
+  return y;
+}
+
+  // Parse inventario (líneas o “;” → 3 columnas)
+  function parseInventario(raw){
+    const rows=[];
+    (String(raw||"").split(/\n|;/)).map(s=>s.trim()).filter(Boolean).forEach(line=>{
+      let cols = line.split(/[,|/–—\t]/).map(s=>s.trim()).filter(Boolean);
+      if (cols.length===1) cols=[cols[0],"",""];
+      if (cols.length===2) cols=[cols[0],cols[1],""];
+      rows.push(cols.slice(0,3));
+    });
+    return rows;
+  }
+
+  // Contadores
+  function buildContadores(get){
+    const rows=[];
+    if (get("contAgua")) rows.push(["Agua", get("contAgua")+" m³", get("contAguaNum")||"—"]);
+    if (get("contLuz"))  rows.push(["Luz",  get("contLuz")+" kWh", get("contLuzNum")||"—"]);
+    if (get("contGas"))  rows.push(["Gas",  get("contGas")+" m³", get("contGasNum")||"—"]);
+    return { rows, obs: (get("contObs")||"").trim() };
+  }
+
+  // Notas explicativas compactas (Anexo III)
+ function buildNotasExplicativas(get, fmtFechaPDF){
+  const zt = get("zonaTensionada")==="si";
+  const ceeTxt = [
+    get("ceeLetra") && `Clase energética: ${get("ceeLetra")}`,
+    get("ceeRegistro") && `Registro CEE: ${get("ceeRegistro")}`,
+    get("ceeFecha") && `Fecha: ${fmtFechaPDF(get("ceeFecha"))}`
+  ].filter(Boolean).join(" · ") || "Información/entrega del CEE según RD 390/2021";
+
+ return [
+  { t:"Marco legal (art. 4 LAU y CC)",
+    p:[
+      "Este contrato se rige por lo pactado y, supletoriamente, por la Ley 29/1994, de Arrendamientos Urbanos, y por el Código Civil. Son nulas las cláusulas contrarias a normas imperativas o que perjudiquen al arrendatario frente al régimen legal.",
+      "El arrendamiento se destina a vivienda permanente del arrendatario y su unidad familiar. El régimen de aplicación y límites imperativos se interpretará conforme a la LAU vigente."
+    ]},
+  { t:"Duración y prórrogas obligatorias (art. 9 LAU)",
+    p:[
+      "Si el plazo inicial es inferior a cinco años (arrendador persona física) o siete (persona jurídica), la duración se prorrogará automáticamente por anualidades hasta esos plazos salvo causas legales de excepción.",
+      "Las fechas de inicio y fin pactadas constan en Condiciones Económicas."
+    ]},
+  { t:"Prórroga tácita (art. 10 LAU)",
+    p:[
+      "Transcurrida la duración mínima legal, si ninguna parte preavisa en plazo, el contrato se prorroga por anualidades hasta un máximo de tres años."
+    ]},
+  { t:"Desistimiento del arrendatario (art. 11 LAU)",
+    p:[
+      "Transcurridos al menos seis meses, el arrendatario puede desistir con preaviso mínimo de 30 días.",
+      "Indemnización, si procede: una mensualidad por cada año que reste (prorrateo para periodos inferiores)."
+    ]},
+  { t:"Fianza y garantías (art. 36 LAU)",
+    p:[
+      "Fianza legal de una mensualidad (vivienda). Depósito según normativa autonómica. No se imputa a rentas.",
+      "Garantías adicionales: si se pactan, respetarán los límites legales aplicables."
+    ]},
+  { t:"Renta y actualización",
+    p:[
+      "La renta, plazos y medio de pago se detallan en el contrato. El retraso devenga el interés pactado o, en su defecto, el legal.",
+      "La actualización anual seguirá el índice legal aplicable y los límites vigentes; será exigible desde el mes siguiente a la notificación por escrito."
+    ]},
+  { t:"Conservación, reparaciones y obras (art. 21 LAU)",
+    p:[
+      "El arrendador realiza las reparaciones necesarias para conservar la vivienda en condiciones de habitabilidad.",
+      "El arrendatario asume las pequeñas reparaciones por uso ordinario. Las obras que alteren la configuración requieren consentimiento escrito."
+    ]},
+  { t:"Gastos y servicios",
+    p:[
+      "Se especifica qué gastos están incluidos en la renta y cuáles se repercuten al arrendatario (comunidad, tributos, suministros individualizados), conforme a lo pactado."
+    ]},
+  { t:"CEE y zona de mercado residencial tensionado",
+    p:[
+      (get("ceeLetra")||get("ceeRegistro")||get("ceeFecha"))
+        ? `Se informa/entrega CEE: ${[
+            get("ceeLetra") && `Clase ${get("ceeLetra")}`,
+            get("ceeRegistro") && `Registro ${get("ceeRegistro")}`,
+            get("ceeFecha") && `Fecha ${fmtFechaPDF(get("ceeFecha"))}`
+          ].filter(Boolean).join(" · ")}.`
+        : "Se informa/entrega el CEE según RD 390/2021.",
+      (get("zonaTensionada")==="si")
+        ? "Si el inmueble está en zona tensionada, la renta inicial, su actualización y otras limitaciones quedan sometidas a los límites legales específicos vigentes."
+        : "No consta declaración de zona tensionada."
+    ]},
+  { t:"Resolución y jurisdicción",
+    p:[
+      "El incumplimiento grave faculta la resolución (art. 1124 CC y art. 27 LAU) con reclamación de daños si procede.",
+      "Para conflictos, las partes se someten a los Juzgados de la localidad del inmueble, salvo pacto o norma en contrario."
+    ]}
+];
+}
+// === Dibujo compacto de Notas (intenta 1 página; si no, evita huérfana la última sección) ===
+function drawNotasCompact(doc, NOTAS, M){
+  const W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight();
+  const FOOT_GUARD = M + 48;                 // zona de seguridad inferior
+  const headerY = M;
+  const yStart  = headerY + 16;
+  const yMax    = H - FOOT_GUARD;
+  const width   = W - M*2;
+
+  // Escalas de compactación (tamaño de fuente y “line height”)
+  const scales = [
+    {fs:11, line:15, headFs:13, secFs:12},   // normal
+    {fs:10, line:14, headFs:13, secFs:12},   // compacta suave
+    {fs:9,  line:13, headFs:12, secFs:11}    // compacta fuerte
+  ];
+
+  // Calcula altura total de TODAS las notas con una escala
+  const measure = (fs, line, secFs) => {
+    let need = 16; // offset bajo el título del anexo
+    window.__PDF_UTILS.setFont(doc,"bold",secFs);
+    NOTAS.forEach(sec=>{
+      if (!sec?.t || !Array.isArray(sec.p) || !sec.p.length) return;
+      need += 10; // título
+      window.__PDF_UTILS.setFont(doc,"normal",fs);
+      sec.p.forEach(par=>{
+        const lines = doc.splitTextToSize(par, width);
+        need += lines.length * line + 6;
+      });
+      need += 4;
+    });
+    return need;
+  };
+
+  // 1) Título del anexo (siempre)
+  window.__PDF_UTILS.setFont(doc,"bold",13);
+  doc.text("ANEXO III — NOTAS EXPLICATIVAS", M, headerY);
+
+  // 2) Intenta encajar TODO en UNA página bajando tamaño paso a paso
+  let chosen = null;
+  for (const s of scales){
+    // Para medir correctamente, fija el tamaño mientras “calculamos”
+    window.__PDF_UTILS.setFont(doc,"normal",s.fs);
+    const need = measure(s.fs, s.line, s.secFs);
+    if (yStart + need <= yMax){ chosen = s; break; }
+  }
+
+  let y = yStart;
+
+  if (chosen){
+    // ——— Dibujo en 1 sola página con la escala elegida ———
+    NOTAS.forEach(sec=>{
+      if (!sec?.t || !Array.isArray(sec.p) || !sec.p.length) return;
+      window.__PDF_UTILS.setFont(doc,"bold", chosen.secFs);
+      doc.text(sec.t, M, y); y += 10;
+      window.__PDF_UTILS.setFont(doc,"normal", chosen.fs);
+      sec.p.forEach(par=>{
+        const lines = doc.splitTextToSize(par, width);
+        doc.text(lines, M, y);
+        y += lines.length * chosen.line + 6;
+      });
       y += 4;
     });
+    return;
+  }
 
-    if (y > H - 240){ doc.addPage(); y = M; }
-    drawFirmas(doc);
+  // ——— Fallback: varias páginas PERO sin huérfanas.
+  // Mantén CADA sección (título + todos sus párrafos) indivisible:
+  const defLine = 15, secTitleFs = 12;
+  NOTAS.forEach(sec=>{
+    if (!sec?.t || !Array.isArray(sec.p) || !sec.p.length) return;
 
-    // ANEXO I — INVENTARIO (con fallback de localStorage)
-    const invChecked = $("#anexoInventario")?.checked;
-    let invRaw = ($("#inventarioTxt")?.value ?? "").trim();
-    if (!invRaw){
-      try{
-        const saved = JSON.parse(localStorage.getItem(LSKEY) || "{}");
-        invRaw = (saved?.anexos?.inventarioTxt || "").trim();
-      }catch{}
+    // Altura que necesita ESTA sección completa
+    window.__PDF_UTILS.setFont(doc,"normal",11);
+    let secNeed = 10; // título
+    sec.p.forEach(par=>{
+      const lines = doc.splitTextToSize(par, width);
+      secNeed += lines.length * defLine + 6;
+    });
+    secNeed += 4;
+
+    // Si no cabe ENTERA antes del pie, salto de página ANTES de empezarla
+    if (y + secNeed > yMax){ doc.addPage(); y = M; }
+
+    // Pinta la sección
+    window.__PDF_UTILS.setFont(doc,"bold",secTitleFs); doc.text(sec.t, M, y); y += 10;
+    window.__PDF_UTILS.setFont(doc,"normal",11);
+    sec.p.forEach(par=>{
+      const lines = doc.splitTextToSize(par, width);
+      if (y + lines.length * defLine > yMax){ doc.addPage(); y = M; } // (muy raro ya, pero seguro)
+      doc.text(lines, M, y); y += lines.length * defLine + 6;
+    });
+    y += 4;
+  });
+}
+
+// Exporta TODO de una vez (crea el objeto y añade drawNotasCompact)
+window.__PDF_PARTS = {
+  tableKV,
+  drawClausulas,
+  parseInventario,
+  buildContadores,
+  buildNotasExplicativas,
+  drawNotasCompact
+};
+
+})();
+</script>
+<script>
+(() => {
+  // Usa la misma clave de tu UI (no la cambiamos)
+  const LSKEY = (window.LSKEY || "contratoVivienda_pro_STABLE");
+
+  // Helpers de lectura
+  const get = id => String(document.getElementById(id)?.value || "").trim();
+  const escOne = s => s.replace(/\s+/g," ").trim();
+
+  // Modo DEV (solo si ?dev=1): marca pago y añade botón de prueba
+  const __DEV_MODE = new URLSearchParams(location.search).get("dev")==="1";
+const __ALLOW_DEV = __DEV_MODE && /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+if (__ALLOW_DEV) localStorage.setItem(LSKEY+"_paid","true");
+
+  const isPaid = () => localStorage.getItem(LSKEY+"_paid")==="true";
+
+  async function _generarPDFCore(){
+    if (!isPaid() && !__ALLOW_DEV){ alert("Completa el pago para habilitar la descarga."); return; }
+
+    await window.__PDF_ENSURE();// Refuerzo: pago vinculado a los datos actuales (bind)
+if (!__ALLOW_DEV){
+  try{
+    const paid = localStorage.getItem(LSKEY+"_paid")==="true";
+    const bindPaid = localStorage.getItem(LSKEY+"_paid_bind") || "";
+    const same = (typeof window.bindStr==="function") ? (bindPaid === window.bindStr()) : !!bindPaid;
+    if (!paid || !same){
+      alert("Los datos han cambiado. Vuelve a confirmar el pago para habilitar la descarga.");
+      return;
     }
-    const invRows = parseInventario(invRaw);
-    const invClause  = Array.isArray(selIds) && selIds.includes("inventario");
-    if (invChecked || invRows.length || invClause){
-      doc.addPage();
-      doc.setFont("times","bold"); doc.setFontSize(13); doc.text("ANEXO I — INVENTARIO", M, M);
-      doc.autoTable({
-        startY: M+12,
-        head: [ ["Elemento","Estado","Observaciones"] ],
-        body: invRows.length ? invRows : [["—","—","—"]],
-        styles: {...T.font, ...T.bodyStyles},
-        headStyles: T.headStyles,
-        alternateRowStyles: T.altRow,
-        theme: "grid",
-        margin: {left:M, right:M},
-        columnStyles: {0:{cellWidth:200},1:{cellWidth:130},2:{cellWidth:"auto"}}
-      });
+  }catch{}
+}
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit:"pt", format:"a4" });
+// === Cargar snapshot consistente (lo que se pagó) ===
+const SNAP_RAW = localStorage.getItem(LSKEY) || "{}";
+let SNAP = {};
+try { SNAP = JSON.parse(SNAP_RAW); } catch { SNAP = {}; }
+
+// Helper: leer clave del snapshot o, si no existe, del DOM
+const s = (k) => {
+  const v = SNAP[k];
+  if (v != null) return String(v).trim();
+  const el = document.getElementById(k);
+  return String(el?.value || "").trim();
+};
+
+// Anexos desde snapshot (booleanos); respaldo DOM si faltan
+const SNAP_ANEX = SNAP.anexos || {};
+const wantInv   = (typeof SNAP_ANEX.inventario === "boolean") ? SNAP_ANEX.inventario
+                  : !!document.getElementById("anexoInventario")?.checked;
+const wantCnt   = (typeof SNAP_ANEX.contadores === "boolean") ? SNAP_ANEX.contadores
+                  : !!document.getElementById("anexoContadores")?.checked;
+const wantNotas = (typeof SNAP_ANEX.notas === "boolean") ? SNAP_ANEX.notas
+                  : !!document.getElementById("anexoNotas")?.checked;
+
+// Cláusulas seleccionadas desde snapshot; si no hay, usa el Set de la UI
+const selSnap = new Set(Array.isArray(SNAP.clSel) ? SNAP.clSel : []);
+const sel     = selSnap.size ? selSnap : (window.selectedClauses || new Set());
+
+// Si hay snapshot y algún campo clave está vacío, repuebla antes de generar
+try {
+  if (!document.getElementById("direccion")?.value && localStorage.getItem(LSKEY)) {
+    if (typeof populate === "function") populate();
+  }
+} catch (e) {}
+
+
+    // Metadatos PDF (mejora profesionalidad)
+    doc.setProperties({
+      title: "Contrato de Arrendamiento de Vivienda",
+      subject: "Contrato de vivienda — JSON Beautifier PRO",
+      author: "JSON Beautifier PRO",
+      keywords: "contrato, arrendamiento, vivienda, alquiler, PDF",
+      creator: "JSON Beautifier PRO"
+    });
+
+    const W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight(), M = 60, MAXW = W - M*2;
+    const THEME = window.__PDF_THEME;
+    const { setFont, pageNumbers, drawSignatures, fmtFechaPDF } = window.__PDF_UTILS;
+    const { tableKV, drawClausulas, parseInventario, buildContadores, buildNotasExplicativas } = window.__PDF_PARTS;
+
+    // === Datos esenciales (ids existentes en tu formulario) ===
+    const tA = s("tipoArrendador") || "fisica";
+const tI = s("tipoInquilino") || "fisica";
+const docALabel = (tA==="juridica" ? "CIF" : "NIF/NIE");
+const docILabel = (tI==="juridica" ? "CIF" : "NIF/NIE");
+
+const data = {
+  arrendador: s("arrendador"),
+  dniArrendador: s("dniArrendador").toUpperCase().replace(/\s+/g,""),
+  razonArr: s("razonArr"),
+  cifArr:   s("cifArr").toUpperCase(),
+  repArr:   s("repArr"),
+  dniRepArr:s("dniRepArr").toUpperCase(),
+
+  inquilino: s("inquilino"),
+  dniInquilino: s("dniInquilino").toUpperCase().replace(/\s+/g,""),
+  razonInq: s("razonInq"),
+  cifInq:   s("cifInq").toUpperCase(),
+  repInq:   s("repInq"),
+  dniRepInq:s("dniRepInq").toUpperCase(),
+
+  emailArr:s("emailArr"), telArr:s("telArr"),
+  emailInq:s("emailInq"), telInq:s("telInq"),
+
+  direccion:s("direccion"), localidad:s("localidad"),
+  refCatastral:s("refCatastral"),
+  regPropiedad:s("regPropiedad"),
+  regTomo:s("regTomo"), regLibro:s("regLibro"),
+  regFolio:s("regFolio"), regFinca:s("regFinca"),
+  zonaTensionada:s("zonaTensionada"),
+  ceeLetra:s("ceeLetra"), ceeRegistro:s("ceeRegistro"), ceeFecha:s("ceeFecha"),
+
+  duracion:s("duracion"), fechaInicio:s("fechaInicio"), fechaFin:s("fechaFin"),
+  renta:s("renta"), fianza:s("fianza")
+};
+
+    // === Cabecera ===
+    let y = M;
+    setFont(doc,"bold",18);
+    doc.text("CONTRATO DE ARRENDAMIENTO DE VIVIENDA", W/2, y, {align:"center"}); y += 28;
+    setFont(doc,"normal",11);
+const marcoLegal = [
+  "Marco legal: LAU 29/1994 · RDL 7/2019 · Ley 12/2023 · Código Civil",
+  "y RD 390/2021 (certificación energética de edificios)"
+];
+doc.text(marcoLegal, W/2, y, { align: "center" });
+y += 28; // un poco más de aire porque ahora son dos líneas
+
+
+    // === PARTES ===
+setFont(doc,"bold",13); doc.text("PARTES DEL CONTRATO", M, y); y += 10; setFont(doc,"normal",11);
+const partesA = (tA==="juridica")
+  ? [
+      ["Razón social (Arrendador)", data.razonArr || "—"],
+      ["CIF (Arrendador)",          data.cifArr   || "—"],
+      ["Representante (Arrendador)",      `${data.repArr||"—"} — NIF ${data.dniRepArr||"—"}`],
+      ["Nombre del arrendador (contacto)", data.arrendador || "—"],
+      ["Contacto arrendador",       `${data.emailArr||"—"} · ${data.telArr||"—"}`],
+    ]
+  : [
+      ["Arrendador",                data.arrendador || "—"],
+      ["NIF/NIE (Arrendador)",      data.dniArrendador || "—"],
+      ["Contacto arrendador",       `${data.emailArr||"—"} · ${data.telArr||"—"}`],
+    ];
+
+const partesI = (tI==="juridica")
+  ? [
+      ["Razón social (Arrendatario)", data.razonInq || "—"],
+      ["CIF (Arrendatario)",          data.cifInq   || "—"],
+      ["Representante (Arrendatario)",     `${data.repInq||"—"} — NIF ${data.dniRepInq||"—"}`],
+      ["Nombre del arrendatario (contacto)", data.inquilino || "—"],
+      ["Contacto arrendatario",       `${data.emailInq||"—"} · ${data.telInq||"—"}`],
+    ]
+  : [
+      ["Arrendatario",                data.inquilino || "—"],
+      ["NIF/NIE (Arrendatario)",      data.dniInquilino || "—"],
+      ["Contacto arrendatario",       `${data.emailInq||"—"} · ${data.telInq||"—"}`],
+    ];
+
+
+const partes = [...partesA, ...partesI];
+y = tableKV(doc, partes, y, [240, W - M*2 - 240], {left:M, right:M}) + 18;
+
+
+    // === INMUEBLE ===
+    setFont(doc,"bold",13); doc.text("INMUEBLE ARRENDADO", M, y); y += 10; setFont(doc,"normal",11);
+    const ceeBits = [];
+if (data.ceeLetra)    ceeBits.push(`Clase ${data.ceeLetra}`);
+if (data.ceeRegistro) ceeBits.push(`Registro ${data.ceeRegistro}`);
+if (data.ceeFecha)    ceeBits.push(`Fecha ${fmtFechaPDF(data.ceeFecha)}`);
+    const reg = [];
+    if (data.regPropiedad) reg.push(`Registro: ${data.regPropiedad}`);
+    if (data.regTomo)      reg.push(`Tomo: ${data.regTomo}`);
+    if (data.regLibro)     reg.push(`Libro: ${data.regLibro}`);
+    if (data.regFolio)     reg.push(`Folio: ${data.regFolio}`);
+    if (data.regFinca)     reg.push(`Finca: ${data.regFinca}`);
+    const inmueble = [
+      ["Dirección de la vivienda arrendada", data.direccion || "—"],
+      ["Localidad", data.localidad || "—"],
+      ["Referencia catastral", data.refCatastral || "—"],
+      ["Registro de la Propiedad", reg.length ? reg.join(" · ") : "—"],
+      ["Zona de mercado residencial tensionado", data.zonaTensionada ? (data.zonaTensionada==="si"?"Sí":"No") : "—"],
+      ["Certificado de eficiencia energética (CEE)", ceeBits.length ? ceeBits.join(" · ") : "—"],
+    ];
+    y = tableKV(doc, inmueble, y, [240, W - M*2 - 240], {left:M, right:M}) + 18;
+
+    // === CONDICIONES ECONÓMICAS ===
+    setFont(doc,"bold",13); doc.text("CONDICIONES ECONÓMICAS", M, y); y += 10; setFont(doc,"normal",11);
+const fmtEURpdf = v => {
+  const n = Number(String(v).replace(",","."));
+  return Number.isFinite(n) ? n.toLocaleString("es-ES", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "—";
+};
+    const econ = [
+      ["Duración", data.duracion ? `${data.duracion} meses` : "—"],
+      ["Fechas", `del ${fmtFechaPDF(data.fechaInicio)} al ${fmtFechaPDF(data.fechaFin)}`],
+      ["Renta (€)", fmtEURpdf(data.renta)],
+      ["Fianza (€)", fmtEURpdf(data.fianza)],
+    ];
+    y = tableKV(doc, econ, y, [170, W - M*2 - 170], {left:M, right:M}) + 18;
+
+    // === REUNIDOS ===
+const parteA = (tA==="juridica")
+  ? `De una parte, ${data.razonArr||"—"}, ${docALabel} ${data.cifArr||"—"}, representada por ${data.repArr||"—"} (NIF ${data.dniRepArr||"—"}).`
+  : `De una parte, ${data.arrendador||"—"}, con ${docALabel} ${data.dniArrendador||"—"}.`;
+const parteI = (tI==="juridica")
+  ? `De otra parte, ${data.razonInq||"—"}, ${docILabel} ${data.cifInq||"—"}, representada por ${data.repInq||"—"} (NIF ${data.dniRepInq||"—"}).`
+  : `De otra parte, ${data.inquilino||"—"}, con ${docILabel} ${data.dniInquilino||"—"}.`;
+const cierre = `Ambas partes se reconocen capacidad para contratar y acuerdan formalizar el presente contrato de arrendamiento.`;
+
+setFont(doc,"bold",13); doc.text("REUNIDOS", M, y); y += 12; setFont(doc,"normal",11);
+const reun = [parteA, parteI, cierre];
+const lineH = 15;
+const FOOT_GUARD_R = M + 48;  // 👈 NUEVO: guardia de pie para REUNIDOS
+
+reun.forEach(par=>{
+  const lines = doc.splitTextToSize(escOne(par), MAXW);
+  lines.forEach((l, i)=>{
+    const linesLeft = lines.length - i;
+
+    // Antihuérfanas al inicio (no arrancar página con 1 sola línea)
+    if (linesLeft === 2 && (y + 2*lineH > H - FOOT_GUARD_R)) { doc.addPage(); y = M; }
+    // Guard habitual de pie
+    else if (y + lineH > H - FOOT_GUARD_R) { doc.addPage(); y = M; }
+
+    doc.text(l, M, y);
+    y += lineH;
+  });
+  y += 2;
+});
+y += 6;
+
+// === EXPONEN ===
+const FOOT_GUARD_E = M + 48;   // mismo colchón de pie
+const lineH2 = 15;
+const MIN_EXP_HEAD = 10 + 2*lineH2 + 8; // título + 2 líneas mín.
+
+setFont(doc,"bold",13);
+if (y + MIN_EXP_HEAD > H - FOOT_GUARD_E){ doc.addPage(); y = M; } // evita huérfano
+doc.text("EXPONEN", M, y); 
+y += 12; 
+setFont(doc,"normal",11);
+
+const exp = [];
+// ... (resto del bloque tal cual)
+
+
+// 1) Titularidad + descripción física y registral
+{
+  const reg = [];
+  if (data.regPropiedad) reg.push(`Registro: ${data.regPropiedad}`);
+  if (data.regTomo)      reg.push(`Tomo: ${data.regTomo}`);
+  if (data.regLibro)     reg.push(`Libro: ${data.regLibro}`);
+  if (data.regFolio)     reg.push(`Folio: ${data.regFolio}`);
+  if (data.regFinca)     reg.push(`Finca: ${data.regFinca}`);
+
+  exp.push(
+    `Que la parte arrendadora es propietaria de la vivienda sita en ${data.direccion || "_______"}, ` +
+    `${data.localidad ? ("en " + data.localidad + ", ") : ""}` +
+    `con Referencia Catastral ${data.refCatastral || "_______"}${reg.length ? (", e inscrita en el Registro de la Propiedad ("+reg.join(" · ")+")") : ""}. ` +
+    `En su caso, la vivienda cuenta con anejos (trastero/plaza de garaje u otros) y se describe su estado e inventario en el Anexo correspondiente.`
+  );
+}
+
+// 2) CEE (RD 390/2021) + zona tensionada
+{
+  const ceeBits = [];
+  if (data.ceeLetra)    ceeBits.push(`Clase ${data.ceeLetra}`);
+  if (data.ceeRegistro) ceeBits.push(`Registro ${data.ceeRegistro}`);
+  if (data.ceeFecha)    ceeBits.push(`Fecha ${fmtFechaPDF(data.ceeFecha)}`);
+
+  exp.push(
+    ceeBits.length
+      ? `Se deja constancia de que la vivienda posee el preceptivo Certificado de Eficiencia Energética (${ceeBits.join(" · ")}), conforme al Real Decreto 390/2021.`
+      : `Se deja constancia de la entrega/puesta a disposición del Certificado de Eficiencia Energética, conforme al Real Decreto 390/2021.`
+  );
+
+  if (data.zonaTensionada === "si"){
+    exp.push(`Siendo la vivienda situada en zona de mercado residencial tensionado, la renta inicial y su actualización quedan sometidas a los límites legales aplicables.`);
+  }
+}
+
+
+// 3) Interés del arrendatario y destino
+exp.push(
+  `Que la parte arrendataria está interesada en arrendar el inmueble descrito para uso permanente de vivienda propia y/o de su unidad familiar.`
+);
+
+// — Pintado con antihuérfanas (2 líneas mínimas al inicio de página)
+exp.forEach(par => {
+  const lines = doc.splitTextToSize(par, MAXW);
+  for (let i=0; i<lines.length; i++){
+    const left = lines.length - i;
+    if (left === 2 && (y + 2*lineH2 > H - FOOT_GUARD_E)){ doc.addPage(); y = M; }
+    else if (y + lineH2 > H - FOOT_GUARD_E){ doc.addPage(); y = M; }
+    doc.text(lines[i], M, y); y += lineH2;
+  }
+  y += 4;
+});
+y += 6; // respiro antes de CLÁUSULAS
+
+
+    // === CLÁUSULAS (toma de tu UI) ===
+   const lang = (localStorage.getItem(LSKEY+"_lang") || "juridico");
+const MUST  = Array.isArray(window.CLAUSES_MANDATORY) ? window.CLAUSES_MANDATORY : [];
+const EXTRA = Array.isArray(window.CLAUSES_EXTRA) ? window.CLAUSES_EXTRA : [];
+const textFor = c => (lang==="claro" ? (c.C||c.J||"") : (c.J||c.C||""));
+
+let clauses = [
+  ...MUST.map(c => ({ t: c.title, p: textFor(c) })),
+  ...EXTRA.filter(c => sel.has(c.id)).map(c => ({ t: c.title, p: textFor(c) }))
+].filter(c => c.t && c.p);
+
+// Si hay Inventario activo, no repetirlo como cláusula
+if (wantInv) { clauses = clauses.filter(c => c.t !== "Inventario anexo"); }
+    y = window.__PDF_PARTS.drawClausulas(doc, y, W, M, clauses);
+
+// === Firmas al pie (estilo modelo, sin cajas) — ANCLADAS AL PIE ===
+{
+  const H = doc.internal.pageSize.getHeight();
+  const FOOT_MARGIN = M;        // mismo margen inferior que superior
+  const LINE = 12;
+
+  // Calcula el nº de líneas por parte (PJ = 2; PF = 1) y añade "contacto" si procede
+  const captionA = (tA==="juridica")
+    ? [
+        `${data.repArr||"—"} (NIF ${data.dniRepArr||"—"})`,
+        `en nombre de ${data.razonArr||"—"} (CIF ${data.cifArr||"—"})`,
+        ...(data.arrendador ? [`Contacto: ${data.arrendador}`] : [])
+      ]
+    : [ data.arrendador || "—" ];
+
+  const captionI = (tI==="juridica")
+    ? [
+        `${data.repInq||"—"} (NIF ${data.dniRepInq||"—"})`,
+        `en nombre de ${data.razonInq||"—"} (CIF ${data.cifInq||"—"})`,
+        ...(data.inquilino ? [`Contacto: ${data.inquilino}`] : [])
+      ]
+    : [ data.inquilino || "—" ];
+
+  const linesA = captionA.length;
+  const linesI = captionI.length;
+  // Altura necesaria del bloque de firmas:
+  //  "En <lugar>, a <fecha>" (26) + etiquetas (12) + separación (16)
+  //  + líneas de nombres (LINE * max) + margen final (24)
+  const need = 84 + (LINE * Math.max(linesA, linesI)); // fecha va DEBAJO
+  // Ancla al pie: si el contenido actual invade la "zona de firmas", salto;
+  // en ambos casos, posiciona y = H - FOOT_MARGIN - need
+  const anchorY = H - FOOT_MARGIN - need;  if (y > anchorY - 8) { doc.addPage(); }  y = anchorY;
+
+  y = window.__PDF_UTILS.drawSignatures(doc, {
+    M,
+    y,
+    lugar: data.localidad,
+    fecha: data.fechaInicio,
+    labelA: "Arrendador",
+    labelI: "Arrendatario",
+    nombreA: captionA,
+    nombreI: captionI
+  });
+}
+// === ANEXOS ===
+
+// ANEXO I — Inventario
+if (wantInv) {
+  doc.addPage();
+  window.__PDF_UTILS.setFont(doc,"bold",13);
+  doc.text("ANEXO I — INVENTARIO", M, M);
+  window.__PDF_UTILS.setFont(doc,"normal",11);
+  const invTxt = (SNAP?.anexos?.inventarioTxt ?? document.getElementById("inventarioTxt")?.value ?? "").toString();
+  const rows = window.__PDF_PARTS.parseInventario(invTxt);
+  if (rows.length){
+    doc.autoTable({
+      startY: M+12,
+      head: [["Elemento","Estado","Observaciones"]],
+      body: rows,
+      styles: window.__PDF_THEME.font,
+      headStyles: window.__PDF_THEME.head,
+      alternateRowStyles: window.__PDF_THEME.alt,
+      theme: "grid",
+      margin: { left:M, right:M }
+    });
+  } else {
+    doc.text("— Sin elementos declarados —", M, M+16);
+  }
+}
+
+// ANEXO II — Lecturas de contadores
+if (wantCnt) {
+  doc.addPage();
+  window.__PDF_UTILS.setFont(doc,"bold",13);
+  doc.text("ANEXO II — LECTURAS DE CONTADORES", M, M);
+  window.__PDF_UTILS.setFont(doc,"normal",11);
+  const getSnap = (id) => (SNAP?.anexos?.lecturas?.[id] ?? document.getElementById(id)?.value ?? "").toString().trim();
+  const { rows, obs } = window.__PDF_PARTS.buildContadores((id)=>getSnap(id));
+  if (rows.length){
+    doc.autoTable({
+      startY: M+12,
+      head: [["Suministro","Lectura","Nº contador"]],
+      body: rows,
+      styles: window.__PDF_THEME.font,
+      headStyles: window.__PDF_THEME.head,
+      alternateRowStyles: window.__PDF_THEME.alt,
+      theme: "grid",
+      margin: { left:M, right:M }
+    });
+  } else {
+    doc.text("— Sin lecturas declaradas —", M, M+16);
+  }
+  const yObs = (doc.lastAutoTable?.finalY || (M+16)) + 16;
+  if (obs){
+    window.__PDF_UTILS.setFont(doc,"bold",11); doc.text("Observaciones:", M, yObs);
+    window.__PDF_UTILS.setFont(doc,"normal",11);
+    doc.text(doc.splitTextToSize(obs, (doc.internal.pageSize.getWidth() - M*2)), M, yObs+14);
+  }
+}
+
+// ANEXO III — Notas explicativas
+if (wantNotas) {
+  doc.addPage();
+  const NOTAS = window.__PDF_PARTS.buildNotasExplicativas((id)=>s(id), window.__PDF_UTILS.fmtFechaPDF);
+  window.__PDF_PARTS.drawNotasCompact(doc, NOTAS, M);
+}
+
+
+          // === ANEXO I — INVENTARIO ===
+if (wantInv){
+  doc.addPage();
+  setFont(doc,"bold",13); doc.text("ANEXO I — INVENTARIO", M, M);
+  setFont(doc,"normal",11);
+  const invTxt = (SNAP.anexos?.inventarioTxt != null)
+    ? String(SNAP.anexos.inventarioTxt)
+    : (document.getElementById("inventarioTxt")?.value || "");
+  const rows = window.__PDF_PARTS.parseInventario(invTxt);
+  if (rows.length){
+    doc.autoTable({
+      startY: M+12,
+      head: [["Elemento","Estado","Observaciones"]],
+      body: rows,
+      styles: THEME.font,
+      headStyles: THEME.head,
+      alternateRowStyles: THEME.alt,
+      theme: "grid",
+      margin: {left:M, right:M}
+    });
+  } else {
+    doc.text("— Sin elementos declarados —", M, M+16);
+  }
+}
+
+// === ANEXO II — LECTURAS DE CONTADORES ===
+if (wantCnt){
+  doc.addPage();
+  setFont(doc,"bold",13); doc.text("ANEXO II — LECTURAS DE CONTADORES", M, M);
+  setFont(doc,"normal",11);
+
+  const getSnap = (id) => (SNAP?.anexos?.lecturas?.[id] ?? document.getElementById(id)?.value ?? "").toString().trim();
+  const { rows, obs } = window.__PDF_PARTS.buildContadores((id)=>getSnap(id));
+  if (rows.length){
+    doc.autoTable({
+      startY: M+12,
+      head: [["Suministro","Lectura","Nº contador"]],
+      body: rows,
+      styles: THEME.font,
+      headStyles: THEME.head,
+      alternateRowStyles: THEME.alt,
+      theme: "grid",
+      margin: {left:M, right:M}
+    });
+  } else {
+    doc.text("— Sin lecturas declaradas —", M, M+16);
+  }
+
+  const yObs = (doc.lastAutoTable?.finalY || (M+16)) + 16;
+  if (obs){
+    setFont(doc,"bold",11); doc.text("Observaciones:", M, yObs);
+    setFont(doc,"normal",11); doc.text(doc.splitTextToSize(obs, MAXW), M, yObs+14);
+  }
+}
+
+// === ANEXO III — NOTAS EXPLICATIVAS ===
+if (wantNotas){
+  doc.addPage();
+  const NOTAS = window.__PDF_PARTS.buildNotasExplicativas((id)=>s(id), fmtFechaPDF);
+  window.__PDF_PARTS.drawNotasCompact(doc, NOTAS, M);
+}
+
+    // === Numeración de páginas y export ===
+    pageNumbers(doc);
+    doc.save("Contrato_Vivienda.pdf");
+  }
+
+  // Wiring botón descarga y (opcional) botón DEV
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("btnDownload");
+    if (btn && !btn.__bound){
+      btn.__bound = true;
+      btn.addEventListener("click", ()=>{ void _generarPDFCore(); });
     }
 
-    // ANEXO II — CONTADORES
-    const hasCont = $("#anexoContadores")?.checked
-                 || get("contAgua") || get("contLuz") || get("contGas")
-                 || get("contAguaNum") || get("contLuzNum") || get("contGasNum") || get("contObs");
-    if (hasCont){
-      doc.addPage();
-      doc.setFont("times","bold"); doc.setFontSize(13); doc.text("ANEXO II — LECTURAS DE CONTADORES", M, M);
-      const { rows, obs } = buildContadores();
-      doc.autoTable({
-        startY: M+12,
-        head: [ ["Tipo","Lectura","Nº contador"] ],
-        body: rows.length ? rows : [["—","—","—"]],
-        styles: {...T.font, ...T.bodyStyles},
-        headStyles: T.headStyles,
-        alternateRowStyles: T.altRow,
-        theme: "grid",
-        margin: {left:M, right:M},
-        columnStyles: {0:{cellWidth:180},1:{cellWidth:120},2:{cellWidth:"auto"}}
-      });
-      if (obs){
-        const yObs = doc.lastAutoTable.finalY + 10;
-        doc.setFont("times","bold"); doc.setFontSize(11); doc.text("Observaciones:", M, yObs);
-        doc.setFont("times","normal"); doc.setFontSize(11);
-        const txt = doc.splitTextToSize(obs, W - M*2);
-        doc.text(txt, M, yObs+14);
+    if (__ALLOW_DEV){
+      const actions = document.querySelector("#payCard .actions");
+      if (actions && !document.getElementById("btnDevPDF")){
+        const b = document.createElement("button");
+        b.id = "btnDevPDF";
+        b.type = "button";
+        b.className = "btn";
+        b.textContent = "Probar PDF (dev)";
+        b.addEventListener("click", ()=>{ void _generarPDFCore(); });
+        actions.appendChild(b);
       }
     }
 
-    if (localStorage.getItem(LSKEY+"_paid")==="true"){
-      const H2 = doc.internal.pageSize.getHeight();
-      doc.setFont("times","bold"); doc.setFontSize(13); doc.setTextColor(180,0,0);
-      doc.text("PAGO VERIFICADO — PDF OFICIAL", W/2, H2-40, {align:"center"});
-      doc.setTextColor(0,0,0);
-    }
-
-    paginate(doc);
-    doc.save("Contrato_Vivienda.pdf");
-  };
-
-  // Botón y pruebas en consola
-  document.addEventListener("DOMContentLoaded", ()=>{
-    const btn = document.getElementById("btnDownload");
-    if (btn) btn.addEventListener("click", async ()=> window._generarPDFCore && await window._generarPDFCore());
-    window.generarPDF   = async ()=> window._generarPDFCore && await window._generarPDFCore();
-    window.descargarPDF = window.generarPDF;
+    // API pública para consola (debe quedar DENTRO del <script>)
+    window._generarPDFCore = _generarPDFCore;
+    window.generarPDF      = _generarPDFCore;   // consola: await generarPDF();
+    window.descargarPDF    = _generarPDFCore;   // alias
   });
 })();
 </script>
 
+
+<script>
+  // Alias de IDs para evitar duplicados en "Actualización"
+  window.ID_ALIAS = { ipc: "actualizacion" };
+</script>
+
+
+<script>
+// ====== VIVIENDA — Biblioteca de cláusulas reforzadas (J/C) ======
+(function(){
+const ID_ALIAS = (window.ID_ALIAS && typeof window.ID_ALIAS==="object") ? window.ID_ALIAS : {};
+  if (!window.CLAUSES_MANDATORY) window.CLAUSES_MANDATORY = [];
+  if (!window.CLAUSES_EXTRA) window.CLAUSES_EXTRA = [];
+
+  const MUST = [
+    {id:"regulacion", title:"Regulación aplicable", 
+      J:"El presente contrato se regirá por lo expresamente pactado y, supletoriamente, por la Ley 29/1994, de Arrendamientos Urbanos, y por el Código Civil. Son nulas las cláusulas que contravengan normas imperativas de la LAU.",
+      C:"Se aplica lo pactado y, si falta algo, la LAU y el Código Civil."},
+    {id:"objeto", title:"Objeto y destino", 
+      J:"La vivienda se arrienda para uso permanente de vivienda del arrendatario y su unidad familiar, entregándose llaves y posesión en este acto. El arrendatario declara conocer su estado y régimen de propiedad horizontal, obligándose a un uso diligente.",
+      C:"Se alquila para vivir. Se entregan llaves y el inquilino la usa con cuidado y respeta la comunidad."},
+    {id:"duracion", title:"Duración y prórrogas (art. 9 LAU)", 
+      J:"El plazo es el indicado en el formulario. Si fuera inferior a cinco años (persona física) o siete (persona jurídica), se prorrogará obligatoriamente por anualidades hasta alcanzar dichos plazos, salvo causas legales de excepción.",
+      C:"Dura lo pactado y se prorroga cada año hasta 5/7 años si procede."},
+     {id:"renta", title:"Renta y pagos", 
+  J:"La renta mensual indicada se abona por meses anticipados dentro de los siete primeros días mediante el medio acordado.",
+  C:"Pagas el alquiler a primeros de mes (días 1 a 7). Retrasos con recargo."},
+    {id:"fianza", title:"Fianza (art. 36 LAU)", 
+      J:"Se entrega una mensualidad en concepto de fianza legal, a depositar según la normativa autonómica. No podrá aplicarse a rentas impagadas. Se devolverá al término si no hay cantidades pendientes.",
+      C:"Fianza de un mes (la ley manda). No vale para compensar impagos."}
+  ];
+
+  const EXTRA = [
+     {id:"actualizacion", title:"Actualización de la renta",
+          J:"La renta podrá actualizarse anualmente conforme al índice legal aplicable y a los límites vigentes, siendo exigible desde el mes siguiente a la notificación por escrito.",
+          C:"La renta puede actualizarse cada año según el índice legal y límites vigentes; se avisa por escrito."},
+    {id:"obras", title:"Obras y mejoras", 
+      J:"El arrendatario no podrá realizar obras que alteren la configuración sin consentimiento escrito. Las autorizadas quedarán en beneficio de la propiedad sin indemnización.",
+      C:"No hagas obras sin permiso; si se autorizan, se quedan."},
+    {id:"cesion", title:"Cesión y subarriendo",
+      J:"Prohibida la cesión o el subarriendo sin consentimiento escrito del arrendador.",
+      C:"No puedes ceder ni subarrendar sin permiso."},
+    {id:"desistimiento", title:"Desistimiento (art. 11 LAU)", 
+      J:"Transcurridos seis meses, el arrendatario podrá desistir con preaviso de 30 días. Indemnizará con una mensualidad por cada año de contrato restante, prorrateándose por periodos inferiores.",
+      C:"Puedes irte tras 6 meses avisando 30 días; hay indemnización proporcional."},
+    {id:"prorroga_tacita", title:"Prórroga tácita (art. 10 LAU)", 
+      J:"Llegado el término, si ninguna parte preavisa en plazo, el contrato se prorrogará por anualidades hasta un máximo de tres años.",
+      C:"Si nadie avisa, se renueva hasta 3 años más."},
+    {id:"gastos", title:"Gastos y servicios", 
+      J:"Se especifica qué gastos se incluyen en la renta y cuáles se repercuten al arrendatario (comunidad, tributos, suministros individualizados), conforme a lo pactado.",
+      C:"Se aclara qué gastos van incluidos y cuáles pagas tú."},
+    {id:"notificaciones", title:"Notificaciones",
+      J:"Serán válidas en los domicilios designados y/o en los correos electrónicos facilitados a efectos de notificaciones.",
+      C:"Avisos al domicilio/email acordados."},
+   { id:"cee", title:"Eficiencia energética",
+  J:"Se entrega el certificado de eficiencia energética conforme al RD 390/2021, de 1 de junio (certificación energética de edificios).",
+  C:"Se entrega el certificado energético conforme al RD 390/2021."
+},
+{ id:"zona_tensionada", title:"Régimen de zona de mercado residencial tensionado",
+  J:"Si la vivienda estuviera situada en una zona de mercado residencial tensionado conforme a la normativa vigente, la renta inicial, su actualización y, en su caso, las limitaciones aplicables quedarán sometidas a dichos límites legales, sin perjuicio de lo pactado y de la Ley de Arrendamientos Urbanos.",
+  C:"Si el piso está en zona tensionada, la renta y su actualización se ajustarán a los límites legales vigentes."
+}
+,{ id:"resol_jurisdiccion",
+  title:"Resolución del contrato y jurisdicción",
+  J:"El incumplimiento grave de las obligaciones esenciales facultará a la parte cumplidora para resolver el contrato conforme al art. 1124 del Código Civil y al art. 27 de la LAU, con reclamación de daños y perjuicios si procediere. Para la interpretación y cumplimiento de este contrato, las partes se someten, con renuncia expresa a cualquier otro fuero que pudiera corresponderles, a los Juzgados y Tribunales de la localidad del inmueble arrendado.",
+  C:"Si hay incumplimiento grave, el contrato podrá resolverse (art. 1124 CC y 27 LAU). Cualquier conflicto se verá en los juzgados de la localidad del piso."
+}
+  ];
+
+// 👉 Añadir aquí la cláusula ADR/mediación (EXTRA)
+EXTRA.push({
+  id:"adr", title:"Mediación y ADR",
+  J:"Para conflictos, las partes se comprometen a intentar previamente la mediación o un sistema adecuado de resolución de disputas (ADR).",
+  C:"Antes de ir a juicio, probamos mediación/ADR."
+});
+EXTRA.push({
+  id:"necesidad",
+  title:"Recuperación por necesidad del arrendador (art. 9.3 LAU)",
+  J:"Transcurrido el primer año de contrato, no procederá la prórroga obligatoria si el arrendador, persona física, comunica que necesita la vivienda para destinarla a vivienda permanente para sí, sus familiares en primer grado por consanguinidad o adopción, o para su cónyuge en supuestos de sentencia firme de separación, divorcio o nulidad. La comunicación será por escrito con al menos dos meses de antelación.",
+  C:"Tras el primer año, si el propietario (persona física) necesita la vivienda para él o un familiar directo, puede evitar la prórroga con aviso por escrito 2 meses antes."
+});
+
+
+  // Inyecta sin duplicar (IDs canónicos + títulos normalizados)
+const normTitle = (t) => {
+  let s = (t||"").toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"") // sin tildes
+    .replace(/\(.*?\)/g,"")                          // quita paréntesis y su contenido
+    .replace(/[,.:;]+/g," ")                         // limpia signos que confunden
+    .replace(/\s+/g," ").trim();
+
+  // Sinónimos canónicos para evitar duplicados entre UI y MUST
+  s = s.replace(/^precio y forma de pago$/,"renta y pagos");
+  s = s.replace(/^renta y pagos?$/,"renta y pagos");
+  s = s.replace(/^duracion y prorrogas?$/,"duracion y prorrogas");
+  s = s.replace(/^prorroga tacita.*$/,"prorroga tacita");
+  s = s.replace(/^fianza.*$/,"fianza");
+// Unifica orden "cesión/subarriendo" (evita duplicados con títulos invertidos)
+s = s.replace(/^subarriendo y cesion$/,"cesion y subarriendo");
+
+
+  return s;
+};
+
+
+// ——— MANDATORY ———
+(function mergeMandatory(){
+  const base = Array.isArray(window.CLAUSES_MANDATORY) ? window.CLAUSES_MANDATORY : [];
+  const out = [];
+  const seenT = new Set();
+
+  // Primero, MUST reforzadas
+  MUST.forEach(c=>{
+    const k = normTitle(c.title);
+    if (!seenT.has(k)){ out.push(c); seenT.add(k); }
+  });
+
+  // Luego, las que ya estaban (si no colisionan por título)
+  base.forEach(c=>{
+    const k = normTitle(c.title);
+    if (!seenT.has(k)){ out.push(c); seenT.add(k); }
+  });
+
+  window.CLAUSES_MANDATORY = out;
+})();
+
+// ——— EXTRA ———
+(function mergeExtra(){
+  const base = Array.isArray(window.CLAUSES_EXTRA) ? window.CLAUSES_EXTRA : [];
+  const out = [];
+  const seenId = new Set();
+  const seenT  = new Set();
+
+  // Normaliza IDs en ambos arrays
+  const alias = c => { const map = (window.ID_ALIAS && typeof window.ID_ALIAS==="object") ? window.ID_ALIAS : {}; const to = map[c.id]; if (to) c.id = to; return c; };
+
+
+
+  [...EXTRA.map(alias), ...base.map(alias)].forEach(c=>{
+    const id = c.id || "";
+    const k  = normTitle(c.title);
+    if (seenId.has(id) || seenT.has(k)) return;
+    seenId.add(id); seenT.add(k); out.push(c);
+  });
+
+  window.CLAUSES_EXTRA = out;
+
+  // Si había selecciones guardadas con IDs antiguos, cánonicalas
+  if (window.selectedClauses instanceof Set){
+    const fix = new Set();
+    window.selectedClauses.forEach(id=>{
+      fix.add(ID_ALIAS[id] || id);
+    });
+    window.selectedClauses = fix;
+  }
+})();
+// Compositor único de cláusulas (mismo orden/criterio que el PDF)
+window.__CLAUSES_COMPOSE = function(lang){
+ const ID_ALIAS = (window.ID_ALIAS && typeof window.ID_ALIAS==="object") ? window.ID_ALIAS : {};
+  const MUST  = Array.isArray(window.CLAUSES_MANDATORY) ? window.CLAUSES_MANDATORY : [];
+  const EXTRA = Array.isArray(window.CLAUSES_EXTRA) ? window.CLAUSES_EXTRA : [];
+  const sel   = (window.selectedClauses instanceof Set) ? window.selectedClauses : new Set();
+  const textFor = c => (lang==="claro" ? (c.C||c.J||"") : (c.J||c.C||""));
+  return [
+    ...MUST.map(c=>({ t:c.title, p:textFor(c) })),
+    ...EXTRA.filter(c=>sel.has(c.id)).map(c=>({ t:c.title, p:textFor(c) }))
+  ].filter(c=>c.t && c.p);
+};
+})();
+</script>
 </body>
 </html>
