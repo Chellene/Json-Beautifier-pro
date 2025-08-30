@@ -2864,68 +2864,7 @@ if (wantNotas) {
 }
 
 
-          // === ANEXO I — INVENTARIO ===
-if (wantInv){
-  doc.addPage();
-  setFont(doc,"bold",13); doc.text("ANEXO I — INVENTARIO", M, M);
-  setFont(doc,"normal",11);
-  const invTxt = (SNAP.anexos?.inventarioTxt != null)
-    ? String(SNAP.anexos.inventarioTxt)
-    : (document.getElementById("inventarioTxt")?.value || "");
-  const rows = window.__PDF_PARTS.parseInventario(invTxt);
-  if (rows.length){
-    doc.autoTable({
-      startY: M+12,
-      head: [["Elemento","Estado","Observaciones"]],
-      body: rows,
-      styles: THEME.font,
-      headStyles: THEME.head,
-      alternateRowStyles: THEME.alt,
-      theme: "grid",
-      margin: {left:M, right:M}
-    });
-  } else {
-    doc.text("— Sin elementos declarados —", M, M+16);
-  }
-}
-
-// === ANEXO II — LECTURAS DE CONTADORES ===
-if (wantCnt){
-  doc.addPage();
-  setFont(doc,"bold",13); doc.text("ANEXO II — LECTURAS DE CONTADORES", M, M);
-  setFont(doc,"normal",11);
-
-  const getSnap = (id) => (SNAP?.anexos?.lecturas?.[id] ?? document.getElementById(id)?.value ?? "").toString().trim();
-  const { rows, obs } = window.__PDF_PARTS.buildContadores((id)=>getSnap(id));
-  if (rows.length){
-    doc.autoTable({
-      startY: M+12,
-      head: [["Suministro","Lectura","Nº contador"]],
-      body: rows,
-      styles: THEME.font,
-      headStyles: THEME.head,
-      alternateRowStyles: THEME.alt,
-      theme: "grid",
-      margin: {left:M, right:M}
-    });
-  } else {
-    doc.text("— Sin lecturas declaradas —", M, M+16);
-  }
-
-  const yObs = (doc.lastAutoTable?.finalY || (M+16)) + 16;
-  if (obs){
-    setFont(doc,"bold",11); doc.text("Observaciones:", M, yObs);
-    setFont(doc,"normal",11); doc.text(doc.splitTextToSize(obs, MAXW), M, yObs+14);
-  }
-}
-
-// === ANEXO III — NOTAS EXPLICATIVAS ===
-if (wantNotas){
-  doc.addPage();
-  const NOTAS = window.__PDF_PARTS.buildNotasExplicativas((id)=>s(id), fmtFechaPDF);
-  window.__PDF_PARTS.drawNotasCompact(doc, NOTAS, M);
-}
-
+         
     // === Numeración de páginas y export ===
     pageNumbers(doc);
     doc.save("Contrato_Vivienda.pdf");
