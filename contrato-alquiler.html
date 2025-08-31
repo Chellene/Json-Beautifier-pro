@@ -2,7 +2,6 @@
 <html lang="es">
 <head>
 <link rel="icon" href="logo.svg" type="image/svg+xml">
-<link rel="shortcut icon" href="favicon.ico"> <!-- opcional: fallback si algún navegador lo usa -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contrato de Vivienda PRO — Generador de PDF estilo notaría por 1 €</title>
@@ -798,6 +797,8 @@ button, .chip, .seg label{ touch-action: manipulation; }
 window.LSKEY   = LSKEY;
 window.STEP_K  = STEP_K;
 window.PRESET_K= PRESET_K;
+let __downloading = false;
+
 
 
 // — Vinculación del pago a los datos (sin backend) —
@@ -1798,9 +1799,7 @@ if (!localStorage.getItem(LSKEY)) {
   if (n && !n.checked) { n.checked = true; toggleAnexEditors(); syncChipStyles(); }
 }
 
-document.getElementById("btnDownload")?.addEventListener("click", () => {
-  void window.generarPDF();
-});
+
 
 
       // presets
@@ -2052,6 +2051,22 @@ gateDownload();
       // Paso 3: muestra botón si ya pagó y precarga libs
       if (currentStep===3) { ensurePDFLibs().catch(()=>{}); }
       gateDownload();
+const btn = document.getElementById("btnDownload");
+if (btn && !btn.__bound){
+  btn.__bound = true;
+  btn.addEventListener("click", async () => {
+    if (__downloading) return;
+    __downloading = true;
+    btn.disabled = true;
+    try {
+      await Promise.resolve(_generarPDFCore());
+    } finally {
+      btn.disabled = false;
+      __downloading = false;
+    }
+  });
+}
+
 
 // === Sincroniza aria-current con el paso activo (accesibilidad) ===
 (function setupAriaSteps(){
@@ -2514,6 +2529,7 @@ try {
       keywords: "contrato, arrendamiento, vivienda, alquiler, PDF",
       creator: "JSON Beautifier PRO"
     });
+let __sealPrinted = false;
 
     const W = doc.internal.pageSize.getWidth(), H = doc.internal.pageSize.getHeight(), M = 60, MAXW = W - M*2;
     const THEME = window.__PDF_THEME;
@@ -2855,13 +2871,75 @@ if (wantCnt) {
     doc.text(doc.splitTextToSize(obs, (doc.internal.pageSize.getWidth() - M*2)), M, yObs+14);
   }
 }
+function drawPaidSealBottomRight(doc, opts={}){
+  const W = doc.internal.pageSize.getWidth();
+  const H = doc.internal.pageSize.getHeight();
+  const MARGIN = (typeof M === "number" ? M : 56);
+  const R = 24; // radio del sello
+  const cx = W - MARGIN - R;          // centro X (margen derecho)
+  const cy = H - 34 - R;              // centro Y (por encima de la numeración)
 
-// ANEXO III — Notas explicativas
+  const main = (opts.main || "PAGO VERIFICADO").toUpperCase();
+  const sub  = (opts.sub  || "DOCUMENTO ORIGINAL").toUpperCase();
+
+  // Colores/estilo
+  doc.setTextColor(200, 30, 30);
+  doc.setDrawColor(200, 30, 30);
+  doc.setLineWidth(1.2);
+
+  // Aro exterior
+  doc.circle(cx, cy, R, "S");
+
+  // Aro interior discontinuo
+  if (doc.setLineDash) doc.setLineDash([2.2, 1.8], 0);
+  doc.setLineWidth(0.8);
+  doc.circle(cx, cy, R - 5.5, "S");
+  if (doc.setLineDash) doc.setLineDash([], 0);
+
+  // Check central (icono)
+  doc.setLineWidth(2.2);
+  doc.setLineCap("round");
+  doc.line(cx - 7, cy + 0, cx - 1, cy + 6);
+  doc.line(cx - 1, cy + 6, cx + 9, cy - 6);
+
+  // Texto principal
+  window.__PDF_UTILS.setFont(doc,"bold",9);
+  const tw = doc.getTextWidth(main);
+  doc.text(main, cx - tw/2, cy - 10);
+
+  // Banda horizontal fina
+  doc.setLineWidth(0.6);
+  doc.line(cx - (R - 6), cy - 7.5, cx + (R - 6), cy - 7.5);
+
+  // Subtítulo
+  window.__PDF_UTILS.setFont(doc,"normal",7.5);
+  const tw2 = doc.getTextWidth(sub);
+  doc.text(sub, cx - tw2/2, cy + 13);
+}
+
+
+// ANEXO III — Notas explicativas (compacto)
 if (wantNotas) {
   doc.addPage();
   const NOTAS = window.__PDF_PARTS.buildNotasExplicativas((id)=>s(id), window.__PDF_UTILS.fmtFechaPDF);
   window.__PDF_PARTS.drawNotasCompact(doc, NOTAS, M);
 }
+
+// — Sello profesional en ÚLTIMA página de Notas —
+if (wantNotas) {
+  const includeSeal = (localStorage.getItem(LSKEY+"_paid")==="true") &&
+                      (localStorage.getItem(LSKEY+"_seal")==="1");
+  if (includeSeal) {
+    const last = doc.internal.getNumberOfPages();
+    doc.setPage(last);
+    drawPaidSealBottomRight(doc, {
+      main: "PAGO VERIFICADO",
+      // sub: "DOCUMENTO EMITIDO"  ó  "COPIA DIGITAL"
+      sub: "DOCUMENTO ORIGINAL"
+    });
+  }
+}
+
 
 
          
