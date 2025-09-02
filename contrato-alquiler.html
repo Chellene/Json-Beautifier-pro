@@ -93,21 +93,52 @@
     {
       "@type":"Question",
       "name":"¿Es válido legalmente este contrato?",
-      "acceptedAnswer":{"@type":"Answer","text":"Sí. Es un contrato privado entre particulares ajustado a la LAU vigente en España."}
+      "acceptedAnswer":{"@type":"Answer","text":"Sí. Es un contrato privado entre particulares conforme a la LAU vigente en España. Basta la firma de ambas partes."}
     },
     {
       "@type":"Question",
-      "name":"¿Necesito registrarme o subir datos?",
-      "acceptedAnswer":{"@type":"Answer","text":"No. Todo se genera en tu navegador y puedes descargarlo tras pagar 1 €."}
+      "name":"¿Necesito notario o registro para que sea válido?",
+      "acceptedAnswer":{"@type":"Answer","text":"No. No es obligatorio. Puedes firmarlo en papel o digitalmente; el PDF generado es apto para ambas formas de firma."}
+    },
+    {
+      "@type":"Question",
+      "name":"¿Se guardan mis datos?",
+      "acceptedAnswer":{"@type":"Answer","text":"No. El contrato se genera en tu navegador. Sólo al pagar 1 € se desbloquea la descarga; no pedimos registro ni subes documentos."}
     },
     {
       "@type":"Question",
       "name":"¿Sirve para toda España?",
-      "acceptedAnswer":{"@type":"Answer","text":"Sí, el modelo está adaptado a la normativa española y es válido en todo el territorio nacional."}
+      "acceptedAnswer":{"@type":"Answer","text":"Sí. Está adaptado a la normativa española y es válido en todo el territorio nacional."}
+    },
+    {
+      "@type":"Question",
+      "name":"¿Incluye anexos como Inventario y Lecturas de contadores?",
+      "acceptedAnswer":{"@type":"Answer","text":"Sí, puedes activarlos como Anexo I (Inventario) y Anexo II (Lecturas). Se añaden automáticamente al PDF final."}
+    },
+    {
+      "@type":"Question",
+      "name":"¿Puedo añadir o quitar cláusulas?",
+      "acceptedAnswer":{"@type":"Answer","text":"Sí. Dispones de packs de cláusulas editables. Puedes activar sólo las que necesites y personalizarlas antes de generar el PDF."}
+    },
+    {
+      "@type":"Question",
+      "name":"¿Qué pasa si cambio datos tras pagar?",
+      "acceptedAnswer":{"@type":"Answer","text":"Por seguridad, si cambias datos clave te pediremos volver a confirmar el pago antes de descargar el PDF actualizado."}
+    },
+    {
+      "@type":"Question",
+      "name":"¿Para alquiler por temporada u habitaciones?",
+      "acceptedAnswer":{"@type":"Answer","text":"Este modelo es para vivienda habitual. Para temporada u habitaciones usa los generadores específicos en esta web."}
+    },
+    {
+      "@type":"Question",
+      "name":"¿Cómo se trata la fianza?",
+      "acceptedAnswer":{"@type":"Answer","text":"Incluye campo de fianza y su devolución. En vivienda habitual la fianza legal mínima suele ser un mes de renta conforme a la LAU."}
     }
   ]
 }
 </script>
+
 
 
 
@@ -749,30 +780,65 @@ button, .chip, .seg label{ touch-action: manipulation; }
 <section id="faq-vivienda" class="container" style="max-width:820px;margin:28px auto">
   <h2 class="text-xl" style="font-weight:800;margin:.2rem 0 12px">Preguntas frecuentes</h2>
 
-  <details class="mb-3" open>
-    <summary class="font-medium">¿Es válido legalmente este contrato?</summary>
-    <div class="mt-2 text-sm" style="line-height:1.65">
-      Sí. Es un contrato privado entre particulares ajustado a la LAU vigente en España.
-    </div>
-  </details>
-
   <details class="mb-3">
-    <summary class="font-medium">¿Necesito notario o registro?</summary>
-    <div class="mt-2 text-sm" style="line-height:1.65">
-      No, no es obligatorio. El contrato privado firmado por ambas partes es válido.
-    </div>
-  </details>
+  <summary>¿Es válido legalmente este contrato?</summary>
+  <p>Sí, es un contrato privado conforme a la LAU. Basta la firma del arrendador y del inquilino.</p>
+</details>
+
+<details class="mb-3">
+  <summary>¿Necesito notario o registro para que sea válido?</summary>
+  <p>No. Puedes firmarlo en papel o de forma digital; el PDF generado es apto para ambas.</p>
+</details>
+
+<details class="mb-3">
+  <summary>¿Se guardan mis datos o el documento?</summary>
+  <p>No guardamos tus datos. El documento se compone en tu navegador y la descarga se desbloquea tras pagar 1 €.</p>
+</details>
+
+<details class="mb-3">
+  <summary>¿Sirve para toda España?</summary>
+  <p>Sí, el modelo está adaptado a la normativa española y es válido en todo el territorio.</p>
+</details>
+
+<details class="mb-3">
+  <summary>¿Incluye anexos como Inventario y Lecturas de contadores?</summary>
+  <p>Sí. Puedes activar Inventario (Anexo I) y Lecturas de contadores (Anexo II). Se añaden automáticamente al PDF.</p>
+</details>
+
+<details class="mb-3">
+  <summary>¿Puedo añadir o quitar cláusulas?</summary>
+  <p>Sí, el generador ofrece packs de cláusulas y puedes activar sólo las que necesites, además de editarlas.</p>
+</details>
+
+<details class="mb-3">
+  <summary>He cambiado datos después de pagar, ¿tengo que pagar otra vez?</summary>
+  <p>Si cambias datos clave, por seguridad te pediremos reconfirmar el pago antes de descargar el PDF actualizado.</p>
+</details>
+
+<details class="mb-3">
+  <summary>¿Sirve para alquiler por temporada u habitaciones?</summary>
+  <p>Este es para vivienda habitual. Para <a href="contrato-habitacion.html">habitaciones</a> usa el generador específico; para temporada, tu modelo correspondiente.</p>
+</details>
+
+<details class="mb-3">
+  <summary>¿Cómo tratamos la fianza?</summary>
+  <p>El contrato incluye la fianza y su devolución. En vivienda habitual la fianza legal mínima suele ser un mes de renta conforme a la LAU.</p>
+</details>
+
 </section>
 
   </main>
 
   <footer class="container">
-  <a href="aviso-legal.html?from=vivienda">Aviso legal</a> •
-  <a href="privacidad-contrato.html?from=vivienda">Privacidad</a> •
-  <a href="cookies.html?from=vivienda">Cookies</a> •
-  <a href="contacto.html?from=vivienda">Contacto</a>
-• <span>JSON Beautifier PRO © 2025</span>
+  <div>
+    <a href="aviso-legal.html?from=habitacion">Aviso legal</a> •
+    <a href="privacidad-contrato.html?from=habitacion">Privacidad</a> •
+    <a href="cookies.html?from=habitacion">Cookies</a> •
+    <a href="contacto.html?from=habitacion">Contacto</a>
+  </div>
+  <div style="margin-top:6px">JSON Beautifier PRO © 2025</div>
 </footer>
+
 
 
   <!-- Modal fullscreen -->

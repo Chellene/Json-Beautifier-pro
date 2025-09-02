@@ -542,8 +542,7 @@ button, .chip, .seg label{ touch-action: manipulation; }
                       <div><span class="tick">✓</span> Guardado local opcional</div>
                     </div>
 
-                    <!-- Botón de descarga (se muestra solo con pago confirmado) -->
-                    <button type="button" class="btn btn-primary" id="btnDownload" style="display:none">Descargar PDF</button>
+                    
 
                     <!-- Botón PayPal clásico eliminado: usamos NCP igual que Vivienda -->
 <style>
@@ -560,13 +559,20 @@ button, .chip, .seg label{ touch-action: manipulation; }
   .ppNcpWrap small{ display:block; color:#666; margin-top:.45rem; }
 </style>
 
-<!-- Toggle para incluir el sello en el PDF (solo se muestra tras pagar) -->
-<div id="sealWrap" style="display:none; margin:8px 0 0">
-  <label class="chip" style="cursor:pointer; gap:.5rem; align-items:center;">
-    <input type="checkbox" id="sealToggle" />
-    Incluir sello “Pago verificado” en el <b>Anexo I — Inventario</b>
-  </label>
+<!-- Acciones de pago/descarga en una sola fila -->
+<div class="actions" id="payActions" style="align-items:center; gap:10px; margin-top:8px;">
+  <button type="button" class="btn btn-primary" id="btnDownload" style="display:none">
+    Descargar PDF
+  </button>
+
+  <div id="sealWrap" style="display:none;">
+    <label class="chip" style="cursor:pointer; gap:.5rem; align-items:center;">
+      <input type="checkbox" id="sealToggle" />
+      Incluir sello “Pago verificado” en el <b>Anexo I — Inventario</b>
+    </label>
+  </div>
 </div>
+
 
 
 
@@ -656,11 +662,15 @@ button, .chip, .seg label{ touch-action: manipulation; }
   </main>
 
   <footer class="container">
+  <div>
     <a href="aviso-legal.html?from=habitacion">Aviso legal</a> •
     <a href="privacidad-contrato.html?from=habitacion">Privacidad</a> •
     <a href="cookies.html?from=habitacion">Cookies</a> •
     <a href="contacto.html?from=habitacion">Contacto</a>
-  </footer>
+  </div>
+  <div style="margin-top:6px">JSON Beautifier PRO © 2025</div>
+</footer>
+
 
   <!-- Modal fullscreen -->
   <div class="modal" id="fs">
@@ -1323,13 +1333,49 @@ try{
     if (S.y + needed <= bottom) return false;
     doc.addPage(); S.y = NT.PAGE.margin; return true;
   }
-  function flowPara(doc, text, x, y, w, opts={}){
-    opts.S = opts.S || { y };
-    const lines = doc.splitTextToSize(sanitize(text), w);
-    const lh = opts.lh || NT.LINEH;
-    for (let i=0; i<lines.length; i++){ paginate(doc, opts.S, lh); doc.text(lines[i], x, opts.S.y, { maxWidth:w, align:(opts.align||"left") }); opts.S.y += lh; }
-    return opts.S.y;
+  
+
+function flowPara(doc, text, x, y, w, opts = {}) {
+  opts.S = opts.S || { y };
+  const lines = doc.splitTextToSize(sanitize(text), w);
+  const lh = opts.lh || NT.LINEH;
+  const minNextLines = 2; // No dejar 1 línea suelta en la página siguiente
+
+  let i = 0;
+  while (i < lines.length) {
+    const pageH = doc.internal.pageSize.getHeight();
+    const bottom = pageH - NT.PAGE.bottomSafe;
+    const roomLines = Math.floor((bottom - opts.S.y) / lh);
+    const remain = lines.length - i;
+
+    // Si no cabe ni una línea más, abre página ya
+    if (roomLines <= 0) { doc.addPage(); opts.S.y = NT.PAGE.margin; continue; }
+
+    // Por defecto, imprimimos lo que quepa en esta página
+    let take = Math.min(roomLines, remain);
+
+    // Anti-viudas: si al imprimir 'take' líneas, queda SOLO 1 para la próxima,
+    // movemos 1 de las que cabían a la página nueva, para que queden >=2 líneas allí.
+    if (remain > roomLines && (remain - roomLines) < minNextLines) {
+      const falta = minNextLines - (remain - roomLines); // normalmente 1
+      take = Math.max(0, take - falta);
+    }
+
+    // Si por el ajuste no tomamos ninguna, abrimos página y seguimos
+    if (take === 0) { doc.addPage(); opts.S.y = NT.PAGE.margin; continue; }
+
+    // Pinta 'take' líneas en esta página
+    for (let k = 0; k < take; k++) {
+      doc.text(lines[i + k], x, opts.S.y, { maxWidth: w, align: (opts.align || "left") });
+      opts.S.y += lh;
+    }
+    i += take;
+
+    // Si quedan líneas, abrimos página para continuar
+    if (i < lines.length) { doc.addPage(); opts.S.y = NT.PAGE.margin; }
   }
+  return opts.S.y;
+}
 
   // Cabecera de sección con línea **solo** en 4 títulos
   function band(doc, title, x, S, w){
@@ -1454,7 +1500,7 @@ try{
       doc.setPage(i);
       setFont(doc,"normal",10);
       const pageW = doc.internal.pageSize.getWidth(), pageH = doc.internal.pageSize.getHeight();
-      const label = `${i} / ${n}`, width = doc.getTextWidth(label);
+      const label = `Página ${i} / ${n}`, width = doc.getTextWidth(label);
       doc.text(label, (pageW-width)/2, pageH-30);
     }
   }
@@ -1666,25 +1712,40 @@ S.y = flowPara(
 
       S.y += 8; // aire por arriba
                S.y = band(doc,"Cláusulas", m, S, W);
+      const __oldSafe = NT.PAGE.bottomSafe;
+NT.PAGE.bottomSafe = 140;
        for (let i = 0; i < claus.length; i++) {
-   const [tit, cuerpo] = claus[i];
-   const lines   = doc.splitTextToSize(sanitize(cuerpo), W);
-   const lh      = NT.LINEH;
-   const need    = 10 + (lines.length * lh) + 8; // título + texto + margen
-   const bottom  = doc.internal.pageSize.getHeight() - NT.PAGE.bottomSafe;
-   const remain  = bottom - S.y;
-   // Si no cabe al menos el título + 2 líneas, empezamos en página nueva
-   const minShow = 10 + (2 * lh);
-   if (remain < Math.min(need, minShow)) { doc.addPage(); S.y = NT.PAGE.margin; }
+  const [tit, cuerpo] = claus[i];
+  const lines   = doc.splitTextToSize(sanitize(cuerpo), W);
+  const lh      = NT.LINEH;
 
-   // Título
-   setFont(doc, "bold"); paginate(doc, S, lh);
-   doc.text(`${i + 1}. ${tit}`, m, S.y); S.y += 10;
-   // Cuerpo
-   setFont(doc, "normal");
-   S.y = flowPara(doc, cuerpo, m, S.y, W, { S, lh, align: "left" });
-   S.y += 8;
- }
+  // >>> espacios controlados
+  const TITLE_GAP = 14;   // aire entre título y texto (antes: 10)
+  let AFTER_GAP = 10;   // aire al final de cada cláusula (antes: 8)
+
+  // Cálculo para decidir salto de página antes de pintar esta cláusula
+  const neededHeight = TITLE_GAP + (lines.length * lh) + AFTER_GAP;
+  const bottom  = doc.internal.pageSize.getHeight() - NT.PAGE.bottomSafe;
+  const remain  = bottom - S.y;
+
+  // Mostrar al menos título + 2 líneas en la misma página
+  const minShow = TITLE_GAP + (2 * lh);
+  if (remain < Math.min(neededHeight, minShow)) {
+    doc.addPage(); S.y = NT.PAGE.margin;
+  }
+
+
+  // Título
+  setFont(doc, "bold"); paginate(doc, S, lh);
+  doc.text(`${i + 1}. ${tit}`, m, S.y);
+  S.y += TITLE_GAP;
+
+  // Cuerpo
+  setFont(doc, "normal");
+  S.y = flowPara(doc, cuerpo, m, S.y, W, { S, lh, align: "left" });
+  S.y += AFTER_GAP;
+}
+NT.PAGE.bottomSafe = __oldSafe;
 
       // ===== Firmas =====
       reserveSignatures(doc, S, 12);
@@ -2069,7 +2130,7 @@ function refreshPayUI(){
   const wrap = document.getElementById("sealWrap");
   const cb   = document.getElementById("sealToggle");
   if (!wrap || !cb) return;
-  wrap.style.display = paid ? "block" : "none";
+  wrap.style.display = paid ? "inline-flex" : "none";
   // por defecto activado tras pagar si no hay preferencia previa
   const v = localStorage.getItem(LSKEY + "_seal");
   if (v === null && paid) localStorage.setItem(LSKEY + "_seal", "1");
