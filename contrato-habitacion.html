@@ -155,6 +155,37 @@ label.clause-card.active{
   .brand h1{ white-space: normal; overflow: visible; text-overflow: clip; }
 }
 
+/* Toggle "Incluir sello": aspecto de checkbox visible dentro del chip */
+#sealToggle{
+  display:inline-flex; align-items:center; gap:8px;
+  cursor:pointer; user-select:none;
+}
+#sealToggle .box{
+  position:relative; width:18px; height:18px; border:2px solid #cbd5e1;
+  border-radius:4px; display:inline-block; flex:0 0 18px; background:#fff;
+}
+#sealToggle input[type="checkbox"]{
+  appearance:none; position:absolute; inset:0; opacity:0;
+}
+#sealToggle input[type="checkbox"]:focus + .box{
+  outline: 2px solid #4c6fff; outline-offset: 2px;
+}
+#sealToggle input[type="checkbox"]:checked + .box{
+  background:#4c6fff; border-color:#4c6fff;
+}
+#sealToggle input[type="checkbox"]:checked + .box::after{
+  content:""; position:absolute; left:5px; top:2px;
+  width:4px; height:8px; border-right:2px solid #fff; border-bottom:2px solid #fff;
+  transform:rotate(45deg);
+}
+
+/* "Pago verificado" como insignia informativa (si la usas en el header de pago) */
+#paidSeal{
+  cursor:default; pointer-events:none;
+  background:#eef2ff; border-color:#cfd7e6; color:#1e293b; box-shadow:none;
+}
+
+
 /* === Paridad móvil con Vivienda + protección de copia === */
 
 /* 1) Formulario a 1 columna en móviles (no apelotonar) */
@@ -542,48 +573,20 @@ button, .chip, .seg label{ touch-action: manipulation; }
                       <div><span class="tick">✓</span> Guardado local opcional</div>
                     </div>
 
-                    
+  <!-- Botón PayPal NCP exclusivo de HABITACIÓN -->
 
-                    <!-- Botón PayPal clásico eliminado: usamos NCP igual que Vivienda -->
 <style>
-  /* Botón NCP (idéntico al de Vivienda) */
-  .pp-ZGPA6FGJKB4DW{
-    display:inline-flex; align-items:center; gap:.55rem;
-    background:#ffc439; color:#111;
-    padding:.7rem 1.1rem; border-radius:10px;
-    font-weight:700; text-decoration:none; border:none; cursor:pointer;
-    box-shadow:0 2px 0 rgba(0,0,0,.12), 0 1px 1px rgba(0,0,0,.08);
-    transition: transform .02s ease;
+  .pp-FQE2RL234MT9C {
+    text-align:center;border:none;border-radius:0.25rem;min-width:11.625rem;
+    padding:0 2rem;height:2.625rem;font-weight:bold;background:#FFD140;color:#000;
+    font-family:"Helvetica Neue",Arial,sans-serif;font-size:1rem;line-height:1.25rem;cursor:pointer;
   }
-  .pp-ZGPA6FGJKB4DW:hover{ transform: translateY(-1px); }
-  .ppNcpWrap small{ display:block; color:#666; margin-top:.45rem; }
 </style>
 
-<!-- Acciones de pago/descarga en una sola fila -->
-<div class="actions" id="payActions" style="align-items:center; gap:10px; margin-top:8px;">
-  <button type="button" class="btn btn-primary" id="btnDownload" style="display:none">
-    Descargar PDF
-  </button>
+<div class="ppNcpWrap" style="margin-top:1rem;display:inline-grid;justify-items:center;gap:.5rem">
+  <!-- Botón visible que ENVÍA el form oculto #ppNcpForm -->
+  <button class="pp-FQE2RL234MT9C" type="submit" form="ppNcpForm" formnovalidate>Comprar ahora</button>
 
-  <div id="sealWrap" style="display:none;">
-    <label class="chip" style="cursor:pointer; gap:.5rem; align-items:center;">
-      <input type="checkbox" id="sealToggle" />
-      Incluir sello “Pago verificado” en el <b>Anexo I — Inventario</b>
-    </label>
-  </div>
-</div>
-
-
-
-
-
-<div class="ppNcpWrap" style="margin-top:1rem;">
-  <a class="pp-ZGPA6FGJKB4DW"
-     href="https://www.paypal.com/ncp/payment/ZGPA6FGJKB4DW"
-     form="ppNcpForm" target="_blank" rel="noopener">
-    <span>Comprar ahora</span>
-  </a>
-  <small>Al pagar se desbloquea la descarga del PDF.</small>
   <img src="https://www.paypalobjects.com/images/Debit_Credit_APM.svg" alt="cards" />
   <section style="font-size:.75rem;">
     Tecnología de
@@ -591,6 +594,24 @@ button, .chip, .seg label{ touch-action: manipulation; }
          alt="paypal" style="height:.875rem;vertical-align:middle;"/>
   </section>
 </div>
+
+<div class="actions" id="payActions" style="align-items:center; gap:10px; margin-top:8px;">
+  <button type="button" class="btn btn-primary" id="btnDownload" style="display:none">
+    <i class="fa-solid fa-file-pdf" aria-hidden="true"></i> Descargar PDF
+  </button>
+
+  <!-- Opcional: toggle del sello “Pago verificado” (tu JS ya lo soporta) -->
+ <div id="sealWrap" style="display:none">
+  <label id="sealToggle" class="chip">
+    <input type="checkbox" id="sealOpt" role="switch" />
+    <span class="box"></span>
+    <span class="txt">Incluir sello “Pago verificado” en el PDF</span>
+  </label>
+</div>
+
+</div>
+
+
 <p id="payError" class="err" aria-live="polite"></p>
 <p style="font-size:12px;color:#475569;margin-top:6px">
   Producto digital. No admite devoluciones (art. 103.m TRLGDCU).
@@ -691,12 +712,14 @@ button, .chip, .seg label{ touch-action: manipulation; }
   const qsa = (sel)=> Array.from(document.querySelectorAll(sel));
 
   // ---------- Estado ----------
-  const LSKEY  = "contrato_habitacion_v2";
-  const STEP_K = "HAB_STEP";
+  window.LSKEY  = window.LSKEY  || "contrato_habitacion_v2";
+window.STEP_K = window.STEP_K || "HAB_STEP";
+window.refreshPayUI = window.refreshPayUI || function(){};
 const PRESET_K = LSKEY + "_preset";
 window.PRESET_K = PRESET_K;
 let __downloading = false;
   let currentStep = Number(localStorage.getItem(STEP_K) || "1");
+window.currentStep = currentStep;
   window.hasPaid  = localStorage.getItem("HAB_PAID") === "1";   // controla visibilidad botón descarga
   window.orderId  = localStorage.getItem("HAB_ORDER") || "";
   window.langMode = localStorage.getItem(LSKEY+"_lang") || "juridico"; // 'juridico' | 'claro'
@@ -793,6 +816,16 @@ function renderClausePicker(filter=""){
     if (( $("wifi")?.value||"no")==="si") arr.push("Wi-Fi");
     return arr;
   }
+function syncInventoryUI(){
+  const on = !!document.getElementById("anexoInventario")?.checked;
+  const box  = document.getElementById("anexosBox");
+  const boxI = document.getElementById("anexoInvBox");
+  const chip = document.getElementById("chipInv");
+  if (box)  box.style.display  = on ? "block" : "none";
+  if (boxI) boxI.style.display = on ? "block" : "none";
+  chip?.classList.toggle("active", on);
+}
+
 
   // ---------- Resumen + Vista protegida ----------
   const fmtFecha = (v) => !v ? "—" : new Date(v+"T00:00:00").toLocaleDateString("es-ES",{day:"numeric",month:"long",year:"numeric"});
@@ -839,46 +872,63 @@ function renderClausePicker(filter=""){
   return blocks;
 }
 
-  function vistaHTML(){
-  const g=id=>($(id)?.value||"");
-  const escH = s => String(s ?? "")
+function vistaHTML(){
+  const g = id => (document.getElementById(id)?.value || "");
+  const N = s => String(s || "").toUpperCase().replace(/\s+/g, "");
+  const esc = s => String(s ?? "")
     .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
     .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+  const fmtFecha = (v) => !v
+    ? "—"
+    : new Date(v + "T00:00:00").toLocaleDateString("es-ES", { day:"numeric", month:"long", year:"numeric" });
 
-  const claus = construirClausulas();
-  const zonas = getZonas(), serv=getServiciosIncluidos();
-  const fumar = (( $("fumar")?.value)||"no")==="si" ? "Permitido" : "No permitido";
-  const anex = $("anexoInventario")?.checked ? ["Inventario"] : [];
+  const zonas = (typeof getZonas === "function" ? getZonas() : []);
+  const serv  = (typeof getServiciosIncluidos === "function" ? getServiciosIncluidos() : []);
+  const fumar = ((document.getElementById("fumar")?.value) || "no") === "si" ? "Permitido" : "No permitido";
 
-  let html = "";
-  html += `<p><strong>Arrendador:</strong> ${escH(g("arrendador"))} — <strong>DNI:</strong> ${escH((g("dniArrendador")||"").toUpperCase().replace(/\s+/g,""))}</p>`;
-  html += `<p><strong>Inquilino:</strong> ${escH(g("inquilino"))} — <strong>DNI:</strong> ${escH((g("dniInquilino")||"").toUpperCase().replace(/\s+/g,""))}</p>`;
-  html += `<p><strong>Dirección:</strong> ${escH(g("direccion"))}</p>`;
-  html += `<p><strong>Localidad:</strong> ${escH(g("localidad"))} — <strong>Duración:</strong> ${escH(g("duracion")||"—")} meses</p>`;
+  let h = "";
 
-  // 🔧 Estos tres párrafos son los que estaban sueltos rompiendo el parseo:
-  html += `<p><strong>Habitación:</strong> ${escH(g("habId")||"—")} ${g("habPlanta")?`(${escH(g("habPlanta"))})`:""}</p>`;
-  html += `<p><strong>Superficie:</strong> ${escH(g("habM2")||"—")} m² · <strong>Amueblada:</strong> ${g("habAmueblada")==="si"?"Sí":(g("habAmueblada")==="no"?"No":"—")}</p>`;
-  html += `<p><strong>Descripción:</strong> ${escH(g("habDescripcion")||"—")}</p>`;
+  // Partes
+  h += `<p><strong>Arrendador:</strong> ${esc(g("arrendador"))} · ${N(g("dniArrendador"))}</p>`;
+  h += `<p><strong>Inquilino:</strong> ${esc(g("inquilino"))} · ${N(g("dniInquilino"))}</p>`;
 
-  html += `<p><strong>Fechas:</strong> ${fmtFecha(g("fechaInicio"))} - ${fmtFecha(g("fechaFin"))}</p>`;
-  html += `<p><strong>Precio:</strong> ${escH(g("renta")||"—")} € — <strong>Fianza:</strong> ${escH(g("fianza")||"—")} €</p>`;
+  // Inmueble / Duración
+  h += `<p><strong>Dirección:</strong> ${esc(g("direccion"))}</p>`;
+  h += `<p><strong>Localidad:</strong> ${esc(g("localidad"))} — <strong>Duración:</strong> ${esc(g("duracion") || "—")} meses</p>`;
+  h += `<p><strong>Fechas:</strong> ${fmtFecha(g("fechaInicio"))} – ${fmtFecha(g("fechaFin"))}</p>`;
 
-  html += `<p><strong>Condiciones específicas:</strong></p><ul>`;
-  html += `<li><b>Zonas comunes incluidas:</b> ${zonas.length? zonas.map(escH).join(", ") : "—"}</li>`;
-  html += `<li><b>Servicios incluidos:</b> ${serv.length? serv.map(escH).join(", ") : "—"}</li>`;
-  html += `<li><b>Fumar:</b> ${fumar}</li>`;
-  html += `</ul>`;
+  // Importes
+  h += `<p><strong>Precio mensual:</strong> ${esc(g("renta") || "—")} € · <strong>Fianza:</strong> ${esc(g("fianza") || "—")} €</p>`;
 
-  html += `<p><strong>Cláusulas:</strong></p><ol>` + claus.map(c=>`<li><b>${escH(c.title||c.titulo||c.t||"")}</b> — ${escH(c.text||c.C||c.J||"")}</li>`).join("") + `</ol>`;
+  // Datos específicos de la habitación
+  const am = document.getElementById("habAmueblada")?.value;
+  const amTxt = am === "si" ? "Amueblada" : (am === "no" ? "Sin amueblar" : "—");
+  h += `<p><strong>Habitación:</strong> ${esc(g("habId") || "—")} · ${esc(g("habPlanta") || "—")} · ${esc(g("habM2") || "—")} m² · ${amTxt}</p>`;
+  const desc = (g("habDescripcion") || "").trim();
+  if (desc) h += `<p><strong>Descripción:</strong> ${esc(desc)}</p>`;
 
-  if (anex.length){
-    html += `<p><strong>Anexos:</strong> ${anex.join(", ")} (se incorporarán al PDF en página aparte).</p>`;
+  // Zonas/Servicios
+  if (zonas?.length) h += `<p><strong>Zonas comunes:</strong> ${zonas.map(esc).join(", ")}</p>`;
+  if (serv?.length)  h += `<p><strong>Incluye:</strong> ${serv.map(esc).join(", ")} · <strong>Wi-Fi:</strong> ${document.getElementById("wifi")?.value==="si"?"Sí":"No"} · <strong>Fumar:</strong> ${fumar}</p>`;
+
+  // Cláusulas adicionales (si existe tu builder)
+  if (typeof construirClausulas === "function"){
+    const cls = construirClausulas();
+    if (Array.isArray(cls) && cls.length){
+      h += `<hr><h4>Cláusulas adicionales</h4>`;
+      h += cls.map(c => `<p><strong>${esc(c.title)}:</strong> ${esc(c.text)}</p>`).join("");
+    }
   }
-  html += `<p style="display:flex;justify-content:space-between;font-weight:bold;margin-top:2rem"><span>Arrendador: _____________________</span><span>Arrendatario: _____________________</span></p>`;
-  html += `<p style="display:flex;justify-content:space-between"><span>${escH(g("arrendador"))}</span><span>${escH(g("inquilino"))}</span></p>`;
-  return html;
+
+  // Anexos
+  const anexInv = !!document.getElementById("anexoInventario")?.checked;
+  if (anexInv){
+    h += `<hr><p><strong>Anexos:</strong> Inventario</p>`;
+  }
+
+  return h;
 }
+
 
   function lockPreviewEvents(el){ if (!el || el.dataset.locked) return; ["copy","cut","paste","contextmenu"].forEach(ev => el.addEventListener(ev, e=>e.preventDefault())); el.onselectstart = () => false; el.dataset.locked = "1"; }
 // Bloqueo de atajos de copiar/cortar/seleccionar mientras esté abierto el fullscreen
@@ -910,9 +960,9 @@ function toggleCopyGuard(on){
     if($("meter")) $("meter").value=pct;
     if($("pct"))   $("pct").textContent = pct+" % completado";
 
-    // Botón descarga visible solo si hasPaid y estás en paso 3 (PARTE 3 añade listener real)
-    const btn=$("btnDownload");
-    if(btn) btn.style.display = ((window.hasPaid) && currentStep===3) ? "inline-flex" : "none";
+    // Visibilidad de descarga: la decide gateDownload() (pago + bind)
+if (typeof gateDownload === "function") gateDownload();
+
 
     // Sello de pago si existe ensurePaidSeal (PARTE 3)
     if (typeof ensurePaidSeal === "function") ensurePaidSeal();
@@ -953,6 +1003,9 @@ function toggleCopyGuard(on){
   }
   window.validar = validar; // consola
   function validateField(el){
+if (!el) return;
+  const t = (el.type || '').toLowerCase();
+  if (['submit','button','image','file','reset','radio'].includes(t)) return; 
     if (!el) return; const id=el.id; let ok=true;
     switch(id){
       case "dniArrendador":
@@ -990,55 +1043,66 @@ function toggleCopyGuard(on){
 
   // ---------- Persistencia ----------
   function serialize(){
-    const o={};
-    qsa('#contratoForm input, #contratoForm select, #contratoForm textarea').forEach(el=>{
-      if(el.type==='radio') return;
-      if(el.type==='checkbox') o[el.id]=!!el.checked; else o[el.id]=el.value||'';
-    });
-    o._zc=qsa('input[name="zc"]').map(el=>({value:el.value,checked:el.checked}));
-    o.clSel=Array.from(window.selectedClauses);
-    const _PK  = (typeof PRESET_K !== "undefined") ? PRESET_K : (LSKEY + "_preset");
-const _det = (typeof window.detectPresetFromSelection === "function")
-  ? window.detectPresetFromSelection(window.selectedClauses || new Set())
-  : "";
-o.preset = localStorage.getItem(_PK) || _det;
+  const o = {};
+  qsa('#contratoForm input, #contratoForm select, #contratoForm textarea').forEach(el=>{
+    const id = (el.id || '').trim();
+    const t  = (el.type || '').toLowerCase();
+    if (!id) return; // ← ignorar elementos sin id (como el submit de PayPal)
+    if (['submit','button','image','file','reset','radio'].includes(t)) return;
 
-    o.anexos={inventario:$("anexoInventario")?.checked||false, inventarioTxt:$("inventarioTxt")?.value||""};
-    o.lang=window.langMode;
-    return JSON.stringify(o);
-  }
+    if (t === 'checkbox') o[id] = !!el.checked;
+    else                  o[id] = el.value || '';
+  });
+
+  o._zc   = qsa('input[name="zc"]').map(el=>({value:el.value,checked:el.checked}));
+  o.clSel = Array.from(window.selectedClauses);
+  const _PK  = (typeof PRESET_K !== "undefined") ? PRESET_K : (LSKEY + "_preset");
+  const _det = (typeof window.detectPresetFromSelection === "function")
+                 ? window.detectPresetFromSelection(window.selectedClauses || new Set())
+                 : "";
+  o.preset = localStorage.getItem(_PK) || _det;
+
+  o.anexos = {inventario:$("anexoInventario")?.checked||false,
+              inventarioTxt:$("inventarioTxt")?.value||""};
+  o.lang = window.langMode;
+  return JSON.stringify(o);
+}
+
   function saveState(){ if(!$("persistToggle")?.checked) return; try{ localStorage.setItem(LSKEY, serialize()); localStorage.setItem(LSKEY+"_lang", window.langMode); } catch (e) {} }
 
   function populate(){
-    const raw=localStorage.getItem(LSKEY); if(!raw) return;
-    try{
-      const o=JSON.parse(raw);
-      qsa('#contratoForm input, #contratoForm select, #contratoForm textarea').forEach(el=>{
-        const v=o[el.id]; if(v==null) return; if(el.type==='checkbox') el.checked=!!v; else el.value=v;
+  const raw = localStorage.getItem(LSKEY); if (!raw) return;
+  try{
+    const o = JSON.parse(raw);
+    qsa('#contratoForm input, #contratoForm select, #contratoForm textarea').forEach(el=>{
+      const id = (el.id || '').trim();
+      const t  = (el.type || '').toLowerCase();
+      if (!id) return; // ← no tocar elementos sin id
+      if (['submit','button','image','file','reset','radio'].includes(t)) return;
+
+      const v = o[id]; if (v == null) return;
+      if (t === 'checkbox') el.checked = !!v; else el.value = v;
+    });
+
+    if (Array.isArray(o._zc)){
+      qsa('input[name="zc"]').forEach(el=>{
+        const f = o._zc.find(z=>z.value===el.value); if(f) el.checked=!!f.checked;
       });
-      if(Array.isArray(o._zc)){
-        qsa('input[name="zc"]').forEach(el=>{ const f=o._zc.find(z=>z.value===el.value); if(f) el.checked=!!f.checked; });
-      }
-      window.selectedClauses=new Set(Array.isArray(o.clSel)?o.clSel:["zonas","llaves","ruidos"]);
-      if (o.preset) {
-  localStorage.setItem(PRESET_K, o.preset);
-  if (typeof window.markPresetChip === "function") window.markPresetChip(o.preset);
-} else {
-  const detected = (typeof window.detectPresetFromSelection === "function")
-    ? window.detectPresetFromSelection(window.selectedClauses || new Set())
-    : "";
-  if (detected){
-    localStorage.setItem(PRESET_K, detected);
-    if (typeof window.markPresetChip === "function") window.markPresetChip(detected);
-  } else {
-    if (typeof window.markPresetChip === "function") window.markPresetChip("");
-  }
+    }
+
+    window.selectedClauses = new Set(Array.isArray(o.clSel)?o.clSel:["zonas","llaves","ruidos"]);
+    if (o.preset){
+      localStorage.setItem(PRESET_K, o.preset);
+      if (typeof window.markPresetChip === "function") window.markPresetChip(o.preset);
+    }
+    if (o.anexos){
+      if ($("anexoInventario")) $("anexoInventario").checked = !!o.anexos.inventario;
+      if ($("inventarioTxt"))   $("inventarioTxt").value     = o.anexos.inventarioTxt || "";
+    }
+    if (o.lang) window.langMode = o.lang;
+  }catch(e){}
 }
 
-      if(o.anexos){ if($("anexoInventario")) $("anexoInventario").checked = !!o.anexos.inventario; if($("inventarioTxt")) $("inventarioTxt").value = o.anexos.inventarioTxt || ""; }
-      if(o.lang) window.langMode=o.lang;
-    }catch(e){}
-  }
 
 function revalidateAll(){
   qsa('#contratoForm input, #contratoForm select, #contratoForm textarea')
@@ -1053,6 +1117,7 @@ function revalidateAll(){
   // ---------- Navegación ----------
   function goStep(n){
     currentStep=Math.max(1,Math.min(3,n));
+    window.currentStep = currentStep;
     try { localStorage.setItem(STEP_K,String(currentStep)); } catch (e) {}
 
     qsa('.step').forEach((s,i)=> s.classList.toggle('active', (i+1)===currentStep));
@@ -1062,7 +1127,8 @@ function revalidateAll(){
     $("btnPrev")?.toggleAttribute('disabled', currentStep===1);
     const next=$("btnNext"); if(next) next.style.display = (currentStep===3? 'none' : 'inline-flex');
      actualizarVista();
-     refreshPayUI?.();
+     if (typeof refreshPayUI === "function") refreshPayUI();
+
 
   // Precarga jsPDF al entrar en Paso 3 (mejora UX de "Descargar PDF")
   if (currentStep === 3 && typeof ensurePDFLibs === "function") {
@@ -1099,9 +1165,6 @@ setTimeout(()=>{
   // ---------- Inicio ----------
   document.addEventListener('DOMContentLoaded', ()=>{
     // Preferencia del toggle "Guardar datos"
- populate();           // ← esto rehidrata selección de cláusulas y preset
-  actualizarVista();
-  renderClausePicker(document.getElementById("clauseSearch")?.value || "");
     const pFlag = localStorage.getItem('HAB_PERSIST'); // '1' o '0'
     if (pFlag === '0') { $("persistToggle").checked = false; }
     if (pFlag === '1') { $("persistToggle").checked = true;  }
@@ -1119,6 +1182,8 @@ setTimeout(()=>{
     populate();
     revalidateAll();
     renderMandatory(); renderClausePicker(); updateClauseCount();
+    syncInventoryUI();
+
 
     // Lang segment
     const lJ= $("langJ"), lC=$("langC");
@@ -1162,20 +1227,54 @@ refreshPayUI();
     
     // Inputs (validación en vivo + guardado)
     qsa('#contratoForm input, #contratoForm select, #contratoForm textarea').forEach(el=>{
-      el.addEventListener('input', ()=>{
-        if(el.id==='dniArrendador' || el.id==='dniInquilino'){ el.value=(el.value||'').toUpperCase().replace(/\s+/g,''); }
-        validateField(el); actualizarVista(); saveState();
-      });
-      el.addEventListener('change', ()=>{
-        if(el.id==='anexoInventario'){
-          const on = $("anexoInventario")?.checked;
-          $("anexosBox").style.display  = on ? "block":"none";
-          $("anexoInvBox").style.display = on ? "block":"none";
-          $("chipInv")?.classList.toggle("active", !!on);
-        }
-        actualizarVista(); saveState();
-      });
-    });
+  const t = (el.type || '').toLowerCase();
+  if (['submit','button','image','file','reset','radio'].includes(t)) return;
+
+ let raf; // ← uno por cada input (dentro del forEach)
+
+el.addEventListener('input', ()=>{
+  if (t === 'checkbox') return; // los checkboxes van en 'change'
+
+  // Normaliza DNI/NIE mientras se escribe
+  if (el.id==='dniArrendador' || el.id==='dniInquilino') {
+    el.value = (el.value||'').toUpperCase().replace(/\s+/g,'');
+  }
+
+  // Agrupa validación + render + guardado en el próximo frame
+  cancelAnimationFrame(raf);
+  raf = requestAnimationFrame(()=>{
+    validateField(el);
+    actualizarVista();
+    saveState();
+  });
+});
+
+
+  el.addEventListener('change', ()=>{
+  // 1) Sello: guarda preferencia ANTES de refrescar la UI
+  if (el.id === 'sealOpt') {
+    localStorage.setItem(LSKEY + "_seal", el.checked ? "1" : "0");
+    document.getElementById("sealToggle")?.classList.toggle('active', el.checked);
+    refreshPayUI?.();
+    return; // ← no dispares ahora el resto de refrescos
+  }
+
+  // 2) Inventario: muestra/oculta y luego refresca
+  if (el.id === 'anexoInventario'){
+    const on = $("anexoInventario")?.checked;
+    $("anexosBox").style.display  = on ? "block":"none";
+    $("anexoInvBox").style.display = on ? "block":"none";
+    $("chipInv")?.classList.toggle("active", !!on);
+  }
+
+  // 3) Resto de campos: flujo normal
+  actualizarVista(); saveState();
+  refreshPayUI?.();
+});
+});
+
+
+
 
     // chips zonas/suministros
     wireChipGroup('#zonasChips'); wireChipGroup('#sumiChips');
@@ -1234,50 +1333,53 @@ document.querySelectorAll('.toolbar .chip[data-preset]').forEach(b=> b.addEventL
 }));
 
 
-    // navegación
-    $("btnPrev")?.addEventListener('click', ()=> goStep(currentStep-1));
-    $("btnNext")?.addEventListener('click', ()=>{ if(currentStep<3){ if(currentStep===1 && !validar()) return; goStep(currentStep+1); } });
+           // navegación
+    $("btnPrev")?.addEventListener("click", () => {
+      if (typeof goStep === "function") goStep((window.currentStep || 1) - 1);
+    });
+
+    // Siguiente: valida en paso 1 y avanza
+    document.getElementById("btnNext")?.addEventListener("click", () => {
+      if (window.currentStep === 1 && typeof validar === "function" && !validar()) return;
+      if (typeof goStep === "function") goStep((window.currentStep || 1) + 1);
+    });
 
     // fullscreen
-    $("btnFullSide")?.addEventListener('click', openFull);
-    $("fsClose")?.addEventListener('click', closeFull);
-    $("zoomIn")?.addEventListener('click', ()=> zoom(+.1));
-    $("zoomOut")?.addEventListener('click', ()=> zoom(-.1));
+    $("btnFullSide")?.addEventListener("click", openFull);
+    $("fsClose")?.addEventListener("click", closeFull);
+    $("zoomIn")?.addEventListener("click", () => zoom(+0.1));
+    $("zoomOut")?.addEventListener("click", () => zoom(-0.1));
 
     // limpiar
-    $("btnClear")?.addEventListener('click', ()=>{
-      qsa('#contratoForm input, #contratoForm select, #contratoForm textarea').forEach(el=>{
-        if(el.type==='checkbox') el.checked=false;
-        else if(el.type!=='radio') el.value='';
-        el.classList.remove('is-valid','is-invalid');
+    $("btnClear")?.addEventListener("click", () => {
+      qsa("#contratoForm input, #contratoForm select, #contratoForm textarea").forEach(el => {
+        if (el.type === "checkbox") el.checked = false;
+        else if (el.type !== "radio") el.value = "";
+        el.classList.remove("is-valid","is-invalid");
       });
-      window.selectedClauses = new Set(["zonas","llaves","ruidos"]); selectedPreset='estandar';
-      try { localStorage.removeItem(LSKEY); localStorage.setItem(STEP_K,'1'); localStorage.removeItem('HAB_PAID'); localStorage.removeItem('HAB_ORDER'); } catch (e) {}
-
-      window.hasPaid=false; window.orderId='';
-      goStep(1); actualizarVista();
+      window.selectedClauses = new Set(["zonas","llaves","ruidos"]);
+      selectedPreset = "estandar";
+      try {
+        localStorage.removeItem(LSKEY);
+        localStorage.removeItem("HAB_PAID");
+        localStorage.removeItem("HAB_ORDER");
+        localStorage.setItem(PRESET_K, "estandar");
+        localStorage.setItem(STEP_K, "1");
+      } catch(e){}
+      window.hasPaid = false;
+      window.orderId = "";
+      actualizarVista();
+      saveState();
+      renderClausePicker(document.getElementById("clauseSearch")?.value || "");
     });
 
-    // Inicializar anexos UI
-    const invOn = $("anexoInventario")?.checked;
-    $("anexosBox").style.display  = invOn ? "block":"none";
-    $("anexoInvBox").style.display = invOn ? "block":"none";
-    $("chipInv")?.classList.toggle("active", !!invOn);
+  }); /* ← cierre ÚNICO del addEventListener('DOMContentLoaded', ...) */
+</script>
 
-    // Pago PayPal clásico (botón → submit del form oculto con return/cancel)
-    $("btnPayClassic")?.addEventListener("click", ()=>{
-      if (currentStep===1 && !validar()){ $("payError").textContent="Revisa los datos antes de pagar."; return; }
-      const ok = new URL(location.href); ok.searchParams.set("pago_confirmado","1");
-      const ko = new URL(location.href); ko.searchParams.set("pago_cancelado","1");
-      $("ppReturn").value = ok.toString();
-      $("ppCancel").value = ko.toString();
-      $("paypalClassicForm").submit();
-    });
 
-    // Render final
-    actualizarVista();
-  });
-  </script>
+
+
+
 
   <!-- === PDF: INICIO — Bloque “nivel notaría” (líneas solo en 4 cabeceras; sin zebra; sin verticales) === -->
   <script>
@@ -1291,18 +1393,30 @@ document.querySelectorAll('.toolbar .chip[data-preset]').forEach(b=> b.addEventL
   window.__DEV_MODE = window.__DEV_MODE || false;
   window.__DEV_ON   = function(){ window.__DEV_MODE = true; console.info("DEV ON: generar PDF sin pago."); };
 // Auto-dev por querystring
-try{
+// Auto-dev por querystring (limpia ?dev=1 tras activarlo)
+try {
   const _u = new URL(location.href);
-  if (_u.searchParams.get("dev")==="1"){
+  if (_u.searchParams.get("dev") === "1") {
+    // Activa el modo DEV una sola vez
     window.__DEV_ON();
-    // (Opcional) desbloquea UI como si estuviera pagado:
+
+    // Limpia el flag para que NO reaparezca en recargas
+    _u.searchParams.delete("dev");
+    history.replaceState({}, "", _u);
+
+    // (Opcional) desbloquea UI como si estuviera pagado
     window.hasPaid = true;
-    localStorage.setItem(LSKEY+"_paid","true");
-    localStorage.setItem(LSKEY+"_paid_bind", (typeof bindStr==="function") ? bindStr() : "");
-    localStorage.setItem(STEP_K,"3");
-    gateDownload?.(); refreshPayUI?.();
+    localStorage.setItem(LSKEY + "_paid", "true");
+    localStorage.setItem(LSKEY + "_paid_bind", (typeof bindStr === "function") ? bindStr() : "");
+    localStorage.setItem(STEP_K, "3");
+
+    // Re-sincroniza la tarjeta de pago (si ya están definidas)
+    gateDownload?.();
+    refreshPayUI?.();
   }
-}catch (e){}
+} catch (e) {}
+
+
 
 
 
@@ -1507,7 +1621,7 @@ function flowPara(doc, text, x, y, w, opts = {}) {
 function drawPaidSealBottomRight(doc, opts={}){
   const W = doc.internal.pageSize.getWidth();
   const H = doc.internal.pageSize.getHeight();
-  const MARGIN = (typeof M === "number" ? M : 56);
+  const MARGIN = (opts && typeof opts.margin === "number") ? opts.margin : 56;
   const R = 24; // radio del sello
   const cx = W - MARGIN - R;
   const cy = H - 34 - R;
@@ -1687,12 +1801,23 @@ S.y = flowPara(
 );
 
 
-  S.y += 6; S.y = bandSoft(doc, "EXPONEN", m, S, W);const roomBits = [
-  get("habId") && `Habitación: ${get("habId")}${get("habPlanta")?` (${get("habPlanta")})`:""}.`,
-  get("habM2") && `Superficie aproximada: ${get("habM2")} m².`,
-  (get("habAmueblada")==="si"||get("habAmueblada")==="no") && `Amueblada: ${get("habAmueblada")==="si"?"Sí":"No"}.`,
-  get("habDescripcion") && `Descripción: ${get("habDescripcion")}.`
+  S.y += 6; S.y = bandSoft(doc, "EXPONEN", m, S, W);
+  // Datos específicos de la habitación (sin backticks anidados)
+const roomBits = [
+  (get("habId")
+    ? `Habitación: ${get("habId")}${ get("habPlanta") ? " (" + get("habPlanta") + ")" : "" }.`
+    : null),
+  (get("habM2")
+    ? `Superficie aproximada: ${get("habM2")} m².`
+    : null),
+  ((get("habAmueblada")==="si" || get("habAmueblada")==="no")
+    ? `Amueblada: ${get("habAmueblada")==="si" ? "Sí" : "No"}.`
+    : null),
+  (get("habDescripcion")
+    ? `Descripción: ${get("habDescripcion")}.`
+    : null)
 ].filter(Boolean);
+
 
 S.y = flowPara(
   doc,
@@ -1809,6 +1934,11 @@ if (opts?.wantSealOnInventory) {
   <!-- === PDF: FIN === -->
 
   <!-- === PayPal form FUERA del wizard (POST) === -->
+<!-- PayPal NCP — Habitación -->
+<form id="ppNcpForm"
+      action="https://www.paypal.com/ncp/payment/FQE2RL234MT9C"
+      method="post" target="_blank"></form>
+
   <form id="paypalClassicForm" action="https://www.paypal.com/cgi-bin/webscr" method="POST" target="_top" style="display:none">
     <input type="hidden" name="cmd" value="_xclick">
     <input type="hidden" name="business" value="oscargrubio@live.com">
@@ -1979,9 +2109,6 @@ async function generarPDFHabitacion(force=false){
 
 </script>
 
-<form id="ppNcpForm"
-      action="https://www.paypal.com/ncp/payment/ZGPA6FGJKB4DW"
-      method="post" target="_blank"></form>
 
 <script>
 (() => {
@@ -2034,15 +2161,6 @@ async function generarPDFHabitacion(force=false){
     } catch (e) {}
   });
 
-// Extra de robustez: snapshot también en el click del enlace NCP
-document.querySelector('.pp-ZGPA6FGJKB4DW')?.addEventListener('click', ()=>{
-  try {
-    const snap = (typeof serialize==="function") ? serialize() : "{}";
-    localStorage.setItem(LSKEY + "_tmp", snap);
-    if (typeof saveState === "function") saveState();
-    localStorage.setItem(STEP_K, "3");
-  } catch (e) {} 
-}, {capture:true});
 
 
   // Muestra/oculta DESCARGAR: solo si pagó y el bind coincide
@@ -2055,10 +2173,7 @@ document.querySelector('.pp-ZGPA6FGJKB4DW')?.addEventListener('click', ()=>{
     const sameBind = (paidBind && paidBind === bindStr());
     const show = (Number(localStorage.getItem(STEP_K)||"3") === 3 && paid && sameBind);
     if (btn) btn.style.display = show ? "inline-flex" : "none";
-    // Si tienes un sello “Pago verificado”, sincroniza:
-    const wrap = document.getElementById("sealWrap");
-if (wrap) wrap.style.display = paid ? "inline-flex" : "none";
-
+    
   }
   window.gateDownload = gateDownload;
 
@@ -2119,40 +2234,57 @@ if (typeof detectPresetFromSelection === "function" && typeof markPresetChip ===
   gateDownload();
 })();
 </script>
+
 <script>
 // === Sello “Pago verificado” (UI + persistencia) ===
-function shouldSeal(){ return localStorage.getItem(LSKEY + "_seal") === "1"; }
+(() => {
+  const __LS = (typeof window.LSKEY !== "undefined" ? window.LSKEY : "contrato_habitacion_v2");
 
-function refreshPayUI(){
-  const paid = (localStorage.getItem(LSKEY+"_paid")==="true")
-            || window.hasPaid===true
-            || localStorage.getItem("HAB_PAID")==="1";
-  const wrap = document.getElementById("sealWrap");
-  const cb   = document.getElementById("sealToggle");
-  if (!wrap || !cb) return;
-  wrap.style.display = paid ? "inline-flex" : "none";
-  // por defecto activado tras pagar si no hay preferencia previa
-  const v = localStorage.getItem(LSKEY + "_seal");
-  if (v === null && paid) localStorage.setItem(LSKEY + "_seal", "1");
-  cb.checked = shouldSeal();
-// marcar/desmarcar visual
- const lab = cb.closest('label.chip');
-if (lab) lab.classList.toggle('active', cb.checked);
-}
+  // Lo usa el generador de PDF
+  window.shouldSeal = function(){ 
+    return localStorage.getItem(__LS + "_seal") === "1"; 
+  };
 
-// Guardar preferencia al cambiar el checkbox
-document.addEventListener("change", (e)=>{
-  if (e.target && e.target.id === "sealToggle") {
-    localStorage.setItem(LSKEY + "_seal", e.target.checked ? "1" : "0");
-    const lab = e.target.closest('label.chip');
-         if (lab) lab.classList.toggle('active', e.target.checked);
+  function refreshPayUI(){
+    const paid = (localStorage.getItem(__LS+"_paid")==="true")
+              || window.hasPaid===true
+              || localStorage.getItem("HAB_PAID")==="1";
+
+    const wrap = document.getElementById("sealWrap");
+    const cb   = document.getElementById("sealOpt");
+    const lab  = document.getElementById("sealToggle");
+    if (!wrap || !cb || !lab) return;
+
+    // Visible tras pagar y en Paso 3 (si quieres exigir Inventario: añade && invOn)
+    const onStep3 = (typeof window.currentStep === "number"
+                      ? window.currentStep === 3
+                      : (localStorage.getItem("HAB_STEP") || "1") === "3");
+
+    wrap.style.display = (paid && onStep3) ? "inline-flex" : "none";
+
+    // Estado recordado (por defecto “1” si pagado y aún no hay preferencia)
+    let v = localStorage.getItem(__LS + "_seal");
+    if (v === null && paid) { v = "1"; localStorage.setItem(__LS + "_seal", "1"); }
+    cb.checked = (v === "1");
+    lab.classList.toggle('active', cb.checked);
   }
-});
 
-// Arranque y tras cada paso
-document.addEventListener("DOMContentLoaded", refreshPayUI);
-window.refreshPayUI = refreshPayUI;
+  document.addEventListener("DOMContentLoaded", refreshPayUI);
+  window.refreshPayUI = refreshPayUI;
+})();
 </script>
+
+
+<script>
+(() => {
+  const url = new URL(location.href);
+  const pp  = url.searchParams.get("pp");
+  if (pp === "h" && !/contrato-habitacion\.html$/i.test(location.pathname)) {
+    location.replace("contrato-habitacion.html?" + url.searchParams.toString());
+  }
+})();
+</script>
+
 
 
 </body>
