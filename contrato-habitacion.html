@@ -8,6 +8,20 @@
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta name="theme-color" content="#0ea5e9" />
   <link rel="canonical" href="https://www.jsonbeautifierpro.com/contrato-habitacion.html" />
+<link rel="icon" href="logo.svg" type="image/svg+xml">
+
+<meta property="og:title" content="Contrato de Habitación en Alquiler | PDF estilo notaría (España)">
+<meta property="og:description" content="Genera un contrato de habitación legal en PDF. Vista previa protegida y descarga por 1 € (pago seguro).">
+<meta property="og:url" content="https://www.jsonbeautifierpro.com/contrato-habitacion.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://www.jsonbeautifierpro.com/logo.svg">
+<meta property="og:locale" content="es_ES">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Contrato de Habitación PRO (PDF)">
+<meta name="twitter:description" content="Rellena online, vista previa y descarga por 1 € (PayPal).">
+<meta name="twitter:image" content="https://www.jsonbeautifierpro.com/logo.svg">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
@@ -47,7 +61,12 @@
   .hero h2{margin:.4rem 0 .2rem;font-family:Manrope,Inter;font-weight:900;font-size:clamp(20px,2.6vw,30px)}
   .sub{color:#334155;margin:0 0 12px;font-size:15px;font-weight:700}
 
-  .wizard{margin-top:16px;background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 12px 30px rgba(23,30,70,.08)}
+  .wizard{
+   margin-top:16px;
+   scroll-margin-top:84px; /* ajusta 72–96px según altura real del header */
+   background:#fff;border:1px solid var(--border);border-radius:var(--radius);
+   overflow:hidden;box-shadow:0 12px 30px rgba(23,30,70,.08)
+ }
   .steps{display:flex}
   .step{flex:1;padding:12px 8px;text-align:center;background:#f3f6ff;border-right:1px solid var(--border);font-weight:800;color:#3b4780}
   .step:last-child{border-right:none}
@@ -180,6 +199,8 @@ label.clause-card.active{
 /* Ellipsis solo en ≥481px; en móvil dejamos saltos de línea */
 @media (min-width: 481px){
   .brand h1{ overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+}
+
 
 /* 6) Steps con scroll horizontal táctil */
 .steps{ overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 0; }
@@ -386,7 +407,30 @@ button, .chip, .seg label{ touch-action: manipulation; }
                   <input id="duracion" type="number" min="1" required aria-describedby="e-dur" />
                 </label>
                 <div id="e-loc" class="err"></div><div id="e-dur" class="err"></div>
+		<!-- Identificación de la habitación (contrapeado como Vivienda) -->
+<label>Identificador / Nº habitación
+  <input id="habId" type="text" placeholder="Ej.: Hab. 3 / 3B">
+</label>
+<label>Planta / Puerta
+  <input id="habPlanta" type="text" placeholder="Ej.: 2ª — B">
+</label>
+<div class="err"></div><div class="err"></div>
 
+<label>Superficie habitación (m²)
+  <input id="habM2" type="number" step="0.1" min="0" placeholder="Ej.: 10.5">
+</label>
+<label>¿Amueblada?
+  <select id="habAmueblada">
+    <option value="">—</option>
+    <option value="si">Sí</option>
+    <option value="no">No</option>
+  </select>
+</label>
+<div class="err"></div><div class="err"></div>
+
+<label style="grid-column:1/-1">Descripción breve
+  <textarea id="habDescripcion" rows="2" placeholder="Ej.: Cama 135, armario de 2 puertas, mesa y silla."></textarea>
+</label>
                 <label>Fecha de inicio
                   <input id="fechaInicio" type="date" required aria-describedby="e-fi" />
                 </label>
@@ -501,9 +545,52 @@ button, .chip, .seg label{ touch-action: manipulation; }
                     <!-- Botón de descarga (se muestra solo con pago confirmado) -->
                     <button type="button" class="btn btn-primary" id="btnDownload" style="display:none">Descargar PDF</button>
 
-                    <!-- Botón de pago (el form real de PayPal está fuera del wizard) -->
-                    <button type="button" class="btn btn-pay" id="btnPayClassic">Pagar 1 € con PayPal</button>
-                    <p id="payError" class="err" aria-live="polite"></p>
+                    <!-- Botón PayPal clásico eliminado: usamos NCP igual que Vivienda -->
+<style>
+  /* Botón NCP (idéntico al de Vivienda) */
+  .pp-ZGPA6FGJKB4DW{
+    display:inline-flex; align-items:center; gap:.55rem;
+    background:#ffc439; color:#111;
+    padding:.7rem 1.1rem; border-radius:10px;
+    font-weight:700; text-decoration:none; border:none; cursor:pointer;
+    box-shadow:0 2px 0 rgba(0,0,0,.12), 0 1px 1px rgba(0,0,0,.08);
+    transition: transform .02s ease;
+  }
+  .pp-ZGPA6FGJKB4DW:hover{ transform: translateY(-1px); }
+  .ppNcpWrap small{ display:block; color:#666; margin-top:.45rem; }
+</style>
+
+<!-- Toggle para incluir el sello en el PDF (solo se muestra tras pagar) -->
+<div id="sealWrap" style="display:none; margin:8px 0 0">
+  <label class="chip" style="cursor:pointer; gap:.5rem; align-items:center;">
+    <input type="checkbox" id="sealToggle" />
+    Incluir sello “Pago verificado” en el <b>Anexo I — Inventario</b>
+  </label>
+</div>
+
+
+
+
+<div class="ppNcpWrap" style="margin-top:1rem;">
+  <a class="pp-ZGPA6FGJKB4DW"
+     href="https://www.paypal.com/ncp/payment/ZGPA6FGJKB4DW"
+     form="ppNcpForm" target="_blank" rel="noopener">
+    <span>Comprar ahora</span>
+  </a>
+  <small>Al pagar se desbloquea la descarga del PDF.</small>
+  <img src="https://www.paypalobjects.com/images/Debit_Credit_APM.svg" alt="cards" />
+  <section style="font-size:.75rem;">
+    Tecnología de
+    <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg"
+         alt="paypal" style="height:.875rem;vertical-align:middle;"/>
+  </section>
+</div>
+<p id="payError" class="err" aria-live="polite"></p>
+<p style="font-size:12px;color:#475569;margin-top:6px">
+  Producto digital. No admite devoluciones (art. 103.m TRLGDCU).
+</p>
+
+
                   </div>
                 </div>
               </div>
@@ -596,6 +683,9 @@ button, .chip, .seg label{ touch-action: manipulation; }
   // ---------- Estado ----------
   const LSKEY  = "contrato_habitacion_v2";
   const STEP_K = "HAB_STEP";
+const PRESET_K = LSKEY + "_preset";
+window.PRESET_K = PRESET_K;
+let __downloading = false;
   let currentStep = Number(localStorage.getItem(STEP_K) || "1");
   window.hasPaid  = localStorage.getItem("HAB_PAID") === "1";   // controla visibilidad botón descarga
   window.orderId  = localStorage.getItem("HAB_ORDER") || "";
@@ -608,8 +698,12 @@ button, .chip, .seg label{ touch-action: manipulation; }
     {id:"precio",   title:"Precio y fianza", J:"La renta mensual y la fianza se fijan según el formulario. El impago faculta la resolución del contrato.", C:"La renta y la fianza son las que has indicado. Si no se paga, el contrato puede resolverse."}
   ];
   const CLAUSES_EXTRA = [
-    {id:"zonas",        title:"Zonas comunes",               J:"El arrendatario tendrá derecho a usar las zonas comunes señaladas, respetando su correcta utilización.", C:"Puedes usar las zonas comunes marcadas, con buen uso."},
-    {id:"llaves",       title:"Llaves y accesos",            J:"Se entregan las llaves necesarias. Su pérdida conlleva el coste de reposición y podrá exigirse un cargo por duplicado.", C:"Se entregan llaves; si se pierden, se paga la copia."},
+  {id:"zonas",  title:"Zonas comunes",
+   J:"El arrendatario tendrá derecho a usar las zonas comunes señaladas, respetando su correcta utilización.",
+   C:"Puedes usar las zonas comunes marcadas, con buen uso."},
+  {id:"llaves", title:"Llaves y accesos",
+   J:"Se entregan las llaves necesarias. Su pérdida conlleva el coste de reposición y podrá exigirse un cargo por duplicado.",
+   C:"Se entregan llaves; si se pierden, se paga la copia."},
     {id:"ruidos",       title:"Ruidos y convivencia",        J:"El arrendatario evitará actividades molestas, insalubres o ilícitas y observará las normas de la comunidad.", C:"Nada de ruidos ni actividades molestas o ilegales. Cumple las normas de la comunidad."},
     {id:"visitas",      title:"Visitas y pernoctas",         J:"Las visitas serán razonables. Las pernoctas prolongadas requerirán autorización expresa del arrendador.", C:"Visitas sí; pernoctas largas, solo con autorización."},
     {id:"mascotas",     title:"Mascotas",                    J:"Se prohíbe la tenencia de animales salvo autorización escrita del arrendador. En caso de autorización, el arrendatario responderá de daños y limpieza.", C:"No se permiten mascotas salvo permiso por escrito; si las hay, respondes de daños y limpieza."},
@@ -619,6 +713,9 @@ button, .chip, .seg label{ touch-action: manipulation; }
     {id:"paqueteria",   title:"Correspondencia y paquetería",J:"El arrendador no será responsable de la pérdida o deterioro de envíos. El arrendatario autoriza la recepción en portería o vecinos cuando sea preciso.", C:"No nos hacemos responsables de paquetes perdidos; autorizas recepción en portería o vecinos si hace falta."}
   ];
   const getClauseText = (c) => (window.langMode==="claro" ? (c.C || c.J) : c.J);
+// PUBLICA en window (antes de que corra la “biblioteca reforzada”)
+// (no sembramos aquí; la versión final la establece el script reforzado)
+window.CLAUSES_EXTRA     = (window.CLAUSES_EXTRA     || []).concat(CLAUSES_EXTRA);
 
   // Preset por defecto (3 extras)
   window.selectedClauses = new Set(["zonas","llaves","ruidos"]);
@@ -626,52 +723,48 @@ button, .chip, .seg label{ touch-action: manipulation; }
 
   // ---------- Render cláusulas ----------
   function renderMandatory(){
-    const html = CLAUSES_MANDATORY.map(c=>`
-      <div class="clause-card">
-        <input type="checkbox" checked disabled>
-        <div><h4>✔ ${c.title} <span class="tag">obligatoria</span></h4><p>${getClauseText(c)}</p></div>
-      </div>`).join("");
-    const box = $("mandatoryList"); if (box) box.innerHTML = html;
-  }
-  function renderClausePicker(filter=""){
-    const norm = (s)=> (s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-    const t = norm(filter);
-    const html = CLAUSES_EXTRA
-      .filter(c => !t || norm(c.title+getClauseText(c)).includes(t))
-      .map(c=>`
-        <label class="clause-card">
-          <input type="checkbox" ${window.selectedClauses.has(c.id)?'checked':''} data-id="${c.id}">
-          <div><h4>${c.title}</h4><p>${getClauseText(c)}</p></div>
-        </label>`).join("");
-    const box = $("clauseList"); if (box) box.innerHTML = html;
+  const MAND = window.CLAUSES_MANDATORY || CLAUSES_MANDATORY;
+  const html = MAND.map(c=>`
+    <div class="clause-card">
+      <input type="checkbox" checked disabled>
+      <div><h4>✔ ${c.title} <span class="tag">obligatoria</span></h4><p>${getClauseText(c)}</p></div>
+    </div>`).join("");
+  const box = $("mandatoryList"); if (box) box.innerHTML = html;
+}
 
-    qsa('#clauseList label.clause-card input[type="checkbox"]').forEach(cb=>{
-      const lbl = cb.closest('label.clause-card');
-      const sync=()=> lbl && lbl.classList.toggle('active', cb.checked);
+function renderClausePicker(filter=""){
+  const EXTRA = window.CLAUSES_EXTRA || CLAUSES_EXTRA;
+  const norm = (s)=> (s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  const t = norm(filter);
+  const html = EXTRA
+    .filter(c => !t || norm(c.title+getClauseText(c)).includes(t))
+    .map(c=>`
+      <label class="clause-card">
+        <input type="checkbox" ${window.selectedClauses.has(c.id)?'checked':''} data-id="${c.id}">
+        <div><h4>${c.title}</h4><p>${getClauseText(c)}</p></div>
+      </label>`).join("");
+  const box = $("clauseList"); if (box) box.innerHTML = html;
+
+  qsa('#clauseList label.clause-card input[type="checkbox"]').forEach(cb=>{
+    const lbl = cb.closest('label.clause-card');
+    const sync=()=> lbl && lbl.classList.toggle('active', cb.checked);
+    sync();
+    cb.addEventListener('change', e=>{
+      const id = e.target.getAttribute('data-id');
+      if (e.target.checked) window.selectedClauses.add(id);
+      else window.selectedClauses.delete(id);
+      updateClauseCount(); actualizarVista(); saveState();
       sync();
-      cb.addEventListener('change', e=>{
-        const id = e.target.getAttribute('data-id');
-        if (e.target.checked) window.selectedClauses.add(id);
-        else window.selectedClauses.delete(id);
-        updateClauseCount(); actualizarVista(); saveState();
-        sync();
-      });
     });
-  }
+  });
+}
+
   function updateClauseCount(){
     const n = window.selectedClauses.size;
     const el = $("clauseCount");
     if (el) el.textContent = `${n} cláusula${n===1?"":"s"} extra`;
   }
-  function applyPreset(name){
-    selectedPreset = name;
-    if (name==="obligatorias") window.selectedClauses = new Set();
-    if (name==="estandar")     window.selectedClauses = new Set(["zonas","llaves","ruidos"]); // 3
-    if (name==="proteccion")   window.selectedClauses = new Set(["zonas","llaves","ruidos","visitas","limpieza","reparaciones"]); // 6
-    if (name==="premium")      window.selectedClauses = new Set(CLAUSES_EXTRA.map(c=>c.id)); // 9
-    qsa('[data-preset]').forEach(b=> b.classList.toggle('active', b.getAttribute('data-preset')===name));
-    renderClausePicker($("clauseSearch")?.value || ""); updateClauseCount(); actualizarVista(); saveState();
-  }
+  
 
   // ---------- Zonas/servicios ----------
   function wireChipGroup(sel){
@@ -725,41 +818,58 @@ button, .chip, .seg label{ touch-action: manipulation; }
       </div>`;
   }
   function construirClausulas(){
-    const blocks=[]; CLAUSES_MANDATORY.forEach(c=>blocks.push({title:c.title,text:getClauseText(c)}));
-    CLAUSES_EXTRA.forEach(c=>{ if(window.selectedClauses.has(c.id)) blocks.push({title:c.title,text:getClauseText(c)}); });
-    return blocks;
-  }
+  const base   = (window.CLAUSES_MANDATORY && window.CLAUSES_MANDATORY.length) ? window.CLAUSES_MANDATORY : (typeof CLAUSES_MANDATORY!=="undefined" ? CLAUSES_MANDATORY : []);
+  const extras = (window.CLAUSES_EXTRA && window.CLAUSES_EXTRA.length) ? window.CLAUSES_EXTRA : (typeof CLAUSES_EXTRA!=="undefined" ? CLAUSES_EXTRA : []);
+  const blocks=[];
+  base.forEach(c => blocks.push({title:c.title, text:getClauseText(c)}));
+  const map = new Map(extras.map(c=>[c.id,c]));
+  (window.selectedClauses ? Array.from(window.selectedClauses) : []).forEach(id=>{
+    const c = map.get(id); if (c) blocks.push({title:c.title, text:getClauseText(c)});
+  });
+  return blocks;
+}
+
   function vistaHTML(){
-    const g=id=>($(id)?.value||"");
-    const claus = construirClausulas();
-    const zonas = getZonas(), serv=getServiciosIncluidos();
-    const fumar = (( $("fumar")?.value)||"no")==="si" ? "Permitido" : "No permitido";
-    const anex = $("anexoInventario")?.checked ? ["Inventario"] : [];
+  const g=id=>($(id)?.value||"");
+  const escH = s => String(s ?? "")
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 
-    let html = "";
-    html += `<p><strong>Arrendador:</strong> ${g("arrendador")} — <strong>DNI:</strong> ${(g("dniArrendador")||"").toUpperCase().replace(/\s+/g,"")}</p>`;
-    html += `<p><strong>Inquilino:</strong> ${g("inquilino")} — <strong>DNI:</strong> ${(g("dniInquilino")||"").toUpperCase().replace(/\s+/g,"")}</p>`;
-    html += `<p><strong>Dirección:</strong> ${g("direccion")}</p>`;
-    html += `<p><strong>Localidad:</strong> ${g("localidad")} — <strong>Duración:</strong> ${g("duracion")||"—"} meses</p>`;
-    html += `<p><strong>Fechas:</strong> ${fmtFecha(g("fechaInicio"))} - ${fmtFecha(g("fechaFin"))}</p>`;
-    html += `<p><strong>Precio:</strong> ${g("renta")||"—"} € — <strong>Fianza:</strong> ${g("fianza")||"—"} €</p>`;
+  const claus = construirClausulas();
+  const zonas = getZonas(), serv=getServiciosIncluidos();
+  const fumar = (( $("fumar")?.value)||"no")==="si" ? "Permitido" : "No permitido";
+  const anex = $("anexoInventario")?.checked ? ["Inventario"] : [];
 
-    html += `<p><strong>Condiciones específicas:</strong></p><ul>`;
-    html += `<li><b>Zonas comunes incluidas:</b> ${zonas.length? zonas.join(", ") : "—"}</li>`;
-    html += `<li><b>Servicios incluidos:</b> ${serv.length? serv.join(", ") : "—"}</li>`;
-    html += `<li><b>Fumar:</b> ${fumar}</li>`;
-    html += `</ul>`;
+  let html = "";
+  html += `<p><strong>Arrendador:</strong> ${escH(g("arrendador"))} — <strong>DNI:</strong> ${escH((g("dniArrendador")||"").toUpperCase().replace(/\s+/g,""))}</p>`;
+  html += `<p><strong>Inquilino:</strong> ${escH(g("inquilino"))} — <strong>DNI:</strong> ${escH((g("dniInquilino")||"").toUpperCase().replace(/\s+/g,""))}</p>`;
+  html += `<p><strong>Dirección:</strong> ${escH(g("direccion"))}</p>`;
+  html += `<p><strong>Localidad:</strong> ${escH(g("localidad"))} — <strong>Duración:</strong> ${escH(g("duracion")||"—")} meses</p>`;
 
-    html += `<p><strong>Cláusulas:</strong></p><ol>` + claus.map(c=>`<li><b>${c.title}:</b> ${c.text}</li>`).join("") + `</ol>`;
+  // 🔧 Estos tres párrafos son los que estaban sueltos rompiendo el parseo:
+  html += `<p><strong>Habitación:</strong> ${escH(g("habId")||"—")} ${g("habPlanta")?`(${escH(g("habPlanta"))})`:""}</p>`;
+  html += `<p><strong>Superficie:</strong> ${escH(g("habM2")||"—")} m² · <strong>Amueblada:</strong> ${g("habAmueblada")==="si"?"Sí":(g("habAmueblada")==="no"?"No":"—")}</p>`;
+  html += `<p><strong>Descripción:</strong> ${escH(g("habDescripcion")||"—")}</p>`;
 
-    if (anex.length){
-      html += `<p><strong>Anexos:</strong> ${anex.join(", ")} (se incorporarán al PDF en página aparte).</p>`;
-    }
-    // Firmas orientativas (solo preview)
-    html += `<p style="display:flex;justify-content:space-between;font-weight:bold;margin-top:2rem"><span>Arrendador: _____________________</span><span>Arrendatario: _____________________</span></p>`;
-    html += `<p style="display:flex;justify-content:space-between"><span>${g("arrendador")}</span><span>${g("inquilino")}</span></p>`;
-    return html;
+  html += `<p><strong>Fechas:</strong> ${fmtFecha(g("fechaInicio"))} - ${fmtFecha(g("fechaFin"))}</p>`;
+  html += `<p><strong>Precio:</strong> ${escH(g("renta")||"—")} € — <strong>Fianza:</strong> ${escH(g("fianza")||"—")} €</p>`;
+
+  html += `<p><strong>Condiciones específicas:</strong></p><ul>`;
+  html += `<li><b>Zonas comunes incluidas:</b> ${zonas.length? zonas.map(escH).join(", ") : "—"}</li>`;
+  html += `<li><b>Servicios incluidos:</b> ${serv.length? serv.map(escH).join(", ") : "—"}</li>`;
+  html += `<li><b>Fumar:</b> ${fumar}</li>`;
+  html += `</ul>`;
+
+  html += `<p><strong>Cláusulas:</strong></p><ol>` + claus.map(c=>`<li><b>${escH(c.title||c.titulo||c.t||"")}</b> — ${escH(c.text||c.C||c.J||"")}</li>`).join("") + `</ol>`;
+
+  if (anex.length){
+    html += `<p><strong>Anexos:</strong> ${anex.join(", ")} (se incorporarán al PDF en página aparte).</p>`;
   }
+  html += `<p style="display:flex;justify-content:space-between;font-weight:bold;margin-top:2rem"><span>Arrendador: _____________________</span><span>Arrendatario: _____________________</span></p>`;
+  html += `<p style="display:flex;justify-content:space-between"><span>${escH(g("arrendador"))}</span><span>${escH(g("inquilino"))}</span></p>`;
+  return html;
+}
+
   function lockPreviewEvents(el){ if (!el || el.dataset.locked) return; ["copy","cut","paste","contextmenu"].forEach(ev => el.addEventListener(ev, e=>e.preventDefault())); el.onselectstart = () => false; el.dataset.locked = "1"; }
 // Bloqueo de atajos de copiar/cortar/seleccionar mientras esté abierto el fullscreen
 function toggleCopyGuard(on){
@@ -877,12 +987,18 @@ function toggleCopyGuard(on){
     });
     o._zc=qsa('input[name="zc"]').map(el=>({value:el.value,checked:el.checked}));
     o.clSel=Array.from(window.selectedClauses);
-    o.preset=selectedPreset;
+    const _PK  = (typeof PRESET_K !== "undefined") ? PRESET_K : (LSKEY + "_preset");
+const _det = (typeof window.detectPresetFromSelection === "function")
+  ? window.detectPresetFromSelection(window.selectedClauses || new Set())
+  : "";
+o.preset = localStorage.getItem(_PK) || _det;
+
     o.anexos={inventario:$("anexoInventario")?.checked||false, inventarioTxt:$("inventarioTxt")?.value||""};
     o.lang=window.langMode;
     return JSON.stringify(o);
   }
-  function saveState(){ if(!$("persistToggle")?.checked) return; try{ localStorage.setItem(LSKEY, serialize()); localStorage.setItem(LSKEY+"_lang", window.langMode); }catch{} }
+  function saveState(){ if(!$("persistToggle")?.checked) return; try{ localStorage.setItem(LSKEY, serialize()); localStorage.setItem(LSKEY+"_lang", window.langMode); } catch (e) {} }
+
   function populate(){
     const raw=localStorage.getItem(LSKEY); if(!raw) return;
     try{
@@ -894,11 +1010,31 @@ function toggleCopyGuard(on){
         qsa('input[name="zc"]').forEach(el=>{ const f=o._zc.find(z=>z.value===el.value); if(f) el.checked=!!f.checked; });
       }
       window.selectedClauses=new Set(Array.isArray(o.clSel)?o.clSel:["zonas","llaves","ruidos"]);
-      if(o.preset) selectedPreset=o.preset;
+      if (o.preset) {
+  localStorage.setItem(PRESET_K, o.preset);
+  if (typeof window.markPresetChip === "function") window.markPresetChip(o.preset);
+} else {
+  const detected = (typeof window.detectPresetFromSelection === "function")
+    ? window.detectPresetFromSelection(window.selectedClauses || new Set())
+    : "";
+  if (detected){
+    localStorage.setItem(PRESET_K, detected);
+    if (typeof window.markPresetChip === "function") window.markPresetChip(detected);
+  } else {
+    if (typeof window.markPresetChip === "function") window.markPresetChip("");
+  }
+}
+
       if(o.anexos){ if($("anexoInventario")) $("anexoInventario").checked = !!o.anexos.inventario; if($("inventarioTxt")) $("inventarioTxt").value = o.anexos.inventarioTxt || ""; }
       if(o.lang) window.langMode=o.lang;
     }catch(e){}
   }
+
+function revalidateAll(){
+  qsa('#contratoForm input, #contratoForm select, #contratoForm textarea')
+    .forEach(el => validateField(el));
+}
+
   function syncPersistUI(){
     const lab = $("chipPersist"); const cb  = $("persistToggle");
     if (lab && cb) lab.classList.toggle("active", !!cb.checked);
@@ -907,7 +1043,8 @@ function toggleCopyGuard(on){
   // ---------- Navegación ----------
   function goStep(n){
     currentStep=Math.max(1,Math.min(3,n));
-    try { localStorage.setItem(STEP_K,String(currentStep)); } catch{}
+    try { localStorage.setItem(STEP_K,String(currentStep)); } catch (e) {}
+
     qsa('.step').forEach((s,i)=> s.classList.toggle('active', (i+1)===currentStep));
     $("step1").style.display = currentStep===1? 'grid':'none';
     $("step2").style.display = currentStep===2? 'grid':'none';
@@ -921,7 +1058,12 @@ function toggleCopyGuard(on){
   if (currentStep === 3 && typeof ensurePDFLibs === "function") {
     // no bloquea la UI; si ya estaba cargado, ensurePDFLibs() sale rápido
     Promise.resolve().then(() => ensurePDFLibs()).catch(()=>{});
+
   }
+// Al cambiar de paso, sube al principio del asistente
+setTimeout(()=>{
+  document.querySelector('.wizard')?.scrollIntoView({ behavior:'smooth', block:'start' });
+}, 0);
 }
 
   window.goStep = goStep;
@@ -943,40 +1085,13 @@ function toggleCopyGuard(on){
 }
   function zoom(delta){ const el=$("fsFrame").firstElementChild; if(!el) return; const cur=Number(el.dataset.z||'1'); const nx=Math.max(.5,Math.min(2.2,cur+delta)); el.style.transform=`scale(${nx})`; el.dataset.z=String(nx); }
 
-  // === PAGO PAYPAL CLÁSICO (wire + return) ===
-  function setPaid(order){ try{ localStorage.setItem("HAB_PAID","1"); if(order) localStorage.setItem("HAB_ORDER",order); window.hasPaid=true; window.orderId=order||"PAYPAL-OK"; }catch{} }
-  function parsePayReturn(){
-    const u = new URL(location.href);
-    if (u.searchParams.get("pago_confirmado")==="1"){
-      setPaid("PAYPAL-OK");
-      try{ u.searchParams.delete("pago_confirmado"); history.replaceState({}, "", u.toString()); }catch{}
-    }
-    if (u.searchParams.get("pago_cancelado")==="1"){
-      try{ u.searchParams.delete("pago_cancelado"); history.replaceState({}, "", u.toString()); }catch{}
-    }
-  }
-  function ensurePaidSeal(){
-    const top = document.querySelector("#payCard .pay-top");
-    if (!top) return;
-    let s = document.getElementById("paidSeal");
-    if (!s){ s=document.createElement("div"); s.id="paidSeal"; s.className="chip active"; s.textContent="Pago verificado"; top.appendChild(s); }
-    s.style.display = window.hasPaid ? "inline-flex" : "none";
-  }
-  function refreshPayUI(){
-  const btnD = document.getElementById("btnDownload");
-  if (btnD) btnD.style.display = (window.hasPaid && currentStep===3) ? "inline-flex" : "none";
-
-  const btnP = document.getElementById("btnPayClassic");
-  if (btnP) btnP.style.display = window.hasPaid ? "none" : "inline-flex";
-
-  ensurePaidSeal();
-}
-
-  parsePayReturn();
 
   // ---------- Inicio ----------
   document.addEventListener('DOMContentLoaded', ()=>{
     // Preferencia del toggle "Guardar datos"
+ populate();           // ← esto rehidrata selección de cláusulas y preset
+  actualizarVista();
+  renderClausePicker(document.getElementById("clauseSearch")?.value || "");
     const pFlag = localStorage.getItem('HAB_PERSIST'); // '1' o '0'
     if (pFlag === '0') { $("persistToggle").checked = false; }
     if (pFlag === '1') { $("persistToggle").checked = true;  }
@@ -985,14 +1100,14 @@ function toggleCopyGuard(on){
     $("persistToggle")?.addEventListener('change', ()=>{
       syncPersistUI();
       if ($("persistToggle").checked) {
-        try { localStorage.setItem('HAB_PERSIST','1'); saveState(); } catch{}
+        try { localStorage.setItem('HAB_PERSIST','1'); saveState(); } catch (e) {}
       } else {
-        try { localStorage.setItem('HAB_PERSIST','0'); localStorage.removeItem(LSKEY); } catch{}
-      }
+        try { localStorage.setItem('HAB_PERSIST','0'); localStorage.removeItem(LSKEY); } catch (e) {}      }
     });
 
     // Cargar datos guardados y render inicial
     populate();
+    revalidateAll();
     renderMandatory(); renderClausePicker(); updateClauseCount();
 
     // Lang segment
@@ -1055,9 +1170,59 @@ refreshPayUI();
     // chips zonas/suministros
     wireChipGroup('#zonasChips'); wireChipGroup('#sumiChips');
 
-    // presets + búsqueda
-    qsa('[data-preset]').forEach(b=> b.addEventListener('click', ()=> applyPreset(b.getAttribute('data-preset'))));
-    $("clauseSearch")?.addEventListener('input', e=> renderClausePicker(e.target.value));
+    // ====== PRESETS: definición + helpers (Habitación) ======
+function getPresetSets(){
+  return {
+    obligatorias: new Set(), // sin extra
+    // 6 extras “cotidianas”
+    estandar:     new Set(["zonas","llaves","ruidos","visitas","limpieza","reparaciones"]),
+    // 10 extras “defensivas”
+    proteccion:   new Set(["llaves","ruidos","visitas","limpieza","reparaciones",
+                           "acceso","cesion_subarr","penal_posesion","seguro_rc","notifica_email"]),
+    // SIEMPRE todo lo disponible
+    premium:      new Set((window.CLAUSES_EXTRA||[]).map(c=>c.id))
+  };
+}
+const eqSets = (a,b)=> a.size===b.size && Array.from(a).every(v=>b.has(v));
+function detectPresetFromSelection(sel){
+  const PS = getPresetSets();
+  for (const [id,set] of Object.entries(PS)){ if (eqSets(sel,set)) return id; }
+  return "";
+}
+function markPresetChip(id){
+  document.querySelectorAll('.toolbar .chip[data-preset]').forEach(x=>x.classList.remove('active'));
+  if (id) document.querySelector(`.toolbar .chip[data-preset="${id}"]`)?.classList.add('active');
+}
+(function restorePresetChipOnLoad(){
+  const PS       = getPresetSets();
+  const saved    = localStorage.getItem(PRESET_K) || "";
+  const detected = detectPresetFromSelection(window.selectedClauses || new Set());
+  const chosen   = saved || detected || "estandar";
+  window.selectedClauses = new Set(PS[chosen] || []);
+  markPresetChip(chosen);
+  localStorage.setItem(PRESET_K, chosen);
+  updateClauseCount();
+  renderClausePicker(document.getElementById("clauseSearch")?.value || "");
+  actualizarVista();
+  saveState();
+})();
+
+// Click en chips => set dinámico (tu handler ya hace premium dinámico; déjalo igual)
+
+
+// Click en chips => tomar sets desde getPresetSets()
+document.querySelectorAll('.toolbar .chip[data-preset]').forEach(b=> b.addEventListener("click", ()=>{
+  const p  = b.dataset.preset;
+  const PS = getPresetSets();
+  window.selectedClauses = new Set(PS[p] || []);
+  localStorage.setItem(PRESET_K, p);
+  markPresetChip(p);
+  updateClauseCount();
+  saveState();
+  actualizarVista();
+  renderClausePicker(document.getElementById("clauseSearch")?.value || "");
+}));
+
 
     // navegación
     $("btnPrev")?.addEventListener('click', ()=> goStep(currentStep-1));
@@ -1077,7 +1242,8 @@ refreshPayUI();
         el.classList.remove('is-valid','is-invalid');
       });
       window.selectedClauses = new Set(["zonas","llaves","ruidos"]); selectedPreset='estandar';
-      try{ localStorage.removeItem(LSKEY); localStorage.setItem(STEP_K,'1'); localStorage.removeItem('HAB_PAID'); localStorage.removeItem('HAB_ORDER'); }catch{}
+      try { localStorage.removeItem(LSKEY); localStorage.setItem(STEP_K,'1'); localStorage.removeItem('HAB_PAID'); localStorage.removeItem('HAB_ORDER'); } catch (e) {}
+
       window.hasPaid=false; window.orderId='';
       goStep(1); actualizarVista();
     });
@@ -1114,6 +1280,21 @@ refreshPayUI();
   // ====== DEV / Pago ======
   window.__DEV_MODE = window.__DEV_MODE || false;
   window.__DEV_ON   = function(){ window.__DEV_MODE = true; console.info("DEV ON: generar PDF sin pago."); };
+// Auto-dev por querystring
+try{
+  const _u = new URL(location.href);
+  if (_u.searchParams.get("dev")==="1"){
+    window.__DEV_ON();
+    // (Opcional) desbloquea UI como si estuviera pagado:
+    window.hasPaid = true;
+    localStorage.setItem(LSKEY+"_paid","true");
+    localStorage.setItem(LSKEY+"_paid_bind", (typeof bindStr==="function") ? bindStr() : "");
+    localStorage.setItem(STEP_K,"3");
+    gateDownload?.(); refreshPayUI?.();
+  }
+}catch (e){}
+
+
 
   // ====== Carga jsPDF ======
   async function ensurePDFLibs(){
@@ -1128,7 +1309,7 @@ refreshPayUI();
     FONT: "times",
     FONT_SIZE: 12,
     LINEH: 18,
-    PAGE: { margin: 85, bottomSafe: 220 }, // pie amplio; evita invasión de firmas
+    PAGE: { margin: 85, bottomSafe: 160 }, // pie amplio; evita invasión de firmas
     COLOR: { text:"#0f172a", brand:"#1f2937", line:"#d2d6e0" }
   };
   const EUR = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' });
@@ -1143,6 +1324,7 @@ refreshPayUI();
     doc.addPage(); S.y = NT.PAGE.margin; return true;
   }
   function flowPara(doc, text, x, y, w, opts={}){
+    opts.S = opts.S || { y };
     const lines = doc.splitTextToSize(sanitize(text), w);
     const lh = opts.lh || NT.LINEH;
     for (let i=0; i<lines.length; i++){ paginate(doc, opts.S, lh); doc.text(lines[i], x, opts.S.y, { maxWidth:w, align:(opts.align||"left") }); opts.S.y += lh; }
@@ -1157,22 +1339,32 @@ refreshPayUI();
     doc.setTextColor(NT.COLOR.text);
     S.y += 14;
     const needLine = (
-      T==="CONTRATO DE ARRENDAMIENTO DE HABITACIÓN" ||
-      T==="CONDICIONES ESPECÍFICAS" ||
-      T==="CLÁUSULAS" ||
-      T==="ANEXO I — INVENTARIO"
-    );
+  T==="CONTRATO DE ARRENDAMIENTO DE HABITACIÓN" ||
+  T.startsWith("CONDICIONES ESPECÍFICAS") || // incluye (CONT.)
+  T==="CLÁUSULAS" ||
+  T==="ANEXO I — INVENTARIO"
+);
+
     if (needLine){ hr(doc, x, S.y, w); S.y += 14; }
     return S.y;
   }
   // Cabecera “suave” (SIN línea)
   function bandSoft(doc, title, x, S, w){
-    setFont(doc,"bold",12.5); doc.setTextColor(NT.COLOR.brand);
-    doc.text(String(title).toUpperCase(), x, S.y);
-    doc.setTextColor(NT.COLOR.text);
-    S.y += 16;
-    return S.y;
+     const minNextLines = 2;                 // ← queremos al menos 2 líneas del cuerpo tras el título
+  const titleBlock   = 16;                // altura que consume el título “suave”
+  const pageH  = doc.internal.pageSize.getHeight();
+  const bottom = pageH - NT.PAGE.bottomSafe;
+  if (S.y + titleBlock + (minNextLines * NT.LINEH) > bottom){
+    doc.addPage(); S.y = NT.PAGE.margin;  // abrir página para no dejar el título huérfano
   }
+  setFont(doc,"bold",12.5);
+  doc.setTextColor(NT.COLOR.brand);
+  doc.text(String(title).toUpperCase(), x, S.y);
+  doc.setTextColor(NT.COLOR.text);
+  S.y += titleBlock;
+  setFont(doc,"normal");                  // el párrafo debajo se escribe en normal
+  return S.y;
+ }
 
   // ====== Fila clave:valor (Zonas/Servicios en horizontal) ======
   function rowKV(doc, key, value, x, w, S){
@@ -1266,27 +1458,83 @@ refreshPayUI();
       doc.text(label, (pageW-width)/2, pageH-30);
     }
   }
+function drawPaidSealBottomRight(doc, opts={}){
+  const W = doc.internal.pageSize.getWidth();
+  const H = doc.internal.pageSize.getHeight();
+  const MARGIN = (typeof M === "number" ? M : 56);
+  const R = 24; // radio del sello
+  const cx = W - MARGIN - R;
+  const cy = H - 34 - R;
+
+  const main = (opts.main || "PAGO VERIFICADO").toUpperCase();
+  const sub  = (opts.sub  || "DOCUMENTO ORIGINAL").toUpperCase();
+
+  // Colores/estilo
+  doc.setTextColor(200, 30, 30);
+  doc.setDrawColor(200, 30, 30);
+  doc.setLineWidth(1.2);
+
+  // Aro exterior
+  doc.circle(cx, cy, R, "S");
+
+  // Aro interior discontinuo
+  if (doc.setLineDash) doc.setLineDash([2.2, 1.8], 0);
+  doc.setLineWidth(0.8);
+  doc.circle(cx, cy, R - 5.5, "S");
+  if (doc.setLineDash) doc.setLineDash([], 0);
+
+  // Check central
+  doc.setLineWidth(2.2);
+  doc.setLineCap("round");
+  doc.line(cx - 7, cy + 0, cx - 1, cy + 6);
+  doc.line(cx - 1, cy + 6, cx + 9, cy - 6);
+
+  // Texto
+setFont(doc,"bold",9);
+  const tw = doc.getTextWidth(main);
+  doc.text(main, cx - tw/2, cy - 10);
+
+  doc.setLineWidth(0.6);
+  doc.line(cx - (R - 6), cy - 7.5, cx + (R - 6), cy - 7.5);
+
+ setFont(doc,"normal",7.5);
+  const tw2 = doc.getTextWidth(sub);
+  doc.text(sub, cx - tw2/2, cy + 13);
+}
+
   function getClauseTextFromUI(c){ try{ return (window.langMode === "claro" ? (c.C || c.J || c.text) : (c.J || c.C || c.text)); }catch(e){ return c.text || ""; } }
-  function buildClausesFromUI(){
-    try{
-      const base = (typeof CLAUSES_MANDATORY!=="undefined" ? CLAUSES_MANDATORY : []);
-      const extras = (typeof CLAUSES_EXTRA!=="undefined" ? CLAUSES_EXTRA : []);
-      const sel = (window.selectedClauses ? Array.from(window.selectedClauses) : []);
-      const map = new Map(extras.map(c=>[c.id,c]));
-      const out = [];
-      base.forEach(c => out.push([c.title || c.titulo || "Cláusula", getClauseTextFromUI(c)]));
-      sel.forEach(id => { const c = map.get(id); if (c) out.push([c.title || c.titulo || "Cláusula", getClauseTextFromUI(c)]); });
-      if (out.length) return out;
-    }catch(e){}
-    return [
-      ["Objeto y partes","..."],["Régimen jurídico","..."],["Duración","..."],["Renta y pagos","..."],
-      ["Fianza","..."],["Uso debido y convivencia","..."],["Llaves y accesos","..."],["Visitas","..."],
-      ["Suministros","..."],["Resolución","..."]
-    ];
-  }
+  
+function buildClausesFromUI(){
+  try{
+    const base   = (window.CLAUSES_MANDATORY && window.CLAUSES_MANDATORY.length) ? window.CLAUSES_MANDATORY : (typeof CLAUSES_MANDATORY!=="undefined" ? CLAUSES_MANDATORY : []);
+    const extras = (window.CLAUSES_EXTRA && window.CLAUSES_EXTRA.length) ? window.CLAUSES_EXTRA : (typeof CLAUSES_EXTRA!=="undefined" ? CLAUSES_EXTRA : []);
+    const sel = (window.selectedClauses ? Array.from(window.selectedClauses) : []);
+    const map = new Map(extras.map(c=>[c.id,c]));
+    const out = [];
+    base.forEach(c => out.push([c.title || "Cláusula", getClauseTextFromUI(c)]));
+    sel.forEach(id => { const c = map.get(id); if (c) out.push([c.title || "Cláusula", getClauseTextFromUI(c)]); });
+     // DEDUP por título (norm + alias para ruidos/convivencia)
+    const alias = new Map([
+      ["normas de convivencia y ruidos","ruidos-convivencia"],
+      ["ruidos y convivencia","ruidos-convivencia"]
+    ]);
+    const norm = s => String(s||"").toLowerCase()
+       .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+       .replace(/[^a-z0-9 ]+/g," ").replace(/\s+/g," ").trim();
+    const seen = new Set(), dedup = [];
+    for (const [title, text] of out){
+      const k0 = norm(title); const k = alias.get(k0) || k0;
+      if (seen.has(k)) continue; seen.add(k); dedup.push([title, text]);
+    }
+    if (dedup.length) return dedup;  }catch(e){}
+  return [["Objeto y partes","..."],["Duración","..."],["Renta y pagos","..."]];
+}
+
 
   // ====== Núcleo PDF ======
-  async function __genPDF(force){
+  async function __genPDF(force, opts = {}){const get = (id) => (document.getElementById(id)?.value || "")
+                       .trim()
+                       .replace(/\s+/g, " ");
     if (!window.hasPaid && !force && !window.__DEV_MODE){ alert("Completa el pago para habilitar la descarga."); return false; }
     await ensurePDFLibs();
     const jsPDF = window.jspdf.jsPDF;
@@ -1298,6 +1546,7 @@ refreshPayUI();
       const pageW = doc.internal.pageSize.getWidth();
       const m  = NT.PAGE.margin, W = pageW - m*2;
       const S  = { y: NT.PAGE.margin };
+
 
       // ===== Título principal (con línea) =====
       setFont(doc,"bold",15.5);
@@ -1345,30 +1594,100 @@ refreshPayUI();
       const fumar = ((document.getElementById("fumar")?.value||"no")==="si") ? "Permitido" : "No permitido";
       const invOn = !!document.getElementById("anexoInventario")?.checked;
 
-      S.y = band(doc,"Condiciones específicas", m, S, W);
+      S.y += 8; // aire por arriba
+               S.y = band(doc,"Condiciones específicas", m, S, W);
       rowKV(doc, "Zonas comunes incluidas", zonas.length? zonas : ["—"], m, W, S);
       rowKV(doc, "Servicios incluidos",     serv.length?  serv  : ["—"], m, W, S);
       rowKV(doc, "Política de fumar",       fumar, m, W, S);
 
       if (invOn){
-        const jumped = paginate(doc, S, NT.LINEH * 2);
-        if (jumped){ S.y = band(doc, "Condiciones específicas (cont.)", m, S, W); }
+        const pageH  = doc.internal.pageSize.getHeight();
+        const bottom = pageH - NT.PAGE.bottomSafe;
+        const willJump = (S.y + NT.LINEH) > bottom; // solo necesitamos 1 línea
+        if (willJump){
+          doc.addPage(); S.y = NT.PAGE.margin;
+          S.y = band(doc, "Condiciones específicas (cont.)", m, S, W);
+        }
         rowKV(doc, "Acceso al inventario", "Sí (Anexo I — Inventario)", m, W, S);
       }
 
       // ===== Cláusulas (CON línea) =====
       const claus = buildClausesFromUI();
-      S.y = band(doc,"Cláusulas", m, S, W);
-      for (let i=0; i<claus.length; i++){
-        const [tit, cuerpo] = claus[i];
-        paginate(doc,S,NT.LINEH);
-        setFont(doc,"bold"); doc.text(`${i+1}. ${tit}`, m, S.y); S.y += 10;
-        setFont(doc,"normal"); S.y = flowPara(doc, cuerpo, m, S.y, W, { S, lh: NT.LINEH, align: "left" });
-        S.y += 8;
-      }
+	// ——— REUNIDOS / INTERVIENEN / EXPONEN ———
+S.y += 6; S.y = bandSoft(doc, "REUNIDOS", m, S, W);
+S.y = flowPara(
+  doc,
+  [
+    `De una parte, ${get("arrendador")} (DNI/NIE ${get("dniArrendador")}).`,
+    `De otra parte, ${get("inquilino")} (DNI/NIE ${get("dniInquilino")}).`
+  ].join("\n"),
+  m,
+  S.y,
+  W,
+  { S, lh: NT.LINEH, align: "left" }
+);
+
+S.y += 6; S.y = bandSoft(doc, "INTERVIENEN", m, S, W);
+S.y = flowPara(
+  doc,
+  [
+    `${get("arrendador")} interviene en su propio nombre y derecho como parte arrendadora.`,
+    `${get("inquilino")} interviene en su propio nombre y derecho como parte arrendataria.`
+  ].join("\n"),
+  m,
+  S.y,
+  W,
+  { S, lh: NT.LINEH, align: "left" }
+);
+
+
+  S.y += 6; S.y = bandSoft(doc, "EXPONEN", m, S, W);const roomBits = [
+  get("habId") && `Habitación: ${get("habId")}${get("habPlanta")?` (${get("habPlanta")})`:""}.`,
+  get("habM2") && `Superficie aproximada: ${get("habM2")} m².`,
+  (get("habAmueblada")==="si"||get("habAmueblada")==="no") && `Amueblada: ${get("habAmueblada")==="si"?"Sí":"No"}.`,
+  get("habDescripcion") && `Descripción: ${get("habDescripcion")}.`
+].filter(Boolean);
+
+S.y = flowPara(
+  doc,
+  [
+    `Que la parte arrendadora es propietaria/usufructuaria de la vivienda sita en ${get("direccion")} (${get("localidad")}).`,
+    `Que se arrienda la habitación identificada y descrita a continuación para uso exclusivo del arrendatario, con derecho de uso a las zonas comunes acordadas.`,
+    ...roomBits
+  ].join("\n"),     // (opcional) unimos líneas
+  m,
+  S.y,
+  W,
+  { S, lh: NT.LINEH, align: "left" }
+);
+
+
+// (A partir de aquí continúa con:)
+
+      S.y += 8; // aire por arriba
+               S.y = band(doc,"Cláusulas", m, S, W);
+       for (let i = 0; i < claus.length; i++) {
+   const [tit, cuerpo] = claus[i];
+   const lines   = doc.splitTextToSize(sanitize(cuerpo), W);
+   const lh      = NT.LINEH;
+   const need    = 10 + (lines.length * lh) + 8; // título + texto + margen
+   const bottom  = doc.internal.pageSize.getHeight() - NT.PAGE.bottomSafe;
+   const remain  = bottom - S.y;
+   // Si no cabe al menos el título + 2 líneas, empezamos en página nueva
+   const minShow = 10 + (2 * lh);
+   if (remain < Math.min(need, minShow)) { doc.addPage(); S.y = NT.PAGE.margin; }
+
+   // Título
+   setFont(doc, "bold"); paginate(doc, S, lh);
+   doc.text(`${i + 1}. ${tit}`, m, S.y); S.y += 10;
+   // Cuerpo
+   setFont(doc, "normal");
+   S.y = flowPara(doc, cuerpo, m, S.y, W, { S, lh, align: "left" });
+   S.y += 8;
+ }
 
       // ===== Firmas =====
-      reserveSignatures(doc, S, 90);
+      reserveSignatures(doc, S, 12);
       drawSignaturesFooter(doc, g("localidad"), g("arrendador"), g("inquilino"));
 
       // ===== Anexo I =====
@@ -1387,13 +1706,18 @@ refreshPayUI();
         tableSimple(doc, ["Elemento","Estado","Observaciones"], items, m, S, W);
       }
 
+// Si el inventario está activo y el usuario quiere sello, estamparlo aquí
+if (opts?.wantSealOnInventory) {
+  drawPaidSealBottomRight(doc);
+}
+
+
       // ===== Numeración =====
       addPageNumbers(doc);
 
       // Guardar
       try{ doc.save("Contrato-habitacion.pdf"); }
-      catch{
-        const blob=doc.output('blob'); const url=URL.createObjectURL(blob);
+      catch (e){const blob=doc.output('blob'); const url=URL.createObjectURL(blob);
         const a=document.createElement('a'); a.href=url; a.download="Contrato-habitacion.pdf"; document.body.appendChild(a); a.click(); a.remove();
         setTimeout(()=>URL.revokeObjectURL(url), 15000);
       }
@@ -1408,13 +1732,18 @@ refreshPayUI();
 
   // API pública / botón
   window.generarPDF = function(forceOverride){
-    const force = !!forceOverride || !!window.__DEV_MODE;
-    return __genPDF(force);
-  };
+   const force = !!forceOverride || !!window.__DEV_MODE;
+   const invOn = !!document.getElementById("anexoInventario")?.checked;
+   const wantSeal = invOn && (
+     (typeof shouldSeal === "function") ? shouldSeal()
+     : (localStorage.getItem(LSKEY + "_seal") === "1")
+   );
+   return __genPDF(force, { wantSealOnInventory: wantSeal });
+ };
   window.generarPDFForce = function(){ return __genPDF(true); };
 
-  document.getElementById('btnDownload')?.addEventListener('click', ()=>{ void __genPDF(false); });
-  try{ refreshPayUI(); }catch{}
+  document.getElementById('btnDownload')?.addEventListener('click', ()=>{ void generarPDF(); });
+  try { refreshPayUI(); } catch (e) {}
   </script>
   <!-- === PDF: FIN === -->
 
@@ -1430,6 +1759,340 @@ refreshPayUI();
     <input type="hidden" id="ppReturn" name="return" value="">
     <input type="hidden" id="ppCancel" name="cancel_return" value="">
   </form>
+<script>
+// ====== HABITACIÓN — Biblioteca reforzada (J/C) ======
+(function(){
+  if (!window.CLAUSES_MANDATORY) window.CLAUSES_MANDATORY = [];
+  if (!window.CLAUSES_EXTRA) window.CLAUSES_EXTRA = [];
+
+  const MUST = [
+    {id:"objeto_hab", title:"Objeto y destino (habitación)", 
+      J:"Se arrienda habitación amueblada identificada en el contrato, con derecho de uso de las zonas comunes pactadas. La habitación se arrienda como cuerpo cierto. Uso conforme a su destino.",
+      C:"Habitación amueblada con uso de zonas comunes. Uso adecuado."},
+    {id:"duracion_hab", title:"Duración y finalización", 
+      J:"Duración la indicada (temporal). Al vencimiento, la posesión se devolverá libre de ocupantes, sin requerimiento previo, salvo tácita reconducción.",
+      C:"Dura lo pactado. Al final, devuelves la habitación sin ocupar."},
+    {id:"precio_fianza_hab", title:"Renta y fianza", 
+      J:"Renta mensual anticipada dentro de los cinco primeros días. Fianza equivalente a una mensualidad; no compensa impagos y se devuelve al término si no hay cantidades pendientes.",
+      C:"Pagas a primeros de mes. Fianza de un mes; no sirve para impagos."}
+  ];
+MUST.push({
+  id:"desist_preaviso",
+  title:"Desistimiento y preaviso",
+  J:"Cualquiera de las partes podrá desistir del contrato mediando preaviso por escrito con una antelación mínima de 30 días, sin perjuicio de las cantidades devengadas hasta la fecha y de la liquidación final que corresponda.",
+  C:"Puedes terminar el contrato avisando por escrito con 30 días de antelación. Se liquidan los importes pendientes."
+});
+// 1) Estado de entrega e inventario
+MUST.push({
+  id:"estado_inventario",
+  title:"Estado de entrega e inventario",
+  J:"La habitación se entrega en buen estado de uso y limpieza, con el mobiliario y enseres descritos en el inventario que se incorpora como anexo y es firmado por ambas partes. A la finalización del contrato, el arrendatario devolverá la posesión en el mismo estado, respondiendo de los daños distintos del desgaste por uso ordinario.",
+  C:"Se entrega limpia y en buen estado, con los muebles del inventario firmado. Al irte, debes devolverla igual; pagarás daños más allá del uso normal."
+});
+
+// 2) Resolución por incumplimiento grave
+MUST.push({
+  id:"resolucion_incumplimiento",
+  title:"Resolución por incumplimiento grave",
+  J:"Serán causa de resolución, entre otras, el impago de la renta o de la fianza/actualizaciones, el subarriendo o cesión sin consentimiento, la realización de actividades molestas o ilícitas, los daños graves, o el incumplimiento de las obligaciones esenciales. En tales casos, el arrendador podrá declarar resuelto el contrato y exigir la restitución de la habitación y las indemnizaciones que procedan.",
+  C:"Si no pagas, subarriendas sin permiso, causas molestias o daños graves o incumples lo esencial, el propietario puede dar por terminado el contrato y pedir la devolución de la habitación con daños y perjuicios."
+});
+
+
+  const EXTRA = [
+    {id:"acceso", title:"Derecho de acceso del arrendador", 
+      J:"El arrendatario no impedirá el acceso del arrendador a zonas comunes y a habitaciones no arrendadas cuando sea necesario. Su vulneración faculta la resolución y el desahucio, con resarcimiento de daños.",
+      C:"No bloquees el acceso del propietario a comunes/habitaciones libres."},
+    {id:"electrodomesticos", title:"Uso de electrodomésticos",
+       J:"El arrendatario utilizará los electrodomésticos e instalaciones de la vivienda conforme a su finalidad e instrucciones del fabricante, manteniéndolos en correcto estado de limpieza. Responderá de los daños ocasionados por uso negligente o inadecuado.",
+       C:"Usa los electrodomésticos correctamente y límpialos; respondes de daños por mal uso."},
+    {id:"cesion_subarr", title:"Cesión y subarriendo", 
+      J:"Prohibidos sin consentimiento escrito del arrendador. Su incumplimiento faculta la resolución.",
+      C:"No cedas ni subarriendes sin permiso."},
+    {id:"penal_posesion", title:"Penalización por no devolver la posesión", 
+      J:"Si no se entrega la posesión en la fecha de fin, penalización equivalente al doble de la renta vigente por el tiempo de retraso.",
+      C:"Si no devuelves a tiempo, pagas el doble por los días de retraso."},
+    {id:"notifica_email", title:"Notificaciones por correo electrónico", 
+      J:"Serán válidas las notificaciones enviadas a los domicilios designados y/o a los correos electrónicos facilitados por las partes.",
+      C:"Avisos válidos al email indicado."},
+    {id:"masc_ovc", title:"MASC previo a la vía judicial", 
+      J:"Cuando sea obligatorio acudir a un MASC previo, las partes se someten al que corresponda en derecho. Si no es obligatorio, renuncian a MASC y se someten a la jurisdicción ordinaria.",
+      C:"Si la ley exige MASC, se usa; si no, a juzgados."}
+  ];
+EXTRA.push({
+  id:"seguro_rc",
+  title:"Seguro de responsabilidad civil (recomendado)",
+  J:"El arrendatario mantendrá durante la vigencia del contrato una póliza de responsabilidad civil que cubra los daños causados a terceros en la vivienda y zonas comunes, exhibiéndola al arrendador cuando sea requerido.",
+  C:"Mantén un seguro de RC que cubra daños a terceros y enséñalo si te lo piden."
+});
+// 1) Límites de consumo y regularización de suministros
+EXTRA.push({
+  id:"limite_suministros",
+  title:"Límites de consumo y regularización de suministros",
+  J:"Cuando los suministros estén incluidos en la renta, las partes fijan un consumo razonable máximo mensual por concepto (electricidad/agua/gas/Internet). Los excesos sobre el umbral pactado se regularizarán mensualmente contra justificantes, repartiéndose entre los inquilinos a partes iguales salvo pacto distinto.",
+  C:"Si los suministros van incluidos hay un tope razonable; lo que pase del tope se regulariza con facturas y se reparte."
+});
+
+// 2) Actualización anual de la renta (si se pacta)
+EXTRA.push({
+  id:"actualizacion_renta",
+  title:"Actualización anual de la renta (si se pacta)",
+  J:"La renta podrá actualizarse anualmente en la fecha de cada aniversario, conforme al mecanismo que acuerden las partes y dentro de los límites legales vigentes. En defecto de pacto expreso, no habrá actualización.",
+  C:"Cada año, si lo acordáis por escrito, puede actualizarse la renta dentro de los topes legales; si no se pacta, no se actualiza."
+});
+
+
+  // Inyectamos manteniendo tus IDs
+  window.CLAUSES_MANDATORY = MUST; // sobrescribe la lista base con la versión de 'habitación'
+  window.CLAUSES_EXTRA = [...EXTRA, ...window.CLAUSES_EXTRA];
+})();
+</script>
+<script>
+(function(){
+  function valOf(id){ return (document.getElementById(id)||{}).value || ""; }
+  function isOn(sel){ const el=document.querySelector(sel); return !!(el && (el.checked || el.classList?.contains("active"))); }
+  function collectHabitacion(){
+    const zonas = Array.from(document.querySelectorAll('#zonasChips input[name="zc"]:checked')).map(i=>i.value);
+    const sumis = {
+      incAgua: document.getElementById("incAgua")?.checked || false,
+      incLuz:  document.getElementById("incLuz")?.checked  || false,
+      incGas:  document.getElementById("incGas")?.checked  || false,
+    };
+    return {
+      direccion: valOf("direccion"),
+      arrendador: valOf("arrendador"),
+      dniArrendador: valOf("dniArrendador"),
+      inquilino: valOf("inquilino"),
+      dniInquilino: valOf("dniInquilino"),
+      localidad: valOf("localidad"),
+      duracion: valOf("duracion"),
+      fechaInicio: valOf("fechaInicio"),
+      fechaFin: valOf("fechaFin"),
+      renta: valOf("renta"),
+      fianza: valOf("fianza"),
+      wifi: (document.getElementById("wifi")||{}).value || "no",
+      fumar: (document.getElementById("fumar")||{}).value || "no",
+      zonas,
+       sumis: sumis
+    };
+  }
+
+  function parseInventario(){
+    const raw = (document.getElementById("inventarioTxt")||{}).value || "";
+    return raw.split(/\r?\n/).map(s=>s.trim()).filter(Boolean).map(line=>{
+      const parts = line.split(/\s*[|;/—-]\s*|,\s*|\t/).map(s=>s.trim()).filter(Boolean);
+      return parts.join(" — ");
+    });
+  }
+
+async function generarPDFHabitacion(force=false){
+  if (!window.hasPaid && !force && !window.__DEV_MODE){
+    alert("Completa el pago para habilitar la descarga."); return;
+  }
+  if (__downloading) return;
+  __downloading = true;
+  try {
+    const data    = collectHabitacion();
+    const clauses = (window.buildClausesFromUI ? window.buildClausesFromUI() : []);
+    const anexos  = {};
+    if (document.getElementById("anexoInventario")?.checked){
+      anexos.inventario = parseInventario();
+    }
+
+    const wantSeal = !!anexos.inventario && shouldSeal();
+
+    if (window.__NT_BUILD_PDF){
+      const doc = await window.__NT_BUILD_PDF("habitacion", data, clauses, anexos);
+      if (wantSeal) drawPaidSealBottomRight(doc); // sello en la última (Anexo I)
+      doc.save("Contrato_habitacion.pdf");
+    } else {
+      await __genPDF(true, { wantSealOnInventory: wantSeal }); // fallback interno con sello
+    }
+  } finally {
+    __downloading = false;
+  }
+}
+})();
+
+
+
+</script>
+
+<form id="ppNcpForm"
+      action="https://www.paypal.com/ncp/payment/ZGPA6FGJKB4DW"
+      method="post" target="_blank"></form>
+
+<script>
+(() => {
+  // Claves de Habitación (sin cambiarlas)
+  const LSKEY  = (window.LSKEY || "contrato_habitacion_v2");
+  const STEP_K = (window.STEP_K || "HAB_STEP");
+
+
+
+  // Vincula el pago a los datos núcleo (igual que Vivienda)
+  function bindStr(){
+    const g=id=> (document.getElementById(id)?.value || "").trim().toUpperCase();
+    return JSON.stringify({
+      arr:g("arrendador"), dniA:g("dniArrendador"),
+      inq:g("inquilino"),  dniI:g("dniInquilino"),
+      dir:g("direccion"),  loc:g("localidad"),
+      fi:g("fechaInicio"), ff:g("fechaFin"),
+      renta:g("renta"),    fianza:g("fianza")
+    });
+  }
+  window.bindStr = bindStr;
+
+  // Si cambian campos clave, invalida pago (como Vivienda)
+  ["arrendador","dniArrendador","inquilino","dniInquilino",
+   "direccion","localidad","fechaInicio","fechaFin","renta","fianza"]
+  .forEach(id=>{
+    const el = document.getElementById(id);
+    el?.addEventListener("input", ()=>{
+      const paidBind = localStorage.getItem(LSKEY+"_paid_bind") || "";
+      if (paidBind && paidBind !== bindStr()){
+        localStorage.removeItem(LSKEY+"_paid");
+        localStorage.removeItem(LSKEY+"_order");
+        localStorage.removeItem(LSKEY+"_paid_bind");
+        // compat previo
+        localStorage.removeItem("HAB_PAID");
+        localStorage.removeItem("HAB_ORDER");
+        window.hasPaid = false; window.orderId = "";
+        gateDownload();
+      }
+    });
+  });
+
+  // Antes de abrir NCP, guarda snapshot temporal SIEMPRE (como Vivienda)
+  document.getElementById("ppNcpForm")?.addEventListener("submit", () => {
+    try {
+      const snap = (typeof serialize==="function") ? serialize() : "{}";
+      localStorage.setItem(LSKEY + "_tmp", snap);
+      if (typeof saveState === "function") saveState();
+      localStorage.setItem(STEP_K, "3");
+    } catch (e) {}
+  });
+
+// Extra de robustez: snapshot también en el click del enlace NCP
+document.querySelector('.pp-ZGPA6FGJKB4DW')?.addEventListener('click', ()=>{
+  try {
+    const snap = (typeof serialize==="function") ? serialize() : "{}";
+    localStorage.setItem(LSKEY + "_tmp", snap);
+    if (typeof saveState === "function") saveState();
+    localStorage.setItem(STEP_K, "3");
+  } catch (e) {} 
+}, {capture:true});
+
+
+  // Muestra/oculta DESCARGAR: solo si pagó y el bind coincide
+  function gateDownload(){
+    const btn = document.getElementById("btnDownload");
+    const paid = (localStorage.getItem(LSKEY+"_paid")==="true")
+                 || window.hasPaid===true
+                 || localStorage.getItem("HAB_PAID")==="1"; // compat
+    const paidBind = localStorage.getItem(LSKEY+"_paid_bind") || "";
+    const sameBind = (paidBind && paidBind === bindStr());
+    const show = (Number(localStorage.getItem(STEP_K)||"3") === 3 && paid && sameBind);
+    if (btn) btn.style.display = show ? "inline-flex" : "none";
+    // Si tienes un sello “Pago verificado”, sincroniza:
+    const wrap = document.getElementById("sealWrap");
+if (wrap) wrap.style.display = paid ? "inline-flex" : "none";
+
+  }
+  window.gateDownload = gateDownload;
+
+  // Retorno PayPal (NCP), como Vivienda
+  {
+    const url = new URL(location.href);
+    if (url.searchParams.get("pago_confirmado") === "1") {
+      window.hasPaid = true;
+      window.orderId = "PAYPAL-OK";
+      localStorage.setItem(LSKEY + "_paid", "true");
+      localStorage.setItem(LSKEY + "_order", window.orderId);
+      // compat con tu lógica previa
+      localStorage.setItem("HAB_PAID", "1");
+      localStorage.setItem("HAB_ORDER", window.orderId);
+
+      // Rehidrata snapshot pagado si existe
+      try {
+        const tmp = localStorage.getItem(LSKEY + "_tmp");
+        if (tmp && tmp.length > 50) {
+          localStorage.setItem(LSKEY, tmp);
+          localStorage.removeItem(LSKEY + "_tmp");
+        }
+        if (localStorage.getItem(LSKEY) && typeof populate === "function") {
+          populate();
+          if (typeof refreshResumen === "function") refreshResumen();
+          if (typeof refreshPreview === "function") refreshPreview();
+if (typeof renderMandatory === "function") renderMandatory();
+if (typeof renderClausePicker === "function") renderClausePicker(document.getElementById("clauseSearch")?.value || "");
+if (typeof updateClauseCount === "function") updateClauseCount();
+if (typeof detectPresetFromSelection === "function" && typeof markPresetChip === "function"){
+  const det = detectPresetFromSelection(window.selectedClauses || new Set());
+  markPresetChip(localStorage.getItem(PRESET_K) || det);
+        }
+	}
+      } catch (e) {}
+
+      // Vincula pago ↔ datos reales
+      try { localStorage.setItem(LSKEY + "_paid_bind", bindStr()); } catch (e) {}
+
+      localStorage.setItem(STEP_K, "3");
+      gateDownload();
+  refreshPayUI();
+
+      // Limpia el querystring
+      try { url.searchParams.delete("pago_confirmado");
+            history.replaceState({}, "", url.toString()); } catch (e) {}
+    }
+
+    if (url.searchParams.get("pago_cancelado") === "1") {
+      localStorage.setItem(STEP_K, "3");
+      try { url.searchParams.delete("pago_cancelado");
+            history.replaceState({}, "", url.toString()); } catch (e) {}
+    }
+  }
+
+  // Estado inicial
+  document.addEventListener("DOMContentLoaded", gateDownload);
+  gateDownload();
+})();
+</script>
+<script>
+// === Sello “Pago verificado” (UI + persistencia) ===
+function shouldSeal(){ return localStorage.getItem(LSKEY + "_seal") === "1"; }
+
+function refreshPayUI(){
+  const paid = (localStorage.getItem(LSKEY+"_paid")==="true")
+            || window.hasPaid===true
+            || localStorage.getItem("HAB_PAID")==="1";
+  const wrap = document.getElementById("sealWrap");
+  const cb   = document.getElementById("sealToggle");
+  if (!wrap || !cb) return;
+  wrap.style.display = paid ? "block" : "none";
+  // por defecto activado tras pagar si no hay preferencia previa
+  const v = localStorage.getItem(LSKEY + "_seal");
+  if (v === null && paid) localStorage.setItem(LSKEY + "_seal", "1");
+  cb.checked = shouldSeal();
+// marcar/desmarcar visual
+ const lab = cb.closest('label.chip');
+if (lab) lab.classList.toggle('active', cb.checked);
+}
+
+// Guardar preferencia al cambiar el checkbox
+document.addEventListener("change", (e)=>{
+  if (e.target && e.target.id === "sealToggle") {
+    localStorage.setItem(LSKEY + "_seal", e.target.checked ? "1" : "0");
+    const lab = e.target.closest('label.chip');
+         if (lab) lab.classList.toggle('active', e.target.checked);
+  }
+});
+
+// Arranque y tras cada paso
+document.addEventListener("DOMContentLoaded", refreshPayUI);
+window.refreshPayUI = refreshPayUI;
+</script>
+
 
 </body>
 </html>
