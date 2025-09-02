@@ -9,21 +9,18 @@
   <meta name="theme-color" content="#0ea5e9" />
   <link rel="canonical" href="https://www.jsonbeautifierpro.com/contrato-habitacion.html" />
 <link rel="icon" href="logo.svg" type="image/svg+xml">
-  <!-- Hreflang for Spanish and default -->
-  <link rel="alternate" hreflang="es-ES" href="https://www.jsonbeautifierpro.com/contrato-habitacion.html" />
-  <link rel="alternate" hreflang="x-default" href="https://www.jsonbeautifierpro.com/contrato-habitacion.html" />
 
 <meta property="og:title" content="Contrato de Habitación en Alquiler | PDF estilo notaría (España)">
 <meta property="og:description" content="Genera un contrato de habitación legal en PDF. Vista previa protegida y descarga por 1 € (pago seguro).">
 <meta property="og:url" content="https://www.jsonbeautifierpro.com/contrato-habitacion.html">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://www.jsonbeautifierpro.com/og-contrato-habitacion.png">
+<meta property="og:image" content="https://www.jsonbeautifierpro.com/logo.svg">
 <meta property="og:locale" content="es_ES">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Contrato de Habitación PRO (PDF)">
 <meta name="twitter:description" content="Rellena online, vista previa y descarga por 1 € (PayPal).">
-<meta name="twitter:image" content="https://www.jsonbeautifierpro.com/og-contrato-habitacion.png">
+<meta name="twitter:image" content="https://www.jsonbeautifierpro.com/logo.svg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -41,7 +38,34 @@
   .head-wrap{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:14px 0}
   .brand{display:flex;align-items:center;gap:12px;min-width:0}
   .brand h1{margin:0;font-family:Manrope,Inter;font-weight:800;letter-spacing:.3px;font-size:clamp(22px,2.8vw,34px);background:linear-gradient(90deg,#0ea5e9,#6366f1 45%,#22c55e);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .logo{height:40px;width:120px}
+  /* Increased header logo size */
+  .logo{height:45px;width:140px}
+
+  /* Styling for the split generator title */
+  .generator-title{
+    display:flex;flex-wrap:wrap;gap:6px;align-items:baseline;
+    font-family:Manrope,Inter;font-weight:900;letter-spacing:.3px;
+    font-size:clamp(22px,2.8vw,34px);
+    color:var(--fg);
+    background:none !important;
+    -webkit-background-clip:border-box;background-clip:border-box;
+  }
+  .generator-title .primary{
+    background:linear-gradient(90deg,#0ea5e9,#6366f1 45%,#22c55e);
+    -webkit-background-clip:text;background-clip:text;
+    color:transparent;
+  }
+  .generator-title .badge{
+    font-size:12px;font-weight:800;padding:.35rem .6rem;
+    border-radius:999px;border:2px solid var(--accent);
+    color:var(--accent);
+  }
+  .brand .generator-title{
+    white-space:normal !important;
+    overflow:visible !important;
+    text-overflow:clip !important;
+    color:var(--fg) !important;
+  }
   .cta{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
   .cta p{margin:0;font-size:13px;color:#64748b}
 /* Chips del header: que envuelvan y no se corten */
@@ -57,10 +81,6 @@
   .btn-primary{background:linear-gradient(90deg,#0ea5e9,#6366f1);border:none;color:#fff}
   .btn-ghost{background:#fff}
   .btn-pay{background:#0070ba;color:#fff;border:none}
-  /* Generator title styling */
-  .generator-title{display:flex;flex-wrap:wrap;gap:6px;align-items:baseline;font-family:Manrope,Inter;font-weight:900;letter-spacing:.3px;font-size:clamp(22px,2.8vw,34px);color:var(--fg);background:none !important;-webkit-background-clip:border-box;background-clip:border-box;}
-  .generator-title .primary{background:linear-gradient(90deg,#0ea5e9,#6366f1 45%,#22c55e);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .generator-title .badge{font-size:12px;font-weight:800;padding:.35rem .6rem;border-radius:999px;border:2px solid var(--accent);color:var(--accent);}
 
   main{padding:26px 0}
   .hero{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:0 12px 30px rgba(23,30,70,.08);position:relative;overflow:hidden}
@@ -304,7 +324,7 @@ button, .chip, .seg label{ touch-action: manipulation; }
       "sku": "contrato-habitacion-pdf",
       "brand": { "@type": "Brand", "name": "JSON Beautifier PRO" },
       "url": "https://www.jsonbeautifierpro.com/contrato-habitacion.html",
-      "image": "https://www.jsonbeautifierpro.com/og-contrato-habitacion.png",
+      "image": "https://www.jsonbeautifierpro.com/logo.svg",
       "isFamilyFriendly": true,
       "audience": { "@type": "PeopleAudience", "audienceType": "Particulares en España" },
       "offers": {
@@ -369,30 +389,6 @@ button, .chip, .seg label{ touch-action: manipulation; }
         { "@type": "ListItem", "position": 2, "name": "Generadores", "item": "https://www.jsonbeautifierpro.com/modelo-contrato-alquiler.html" },
         { "@type": "ListItem", "position": 3, "name": "Contrato de habitación", "item": "https://www.jsonbeautifierpro.com/contrato-habitacion.html" }
       ]
-    },
-    {
-      "@type": "Organization",
-      "@id": "https://www.jsonbeautifierpro.com/#organization",
-      "name": "JSON Beautifier PRO",
-      "url": "https://www.jsonbeautifierpro.com/",
-      "logo": "https://www.jsonbeautifierpro.com/logo.svg"
-    },
-    {
-      "@type": "SoftwareApplication",
-      "@id": "https://www.jsonbeautifierpro.com/contrato-habitacion.html#app",
-      "name": "Contrato de Habitación PRO",
-      "description": "Generador de contrato de habitación estilo notaría con vista previa y descarga en PDF por 1 €.",
-      "applicationCategory": "BusinessApplication",
-      "operatingSystem": "Web",
-      "url": "https://www.jsonbeautifierpro.com/contrato-habitacion.html",
-      "image": "https://www.jsonbeautifierpro.com/og-contrato-habitacion.png",
-      "offers": {
-        "@type": "Offer",
-        "price": "1.00",
-        "priceCurrency": "EUR",
-        "availability": "https://schema.org/InStock",
-        "url": "https://www.jsonbeautifierpro.com/contrato-habitacion.html"
-      }
     }
   ]
 }
@@ -402,7 +398,7 @@ button, .chip, .seg label{ touch-action: manipulation; }
   <header class="main-header">
     <div class="container head-wrap">
       <div class="brand">
-        <img class="logo" src="logo.svg" alt="Logo JSON Beautifier PRO" width="120" height="40" />
+        <img class="logo" src="og-contrato-habitacion.png" alt="Logo Generador contrato habitación" width="140" height="45" />
         <h1 class="generator-title">Contrato de <span class="primary">Habitación</span> <span class="badge">PRO</span></h1>
       </div>
       <div class="cta">

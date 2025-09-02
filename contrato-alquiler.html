@@ -15,12 +15,12 @@
   <meta property="og:locale" content="es_ES" />
   <meta property="og:title" content="Generador de contrato de vivienda — PDF estilo notaría (1 €)" />
   <meta property="og:description" content="Crea tu contrato en minutos, todo en tu navegador. PDF profesional listo para firmar por 1 €." />
-  <meta property="og:image" content="https://www.jsonbeautifierpro.com/og-contrato-vivienda.png" />
+  <meta property="og:image" content="https://www.jsonbeautifierpro.com/logo.svg" />
   <meta property="og:url" content="https://www.jsonbeautifierpro.com/contrato-alquiler.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Generador de contrato de vivienda — PDF estilo notaría (1 €)" />
   <meta name="twitter:description" content="Crea tu contrato en minutos, todo en tu navegador. PDF profesional listo para firmar por 1 €." />
-  <meta name="twitter:image" content="https://www.jsonbeautifierpro.com/og-contrato-vivienda.png" />
+  <meta name="twitter:image" content="https://www.jsonbeautifierpro.com/logo.svg" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -45,7 +45,7 @@
   "description": "Crea un contrato profesional en minutos y descarga un PDF estilo notaría.",
   "brand": { "@type": "Brand", "name": "JSON Beautifier PRO" },
   "url": "https://www.jsonbeautifierpro.com/contrato-alquiler.html",
-  "image": "https://www.jsonbeautifierpro.com/og-contrato-vivienda.png",
+  "image": "https://www.jsonbeautifierpro.com/logo.svg",
   "offers": {
     "@type": "Offer",
     "priceCurrency": "EUR",
@@ -68,7 +68,6 @@
   "name": "Generador de contrato de alquiler de vivienda",
   "applicationCategory": "BusinessApplication",
   "operatingSystem": "Web",
-  "image": "https://www.jsonbeautifierpro.com/og-contrato-vivienda.png",
   "offers": {
     "@type": "Offer",
     "price": "1.00",
@@ -164,9 +163,34 @@
   .head-wrap{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:14px 0}
   .brand{display:flex;align-items:center;gap:12px}
   .brand h1{margin:0;font-family:Manrope,Inter;font-weight:800;letter-spacing:.3px;font-size:clamp(22px,2.8vw,34px);background:linear-gradient(90deg,#0ea5e9,#6366f1 45%,#22c55e);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .logo{height:40px}
-  /* CLS */
-  .logo{height:40px;width:120px}
+  /* Increased header logo size */
+  .logo{height:45px;width:140px}
+  
+  /* Styling for the split generator title */
+  .generator-title{
+    display:flex;flex-wrap:wrap;gap:6px;align-items:baseline;
+    font-family:Manrope,Inter;font-weight:900;letter-spacing:.3px;
+    font-size:clamp(22px,2.8vw,34px);
+    color:var(--fg);
+    background:none !important;
+    -webkit-background-clip:border-box;background-clip:border-box;
+  }
+  .generator-title .primary{
+    background:linear-gradient(90deg,#0ea5e9,#6366f1 45%,#22c55e);
+    -webkit-background-clip:text;background-clip:text;
+    color:transparent;
+  }
+  .generator-title .badge{
+    font-size:12px;font-weight:800;padding:.35rem .6rem;
+    border-radius:999px;border:2px solid var(--accent);
+    color:var(--accent);
+  }
+  .brand .generator-title{
+    white-space:normal !important;
+    overflow:visible !important;
+    text-overflow:clip !important;
+    color:var(--fg) !important;
+  }
 .cta{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
 .cta p{ margin:0; font-size:13px; color:#64748b; }
 
@@ -176,10 +200,6 @@
   .btn-primary{background:linear-gradient(90deg,#0ea5e9,#6366f1);border:none;color:#fff}
   .btn-ghost{background:#fff}
   .btn-pay{background:#0070ba;color:#fff;border:none}
-  /* Generator title styling */
-  .generator-title{display:flex;flex-wrap:wrap;gap:6px;align-items:baseline;font-family:Manrope,Inter;font-weight:900;letter-spacing:.3px;font-size:clamp(22px,2.8vw,34px);color:var(--fg);background:none !important;-webkit-background-clip:border-box;background-clip:border-box;}
-  .generator-title .primary{background:linear-gradient(90deg,#0ea5e9,#6366f1 45%,#22c55e);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .generator-title .badge{font-size:12px;font-weight:800;padding:.35rem .6rem;border-radius:999px;border:2px solid var(--accent);color:var(--accent);}
 
   main{padding:26px 0}
   .hero{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:0 12px 30px rgba(23,30,70,.08)}
@@ -409,7 +429,7 @@ button, .chip, .seg label{ touch-action: manipulation; }
   <header class="main-header">
     <div class="container head-wrap">
       <div class="brand">
-        <img class="logo" src="logo.svg" alt="Logo JSON Beautifier PRO" width="120" height="40" />
+        <img class="logo" src="og-contrato-vivienda.png" alt="Logo Generador contrato vivienda" width="140" height="45" />
         <h1 class="generator-title">Contrato de <span class="primary">Vivienda</span> <span class="badge">PRO</span></h1>
       </div>
       <div class="cta">
