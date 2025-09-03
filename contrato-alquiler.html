@@ -15,12 +15,12 @@
   <meta property="og:locale" content="es_ES" />
   <meta property="og:title" content="Generador de contrato de vivienda — PDF estilo notaría (1 €)" />
   <meta property="og:description" content="Crea tu contrato en minutos, todo en tu navegador. PDF profesional listo para firmar por 1 €." />
-  <meta property="og:image" content="https://www.jsonbeautifierpro.com/logo.svg" />
+  <meta property="og:image" content="https://www.jsonbeautifierpro.com/og-contrato-vivienda.png" />
   <meta property="og:url" content="https://www.jsonbeautifierpro.com/contrato-alquiler.html" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Generador de contrato de vivienda — PDF estilo notaría (1 €)" />
   <meta name="twitter:description" content="Crea tu contrato en minutos, todo en tu navegador. PDF profesional listo para firmar por 1 €." />
-  <meta name="twitter:image" content="https://www.jsonbeautifierpro.com/logo.svg" />
+  <meta name="twitter:image" content="https://www.jsonbeautifierpro.com/og-contrato-vivienda.png" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -164,7 +164,8 @@
   .brand{display:flex;align-items:center;gap:12px}
   .brand h1{margin:0;font-family:Manrope,Inter;font-weight:800;letter-spacing:.3px;font-size:clamp(22px,2.8vw,34px);background:linear-gradient(90deg,#0ea5e9,#6366f1 45%,#22c55e);-webkit-background-clip:text;background-clip:text;color:transparent}
   /* Increased header logo size */
-  .logo{height:45px;width:140px}
+  /* Make the header logo much larger so it spans most of the bar */
+  .logo{height:90px;width:280px}
   
   /* Styling for the split generator title */
   .generator-title{
@@ -188,6 +189,8 @@
   .brand .generator-title{
     white-space:normal !important;
     overflow:visible !important;
+    /* Ensure the plain text before colored spans is visible */
+    color:var(--fg) !important;
     text-overflow:clip !important;
     color:var(--fg) !important;
   }
@@ -429,7 +432,7 @@ button, .chip, .seg label{ touch-action: manipulation; }
   <header class="main-header">
     <div class="container head-wrap">
       <div class="brand">
-        <img class="logo" src="og-contrato-vivienda.png" alt="Logo Generador contrato vivienda" width="140" height="45" />
+        <img class="logo" src="og-contrato-vivienda.png" alt="Logo Generador contrato vivienda" width="280" height="90" />
         <h1 class="generator-title">Contrato de <span class="primary">Vivienda</span> <span class="badge">PRO</span></h1>
       </div>
       <div class="cta">
