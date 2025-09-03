@@ -14,13 +14,14 @@
 <meta property="og:description" content="Genera un contrato de habitación legal en PDF. Vista previa protegida y descarga por 1 € (pago seguro).">
 <meta property="og:url" content="https://www.jsonbeautifierpro.com/contrato-habitacion.html">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://www.jsonbeautifierpro.com/logo.svg">
+<!-- Imagen de Open Graph específica para contrato de habitación -->
+<meta property="og:image" content="https://www.jsonbeautifierpro.com/og-contrato-habitacion.png">
 <meta property="og:locale" content="es_ES">
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Contrato de Habitación PRO (PDF)">
 <meta name="twitter:description" content="Rellena online, vista previa y descarga por 1 € (PayPal).">
-<meta name="twitter:image" content="https://www.jsonbeautifierpro.com/logo.svg">
+<meta name="twitter:image" content="https://www.jsonbeautifierpro.com/og-contrato-habitacion.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,36 +36,58 @@
   .container{max-width:1200px;margin:0 auto;padding:0 16px}
 
   .main-header{position:sticky;top:0;z-index:70;background:linear-gradient(180deg,#fff,rgba(255,255,255,.92));backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--border)}
-  .head-wrap{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:14px 0}
-  .brand{display:flex;align-items:center;gap:12px;min-width:0}
-  .brand h1{margin:0;font-family:Manrope,Inter;font-weight:800;letter-spacing:.3px;font-size:clamp(22px,2.8vw,34px);background:linear-gradient(90deg,#0ea5e9,#6366f1 45%,#22c55e);-webkit-background-clip:text;background-clip:text;color:transparent}
-  /* Make the header logo much larger so it spans most of the bar */
-  .logo{height:90px;width:280px}
+  /*
+    El encabezado utiliza tres columnas: auto para el logotipo, 1fr para que el título
+    crezca y auto para la llamada a la acción. Reducimos el espaciado vertical para
+    que la barra sea más ligera.
+  */
+  .head-wrap{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    gap:20px;
+    align-items:center;
+    padding:10px 0;
+  }
+  .brand{display:flex;align-items:center;gap:20px;min-width:0}
+  /* Restablecemos el estilo base del h1 para usar clases personalizadas más abajo */
+  .brand h1{margin:0;font-family:Manrope,Inter;font-weight:800;letter-spacing:.3px;font-size:clamp(22px,2.8vw,34px)}
+  /* Tamaño del logotipo reducido: altura fija para mantener proporciones sin ocupar
+     demasiado espacio horizontal. El ancho se ajusta automáticamente según el ratio. */
+  .logo{
+    height:80px;
+    width:auto;
+  }
 
-  /* Styling for the split generator title */
-  .generator-title{
-    display:flex;flex-wrap:wrap;gap:6px;align-items:baseline;
-    font-family:Manrope,Inter;font-weight:900;letter-spacing:.3px;
-    font-size:clamp(22px,2.8vw,34px);
-    color:var(--fg);
-    background:none !important;
-    -webkit-background-clip:border-box;background-clip:border-box;
+  /* Estilos comunes de títulos (compartidos con la página de vivienda):
+     usa un degradado vibrante y una ligera sombra para destacar el texto */
+  .title{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    margin:0;
+    font-family:Manrope,Inter;
+    font-weight:800;
+    letter-spacing:.3px;
+    font-size:clamp(22px,3vw,36px);
+    line-height:1;
   }
-  .generator-title .primary{
-    background:linear-gradient(90deg,#0ea5e9,#6366f1 45%,#22c55e);
-    -webkit-background-clip:text;background-clip:text;
+  .title .text{
+    background-image:linear-gradient(90deg,#0ea5e9 0%,#6366f1 50%,#22c55e 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
     color:transparent;
+    text-shadow:1px 1px 0px rgba(255,255,255,0.25),2px 2px 4px rgba(0,0,0,0.15);
   }
-  .generator-title .badge{
-    font-size:12px;font-weight:800;padding:.35rem .6rem;
-    border-radius:999px;border:2px solid var(--accent);
-    color:var(--accent);
-  }
-  .brand .generator-title{
-    white-space:normal !important;
-    overflow:visible !important;
-    /* Ensure the plain text before colored spans is visible */
-    color:var(--fg) !important;
+  .title .badge{
+    background-image:linear-gradient(90deg,#6366f1,#22c55e);
+    color:#fff;
+    padding:.35rem .8rem;
+    border-radius:10px;
+    font-size:0.6em;
+    font-weight:900;
+    display:inline-flex;
+    align-items:center;
+    box-shadow:0 2px 4px rgba(0,0,0,0.1);
   }
   .cta{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
   .cta p{margin:0;font-size:13px;color:#64748b}
@@ -309,31 +332,6 @@ label.clause-card.active{
 /* 10) Mejor tacto (evita retraso de tap) */
 button, .chip, .seg label{ touch-action: manipulation; }
 
-/* Modern styling for generator titles */
-.generator-title{
-  display:flex;
-  flex-wrap:wrap;
-  align-items:baseline;
-  gap:0.4rem;
-  font-family:Manrope,Inter;
-  font-weight:800;
-  font-size:clamp(22px,3.4vw,40px);
-  margin:0;
-}
-.generator-title .primary{
-  background: linear-gradient(90deg, var(--brand), var(--accent), var(--ok));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.generator-title .badge{
-  background: var(--accent);
-  color:#fff;
-  padding:0.2rem 0.6rem;
-  border-radius:0.5rem;
-  font-size:0.6em;
-  font-weight:800;
-}
-
   </style>
 <!-- SEO: Product + FAQ + Breadcrumbs (Habitación) -->
 <script type="application/ld+json">
@@ -349,7 +347,7 @@ button, .chip, .seg label{ touch-action: manipulation; }
       "sku": "contrato-habitacion-pdf",
       "brand": { "@type": "Brand", "name": "JSON Beautifier PRO" },
       "url": "https://www.jsonbeautifierpro.com/contrato-habitacion.html",
-      "image": "https://www.jsonbeautifierpro.com/logo.svg",
+      "image": "https://www.jsonbeautifierpro.com/og-contrato-habitacion.png",
       "isFamilyFriendly": true,
       "audience": { "@type": "PeopleAudience", "audienceType": "Particulares en España" },
       "offers": {
@@ -421,11 +419,18 @@ button, .chip, .seg label{ touch-action: manipulation; }
 </head>
 <body>
   <header class="main-header">
+    <!--
+      La cabecera de la versión de habitación ahora usa la misma estructura que la de vivienda:
+      una cuadrícula de tres columnas en la que el logotipo queda a la izquierda,
+      el título ocupa el espacio central con un degradado de colores y un distintivo PRO,
+      y el bloque CTA se alinea a la derecha. Conservamos iconos e interacciones originales.
+    -->
     <div class="container head-wrap">
-      <div class="brand">
-        <img class="logo" src="og-contrato-habitacion.png" alt="Logo Generador contrato habitación" width="280" height="90" />
-        <h1 class="generator-title">Contrato de <span class="primary">Habitación</span> <span class="badge">PRO</span></h1>
-      </div>
+      <!-- Logotipo específico de habitación -->
+      <img class="logo" src="og-contrato-habitacion.png" alt="Generador de contrato de habitación" />
+      <!-- Título estilizado con degradado -->
+      <h1 class="title"><span class="text">Contrato de Habitación</span> <span class="badge">PRO</span></h1>
+      <!-- CTA original sin modificaciones de funcionalidad -->
       <div class="cta">
         <p>¿Necesitas un contrato de vivienda?</p>
         <button class="btn btn-primary" type="button" onclick="location.href='contrato-alquiler.html'"><i class="fa-solid fa-house"></i> Ir a contrato de vivienda</button>
@@ -1203,6 +1208,21 @@ setTimeout(()=>{
 }
   function zoom(delta){ const el=$("fsFrame").firstElementChild; if(!el) return; const cur=Number(el.dataset.z||'1'); const nx=Math.max(.5,Math.min(2.2,cur+delta)); el.style.transform=`scale(${nx})`; el.dataset.z=String(nx); }
 
+  // -------- Sincronizar UI del inventario --------
+  // Cuando se carga la página con datos guardados, este helper actualiza la visibilidad
+  // de las cajas del inventario y el estado del chip correspondiente en función del
+  // valor guardado en el checkbox #anexoInventario.
+  function syncInventoryUI(){
+    const inv = document.getElementById('anexoInventario');
+    const on = !!(inv && inv.checked);
+    const box  = document.getElementById('anexosBox');
+    const invBox = document.getElementById('anexoInvBox');
+    if (box)   box.style.display   = on ? 'block' : 'none';
+    if (invBox) invBox.style.display = on ? 'block' : 'none';
+    const chipInv = document.getElementById('chipInv');
+    if (chipInv) chipInv.classList.toggle('active', on);
+  }
+
 
   // ---------- Inicio ----------
   document.addEventListener('DOMContentLoaded', ()=>{
@@ -1225,6 +1245,8 @@ setTimeout(()=>{
 
     // Cargar datos guardados y render inicial
     populate();
+    // Sincroniza el estado visual del Anexo Inventario tras rehidratar los datos
+    syncInventoryUI();
     revalidateAll();
     renderMandatory(); renderClausePicker(); updateClauseCount();
 

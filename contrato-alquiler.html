@@ -21,6 +21,9 @@
   <meta name="twitter:title" content="Generador de contrato de vivienda — PDF estilo notaría (1 €)" />
   <meta name="twitter:description" content="Crea tu contrato en minutos, todo en tu navegador. PDF profesional listo para firmar por 1 €." />
   <meta name="twitter:image" content="https://www.jsonbeautifierpro.com/og-contrato-vivienda.png" />
+
+  <!-- Nombre del sitio para Facebook y Twitter -->
+  <meta property="og:site_name" content="JSON Beautifier PRO" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -45,7 +48,7 @@
   "description": "Crea un contrato profesional en minutos y descarga un PDF estilo notaría.",
   "brand": { "@type": "Brand", "name": "JSON Beautifier PRO" },
   "url": "https://www.jsonbeautifierpro.com/contrato-alquiler.html",
-  "image": "https://www.jsonbeautifierpro.com/logo.svg",
+  "image": "https://www.jsonbeautifierpro.com/og-contrato-vivienda.png",
   "offers": {
     "@type": "Offer",
     "priceCurrency": "EUR",
@@ -75,6 +78,7 @@
     "availability": "https://schema.org/InStock",
     "url": "https://www.jsonbeautifierpro.com/contrato-alquiler.html"
   },
+  "image": "https://www.jsonbeautifierpro.com/og-contrato-vivienda.png",
   "publisher": {
     "@type": "Organization",
     "@id": "https://www.jsonbeautifierpro.com/#org"
@@ -160,39 +164,69 @@
   .container{max-width:1200px;margin:0 auto;padding:0 16px}
 
   .main-header{position:sticky;top:0;z-index:70;background:linear-gradient(180deg,#fff,rgba(255,255,255,.92));backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--border)}
-  .head-wrap{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:14px 0}
-  .brand{display:flex;align-items:center;gap:12px}
-  .brand h1{margin:0;font-family:Manrope,Inter;font-weight:800;letter-spacing:.3px;font-size:clamp(22px,2.8vw,34px);background:linear-gradient(90deg,#0ea5e9,#6366f1 45%,#22c55e);-webkit-background-clip:text;background-clip:text;color:transparent}
-  /* Increased header logo size */
-  /* Make the header logo much larger so it spans most of the bar */
-  .logo{height:90px;width:280px}
-  
-  /* Styling for the split generator title */
-  .generator-title{
-    display:flex;flex-wrap:wrap;gap:6px;align-items:baseline;
-    font-family:Manrope,Inter;font-weight:900;letter-spacing:.3px;
-    font-size:clamp(22px,2.8vw,34px);
-    color:var(--fg);
-    background:none !important;
-    -webkit-background-clip:border-box;background-clip:border-box;
+  /*
+    Encabezado principal: se estructura en tres columnas (logo, título, CTA).
+    Usamos auto para el logotipo y la CTA, y 1fr para que el título aproveche el espacio restante.
+    Ajustamos el padding vertical para reducir la altura de la barra.  */
+  .head-wrap{
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    gap:20px;
+    align-items:center;
+    padding:10px 0;
   }
-  .generator-title .primary{
-    background:linear-gradient(90deg,#0ea5e9,#6366f1 45%,#22c55e);
-    -webkit-background-clip:text;background-clip:text;
+  /* Eliminamos el contenedor brand; ahora el logo y el título son elementos independientes */
+  .brand{display:unset}
+  /* Logotipo: tamaño reducido y proporciones automáticas. Definimos únicamente la altura para que
+     conserve su aspecto original sin ocupar demasiado espacio horizontal */
+  .logo{
+    height:80px;
+    width:auto;
+  }
+  /* Estilos del título principal: tipografía potente, degradado llamativo y sombra suave
+     para realzar la lectura. Este estilo se reutiliza tanto en la página de vivienda como en la de habitación. */
+  .title{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    margin:0;
+    font-family:Manrope,Inter;
+    font-weight:800;
+    letter-spacing:.3px;
+    font-size:clamp(22px,3vw,36px);
+    line-height:1;
+  }
+  .title .text{
+    background-image:linear-gradient(90deg,#0ea5e9 0%,#6366f1 50%,#22c55e 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
     color:transparent;
+    /* Añadimos varias capas de sombra para un sutil efecto 3D */
+    text-shadow:1px 1px 0px rgba(255,255,255,0.25),2px 2px 4px rgba(0,0,0,0.15);
   }
-  .generator-title .badge{
-    font-size:12px;font-weight:800;padding:.35rem .6rem;
-    border-radius:999px;border:2px solid var(--accent);
-    color:var(--accent);
+  .title .badge{
+    background-image:linear-gradient(90deg,#6366f1,#22c55e);
+    color:#fff;
+    padding:.35rem .8rem;
+    border-radius:10px;
+    font-size:0.6em;
+    font-weight:900;
+    display:inline-flex;
+    align-items:center;
+    box-shadow:0 2px 4px rgba(0,0,0,0.1);
+  }
+  /* Aseguramos que cualquier título anterior no herede degradados no deseados */
+  .brand h1.title{
+    background:none !important;
+    -webkit-background-clip:initial !important;
+    background-clip:initial !important;
+    color:inherit !important;
   }
   .brand .generator-title{
-    white-space:normal !important;
-    overflow:visible !important;
-    /* Ensure the plain text before colored spans is visible */
     color:var(--fg) !important;
-    text-overflow:clip !important;
-    color:var(--fg) !important;
+    background:none !important;
+    -webkit-background-clip:initial !important;
+    background-clip:initial !important;
   }
 .cta{display:flex;flex-direction:column;gap:8px;align-items:flex-end}
 .cta p{ margin:0; font-size:13px; color:#64748b; }
@@ -430,40 +464,46 @@ button, .chip, .seg label{ touch-action: manipulation; }
 </head>
 <body>
   <header class="main-header">
+    <!--
+      La cabecera se ha reestructurado para mejorar el equilibrio visual entre el logotipo,
+      el título y los botones de acción. Ahora utiliza tres columnas en una cuadrícula: el logo a la izquierda,
+      el título en el centro y la llamada a la acción a la derecha. El logotipo se ha reducido
+      a un tamaño más manejable y se ha alineado completamente al borde para liberar espacio
+      para el título. Esto no afecta a ninguna funcionalidad existente.
+    -->
     <div class="container head-wrap">
-      <div class="brand">
-        <img class="logo" src="og-contrato-vivienda.png" alt="Logo Generador contrato vivienda" width="280" height="90" />
-        <h1 class="generator-title">Contrato de <span class="primary">Vivienda</span> <span class="badge">PRO</span></h1>
-      </div>
+      <!-- Logotipo: reducido y alineado a la izquierda -->
+      <img class="logo" src="og-contrato-vivienda.png" alt="Generador de contrato de vivienda" />
+      <!-- Título con degradado y distintivo PRO -->
+      <h1 class="title"><span class="text">Contrato de Vivienda</span> <span class="badge">PRO</span></h1>
+      <!-- Bloque de llamada a la acción: se mantiene intacta la funcionalidad -->
       <div class="cta">
-  <p>¿Necesitas un contrato de habitación?</p>
-  <button class="btn btn-primary" type="button" onclick="location.href='contrato-habitacion.html'">Ir a contrato de habitación</button>
-  <div class="trust" style="margin-top:8px">
-    <span class="chip">
-  <!-- Escudo -->
-  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" role="img">
-    <path d="M12 2l7 3v6c0 5-3.4 9-7 11-3.6-2-7-6-7-11V5l7-3zM7 8v3c0 3.9 2.6 7.3 5 9 2.4-1.7 5-5.1 5-9V6.6L12 4.6 7 6.6V8z"></path>
-  </svg>
-  Pago seguro
-</span>
-<span class="chip">
-  <!-- Cerebro -->
-  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" role="img">
-    <path d="M8.5 3A3.5 3.5 0 0 0 5 6.5V7a3 3 0 0 0-2 2.8c0 1 .5 1.9 1.3 2.4A3 3 0 0 0 6 16v.5A3.5 3.5 0 0 0 9.5 20H10V8a5 5 0 0 0-1.5-5zM14.5 3A5 5 0 0 0 13 8v12h.5A3.5 3.5 0 0 0 17 16.5V16a3 3 0 0 0 1.7-3.8 2.9 2.9 0 0 0 1.3-2.3A3 3 0 0 0 18 7v-.5A3.5 3.5 0 0 0 14.5 3z"></path>
-  </svg>
-  Todo en tu navegador
-</span>
-<span class="chip">
-  <!-- Firma -->
-  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" role="img">
-    <path d="M4 19h16v2H4zM7 13c.8-1.6 2.1-2.4 3.1-2.2.8.2 1.4.9 1.9 2 .5-1 1.2-1.8 2-2 .9-.2 2 .4 3 2l-1.7 1c-.6-.9-1-.9-1.2-.9-.4.1-.8.7-1.2 1.9l-1.8-.7c-.5-1.2-.9-1.7-1.2-1.8-.3 0-.9.4-1.5 1.6L7 13z"></path>
-  </svg>
-  PDF estilo notaría
-</span>
-
-
-  </div>
-</div>
+        <p>¿Necesitas un contrato de habitación?</p>
+        <button class="btn btn-primary" type="button" onclick="location.href='contrato-habitacion.html'">Ir a contrato de habitación</button>
+        <div class="trust" style="margin-top:8px">
+          <span class="chip">
+            <!-- Escudo -->
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" role="img">
+              <path d="M12 2l7 3v6c0 5-3.4 9-7 11-3.6-2-7-6-7-11V5l7-3zM7 8v3c0 3.9 2.6 7.3 5 9 2.4-1.7 5-5.1 5-9V6.6L12 4.6 7 6.6V8z"></path>
+            </svg>
+            Pago seguro
+          </span>
+          <span class="chip">
+            <!-- Cerebro -->
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" role="img">
+              <path d="M8.5 3A3.5 3.5 0 0 0 5 6.5V7a3 3 0 0 0-2 2.8c0 1 .5 1.9 1.3 2.4A3 3 0 0 0 6 16v.5A3.5 3.5 0 0 0 9.5 20H10V8a5 5 0 0 0-1.5-5zM14.5 3A5 5 0 0 0 13 8v12h.5A3.5 3.5 0 0 0 17 16.5V16a3 3 0 0 0 1.7-3.8 2.9 2.9 0 0 0 1.3-2.3A3 3 0 0 0 18 7v-.5A3.5 3.5 0 0 0 14.5 3z"></path>
+            </svg>
+            Todo en tu navegador
+          </span>
+          <span class="chip">
+            <!-- Firma -->
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" role="img">
+              <path d="M4 19h16v2H4zM7 13c.8-1.6 2.1-2.4 3.1-2.2.8.2 1.4.9 1.9 2 .5-1 1.2-1.8 2-2 .9-.2 2 .4 3 2l-1.7 1c-.6-.9-1-.9-1.2-.9-.4.1-.8.7-1.2 1.9l-1.8-.7c-.5-1.2-.9-1.7-1.2-1.8-.3 0-.9.4-1.5 1.6L7 13z"></path>
+            </svg>
+            PDF estilo notaría
+          </span>
+        </div>
+      </div>
     </div>
   </header>
 
