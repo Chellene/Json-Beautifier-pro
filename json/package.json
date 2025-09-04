@@ -1,0 +1,15 @@
+{
+  "name": "jsonbp-contracts",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@signpdf/signpdf": "^3.2.5",
+    "@signpdf/placeholder-plain": "^3.2.5",
+    "@signpdf/signer-p12": "^3.2.4",
+    "@signpdf/utils": "^3.2.4"
+  }
+}
