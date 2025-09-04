@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portal de Contratos — Generadores, Guías y Definiciones | JSON Beautifier PRO</title>
+  <meta name="description" content="Portal dedicado a contratos: generadores de contrato de vivienda y habitación (PDF por 1 €), guías claras y definiciones jurídicas básicas. Todo en tu navegador." />
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <link rel="canonical" href="https://www.jsonbeautifierpro.com/" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="theme-color" content="#0ea5e9" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:title" content="Portal de contratos — Generadores, guías y definiciones" />
+  <meta property="og:description" content="Genera contratos en minutos y aprende lo esencial: vivienda, habitación, fianza, prórrogas, CEE, zonas tensionadas y más." />
+  <meta property="og:image" content="https://www.jsonbeautifierpro.com/logo.svg" />
+  <meta property="og:url" content="https://www.jsonbeautifierpro.com/" />
+  <meta property="og:site_name" content="JSON Beautifier PRO" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Portal de contratos — Generadores, guías y definiciones" />
+  <meta name="twitter:description" content="Generadores de PDF por 1 € y explicaciones claras. Todo en tu navegador." />
+  <meta name="twitter:image" content="https://www.jsonbeautifierpro.com/logo.svg" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f6f8fc;--fg:#0f172a;--muted:#5b6a8a;--panel:#fff;--border:#dfe3f4;
+      --brand:#0ea5e9;--accent:#6366f1;--ok:#22c55e;--danger:#ef4444;--radius:18px;--radius-sm:12px
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    a{color:#1f2a60;text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:0 16px}
+
+    /* Header */
+    .main-header{position:sticky;top:0;z-index:70;background:linear-gradient(180deg,#fff,rgba(255,255,255,.92));backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--border)}
+    .head-wrap{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:14px 0}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .brand h1{margin:0;font-family:Manrope,Inter;font-weight:800;letter-spacing:.3px;font-size:clamp(20px,2.6vw,30px);background:linear-gradient(90deg,#0ea5e9,#6366f1 45%,#22c55e);-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .logo{height:40px;width:120px}
+    nav{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+    .nav-link{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem .8rem;border:1px solid #cfd7e6;border-radius:999px;background:#fff;font-weight:800}
+
+    /* Hero */
+    .hero{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:0 12px 30px rgba(23,30,70,.08);position:relative;overflow:hidden;margin-top:14px}
+    .hero::after{content:"";position:absolute;inset:auto -10% -1px -10%;height:10px;background:linear-gradient(90deg,#22c55e,#6366f1,#0ea5e9);opacity:.18;filter:blur(1px)}
+    .hero h2{margin:.2rem 0 .4rem;font-family:Manrope,Inter;font-weight:900;font-size:clamp(22px,3vw,34px)}
+    .sub{color:#334155;margin:0 0 12px;font-size:15px;font-weight:700}
+
+    /* Grid cards */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+    .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;box-shadow:0 12px 30px rgba(23,30,70,.08)}
+    .card h3{margin:.2rem 0 .35rem;font-size:18px}
+    .card p{margin:0;color:#475569;font-size:14px}
+    .btn{display:inline-flex;align-items:center;gap:.6rem;border:1px solid #cfd7e6;background:#fff;border-radius:999px;padding:.65rem 1rem;font-weight:800;cursor:pointer;font-size:14px;box-shadow:0 12px 30px rgba(23,30,70,.08);min-height:44px}
+    .btn-primary{background:linear-gradient(90deg,#0ea5e9,#6366f1);border:none;color:#fff}
+    .price{font-weight:900}
+
+    /* Sections */
+    section{margin:22px 0}
+    .sec-title{font-family:Manrope,Inter;font-weight:900;margin:.2rem 0 10px}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    @media (max-width:980px){.two-col{grid-template-columns:1fr}}
+
+    .kbd{font:inherit;border:1px solid #cbd5e1;border-radius:8px;padding:.05rem .35rem;background:#f8fafc}
+
+    /* Definition list */
+    .def{border:1px solid var(--border);border-radius:12px;padding:12px;background:#fff}
+    .def h4{margin:.2rem 0}
+    .def p{margin:.2rem 0;color:#475569}
+
+    /* Footer */
+    footer{margin:28px 0 40px;text-align:center;color:#64748b;font-size:13px}
+    footer a{margin:0 8px}
+
+    /* Search inside page */
+    .search{width:100%;padding:.85rem 1.1rem;border:2px solid #cbd5e1;border-radius:12px;font-size:16px;font-weight:700;color:#0f172a}
+    .hide{display:none!important}
+  </style>
+
+  <!-- Schema.org: Organization + WebSite + ItemList (productos) + FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://www.jsonbeautifierpro.com/#org",
+        "name": "JSON Beautifier PRO",
+        "url": "https://www.jsonbeautifierpro.com/",
+        "logo": "https://www.jsonbeautifierpro.com/logo.svg"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://www.jsonbeautifierpro.com/#website",
+        "url": "https://www.jsonbeautifierpro.com/",
+        "name": "Portal de Contratos — JSON Beautifier PRO",
+        "publisher": { "@id": "https://www.jsonbeautifierpro.com/#org" },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://www.jsonbeautifierpro.com/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "ItemList",
+        "@id": "https://www.jsonbeautifierpro.com/#productos",
+        "itemListElement": [
+          {
+            "@type": "Product",
+            "position": 1,
+            "name": "Generador de contrato de vivienda",
+            "url": "https://www.jsonbeautifierpro.com/contrato-alquiler.html",
+            "image": "https://www.jsonbeautifierpro.com/logo.svg",
+            "offers": {"@type":"Offer","price":"1.00","priceCurrency":"EUR","availability":"https://schema.org/InStock"}
+          },
+          {
+            "@type": "Product",
+            "position": 2,
+            "name": "Generador de contrato de habitación",
+            "url": "https://www.jsonbeautifierpro.com/contrato-habitacion.html",
+            "image": "https://www.jsonbeautifierpro.com/logo.svg",
+            "offers": {"@type":"Offer","price":"1.00","priceCurrency":"EUR","availability":"https://schema.org/InStock"}
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://www.jsonbeautifierpro.com/#faq",
+        "mainEntity": [
+          {"@type":"Question","name":"¿Los contratos generados son válidos en España?","acceptedAnswer":{"@type":"Answer","text":"Sí. Son contratos privados ajustados al marco legal español y listos para firmar entre particulares."}},
+          {"@type":"Question","name":"¿Necesito registrarme o subir datos?","acceptedAnswer":{"@type":"Answer","text":"No. Todo se genera en tu navegador. Solo pagas 1 € para desbloquear la descarga del PDF."}},
+          {"@type":"Question","name":"¿Puedo editar cláusulas y añadir anexos?","acceptedAnswer":{"@type":"Answer","text":"Sí. Puedes activar packs de cláusulas y anexos como inventario o lecturas de contadores, según el generador."}}
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="main-header" role="banner">
+    <div class="container head-wrap">
+      <div class="brand">
+        <img class="logo" src="logo.svg" alt="Logo JSON Beautifier PRO" width="120" height="40" />
+        <h1>Portal de Contratos</h1>
+      </div>
+      <nav aria-label="Navegación principal">
+        <a class="nav-link" href="#generadores">Generadores</a>
+        <a class="nav-link" href="#guias">Guías</a>
+        <a class="nav-link" href="#definiciones">Definiciones</a>
+        <a class="nav-link" href="contacto.html">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="container hero">
+      <h2>Contratos claros, listos para firmar</h2>
+      <p class="sub">Genera tu contrato de vivienda u habitación en minutos y entiende cada término con explicaciones sencillas. PDF profesional por <span class="price">1 €</span>.</p>
+      <div class="grid" id="generadores" role="region" aria-label="Generadores de contratos">
+        <article class="card">
+          <h3>Contrato de vivienda</h3>
+          <p>Crea un contrato de arrendamiento de vivienda habitual con cláusulas editables, anexos y vista previa protegida.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+            <a class="btn btn-primary" href="contrato-alquiler.html">Abrir generador</a>
+            <a class="btn" href="#def-vivienda">¿Qué es? &rarr;</a>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Contrato de habitación</h3>
+          <p>Alquila una habitación con reglas claras de convivencia, zonas comunes y servicios incluidos.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+            <a class="btn btn-primary" href="contrato-habitacion.html">Abrir generador</a>
+            <a class="btn" href="#def-habitacion">¿Qué es? &rarr;</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="container" id="guias" aria-labelledby="t-guias">
+      <h2 id="t-guias" class="sec-title">Guías y modelos</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>Modelo de contrato de alquiler</h3>
+          <p>Plantilla comentada con estructura típica: partes, objeto, duración, renta y anexos.</p>
+          <div style="margin-top:10px"><a class="btn" href="modelo-contrato-alquiler.html">Ver modelo</a></div>
+        </article>
+        <article class="card">
+          <h3>Cómo hacer un contrato de alquiler</h3>
+          <p>Paso a paso para no olvidarte de nada: documentación, fianza, entregas y firmas.</p>
+          <div style="margin-top:10px"><a class="btn" href="como-hacer-contrato-alquiler.html">Leer guía</a></div>
+        </article>
+        <article class="card">
+          <h3>Contrato de arrendamiento de vivienda</h3>
+          <p>Explicación detallada de las cláusulas más habituales y sus variantes.</p>
+          <div style="margin-top:10px"><a class="btn" href="contrato-arrendamiento-vivienda.html">Aprender más</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="container" id="definiciones" aria-labelledby="t-def">
+      <h2 id="t-def" class="sec-title">Definiciones esenciales</h2>
+      <div class="two-col" style="margin:10px 0">
+        <input class="search" id="defSearch" type="search" placeholder="Buscar (fianza, prórroga, CEE, tensionadas…)" aria-label="Buscar términos" />
+      </div>
+      <div class="two-col" id="defs">
+        <article class="def" id="def-vivienda">
+          <h4>Contrato de vivienda</h4>
+          <p>Acuerdo por el que el arrendador cede una vivienda como <em>residencia habitual</em> del inquilino, con duración, renta y fianza pactadas.</p>
+          <p><a href="contrato-alquiler.html">Generar contrato de vivienda</a></p>
+        </article>
+        <article class="def" id="def-habitacion">
+          <h4>Contrato de habitación</h4>
+          <p>Alquiler de una habitación dentro de una vivienda, con uso de zonas comunes y reglas de convivencia.</p>
+          <p><a href="contrato-habitacion.html">Generar contrato de habitación</a></p>
+        </article>
+        <article class="def" id="def-fianza">
+          <h4>Fianza</h4>
+          <p>Importe que garantiza el cumplimiento del contrato y cubre posibles daños o impagos. Se devuelve según proceda al finalizar.</p>
+        </article>
+        <article class="def" id="def-duracion">
+          <h4>Duración y prórrogas</h4>
+          <p>Plazo acordado más las posibles prórrogas legales o pactadas. Indícalo siempre con fecha de inicio y fin.</p>
+        </article>
+        <article class="def" id="def-actualizacion">
+          <h4>Actualización de renta</h4>
+          <p>Revisión periódica de la renta conforme al índice legal aplicable o a lo pactado en el contrato.</p>
+        </article>
+        <article class="def" id="def-anexos">
+          <h4>Anexos (inventario y contadores)</h4>
+          <p>Documentos adjuntos con el mobiliario/estado y las lecturas de agua, luz o gas a la firma.</p>
+        </article>
+        <article class="def" id="def-cee">
+          <h4>CEE — Certificado de Eficiencia Energética</h4>
+          <p>Documento que indica la eficiencia energética de la vivienda (letra, registro y fecha de emisión).</p>
+        </article>
+        <article class="def" id="def-tensionadas">
+          <h4>Zonas tensionadas</h4>
+          <p>Ámbitos donde la normativa puede limitar o referenciar la actualización de precios de alquiler.</p>
+        </article>
+        <article class="def" id="def-subarriendo">
+          <h4>Subarriendo y cesión</h4>
+          <p>Prohibición o regulación de ceder o subarrendar la vivienda o habitación sin autorización escrita.</p>
+        </article>
+        <article class="def" id="def-resolucion">
+          <h4>Resolución del contrato</h4>
+          <p>Supuestos de incumplimiento grave que facultan terminar el contrato y acudir a los juzgados competentes.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="container" aria-labelledby="t-faq">
+      <h2 id="t-faq" class="sec-title">Preguntas frecuentes</h2>
+      <details class="card" open>
+        <summary><strong>¿Tengo que registrarme o subir archivos?</strong></summary>
+        <p style="margin:.6rem 0 0">No. Todo se genera en tu navegador. Solo pagas 1 € para descargar el PDF.</p>
+      </details>
+      <details class="card">
+        <summary><strong>¿Puedo personalizar cláusulas?</strong></summary>
+        <p style="margin:.6rem 0 0">Sí. Los generadores incluyen packs de cláusulas y anexos opcionales.</p>
+      </details>
+      <details class="card">
+        <summary><strong>¿Es asesoramiento legal?</strong></summary>
+        <p style="margin:.6rem 0 0">No. Ofrecemos plantillas y herramientas; si tienes dudas complejas, consulta a un profesional.</p>
+      </details>
+    </section>
+  </main>
+
+  <footer class="container">
+    <a href="aviso-legal.html">Aviso legal</a> •
+    <a href="privacidad-contrato.html">Privacidad</a> •
+    <a href="cookies.html">Cookies</a> •
+    <a href="contacto.html">Contacto</a>
+    <br />
+    <small>JSON Beautifier PRO © 2025</small>
+  </footer>
+
+  <script>
+    // Búsqueda simple en definiciones
+    (function(){
+      const q = document.getElementById('defSearch');
+      const cards = Array.from(document.querySelectorAll('#defs .def'));
+      const norm = s => (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+      if (!q) return;
+      q.addEventListener('input', () => {
+        const t = norm(q.value);
+        cards.forEach(c => {
+          const text = norm(c.textContent);
+          c.classList.toggle('hide', t && !text.includes(t));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
