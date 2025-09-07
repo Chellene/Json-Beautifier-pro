@@ -1,302 +1,498 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Portal de Contratos — Generadores, Guías y Definiciones | JSON Beautifier PRO</title>
-  <meta name="description" content="Portal dedicado a contratos: generadores de contrato de vivienda y habitación (PDF por 1 €), guías claras y definiciones jurídicas básicas. Todo en tu navegador." />
-  <link rel="icon" href="logo.svg" type="image/svg+xml">
-  <link rel="canonical" href="https://www.jsonbeautifierpro.com/" />
-  <meta name="robots" content="index,follow,max-image-preview:large" />
-  <meta name="theme-color" content="#0ea5e9" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contrato de alquiler y habitación — Generador y modelos en PDF</title>
+  <meta name="description" content="Generadores legales de vivienda y habitación, guía de fianzas por CCAA, buscador de zonas tensionadas e índice de referencia. Todo 100% en tu navegador." />
+  <!-- Canonical -->
+  <link rel="canonical" href="https://www.jsonbeautifierpro.com/">
 
   <!-- Open Graph / Twitter -->
-  <meta property="og:type" content="website" />
-  <meta property="og:locale" content="es_ES" />
-  <meta property="og:title" content="Portal de contratos — Generadores, guías y definiciones" />
-  <meta property="og:description" content="Genera contratos en minutos y aprende lo esencial: vivienda, habitación, fianza, prórrogas, CEE, zonas tensionadas y más." />
-  <meta property="og:image" content="https://www.jsonbeautifierpro.com/logo.svg" />
-  <meta property="og:url" content="https://www.jsonbeautifierpro.com/" />
-  <meta property="og:site_name" content="JSON Beautifier PRO" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Portal de contratos — Generadores, guías y definiciones" />
-  <meta name="twitter:description" content="Generadores de PDF por 1 € y explicaciones claras. Todo en tu navegador." />
-  <meta name="twitter:image" content="https://www.jsonbeautifierpro.com/logo.svg" />
+  <meta property="og:title" content="Contrato de alquiler y habitación — Generador PDF estilo notaría">
+  <meta property="og:description" content="Genera contratos de vivienda y de habitación con pasos claros. Descarga PDF, consulta fianza por CCAA y zonas tensionadas oficiales.">
+  <meta property="og:image" content="https://www.jsonbeautifierpro.com/og-contrato-vivienda.png">
+  <meta property="og:url" content="https://www.jsonbeautifierpro.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_ES">
+  <meta name="twitter:card" content="summary_large_image">
 
-  <!-- Fonts -->
+  <!-- dns-prefetch/preconnect para fuentes de datos -->
+  <link rel="dns-prefetch" href="//raw.githubusercontent.com">
+  <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
+  <link rel="dns-prefetch" href="//analisi.transparenciacatalunya.cat">
+  <link rel="preconnect" href="https://analisi.transparenciacatalunya.cat" crossorigin>
+  <link rel="dns-prefetch" href="//nominatim.openstreetmap.org">
+  <link rel="dns-prefetch" href="//es.wikipedia.org">
+  <link rel="dns-prefetch" href="//www.boe.es">
+  <link rel="dns-prefetch" href="//habitatge.gencat.cat">
+  <link rel="dns-prefetch" href="//www.navarra.es">
+  <link rel="dns-prefetch" href="//r.jina.ai">
+
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="theme-color" content="#0ea5e9" />
+  <link rel="icon" href="og-contrato-vivienda.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Manrope:wght@800;900&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
   <style>
-    :root{
-      --bg:#f6f8fc;--fg:#0f172a;--muted:#5b6a8a;--panel:#fff;--border:#dfe3f4;
-      --brand:#0ea5e9;--accent:#6366f1;--ok:#22c55e;--danger:#ef4444;--radius:18px;--radius-sm:12px
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    :root{--bg:#f6f8fc;--fg:#0f172a;--muted:#5b6a8a;--panel:#fff;--border:#e3e9f6;--chip-bg:#f8fafc;--chip-br:#cfd7e6;--radius:20px;--shadow:0 14px 36px rgba(23,30,70,.08);--brand1:#0ea5e9;--brand2:#6366f1;--brand3:#22c55e;--grad:linear-gradient(90deg,color-mix(in oklab,var(--brand1) 78%,white),color-mix(in oklab,var(--brand2) 74%,white) 45%,color-mix(in oklab,var(--brand3) 74%,white));--maxw:1200px}
+    *{box-sizing:border-box} html,body{height:100%} body{margin:0;background:var(--bg);color:var(--fg);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;line-height:1.35}
     a{color:#1f2a60;text-decoration:none}
-    .container{max-width:1200px;margin:0 auto;padding:0 16px}
+    header.main-header{position:sticky;top:0;z-index:80;background:linear-gradient(180deg,#fff,rgba(255,255,255,.94));backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--border)}
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px}
+    .section{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;margin:12px auto;max-width:var(--maxw)}
+    .section h2{font-family:Manrope,Inter;font-weight:900;margin:.2rem 0 .6rem}
+    /* Cabecera protagonista */
+    .header-grid{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:10px 0}
+    .chips-left{justify-self:start}
+    .chips-right{justify-self:end}
+    .brand{display:flex;align-items:center;gap:12px;margin-left:-10px}
+    .brand img{height:92px}
+    .title{margin:0;font-size:clamp(26px,3.6vw,44px);background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;font-family:Manrope,Inter;font-weight:900;letter-spacing:.2px}
+    .chips{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-self:end}
+    .chip{display:inline-flex;align-items:center;gap:6px;padding:.35rem .7rem;border-radius:999px;border:1px solid var(--chip-br);background:var(--chip-bg);font-weight:800;font-size:12px;color:#334155;line-height:1}
+    .btn{display:inline-flex;align-items:center;gap:.6rem;border:1px solid #cfd7e6;background:#fff;border-radius:12px;padding:.65rem .9rem;font-weight:800;cursor:pointer;font-size:13px;min-height:40px;transition:.16s ease}
+    .btn:hover{border-color:transparent;background:var(--grad);color:#fff;box-shadow:0 12px 30px rgba(80,90,200,.28)}
+    .muted{color:#475569} .small{font-size:13px}
+    /* Generadores */
+    .gens{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    @media (max-width:860px){.gens{grid-template-columns:1fr}}
+    .gen{border:1px solid #e5e7eb;border-radius:16px;overflow:hidden;background:#fff;display:grid;grid-template-rows:auto 1fr auto}
+    .gen .head{padding:16px;background:linear-gradient(180deg,#fff,#f7f9ff);border-bottom:1px solid #e8edf7}
+    .gen .head h4{margin:0;font-weight:900}
+    .gen .body{padding:14px;color:#334155;font-size:14px}
+    .gen .body ul{margin:8px 0 0 18px}
+    .gen .actions{padding:14px;display:flex;gap:10px;justify-content:flex-end;align-items:center}
+    /* Fianzas */
+    #fianzas .tools{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start;margin-bottom:8px}
+    #fianzas select{padding:.7rem .85rem;border:2px solid #cbd5e1;border-radius:12px;font-weight:800;background:#fff}
+    #fiInfo .kv{display:grid;grid-template-columns:180px minmax(0,1fr);gap:10px;align-items:start}
+    @media (max-width:640px){#fiInfo .kv{grid-template-columns:1fr}}
+    #fiInfo *{writing-mode:horizontal-tb;white-space:normal;word-break:normal;overflow-wrap:break-word}
+    .badge{display:inline-flex;align-items:center;padding:.1rem .45rem;border:1px solid #cbd5e1;border-radius:8px;font-size:12px;background:#f8fafc;font-weight:800;white-space:nowrap;line-height:1.1}
+    .ok{color:#16a34a} .warn{color:#d97706}
+    /* Zonas */
+    #zt .searchbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    #zt .searchbar input[type=search]{flex:1;min-width:260px;padding:.85rem 1rem;border:2px solid #cbd5e1;border-radius:12px;font-weight:800;font-size:16px}
+    .result{margin-top:10px;display:none} .result.show{display:block}
+    .spinner{width:18px;height:18px;border:2px solid #cbd5e1;border-top-color:#0ea5e9;border-radius:50%;animation:spin 1s linear infinite;display:inline-block;vertical-align:middle;margin-right:8px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    /* Defs */
+    .defs-search{position:relative;display:flex;align-items:center}
+    .defs-search i{position:absolute;left:12px}
+    .search-lg{width:100%;padding:.9rem 1rem .9rem 2.2rem;border:2px solid #cbd5e1;border-radius:12px;font-weight:700}
+    html[data-theme=dark] .search-lg{background:#0b1220;border-color:#273245;color:#e5e9f5}
+    .defs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    @media (max-width:980px){.defs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media (max-width:640px){.defs{grid-template-columns:1fr}}
+    .def{border:1px solid #e6ebf4;border-radius:12px;padding:12px;background:#fff}
+    .def .txt{color:#475569;font-size:13.5px}
+    /* Dark */
+    html[data-theme=dark]{--bg:#0b1220;--fg:#e5e9f5;--muted:#a8b5cf;--panel:#0f172a;--border:#22304a;--chip-bg:#0d1a2b;--chip-br:#22304a}
+    html[data-theme=dark] body{background:var(--bg);color:var(--fg)}
+    html[data-theme=dark] .section,html[data-theme=dark] .def{background:var(--panel);border-color:var(--border)}
+    html[data-theme=dark] .btn{border-color:#334155;background:#0f172a;color:#e5e9f5}
+    html[data-theme=dark] .btn:hover{background:linear-gradient(90deg,#334155,#1e293b);border-color:#334155;color:#fff}
+    html[data-theme=dark] input, html[data-theme=dark] select{background:#0b1220;border-color:#273245;color:#e5e9f5}
+  
+    /* ===== Dark polish ===== */
+    html[data-theme=dark]{color-scheme:dark;}
+    html[data-theme=dark] header.main-header{
+      background:linear-gradient(180deg,#0b1220,rgba(11,18,32,.92));
+      border-bottom-color:var(--border);
+    }
+    html[data-theme=dark] .gen .head{
+      background:linear-gradient(180deg,#0f172a,#0b1220);
+      border-bottom-color:#1b263b;
+    }
+    html[data-theme=dark] .muted{color:var(--muted)}
+    html[data-theme=dark] a{color:#8bb2ff}
+    html[data-theme=dark] a:hover{color:#a8c3ff}
+    html[data-theme=dark] .badge{background:var(--chip-bg);border-color:var(--chip-br);color:var(--fg)}
+    /* Tabla accesible en ambos temas */
+    table.compare{width:100%;border-collapse:collapse}
+    table.compare th,table.compare td{padding:10px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+    table.compare thead th{position:sticky;top:0;background:#f8fafc;z-index:1}
+    html[data-theme=dark] table.compare thead th{background:#0f172a}
+    /* Autocomplete list y tarjetas */
+    .ac-list{position:absolute;z-index:20;max-height:280px;overflow:auto;border:1px solid var(--border);border-radius:12px;background:var(--panel);box-shadow:0 18px 40px rgba(20,24,60,.14);display:none;margin-top:6px}
+    .ac-list.show{display:block}
+    .ac-item{padding:10px 12px;border-bottom:1px solid var(--border);cursor:pointer}
+    .ac-item[aria-selected="true"]{background:rgba(99,102,241,.08)}
+    html[data-theme=dark] .ac-item[aria-selected="true"]{background:rgba(99,102,241,.22)}
+    /* Result card copy */
+    html[data-theme=dark] .def .txt{color:#b7c4df}
+    /* Spinner contraste */
+    html[data-theme=dark] .spinner{border-color:#273245;border-top-color:#60a5fa}
 
-    /* Header */
-    .main-header{position:sticky;top:0;z-index:70;background:linear-gradient(180deg,#fff,rgba(255,255,255,.92));backdrop-filter:saturate(140%) blur(8px);border-bottom:1px solid var(--border)}
-    .head-wrap{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:14px 0}
-    .brand{display:flex;align-items:center;gap:12px;min-width:0}
-    .brand h1{margin:0;font-family:Manrope,Inter;font-weight:800;letter-spacing:.3px;font-size:clamp(20px,2.6vw,30px);background:linear-gradient(90deg,#0ea5e9,#6366f1 45%,#22c55e);-webkit-background-clip:text;background-clip:text;color:transparent;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .logo{height:40px;width:120px}
-    nav{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-    .nav-link{display:inline-flex;align-items:center;gap:.45rem;padding:.55rem .8rem;border:1px solid #cfd7e6;border-radius:999px;background:#fff;font-weight:800}
-
-    /* Hero */
-    .hero{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:0 12px 30px rgba(23,30,70,.08);position:relative;overflow:hidden;margin-top:14px}
-    .hero::after{content:"";position:absolute;inset:auto -10% -1px -10%;height:10px;background:linear-gradient(90deg,#22c55e,#6366f1,#0ea5e9);opacity:.18;filter:blur(1px)}
-    .hero h2{margin:.2rem 0 .4rem;font-family:Manrope,Inter;font-weight:900;font-size:clamp(22px,3vw,34px)}
-    .sub{color:#334155;margin:0 0 12px;font-size:15px;font-weight:700}
-
-    /* Grid cards */
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
-    .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;box-shadow:0 12px 30px rgba(23,30,70,.08)}
-    .card h3{margin:.2rem 0 .35rem;font-size:18px}
-    .card p{margin:0;color:#475569;font-size:14px}
-    .btn{display:inline-flex;align-items:center;gap:.6rem;border:1px solid #cfd7e6;background:#fff;border-radius:999px;padding:.65rem 1rem;font-weight:800;cursor:pointer;font-size:14px;box-shadow:0 12px 30px rgba(23,30,70,.08);min-height:44px}
-    .btn-primary{background:linear-gradient(90deg,#0ea5e9,#6366f1);border:none;color:#fff}
-    .price{font-weight:900}
-
-    /* Sections */
-    section{margin:22px 0}
-    .sec-title{font-family:Manrope,Inter;font-weight:900;margin:.2rem 0 10px}
-    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    @media (max-width:980px){.two-col{grid-template-columns:1fr}}
-
-    .kbd{font:inherit;border:1px solid #cbd5e1;border-radius:8px;padding:.05rem .35rem;background:#f8fafc}
-
-    /* Definition list */
-    .def{border:1px solid var(--border);border-radius:12px;padding:12px;background:#fff}
-    .def h4{margin:.2rem 0}
-    .def p{margin:.2rem 0;color:#475569}
-
-    /* Footer */
-    footer{margin:28px 0 40px;text-align:center;color:#64748b;font-size:13px}
-    footer a{margin:0 8px}
-
-    /* Search inside page */
-    .search{width:100%;padding:.85rem 1.1rem;border:2px solid #cbd5e1;border-radius:12px;font-size:16px;font-weight:700;color:#0f172a}
-    .hide{display:none!important}
   </style>
 
-  <!-- Schema.org: Organization + WebSite + ItemList (productos) + FAQPage -->
+  <!-- Organization (Schema.org) -->
   <script type="application/ld+json">
   {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://www.jsonbeautifierpro.com/#org",
-        "name": "JSON Beautifier PRO",
-        "url": "https://www.jsonbeautifierpro.com/",
-        "logo": "https://www.jsonbeautifierpro.com/logo.svg"
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://www.jsonbeautifierpro.com/#website",
-        "url": "https://www.jsonbeautifierpro.com/",
-        "name": "Portal de Contratos — JSON Beautifier PRO",
-        "publisher": { "@id": "https://www.jsonbeautifierpro.com/#org" },
-        "potentialAction": {
-          "@type": "SearchAction",
-          "target": "https://www.jsonbeautifierpro.com/?q={search_term_string}",
-          "query-input": "required name=search_term_string"
-        }
-      },
-      {
-        "@type": "ItemList",
-        "@id": "https://www.jsonbeautifierpro.com/#productos",
-        "itemListElement": [
-          {
-            "@type": "Product",
-            "position": 1,
-            "name": "Generador de contrato de vivienda",
-            "url": "https://www.jsonbeautifierpro.com/contrato-alquiler.html",
-            "image": "https://www.jsonbeautifierpro.com/logo.svg",
-            "offers": {"@type":"Offer","price":"1.00","priceCurrency":"EUR","availability":"https://schema.org/InStock"}
-          },
-          {
-            "@type": "Product",
-            "position": 2,
-            "name": "Generador de contrato de habitación",
-            "url": "https://www.jsonbeautifierpro.com/contrato-habitacion.html",
-            "image": "https://www.jsonbeautifierpro.com/logo.svg",
-            "offers": {"@type":"Offer","price":"1.00","priceCurrency":"EUR","availability":"https://schema.org/InStock"}
-          }
-        ]
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://www.jsonbeautifierpro.com/#faq",
-        "mainEntity": [
-          {"@type":"Question","name":"¿Los contratos generados son válidos en España?","acceptedAnswer":{"@type":"Answer","text":"Sí. Son contratos privados ajustados al marco legal español y listos para firmar entre particulares."}},
-          {"@type":"Question","name":"¿Necesito registrarme o subir datos?","acceptedAnswer":{"@type":"Answer","text":"No. Todo se genera en tu navegador. Solo pagas 1 € para desbloquear la descarga del PDF."}},
-          {"@type":"Question","name":"¿Puedo editar cláusulas y añadir anexos?","acceptedAnswer":{"@type":"Answer","text":"Sí. Puedes activar packs de cláusulas y anexos como inventario o lecturas de contadores, según el generador."}}
-        ]
-      }
-    ]
+   "@context":"https://schema.org",
+   "@type":"Organization",
+   "name":"Portal de contratos pro",
+   "url":"https://www.jsonbeautifierpro.com",
+   "logo":"https://www.jsonbeautifierpro.com/og-contrato-vivienda.png",
+   "sameAs":[]
   }
   </script>
+
+  <!-- FAQ (Schema.org) -->
+  <script type="application/ld+json">
+  {
+   "@context":"https://schema.org",
+   "@type":"FAQPage",
+   "mainEntity":[
+     {"@type":"Question","name":"¿Necesito registro para generar?","acceptedAnswer":{"@type":"Answer","text":"No. Editas y previsualizas en tu navegador. Descargas el PDF por 1 €."}},
+     {"@type":"Question","name":"¿Inventario y lecturas están incluidos?","acceptedAnswer":{"@type":"Answer","text":"Sí. Puedes añadirlos como anexos en ambos generadores y se numeran automáticamente."}},
+     {"@type":"Question","name":"¿Cómo sé si estoy en zona tensionada?","acceptedAnswer":{"@type":"Answer","text":"Busca tu municipio con el buscador de zonas; desde ahí abre el visor oficial."}},
+     {"@type":"Question","name":"¿Dónde deposito la fianza?","acceptedAnswer":{"@type":"Answer","text":"Depende de tu CCAA. Usa el selector de fianzas para ver organismo, plazos y enlaces."}}
+   ]
+  }
+  </script>
+
 </head>
-<body>
-  <header class="main-header" role="banner">
-    <div class="container head-wrap">
+<body class="no-js">
+  <header class="main-header">
+    <div class="wrap header-grid">
       <div class="brand">
-        <img class="logo" src="logo.svg" alt="Logo JSON Beautifier PRO" width="120" height="40" />
-        <h1>Portal de Contratos</h1>
+        <img src="og-contrato-vivienda.png" alt="Logo Portal de contratos" />
+        <h1 class="title">Portal de contratos pro</h1>
       </div>
-      <nav aria-label="Navegación principal">
-        <a class="nav-link" href="#generadores">Generadores</a>
-        <a class="nav-link" href="#guias">Guías</a>
-        <a class="nav-link" href="#definiciones">Definiciones</a>
-        <a class="nav-link" href="contacto.html">Contacto</a>
-      </nav>
+      <div class="chips chips-left">
+        <span class="chip"><i class="fa-solid fa-brain"></i> En tu navegador</span>
+        <span class="chip"><i class="fa-solid fa-file-signature"></i> PDF notaría</span>
+        <span class="chip"><i class="fa-solid fa-shield-halved"></i> Pagos seguros</span>
+      </div>
+      <div class="chips chips-right">
+        <button id="themeBtn" class="btn" type="button" title="Cambiar tema"><i class="fa-solid fa-circle-half-stroke"></i> Tema</button>
+      </div>
     </div>
   </header>
 
-  <main>
-    <section class="container hero">
-      <h2>Contratos claros, listos para firmar</h2>
-      <p class="sub">Genera tu contrato de vivienda u habitación en minutos y entiende cada término con explicaciones sencillas. PDF profesional por <span class="price">1 €</span>.</p>
-      <div class="grid" id="generadores" role="region" aria-label="Generadores de contratos">
-        <article class="card">
-          <h3>Contrato de vivienda</h3>
-          <p>Crea un contrato de arrendamiento de vivienda habitual con cláusulas editables, anexos y vista previa protegida.</p>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-            <a class="btn btn-primary" href="contrato-alquiler.html">Abrir generador</a>
-            <a class="btn" href="#def-vivienda">¿Qué es? &rarr;</a>
-          </div>
-        </article>
-        <article class="card">
-          <h3>Contrato de habitación</h3>
-          <p>Alquila una habitación con reglas claras de convivencia, zonas comunes y servicios incluidos.</p>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-            <a class="btn btn-primary" href="contrato-habitacion.html">Abrir generador</a>
-            <a class="btn" href="#def-habitacion">¿Qué es? &rarr;</a>
-          </div>
-        </article>
+  <!-- 1) Generadores -->
+  <section id="generadores" class="section wrap">
+    <h2>Responde pasos claros, previsualiza y descarga el PDF estilo notaría. Añade inventario y lecturas si quieres, consulta la fianza por Comunidad y comprueba zonas tensionadas e índice de referencia oficiales.</h2>
+    <div class="gens">
+      <div class="gen">
+        <div class="head"><h4>Contrato de Vivienda</h4><div class="small muted">LAU — vivienda habitual.</div></div>
+        <div class="body">
+          <ul>
+            <li><b>Cláusulas troncales:</b> objeto, renta, fianza, garantías, gastos, conservación, subrogación, desistimiento, prórrogas.</li>
+            <li><b>Anexos:</b> inventario, lecturas de contadores, cesión de llaves, CEE.</li>
+            <li><b>Packs:</b> mascotas, obras consentidas, pintura, resolución anticipada, mediación.</li>
+            <li><b>Salida profesional:</b> portada, numeración, espacio de firmas, export PDF optimizado.</li>
+          </ul>
+        </div>
+        <div class="actions"><a class="btn" href="contrato-alquiler.html"><i class="fa-solid fa-house"></i> Abrir generador</a></div>
       </div>
-    </section>
-
-    <section class="container" id="guias" aria-labelledby="t-guias">
-      <h2 id="t-guias" class="sec-title">Guías y modelos</h2>
-      <div class="grid">
-        <article class="card">
-          <h3>Modelo de contrato de alquiler</h3>
-          <p>Plantilla comentada con estructura típica: partes, objeto, duración, renta y anexos.</p>
-          <div style="margin-top:10px"><a class="btn" href="modelo-contrato-alquiler.html">Ver modelo</a></div>
-        </article>
-        <article class="card">
-          <h3>Cómo hacer un contrato de alquiler</h3>
-          <p>Paso a paso para no olvidarte de nada: documentación, fianza, entregas y firmas.</p>
-          <div style="margin-top:10px"><a class="btn" href="como-hacer-contrato-alquiler.html">Leer guía</a></div>
-        </article>
-        <article class="card">
-          <h3>Contrato de arrendamiento de vivienda</h3>
-          <p>Explicación detallada de las cláusulas más habituales y sus variantes.</p>
-          <div style="margin-top:10px"><a class="btn" href="contrato-arrendamiento-vivienda.html">Aprender más</a></div>
-        </article>
+      <div class="gen">
+        <div class="head"><h4>Contrato de Habitación</h4><div class="small muted">Vivienda compartida.</div></div>
+        <div class="body">
+          <ul>
+            <li><b>Convivencia:</b> uso de zonas comunes, visitas, ruidos, limpieza y desperfectos.</li>
+            <li><b>Gastos:</b> prorrateo automático o reparto fijo; soporte para topes.</li>
+            <li><b>Anexos:</b> inventario individual, normas internas, régimen de llaves.</li>
+            <li><b>PDF final:</b> carátula por habitación y firmas en cada página.</li>
+          </ul>
+        </div>
+        <div class="actions"><a class="btn" href="contrato-habitacion.html"><i class="fa-solid fa-bed"></i> Abrir generador</a></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="container" id="definiciones" aria-labelledby="t-def">
-      <h2 id="t-def" class="sec-title">Definiciones esenciales</h2>
-      <div class="two-col" style="margin:10px 0">
-        <input class="search" id="defSearch" type="search" placeholder="Buscar (fianza, prórroga, CEE, tensionadas…)" aria-label="Buscar términos" />
+  <!-- 2) Fianzas -->
+  <section id="fianzas" class="section wrap" aria-labelledby="fiTitle">
+    <h2 id="fiTitle">Fianzas por Comunidad Autónoma</h2>
+    <div class="tools">
+      <select id="fiSelect" aria-label="Seleccionar Comunidad"></select>
+    </div>
+    <div id="fiInfo" class="def" role="region" aria-live="polite">
+      <h4>Selecciona tu Comunidad</h4>
+      <div class="txt">Te mostraremos si el depósito es obligatorio, el organismo competente y enlaces oficiales al trámite.</div>
+    </div>
+    <details id="fiTableWrap" style="margin-top:10px">
+      <summary class="btn" style="display:inline-flex;margin-bottom:8px"><i class="fa-solid fa-table"></i> Ver tabla rápida por Comunidades</summary>
+      <div style="overflow:auto">
+        <table class="compare mini-table" aria-label="Tabla fianzas por Comunidad">
+          <thead><tr><th>Comunidad</th><th>¿Depósito obligatorio?</th><th>Organismo</th><th>Enlaces</th></tr></thead>
+          <tbody id="fiTableBody"></tbody>
+        </table>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
+          <input id="fiTableQuickFilter" type="search" placeholder="Filtrar tabla (Comunidad, organismo…)" />
+          <span class="small muted">Deep-link: <b>#fi=Comunidad</b> abre la ficha directa.</span>
+        </div>
       </div>
-      <div class="two-col" id="defs">
-        <article class="def" id="def-vivienda">
-          <h4>Contrato de vivienda</h4>
-          <p>Acuerdo por el que el arrendador cede una vivienda como <em>residencia habitual</em> del inquilino, con duración, renta y fianza pactadas.</p>
-          <p><a href="contrato-alquiler.html">Generar contrato de vivienda</a></p>
-        </article>
-        <article class="def" id="def-habitacion">
-          <h4>Contrato de habitación</h4>
-          <p>Alquiler de una habitación dentro de una vivienda, con uso de zonas comunes y reglas de convivencia.</p>
-          <p><a href="contrato-habitacion.html">Generar contrato de habitación</a></p>
-        </article>
-        <article class="def" id="def-fianza">
-          <h4>Fianza</h4>
-          <p>Importe que garantiza el cumplimiento del contrato y cubre posibles daños o impagos. Se devuelve según proceda al finalizar.</p>
-        </article>
-        <article class="def" id="def-duracion">
-          <h4>Duración y prórrogas</h4>
-          <p>Plazo acordado más las posibles prórrogas legales o pactadas. Indícalo siempre con fecha de inicio y fin.</p>
-        </article>
-        <article class="def" id="def-actualizacion">
-          <h4>Actualización de renta</h4>
-          <p>Revisión periódica de la renta conforme al índice legal aplicable o a lo pactado en el contrato.</p>
-        </article>
-        <article class="def" id="def-anexos">
-          <h4>Anexos (inventario y contadores)</h4>
-          <p>Documentos adjuntos con el mobiliario/estado y las lecturas de agua, luz o gas a la firma.</p>
-        </article>
-        <article class="def" id="def-cee">
-          <h4>CEE — Certificado de Eficiencia Energética</h4>
-          <p>Documento que indica la eficiencia energética de la vivienda (letra, registro y fecha de emisión).</p>
-        </article>
-        <article class="def" id="def-tensionadas">
-          <h4>Zonas tensionadas</h4>
-          <p>Ámbitos donde la normativa puede limitar o referenciar la actualización de precios de alquiler.</p>
-        </article>
-        <article class="def" id="def-subarriendo">
-          <h4>Subarriendo y cesión</h4>
-          <p>Prohibición o regulación de ceder o subarrendar la vivienda o habitación sin autorización escrita.</p>
-        </article>
-        <article class="def" id="def-resolucion">
-          <h4>Resolución del contrato</h4>
-          <p>Supuestos de incumplimiento grave que facultan terminar el contrato y acudir a los juzgados competentes.</p>
-        </article>
+    </details>
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+      <a class="btn" id="fiBtnOrg" href="#" target="_blank" rel="noopener" style="display:none"><i class="fa-solid fa-arrow-up-right-from-square"></i> Organismo</a>
+      <a class="btn" id="fiBtnTram" href="#" target="_blank" rel="noopener" style="display:none"><i class="fa-solid fa-file-invoice-dollar"></i> Trámite</a>
+    </div>
+  </section>
+
+  <!-- 3) Zonas tensionadas -->
+  <section id="zt" class="section wrap">
+    <h2>Zonas tensionadas & mapa del índice</h2>
+    <p class="small muted">Busca tu municipio: mostramos provincia, CCAA y resumen de Wikipedia; además, indicamos si figura como zona tensionada (según fuentes oficiales) y abrimos el visor o el mapa del índice.</p>
+    <div class="searchbar">
+      <div class="ac-wrap" style="flex:1 1 360px;min-width:260px">
+        <input id="ztSearch" type="search" placeholder="Escribe municipio (ej.: Toledo, Pamplona, Vigo…)" aria-label="Municipio" autocomplete="off" />
+        <div id="ztAC" class="ac-list" role="listbox" aria-label="Sugerencias de municipios"></div>
       </div>
-    </section>
+      <button id="ztGo" class="btn" type="button"><i class="fa-solid fa-magnifying-glass-location"></i> Buscar</button>
+      <a id="openIndex" class="btn" target="_blank" rel="noopener" href="https://www.mivau.gob.es/mapa-alquiler"><i class="fa-solid fa-map"></i> Mapa índice</a>
+      <a id="openZT" class="btn" target="_blank" rel="noopener" href="https://www.mivau.gob.es/vivienda/alquila-bien-es-tu-derecho/serpavi/consultar-zonas-de-mercado-residencial-tensionado"><i class="fa-solid fa-triangle-exclamation"></i> Zonas tensionadas</a>
+    </div>
+    <div id="ztResult" class="result" aria-live="polite"></div>
+  </section>
 
-    <section class="container" aria-labelledby="t-faq">
-      <h2 id="t-faq" class="sec-title">Preguntas frecuentes</h2>
-      <details class="card" open>
-        <summary><strong>¿Tengo que registrarme o subir archivos?</strong></summary>
-        <p style="margin:.6rem 0 0">No. Todo se genera en tu navegador. Solo pagas 1 € para descargar el PDF.</p>
-      </details>
-      <details class="card">
-        <summary><strong>¿Puedo personalizar cláusulas?</strong></summary>
-        <p style="margin:.6rem 0 0">Sí. Los generadores incluyen packs de cláusulas y anexos opcionales.</p>
-      </details>
-      <details class="card">
-        <summary><strong>¿Es asesoramiento legal?</strong></summary>
-        <p style="margin:.6rem 0 0">No. Ofrecemos plantillas y herramientas; si tienes dudas complejas, consulta a un profesional.</p>
-      </details>
-    </section>
-  </main>
+  <!-- 4) CEE -->
+  <section id="cee" class="section wrap">
+    <h2>Certificado de Eficiencia Energética (CEE)</h2>
+    <p class="small muted">Para alquilar vivienda debes disponer de CEE registrado en tu CCAA (RD 390/2021). Añade la referencia al contrato y entrega copia al inquilino.</p>
+    <ul class="small" style="margin:8px 0 0 18px">
+      <li>Validez general: 10 años (comprueba vigencia antes de firmar).</li>
+      <li>Excepciones: edificios aislados &lt; 50 m² y otros supuestos concretos.</li>
+    </ul>
+    <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+      <a class="btn" href="https://www.miteco.gob.es/es/energia/eficiencia/certificacion-energetica/real-decreto-390-2021.html" target="_blank" rel="noopener"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver RD 390/2021</a>
+    </div>
+  </section>
 
-  <footer class="container">
-    <a href="aviso-legal.html">Aviso legal</a> •
-    <a href="privacidad-contrato.html">Privacidad</a> •
-    <a href="cookies.html">Cookies</a> •
-    <a href="contacto.html">Contacto</a>
-    <br />
-    <small>JSON Beautifier PRO © 2025</small>
+  <!-- 5) FAQ -->
+  <section id="faq" class="section wrap">
+    <h2>FAQ rápido</h2>
+    <details open><summary>¿Necesito registro para generar?</summary><div class="small" style="margin-top:6px">No. Editas y previsualizas en tu navegador. Descargas el PDF por 1 €.</div></details>
+    <details><summary>¿Inventario y lecturas están incluidos?</summary><div class="small" style="margin-top:6px">Sí. Puedes añadirlos como anexos en ambos generadores y se numeran automáticamente.</div></details>
+    <details><summary>¿Cómo sé si estoy en zona tensionada?</summary><div class="small" style="margin-top:6px">Busca tu municipio con el buscador de zonas. Desde ahí abre el visor oficial.</div></details>
+    <details><summary>¿Dónde deposito la fianza?</summary><div class="small" style="margin-top:6px">Depende de tu Comunidad. Usa el selector de fianzas: verás organismo, plazos y enlaces.</div></details>
+    <details><summary>¿Duración mínima y prórrogas?</summary><div class="small" style="margin-top:6px">Con carácter general: 5/7 años según arrendador persona física/jurídica, con prórroga anual automática salvo preaviso.</div></details>
+    <details><summary>¿Actualización de renta?</summary><div class="small" style="margin-top:6px">Según lo pactado y normativa vigente. El contrato incluye cláusula de actualización editable.</div></details>
+    <details><summary>¿Mascotas y obras?</summary><div class="small" style="margin-top:6px">Incluimos packs opcionales de mascotas y obras consentidas, con condiciones claras.</div></details>
+    <details><summary>¿Puedo exportar a Word?</summary><div class="small" style="margin-top:6px">Sí, además del PDF puedes exportar a DOCX desde el visor.</div></details>
+  </section>
+
+  <!-- 6) Definiciones -->
+  <section id="definiciones" class="section wrap">
+    <h2>Definiciones útiles</h2>
+    <div class="defs-search"><i class="fa-solid fa-magnifying-glass"></i><input id="defsSearch" class="search-lg" type="search" placeholder="Buscar (LAU, fianza, inventario, prórroga…)" aria-label="Buscar definición" /></div>
+    <div id="defsGrid" class="defs" style="margin-top:10px"></div>
+  </section>
+
+  <!-- 7) Footer -->
+  <footer class="wrap" style="margin:28px auto 42px;text-align:center;color:#64748b;font-size:13px">
+    <div>
+      <a href="aviso-legal.html">Aviso legal</a> ·
+      <a href="privacidad-contrato.html">Privacidad</a> ·
+      <a href="cookies.html">Cookies</a> ·
+      <a href="contacto.html">Contacto</a>
+    </div>
+    <div style="margin-top:6px">Portal contratos © 2025</div>
   </footer>
 
+  <!-- ===== Fianzas (dataset estático curado) ===== -->
   <script>
-    // Búsqueda simple en definiciones
-    (function(){
-      const q = document.getElementById('defSearch');
-      const cards = Array.from(document.querySelectorAll('#defs .def'));
-      const norm = s => (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-      if (!q) return;
-      q.addEventListener('input', () => {
-        const t = norm(q.value);
-        cards.forEach(c => {
-          const text = norm(c.textContent);
-          c.classList.toggle('hide', t && !text.includes(t));
-        });
-      });
-    })();
+  const FIANZAS = {
+    "Andalucía":{name:"Andalucía",obligatoria:true,org:"Agencia de Vivienda y Rehabilitación de Andalucía (AVRA)",link:"https://www.juntadeandalucia.es/organismos/avra/areas/fianzas.html",tramite:"https://www.juntadeandalucia.es/servicios/procedimientos/detalle/15435.html",plazo:"1 mes desde la firma"},
+    "Aragón":{name:"Aragón",obligatoria:true,org:"Dirección General de Vivienda (Gob. de Aragón)",link:"https://www.aragon.es/tramitador/-/tramite/gestion-de-fianzas-de-arrendamientos-en-regimen-general/deposito",tramite:"https://www.aragon.es/tramitador/-/tramite/gestion-de-fianzas-de-arrendamientos-en-regimen-general/deposito"},
+    "Asturias":{name:"Asturias",obligatoria:false,org:"—",link:"https://www.mivau.gob.es/vivienda/alquila-bien-es-tu-derecho/alquiler/deposito-de-fianzas",tramite:""},
+    "Islas Baleares":{name:"Islas Baleares",obligatoria:true,org:"Instituto Balear de la Vivienda (IBAVI)",link:"https://www.caib.es/sites/informaciohabitatge/es/inicio_fianzas_de_alquiler/",tramite:"https://www.caib.es/sites/ibavi/es/depositos_de_fianzas-94235/"},
+    "Canarias":{name:"Canarias",obligatoria:true,org:"Instituto Canario de la Vivienda (ICAVI)",link:"https://www.gobiernodecanarias.org/vivienda/destacados/Fianzas_V2.html",tramite:"https://sede.gobiernodecanarias.org/sede/procedimientos_servicios/tramites/6672"},
+    "Cantabria":{name:"Cantabria",obligatoria:false,org:"—",link:"https://www.mivau.gob.es/vivienda/alquila-bien-es-tu-derecho/alquiler/deposito-de-fianzas",tramite:""},
+    "Castilla y León":{name:"Castilla y León",obligatoria:true,org:"Cámaras de la Propiedad Urbana (gestión)",link:"https://www.camarascastillayleon.com/fianza",tramite:"https://www.camarascastillayleon.com/fianza"},
+    "Castilla-La Mancha":{name:"Castilla-La Mancha",obligatoria:true,org:"Junta de Comunidades de Castilla-La Mancha",link:"https://vivienda.castillalamancha.es/deposito-de-fianzas",tramite:"https://www.jccm.es/tramitesygestiones/deposito-de-fianzas"},
+    "Cataluña":{name:"Cataluña",obligatoria:true,org:"INCASÒL",link:"https://incasol.gencat.cat/es/2-serveis_i_tramits/Fiances-de-lloguers/",tramite:"https://incasol.gencat.cat/es/2-serveis_i_tramits/Fiances-de-lloguers/informacio/diposit-de-fiances/"},
+    "Comunidad Valenciana":{name:"Comunidad Valenciana",obligatoria:true,org:"Generalitat Valenciana (ATV)",link:"https://www.gva.es/es/inicio/procedimientos?id_proc=3023",tramite:"https://atv.gva.es/es/tributos-modelos-fianzas"},
+    "Extremadura":{name:"Extremadura",obligatoria:true,org:"Caja General de Depósitos de la Junta de Extremadura",link:"https://www.juntaex.es/w/0635722",tramite:"https://sede.juntaex.es/vehiculos-juridicos/caja-de-depositos"},
+    "Galicia":{name:"Galicia",obligatoria:true,org:"IGVS",link:"https://igvs.xunta.gal/deposito-de-fianza?langId=es_ES",tramite:""},
+    "La Rioja":{name:"La Rioja",obligatoria:false,org:"—",link:"https://www.mivau.gob.es/vivienda/alquila-bien-es-tu-derecho/alquiler/deposito-de-fianzas",tramite:""},
+    "Comunidad de Madrid":{name:"Comunidad de Madrid",obligatoria:true,org:"Agencia de Vivienda Social (AVS/IVIMA)",link:"https://www.comunidad.madrid/servicios/vivienda/fianzas-arrendamiento",tramite:"https://gestiona3.madrid.org/gfa_app/menus/visualGeneral.jsf"},
+    "Región de Murcia":{name:"Región de Murcia",obligatoria:false,org:"—",link:"https://www.carm.es/web/pagina?IDCONTENIDO=71099&IDTIPO=100",tramite:""},
+    "Navarra":{name:"Navarra",obligatoria:true,org:"Gobierno de Navarra",link:"https://www.navarra.es/es/vivienda",tramite:"https://www.navarra.es/es/-/nota-prensa/navarra-declara-oficialmente-21-municipios-como-zona-de-mercado-tensionado"},
+    "País Vasco":{name:"País Vasco",obligatoria:true,org:"Bizilagun / Servicio Vasco de Vivienda",link:"https://www.euskadi.eus/fianzas-de-alquiler/web01-a2bizila/es/",tramite:"https://www.euskadi.eus/fianzas/web01-tramite/es/"},
+    "Ceuta":{name:"Ceuta",obligatoria:true,org:"EMVICESA",link:"https://www.emvicesa.es",tramite:"https://www.emvicesa.es"},
+    "Melilla":{name:"Melilla",obligatoria:true,org:"EMVISMESA",link:"https://emvismesa.es/fianzas-de-inmuebles/",tramite:"https://emvismesa.es/fianzas-de-inmuebles/"},
+  };
+  </script>
+
+  <!-- ===== Municipios (online only) ===== -->
+  <script>
+  const MUNICIPAL_SOURCES = [
+    { url: 'https://raw.githubusercontent.com/frontid/ComunidadesProvinciasPoblaciones/master/poblaciones.json', type:'frontid' },
+    { url: 'https://analisi.transparenciacatalunya.cat/api/views/x5xm-w9x7/rows.json?accessType=DOWNLOAD', type:'socrata' }
+  ];
+  let MUNICIPIOS = [];
+  const normalize = (s)=> (s||'').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+
+  async function loadMunicipios(){
+    let loaded = [];
+    for (const src of MUNICIPAL_SOURCES){
+      try{
+        const r = await fetch(src.url,{mode:'cors'});
+        if(!r.ok) throw new Error('HTTP '+r.status);
+        const data = await r.json();
+        if(src.type==='frontid'){
+          loaded = (Array.isArray(data)?data:[]).map(x=>({muni:x.nm,prov:x.pr,ccaa:x.cc}));
+        }else if(src.type==='socrata'){
+          const rows=data&&(data.data||[]);
+          loaded = rows.map(r=>({muni:r[8]||r[9]||'',prov:r[10]||'',ccaa:r[12]||r[13]||''}));
+        }
+        if(loaded.length>1000){ break; }
+      }catch(e){ /* intenta siguiente */ }
+    }
+    MUNICIPIOS = loaded;
+  }
+  </script>
+
+  <!-- ===== Utilidades UI ===== -->
+  <script>
+  (function initTheme(){const root=document.documentElement,btn=document.getElementById('themeBtn'),KEY='JBP_THEME',saved=localStorage.getItem(KEY); if(saved) root.setAttribute('data-theme',saved); btn&&btn.addEventListener('click',()=>{const next=root.getAttribute('data-theme')==='dark'?'light':'dark'; root.setAttribute('data-theme',next); try{localStorage.setItem(KEY,next);}catch(e){}}); document.body.classList.remove('no-js');})();
+  function makeAutocomplete(input,listEl,getItems){let cur=-1;function render(items){listEl.innerHTML=''; if(!items.length){listEl.classList.remove('show');cur=-1;return;} const frag=document.createDocumentFragment(); items.slice(0,200).forEach((it,idx)=>{const el=document.createElement('div'); el.className='ac-item'; el.setAttribute('role','option'); el.dataset.index=idx; el.innerHTML=`<strong>${it.muni}</strong> <span style="color:#64748b">(${it.prov}) · ${it.ccaa}</span>`; el.addEventListener('mousedown',e=>{e.preventDefault();choose(it);}); frag.appendChild(el);}); listEl.appendChild(frag); listEl.classList.add('show'); cur=-1;} function choose(it){input.value=it.muni; listEl.classList.remove('show'); input.dispatchEvent(new Event('change'));} input.addEventListener('input',async()=>{const q=normalize(input.value); if(!q){listEl.classList.remove('show');return;} const items=await getItems(q); render(items);}); input.addEventListener('keydown',e=>{const items=Array.from(listEl.querySelectorAll('.ac-item')); if(!items.length)return; if(e.key==='ArrowDown'){e.preventDefault();cur=(cur+1)%items.length;} else if(e.key==='ArrowUp'){e.preventDefault();cur=(cur-1+items.length)%items.length;} else if(e.key==='Enter'){if(cur>=0){e.preventDefault();items[cur].dispatchEvent(new Event('mousedown'));}} else if(e.key==='Escape'){listEl.classList.remove('show');} Array.from(listEl.children).forEach((el,i)=>el.setAttribute('aria-selected',i===cur?'true':'false')); const sel=listEl.children[cur]; sel&&sel.scrollIntoView({block:'nearest'});}); document.addEventListener('click',e=>{ if(!listEl.contains(e.target) && e.target!==input) listEl.classList.remove('show'); });}
+  </script>
+
+  <!-- ===== Zonas tensionadas (fetch Internet) ===== -->
+  <script>
+  (function zonesInit(){
+    const input=document.getElementById('ztSearch'),ac=document.getElementById('ztAC'),go=document.getElementById('ztGo'),res=document.getElementById('ztResult');
+    if(!input||!ac||!go||!res)return;
+
+    async function items(q){
+      const term=normalize(q);
+      return (MUNICIPIOS||[]).filter(m=>normalize(m.muni).includes(term)||normalize(m.prov).includes(term)||normalize(m.ccaa).includes(term));
+    }
+    makeAutocomplete(input,ac,items);
+
+    async function fetchOnlineFacts(q){
+      const name=encodeURIComponent(q+', España');
+      const osm=fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&q=${name}&addressdetails=1&limit=1`,{headers:{'Accept-Language':'es'}}).then(r=>r.json()).catch(()=>null);
+      const wiki=fetch(`https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(q)}`).then(r=>r.ok?r.json():null).catch(()=>null);
+      // Cataluña (lista oficial)
+      const cat = fetch('https://r.jina.ai/http://habitatge.gencat.cat/ca/ambits/preus-ingressos-i-zones/limit-preu-lloguer/llistat-municipis-zmrt/').then(r=>r.text()).catch(()=>'' );
+      // Navarra (nota oficial)
+      const nav = fetch('https://r.jina.ai/https://www.navarra.es/es/-/nota-prensa/navarra-declara-oficialmente-21-municipios-como-zona-de-mercado-tensionado').then(r=>r.text()).catch(()=>'' );
+      // BOE 2025 (A Coruña, Donostia y Navarra)
+      const boe = fetch('https://r.jina.ai/https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-15728').then(r=>r.text()).catch(()=>'' );
+
+      const [o,w,catTxt,navTxt,boeTxt]=await Promise.all([osm,wiki,cat,nav,boe]);
+      function inText(txt,term){ return (txt||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').includes(term); }
+      const term=(q||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+      let tension=null;
+      if(inText(catTxt,term)) tension={ccaa:'Cataluña',fuente:'Generalitat — ZMRT',url:'https://habitatge.gencat.cat/ca/ambits/preus-ingressos-i-zones/limit-preu-lloguer/llistat-municipis-zmrt/'};
+      if(!tension && inText(navTxt,term)) tension={ccaa:'Navarra',fuente:'Gobierno de Navarra',url:'https://www.navarra.es/es/-/nota-prensa/navarra-declara-oficialmente-21-municipios-como-zona-de-mercado-tensionado'};
+      if(!tension && inText(boeTxt,term)) tension={ccaa:'España',fuente:'BOE-A-2025-15728',url:'https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-15728'};
+      return {osm:o&&o[0],wiki:w,tension};
+    }
+
+    function draw(local, raw, extra){
+      const lat=extra?.osm?.lat, lon=extra?.osm?.lon;
+      const osmLink=(lat&&lon)?`https://www.openstreetmap.org/?mlat=${lat}&mlon=${lon}#map=12/${lat}/${lon}`:null;
+      const wikiLink=extra?.wiki?.content_urls?.desktop?.page||null;
+      const wikiDesc=extra?.wiki?.extract||'';
+      const tz=extra?.tension;
+      const tzLine = tz
+          ? `<div class='txt' style='margin-top:6px'><b>Zona tensionada:</b> Sí — ${tz.ccaa}. Fuente: <a href='${tz.url}' target='_blank' rel='noopener'>${tz.fuente}</a></div>`
+          : `<div class='txt' style='margin-top:6px'><b>Zona tensionada:</b> No encontrada en listados oficiales consultados. Verifica en el <a href='https://www.mivau.gob.es/vivienda/alquila-bien-es-tu-derecho/serpavi/consultar-zonas-de-mercado-residencial-tensionado' target='_blank' rel='noopener'>visor del MIVAU</a>.</div>`;
+
+      res.innerHTML = `
+        <div class="def">
+          <h4 style="margin:0 0 6px">Municipio: ${raw||local?.muni||'—'}</h4>
+          <div class="txt"><b>Provincia:</b> ${local?.prov||'—'} · <b>CCAA:</b> ${local?.ccaa||'—'}</div>
+          ${tzLine}
+          <div class="txt" style="margin-top:6px">${wikiDesc}</div>
+          <div class="txt" style="margin-top:6px">${lat?`Coordenadas: ${lat}, ${lon}`:''}</div>
+          <div class="txt" style="margin-top:6px">
+            ${osmLink?`<a href="${osmLink}" target="_blank" rel="noopener"><i class="fa-solid fa-map-location-dot"></i> Ver en mapa</a>`:''}
+            ${wikiLink?` · <a href="${wikiLink}" target="_blank" rel="noopener"><i class="fa-brands fa-wikipedia-w"></i> Wikipedia</a>`:''}
+          </div>
+        </div>`;
+      res.classList.add('show'); res.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+
+    async function goSearch(){
+      res.innerHTML='<div class="small"><span class="spinner"></span>Buscando…</div>'; res.classList.add('show');
+      const q=input.value.trim();
+      const local=(MUNICIPIOS||[]).find(m=>normalize(m.muni)===normalize(q))||(MUNICIPIOS||[]).find(m=>normalize(m.muni).includes(normalize(q)));
+      const extra=await fetchOnlineFacts(q);
+      draw(local,q,extra);
+      try{localStorage.setItem('JBP_LAST_ZT',q)}catch(_ ){}
+    }
+    go.addEventListener('click',goSearch); input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();goSearch();}});
+  })();
+  </script>
+
+  <!-- ===== Fianzas (lógica) ===== -->
+  <script>
+  (function fianzasInit(){
+    const elSelect=document.getElementById('fiSelect'),elInfo=document.getElementById('fiInfo'),
+          btnOrg=document.getElementById('fiBtnOrg'),btnTram=document.getElementById('fiBtnTram'),
+          elTableBody=document.getElementById('fiTableBody'),quick=document.getElementById('fiTableQuickFilter');
+
+    const comunidades=Object.keys(FIANZAS).sort((a,b)=>a.localeCompare(b,'es'));
+    elSelect.innerHTML='<option value="">Selecciona Comunidad…</option>'+comunidades.map(c=>`<option value="${c}">${c}</option>`).join('');
+
+    elSelect.addEventListener('change',()=>{const key=elSelect.value; const it=FIANZAS[key]; if(it){showInfo(it);} else clearInfo(); location.hash=`#fi=${encodeURIComponent(key)}`;});
+
+    function clearInfo(){elInfo.innerHTML='<h4>Selecciona tu Comunidad</h4><div class="txt">Te mostraremos si el depósito es obligatorio, el organismo competente y enlaces oficiales al trámite.</div>'; btnOrg.style.display='none'; btnTram.style.display='none';}
+    function showInfo(it){
+      elInfo.innerHTML=`<h4 style='margin:.1rem 0'>${it.name}</h4>
+        <div class='kv'>
+          <div><b>Depósito</b></div><div>${it.obligatoria?'<span class="badge ok">Obligatorio</span>':'<span class="badge warn">No obligatorio</span>'}</div>
+          <div><b>Organismo</b></div><div>${it.org||'—'}</div>
+          <div><b>Plazo</b></div><div>${it.plazo||'—'}</div>
+          <div><b>Enlace</b></div><div>${it.link?`<a href='${it.link}' target='_blank' rel='noopener'>Oficial</a>`:'—'}</div>
+        </div>`;
+      if(it.link){btnOrg.style.display='inline-flex'; btnOrg.href=it.link;} else btnOrg.style.display='none';
+      if(it.tramite){btnTram.style.display='inline-flex'; btnTram.href=it.tramite;} else btnTram.style.display='none';
+    }
+
+    // tabla
+    elTableBody.innerHTML=Object.values(FIANZAS).map(it=>{
+      const link=it.link?`<a href='${it.link}' target='_blank' rel='noopener'>Oficial</a>`:'—';
+      const tram=it.tramite?` · <a href='${it.tramite}' target='_blank' rel='noopener'>Trámite</a>`:'';
+      return `<tr><td>${it.name}</td><td>${it.obligatoria?'Sí':'No'}</td><td>${it.org||'—'}</td><td>${link}${tram}</td></tr>`;
+    }).join('');
+    function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+    function filterRows(){const q=norm(quick.value); Array.from(elTableBody.children).forEach(tr=>{tr.style.display=!q||norm(tr.textContent).includes(q)?'':'none';});}
+    quick.addEventListener('input',filterRows);
+
+    clearInfo();
+    function applyHash(){const hash=new URLSearchParams(location.hash.replace(/^#/,'')); const fi=hash.get('fi'); if(fi && FIANZAS[fi]){showInfo(FIANZAS[fi]); elSelect.value=fi;} }
+    window.addEventListener('hashchange',applyHash); applyHash();
+
+    loadMunicipios(); // necesario para el autocomplete de zonas tensionadas
+  })();
+  </script>
+
+  <!-- ===== Definiciones ===== -->
+  <script>
+  (function defsInit(){
+    const list=[
+      ["LAU (Ley de Arrendamientos Urbanos)","Norma principal para alquiler de vivienda habitual y usos distintos."],
+      ["Fianza","Cantidad entregada al firmar; mínimo legal en vivienda habitual: 1 mensualidad."],
+      ["Depósito de fianza","Ingreso de la fianza en el organismo autonómico (si procede)."],
+      ["Garantías adicionales","Avales/depósitos extra pactados; limitadas en vivienda habitual."],
+      ["Renta","Precio del alquiler. Con actualización según lo pactado y la ley aplicable."],
+      ["Gastos repercutibles","Suministros y pequeños arreglos por uso normal si se pacta."],
+      ["Inventario","Relación de muebles/estado inicial; clave para devolución."],
+      ["Lecturas de contadores","Anexo con lecturas iniciales de agua, luz y gas."],
+      ["Índice de referencia","Rangos orientativos del mercado por zona."],
+      ["Zona tensionada","Área con medidas de contención y reporte específico."],
+      ["Prórroga legal","Extensión mínima si no hay preaviso."],
+      ["Desistimiento","Finalización anticipada con preaviso e indemnización si procede."],
+      ["Cláusula de obras","Permisos y límites para obras y mejoras."],
+      ["Mascotas","Régimen de convivencia y responsabilidad por daños."],
+      ["Subrogación","Continuidad del contrato por cambio de titularidad o fallecimiento."]
+    ];
+    const grid=document.getElementById('defsGrid'),q=document.getElementById('defsSearch');
+    function paint(rows){grid.innerHTML=rows.map(([t,d])=>`<article class='def'><h4>${t}</h4><div class='txt'>${d}</div></article>`).join('');}
+    function norm(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+    paint(list); q.addEventListener('input',()=>{const term=norm(q.value); const hits=!term?list:list.filter(([t,d])=>norm(t+d).includes(term)); paint(hits);});
+  })();
   </script>
 </body>
 </html>
