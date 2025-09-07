@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<link rel="icon" href="logo.svg" type="image/svg+xml">
+<link rel="icon" href="og-contrato-vivienda.png" type="image/png">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contrato de Vivienda PRO — Generador de PDF estilo notaría por 1 €</title>
@@ -456,6 +456,59 @@ button, .chip, .seg label{ touch-action: manipulation; }
   background:#eef2ff; border-color:#cfd7e6; color:#1e293b; box-shadow:none;
 }
 
+/* Toggle AUTO rectangular con look azul del generador */
+.toggle-field{
+  outline: none;
+}
+.toggle-field:focus-within{
+  box-shadow: 0 0 0 3px rgba(99,102,241,.35);
+}
+.toggle-field{
+  display:grid; grid-template-columns:1fr auto; align-items:center;
+  border:1px solid #cfd7e6; border-radius:12px; padding:.7rem .85rem;
+  background:#f8fafc; color:#334155; font-weight:800;
+  transition: .15s ease-in-out;
+}
+.toggle-field span{ font-size:13.5px; }
+.toggle-box{
+  width:20px; height:20px; cursor:pointer; appearance:auto;
+  accent-color:#4c6fff; /* marca interna */
+}
+.toggle-field.active{
+  border-color:#4c6fff;
+  background:linear-gradient(90deg,#0ea5e9,#6366f1);
+  color:#fff;
+  box-shadow:0 6px 16px rgba(80,90,200,.28);
+}
+.toggle-field.active .toggle-box{ accent-color:#f8fafc; }
+
+/* === Realce azul cuando está activado el toggle de fianza auto === */
+.toggle-field {
+  border:1px solid var(--border);
+  background:#fff;
+  border-radius:12px;
+  padding:10px 12px;
+}
+.toggle-field:has(input:checked){
+  background: linear-gradient(90deg, #0ea5e9, #6366f1);
+  color: #fff;
+  border-color: #4c6fff;
+  box-shadow: 0 6px 16px rgba(80,90,200,.28);
+}
+.toggle-field input[type="checkbox"]{ /* ya lo tienes, lo dejo por claridad */
+  position:absolute; inline-size:1px; block-size:1px; opacity:0; pointer-events:none;
+}
+.toggle-field .toggle-square{
+  display:inline-flex; justify-content:center; align-items:center;
+  inline-size:20px; block-size:20px; border:2px solid #4c6fff; border-radius:6px;
+  margin-inline-end:8px; flex:0 0 auto;
+}
+.toggle-field:has(input:checked) .toggle-square{ background:#4c6fff; }
+
+
+
+
+
   </style>
 
   <!-- PayPal SDK desactivado (evita 400 sin client-id).
@@ -633,6 +686,14 @@ button, .chip, .seg label{ touch-action: manipulation; }
   <input id="localidad" name="localidad" required
          autocomplete="section-inmueble address-level2" aria-describedby="e-loc" />
 </label>
+
+<div class="field">
+  <label for="provincia">Provincia</label>
+  <select id="provincia" required></select>
+  <div id="e-provincia" class="err"></div>
+</div>
+
+
 <div id="e-dir" class="err" aria-live="polite"></div>
 <div id="e-loc" class="err"></div>
 
@@ -708,6 +769,18 @@ button, .chip, .seg label{ touch-action: manipulation; }
                 <label>Precio mensual (€)
                   <input id="renta" type="number" min="0" step="0.01" required aria-describedby="e-renta" />
                 </label>
+<!-- NUEVO: cálculo por meses -->
+<label>Meses de fianza
+  <input id="fianzaMeses" type="number" min="0" step="1" value="1" aria-describedby="e-fianzaMeses">
+  <div class="err" id="e-fianzaMeses"></div>
+</label>
+
+<!-- Toggle AUTO rectangular minimalista -->
+<label class="toggle-field" id="fianzaAutoField" style="grid-column:1/-1">
+  <span>Calcular meses según provincia (auto)</span>
+  <input type="checkbox" id="fianzaAuto" class="toggle-box" checked>
+</label>
+
                 <label>Fianza (€)
                   <input id="fianza" type="number" min="0" step="0.01" required aria-describedby="e-fianza" />
                 </label>
@@ -927,6 +1000,15 @@ button, .chip, .seg label{ touch-action: manipulation; }
     const LSKEY   = "contratoVivienda_pro_STABLE";
     const STEP_K  = LSKEY + "_step";
     const $  = (id) => document.getElementById(id);
+const autoEl   = $("fianzaAuto");
+const autoWrap = $("fianzaAutoField");
+
+function syncAutoUI(){
+  if (!autoEl) return;
+  autoWrap?.classList.toggle("active", !!autoEl.checked);
+  autoEl.setAttribute("aria-checked", autoEl.checked ? "true" : "false");
+}
+
     const PRESET_K = LSKEY + "_preset";
 window.LSKEY   = LSKEY;
 window.STEP_K  = STEP_K;
@@ -942,7 +1024,7 @@ function bindStr(){
   return JSON.stringify({
     tA:g("tipoArrendador"), arr:g("arrendador"), rzA:g("razonArr"), cifA:g("cifArr"), repA:g("repArr"), dniRA:g("dniRepArr"),
     tI:g("tipoInquilino"), inq:g("inquilino"), rzI:g("razonInq"), cifI:g("cifInq"), repI:g("repInq"), dniRI:g("dniRepInq"),
-    dir:g("direccion"), loc:g("localidad"),
+    dir:g("direccion"), loc:g("localidad"), prov:g("provincia"),
     fi:g("fechaInicio"), ff:g("fechaFin"),
     renta:g("renta"), fianza:g("fianza")
   });
@@ -1064,7 +1146,7 @@ const fmtEUR = v => {
     function requiredIds(){
   const tA = $("tipoArrendador")?.value || "fisica";
   const tI = $("tipoInquilino")?.value || "fisica";
-  const base = ["direccion","localidad","duracion","fechaInicio","fechaFin","renta","fianza"];
+  const base = ["direccion","localidad","provincia","duracion","fechaInicio","fechaFin","renta","fianza"];
   const parteA = (tA==="juridica") ? ["razonArr","cifArr","repArr","dniRepArr"] : ["arrendador","dniArrendador"];
   const parteI = (tI==="juridica") ? ["razonInq","cifInq","repInq","dniRepInq"] : ["inquilino","dniInquilino"];
   return [...base, ...parteA, ...parteI];
@@ -1231,6 +1313,7 @@ if (tI==="juridica"){
   check("dniInquilino", validateDNIorNIE($("dniInquilino")?.value), "DNI/NIE no válido.");
 }
       check("localidad", !!$("localidad")?.value?.trim());
+      check("provincia", !!$("provincia")?.value?.trim(), "Selecciona una provincia");
       check("duracion", Number($("duracion")?.value)>=1, "Mínimo 1 mes.");
       check("fechaInicio", !!fi);
       check("fechaFin", !!ff && new Date(ff)>=new Date(fi), "La fecha fin debe ser posterior.");
@@ -1507,6 +1590,7 @@ const sumI = (tI==="juridica")
         <div class="sum-card"><h4>Inmueble</h4>
           <div class="sum-line">${escH(g("direccion")||"—")}</div>
           <div class="sum-line">${escH(g("localidad")||"")}</div>
+                        <div class="sum-line">${escH(g("provincia")||"")}</div>
 	<div class="sum-line">Ref. catastral: <b>${escH(g("refCatastral")||"—")}</b></div>
 <div class="sum-line">Zona de mercado residencial tensionado: <b>${escH(g("zonaTensionada")==="si"?"Sí":(g("zonaTensionada")==="no"?"No":"—"))}</b></div>
 <div class="sum-line">CEE: <b>${escH([g("ceeLetra")&&("Clase "+g("ceeLetra")),
@@ -1531,7 +1615,10 @@ const sumI = (tI==="juridica")
         </div>
         <div class="sum-card"><h4>Importes</h4>
           <div class="sum-line">Precio mensual: <b>${escH(fmtEUR(g("renta")))} €</b></div>
-<div class="sum-line">Fianza: <b>${escH(fmtEUR(g("fianza")))} €</b></div>
+<div class="sum-line">Fianza: <b>${escH(fmtEUR(g("fianza")))} €</b>
+  ${g("fianzaMeses") ? ` <em>(${escH(g("fianzaMeses"))} mes/es)</em>` : ""}</div>
+
+
         </div>`;
     }
     function previewHTML(){
@@ -1555,10 +1642,10 @@ const lineaI = (tI==="juridica")
 html += lineaA + lineaI;
 html += `<p><strong>Contacto arrendador:</strong> ${escH(g("emailArr")||"—")} · ${escH(g("telArr")||"—")}</p>`;
 html += `<p><strong>Contacto arrendatario:</strong> ${escH(g("emailInq")||"—")} · ${escH(g("telInq")||"—")}</p>`;
-      html += `<p><strong>Dirección de la vivienda arrendada:</strong> ${escH(g("direccion"))}</p>`;
-      html += `<p><strong>Localidad:</strong> ${escH(g("localidad"))} — <strong>Duración:</strong> ${escH(g("duracion")||"—")} meses</p>`;
-      html += `<p><strong>Fechas:</strong> ${escH(fmtFecha(g("fechaInicio")))} → ${escH(fmtFecha(g("fechaFin")))}</p>`;
-      html += `<p><strong>Precio:</strong> ${escH(fmtEUR(g("renta")))} € — <strong>Fianza:</strong> ${escH(fmtEUR(g("fianza")))} €</p>`;
+html += `<p><strong>Dirección de la vivienda arrendada:</strong> ${escH(g("direccion"))}</p>`;
+html += `<p><strong>Localidad:</strong> ${escH(g("localidad"))} — <strong>Provincia:</strong> ${escH(g("provincia"))} — <strong>Duración:</strong> ${escH(g("duracion")||"—")} meses</p>`;
+html += `<p><strong>Fechas:</strong> ${escH(fmtFecha(g("fechaInicio")))} → ${escH(fmtFecha(g("fechaFin")))}</p>`;
+html += `<p><strong>Precio:</strong> ${escH(fmtEUR(g("renta")))} € — <strong>Fianza:</strong> ${escH(fmtEUR(g("fianza")))} €${g("fianzaMeses")?` <em> (${escH(g("fianzaMeses"))} mes/es)</em>`:""}</p>`;
 
 html += `<p><strong>Ref. catastral:</strong> ${escH(g("refCatastral")||"—")}</p>`;
 const zt = g("zonaTensionada");
@@ -1877,7 +1964,7 @@ if (["dniArrendador","dniInquilino","dniRepArr","dniRepInq","cifArr","cifInq"].i
 // Si cambian datos núcleo, invalida vinculación de pago
 ["tipoArrendador","arrendador","razonArr","cifArr","repArr","dniRepArr",
  "tipoInquilino","inquilino","razonInq","cifInq","repInq","dniRepInq",
- "direccion","localidad","fechaInicio","fechaFin","renta","fianza"]
+ "direccion","localidad", "provincia", "fechaInicio","fechaFin","renta","fianza"]
 .forEach(id=>{
   const el = document.getElementById(id);
   el?.addEventListener("input", ()=>{
@@ -2228,11 +2315,194 @@ if (btn && !btn.__bound){
   steps.forEach(el => mo.observe(el, { attributes: true, attributeFilter: ["class"] }));
 })();
 
-    });
+    
+// === Sincronía DURACIÓN ↔ FECHAS (coherencia automática) ===
+let __syncing_df = false;
+
+function parseYMD(s){
+  if(!s) return null;
+  const [y,m,d] = String(s).split("-").map(n=>parseInt(n,10));
+  if(!y||!m||!d) return null;
+  const dt = new Date(Date.UTC(y, m-1, d));
+  return isNaN(dt.getTime()) ? null : dt;
+}
+function daysInMonthUTC(y,m){ return new Date(Date.UTC(y, m+1, 0)).getUTCDate(); }
+function toYMDUTC(dt){
+  const y = dt.getUTCFullYear();
+  const m = String(dt.getUTCMonth()+1).padStart(2,"0");
+  const d = String(dt.getUTCDate()).padStart(2,"0");
+  return `${y}-${m}-${d}`;
+}
+function addMonthsKeepDOM(ymd, months){
+  const dt = parseYMD(ymd); if(!dt) return ymd;
+  const y0 = dt.getUTCFullYear(), m0 = dt.getUTCMonth(), dom = dt.getUTCDate();
+  const mTot = y0*12 + m0 + Number(months||0);
+  const y = Math.floor(mTot/12), m = mTot % 12;
+  const dim = daysInMonthUTC(y, m);
+  const d = Math.min(dom, dim);
+  const out = new Date(Date.UTC(y, m, d));
+  return toYMDUTC(out);
+}
+function monthsBetweenExact(fi, ff){
+  const a = parseYMD(fi), b = parseYMD(ff);
+  if(!a || !b) return 0;
+  let months = (b.getUTCFullYear() - a.getUTCFullYear())*12 + (b.getUTCMonth() - a.getUTCMonth());
+  // Ajuste por día del mes: si el día de ff es menor que el día original, reduce 1
+  if (b.getUTCDate() < a.getUTCDate()) months -= 1;
+  return Math.max(0, months);
+}
+function syncDurationAndDates(source){
+  if(__syncing_df) return;
+  __syncing_df = true;
+  try {
+    const fi = document.getElementById("fechaInicio")?.value || "";
+    const ff = document.getElementById("fechaFin")?.value || "";
+    const durEl = document.getElementById("duracion");
+    let dur = parseInt(durEl?.value||"0",10);
+    if (source==="dur" || source==="fi"){
+      if(fi && Number.isFinite(dur) && dur>=1){
+        const calc = addMonthsKeepDOM(fi, dur);
+        if (document.getElementById("fechaFin")?.value !== calc){
+          document.getElementById("fechaFin").value = calc;
+          // limpiar errores previos y validar ambos
+          try { document.getElementById("fechaFin").dispatchEvent(new Event("input",{bubbles:true})); } catch(_){}
+        }
+      }
+    } else if (source==="ff"){
+      if(fi && ff){
+        let n = monthsBetweenExact(fi, ff);
+        n = Math.max(1, n);
+        if (!Number.isFinite(dur) || dur !== n){
+          durEl.value = String(n);
+          try { durEl.dispatchEvent(new Event("input",{bubbles:true})); } catch(_){}
+        }
+        const snap = addMonthsKeepDOM(fi, n);
+        if (ff !== snap){
+          document.getElementById("fechaFin").value = snap;
+          try { document.getElementById("fechaFin").dispatchEvent(new Event("input",{bubbles:true})); } catch(_){}
+        }
+      }
+    }
+    // refrescar vistas/estado
+    try{ saveState(); progress(); refreshResumen(); refreshPreview(); }catch(_){}
+  } finally {
+    __syncing_df = false;
+  }
+}
+
+// Enlaces de eventos
+document.getElementById("duracion")?.addEventListener("input", ()=>syncDurationAndDates("dur"));
+document.getElementById("fechaInicio")?.addEventListener("change", ()=>syncDurationAndDates("fi"));
+document.getElementById("fechaFin")?.addEventListener("change", ()=>syncDurationAndDates("ff"));
+
+// Coherencia inicial al cargar (por si había snapshot viejo inconsistente)
+(function cohereOnLoad(){
+  const fi = document.getElementById("fechaInicio")?.value || "";
+  const ff = document.getElementById("fechaFin")?.value || "";
+  const d  = parseInt(document.getElementById("duracion")?.value||"0",10);
+  if (fi && d>=1){
+    const calc = addMonthsKeepDOM(fi, d);
+    if (!ff || ff !== calc){
+      document.getElementById("fechaFin").value = calc;
+    }
+  } else if (fi && ff){
+    const n = Math.max(1, monthsBetweenExact(fi, ff));
+    document.getElementById("duracion").value = String(n);
+    const calc = addMonthsKeepDOM(fi, n);
+    if (ff !== calc){
+      document.getElementById("fechaFin").value = calc;
+    }
+  }
+  try{ saveState(); progress(); refreshResumen(); refreshPreview(); }catch(_){}
+})();
+});
   // Helpers visibles en consola (solo pruebas)
   window.bindStr = bindStr;
   window.gateDownload = gateDownload;
   window.go = go;
+
+  // 1) Rellenar <select id="provincia"> (con fallback local a todas las provincias de España)
+  (function fillProvincias(){
+    const sel = $("provincia"); if (!sel) return;
+
+    const FALLBACK_PROVINCIAS = [
+      "Álava","Albacete","Alicante","Almería","Asturias","Ávila","Badajoz","Barcelona","Bizkaia","Burgos",
+      "Cáceres","Cádiz","Cantabria","Castellón","Ciudad Real","Córdoba","A Coruña","Cuenca","Gipuzkoa","Girona",
+      "Granada","Guadalajara","Huelva","Huesca","Illes Balears","Jaén","La Rioja","Las Palmas","León","Lleida",
+      "Lugo","Madrid","Málaga","Murcia","Navarra","Ourense","Palencia","Pontevedra","Salamanca","Santa Cruz de Tenerife",
+      "Segovia","Sevilla","Soria","Tarragona","Teruel","Toledo","Valencia","Valladolid","Zamora","Zaragoza",
+      "Ceuta","Melilla"
+    ];
+
+    const list =
+      (Array.isArray(window.PROVINCIAS) && window.PROVINCIAS.length) ? window.PROVINCIAS
+      : ((window.FIANZAS && Object.keys(window.FIANZAS).length) ? Object.keys(window.FIANZAS) : FALLBACK_PROVINCIAS);
+
+    sel.innerHTML = '<option value="">Selecciona…</option>' +
+      list.sort((a,b)=>a.localeCompare(b,'es')).map(p=>`<option value="${p}">${p}</option>`).join('');
+  })();
+
+
+  // 2) Función de lookup de meses por provincia (vuestra lógica del portal):
+  function lookupMeses(provincia){
+    // Engancha aquí vuestra función/tabla:
+    if (typeof window.lookupFianzaMeses === "function") {
+      return Number(window.lookupFianzaMeses(provincia, "vivienda"));
+    }
+    // Fallback prudente: 1 mes en vivienda habitual
+    return 1;
+  }
+
+  // 3) Sincronía meses ⇄ euros
+  function syncFianzaEuros(){
+    const r   = Number($("renta")?.value||0);
+    const m   = Number($("fianzaMeses")?.value||0);
+    if (Number.isFinite(r) && Number.isFinite(m) && $("fianza")){
+      $("fianza").value = (r*m).toFixed(2);
+      // dispara validación viva si la tienes encendida:
+      try{ $("fianza").dispatchEvent(new Event("input",{bubbles:true})); }catch(_){}
+    }
+  }
+
+  function applyAutoMeses(){
+    const sel = $("provincia");
+    if (!sel || !sel.value) return;
+    const meses = lookupMeses(sel.value);
+    if ($("fianzaMeses")){
+      $("fianzaMeses").value = meses;
+      $("fianzaMeses").setAttribute("aria-label","Meses de fianza (auto)");
+      syncFianzaEuros();
+    }
+  }
+
+  // 4) Eventos
+  $("provincia")?.addEventListener("change", ()=>{
+    if ($("fianzaAuto")?.checked) applyAutoMeses();
+  });
+  
+  $("fianzaMeses")?.addEventListener("input", syncFianzaEuros);
+  $("renta")?.addEventListener("input",  syncFianzaEuros);
+
+if ($("fianzaMeses") && autoEl) {
+  $("fianzaMeses").toggleAttribute("disabled", autoEl.checked);
+}
+syncAutoUI();
+
+// accesibilidad visual del nuevo rect-check
+if (autoEl) autoEl.setAttribute("aria-checked", autoEl.checked ? "true" : "false");
+// Cambios del toggle: bloquea/activa los meses, recalcula y pinta el azul
+autoEl?.addEventListener("change", (e) => {
+  const auto = !!e.target.checked;
+  $("fianzaMeses")?.toggleAttribute("disabled", auto);
+  if (auto) applyAutoMeses();
+  syncAutoUI(); // ← añade/quita .active en el rectángulo azul
+});
+
+
+
+
+  // 5) Primera pasada: si hay provincia y está en AUTO, precalcula
+  if ($("fianzaAuto")?.checked) applyAutoMeses();
   })();
   </script>
 <script>
@@ -2677,6 +2947,7 @@ const docALabel = (tA==="juridica" ? "CIF" : "NIF/NIE");
 const docILabel = (tI==="juridica" ? "CIF" : "NIF/NIE");
 
 const data = {
+  // — Arrendador —
   arrendador: s("arrendador"),
   dniArrendador: s("dniArrendador").toUpperCase().replace(/\s+/g,""),
   razonArr: s("razonArr"),
@@ -2684,6 +2955,7 @@ const data = {
   repArr:   s("repArr"),
   dniRepArr:s("dniRepArr").toUpperCase(),
 
+  // — Inquilino —
   inquilino: s("inquilino"),
   dniInquilino: s("dniInquilino").toUpperCase().replace(/\s+/g,""),
   razonInq: s("razonInq"),
@@ -2691,10 +2963,16 @@ const data = {
   repInq:   s("repInq"),
   dniRepInq:s("dniRepInq").toUpperCase(),
 
+  // — Contacto —
   emailArr:s("emailArr"), telArr:s("telArr"),
   emailInq:s("emailInq"), telInq:s("telInq"),
 
-  direccion:s("direccion"), localidad:s("localidad"),
+  // — Inmueble —
+  direccion: s("direccion"),
+  localidad: s("localidad"),
+  provincia: s("provincia"),
+
+  // — CEE / mercado —
   refCatastral:s("refCatastral"),
   regPropiedad:s("regPropiedad"),
   regTomo:s("regTomo"), regLibro:s("regLibro"),
@@ -2702,9 +2980,38 @@ const data = {
   zonaTensionada:s("zonaTensionada"),
   ceeLetra:s("ceeLetra"), ceeRegistro:s("ceeRegistro"), ceeFecha:s("ceeFecha"),
 
-  duracion:s("duracion"), fechaInicio:s("fechaInicio"), fechaFin:s("fechaFin"),
-  renta:s("renta"), fianza:s("fianza")
+  // — Económico —
+  duracion:s("duracion"),
+  fechaInicio:s("fechaInicio"),
+  fechaFin:s("fechaFin"),
+  renta:s("renta"),
+  fianza:s("fianza"),
+  fianzaMeses:s("fianzaMeses")
 };
+// --- Coherencia Duración ↔ Fechas en PDF (robustez extra) ---
+function __addMonthsYMD(ymd, months){
+  const parts = String(ymd||"").split("-").map(n=>parseInt(n,10));
+  if (parts.length<3 || !parts[0] || !parts[1] || !parts[2]) return ymd;
+  const y0 = parts[0], m0 = parts[1]-1, d0 = parts[2];
+  const mTot = y0*12 + m0 + Number(months||0);
+  const y = Math.floor(mTot/12), m = mTot % 12;
+  const dim = new Date(y, m+1, 0).getDate();
+  const d = Math.min(d0, dim);
+  const out = new Date(y, m, d);
+  const ym = String(out.getMonth()+1).padStart(2,"0");
+  const yd = String(out.getDate()).padStart(2,"0");
+  return `${out.getFullYear()}-${ym}-${yd}`;
+}
+(function enforceDateCoherence(){
+  const durN = parseInt(data.duracion||"0",10);
+  if (durN>=1 && data.fechaInicio){
+    const calc = __addMonthsYMD(data.fechaInicio, durN);
+    if (!data.fechaFin || data.fechaFin !== calc){
+      data.fechaFin = calc;
+    }
+  }
+})();
+
 
     // === Cabecera ===
     let y = M;
@@ -2769,6 +3076,7 @@ if (data.ceeFecha)    ceeBits.push(`Fecha ${fmtFechaPDF(data.ceeFecha)}`);
     const inmueble = [
       ["Dirección de la vivienda arrendada", data.direccion || "—"],
       ["Localidad", data.localidad || "—"],
+               ["Provincia", data.provincia],
       ["Referencia catastral", data.refCatastral || "—"],
       ["Registro de la Propiedad", reg.length ? reg.join(" · ") : "—"],
       ["Zona de mercado residencial tensionado", data.zonaTensionada ? (data.zonaTensionada==="si"?"Sí":"No") : "—"],
@@ -2786,7 +3094,7 @@ const fmtEURpdf = v => {
       ["Duración", data.duracion ? `${data.duracion} meses` : "—"],
       ["Fechas", `del ${fmtFechaPDF(data.fechaInicio)} al ${fmtFechaPDF(data.fechaFin)}`],
       ["Renta (€)", fmtEURpdf(data.renta)],
-      ["Fianza (€)", fmtEURpdf(data.fianza)],
+      ["Fianza (€)", `${fmtEURpdf(data.fianza)}${data.fianzaMeses ? `  ·  (${data.fianzaMeses} mes/es)` : ""}`],
     ];
     y = tableKV(doc, econ, y, [170, W - M*2 - 170], {left:M, right:M}) + 18;
 
