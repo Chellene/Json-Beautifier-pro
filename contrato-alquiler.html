@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Contrato de Vivienda PRO — Generador de PDF estilo notaría por 1 €</title>
   <meta name="description" content="Genera un contrato de alquiler de vivienda profesional en minutos: rellena datos, elige cláusulas y descarga un PDF estilo notaría por 1 €. Pago seguro por PayPal." />
+  <!-- Palabras clave para motores de búsqueda -->
+  <meta name="keywords" content="contrato de alquiler, generador de contrato de alquiler, contrato de vivienda, arrendador, inquilino, alquiler vivienda, modelo contrato" />
   <link rel="canonical" href="https://www.jsonbeautifierpro.com/contrato-alquiler.html" />
   <link rel="alternate" hreflang="es-ES" href="https://www.jsonbeautifierpro.com/contrato-alquiler.html">
   <link rel="alternate" hreflang="x-default" href="https://www.jsonbeautifierpro.com/contrato-alquiler.html">
@@ -34,9 +36,77 @@
   "logo": "https://www.jsonbeautifierpro.com/logo.svg"
 }
 </script>
-<meta property="og:site_name" content="JSON Beautifier PRO" />
 
-
+<!-- ===== Sincronización de provincia desde la localidad cuando el usuario selecciona una opción del datalist
+     Esta capa extra no depende del dataset online. Intenta deducir la provincia a partir del valor
+     del campo de localidad y de las opciones del datalist. Si el valor contiene un guion largo (—),
+     o si la opción del datalist tiene un atributo label con formato "Municipio — Provincia", se extrae
+     la provincia y se establece en el <select id="provincia">. Además, si está activada la opción
+     de fianza automática, recalcula los meses y la fianza llamando a applyAutoMeses(). -->
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const loc  = document.getElementById('localidad');
+  const prov = document.getElementById('provincia');
+  if (!loc || !prov) return;
+  function norm(s){ return String(s||'').trim().toLowerCase(); }
+  function setProvinciaFromLocalidad(){
+    const v = (loc.value || '').trim();
+    if (!v) return;
+    let provName = '';
+    // Buscar en el datalist por coincidencia exacta (case-insensitive)
+    const dl = document.getElementById('dlMunicipios');
+    if (dl && dl.options){
+      const matchOpt = Array.from(dl.options).find(o => norm(o.value) === norm(v));
+      if (matchOpt){
+        // Si tiene atributo label (o propiedad .label) con formato "Muni — Prov · CCAA", lo usamos
+        const labelAttr = matchOpt.getAttribute('label') || matchOpt.label || '';
+        if (labelAttr && labelAttr.includes('—')){
+          const parts = labelAttr.split('—');
+          if (parts.length > 1){
+            provName = parts[1].split('·')[0].trim();
+          }
+        }
+        // Si no obtenemos provincia del label, intentamos del valor si contiene guion
+        if (!provName && matchOpt.value.includes('—')){
+          const vp = matchOpt.value.split('—');
+          if (vp.length > 1){ provName = vp[1].split('·')[0].trim(); }
+        }
+      }
+    }
+    // Si no hay opción en datalist, pero el texto contiene un guion largo (—), parseamos directo
+    if (!provName && v.includes('—')){
+      const vp = v.split('—');
+      if (vp.length > 1) provName = vp[1].split('·')[0].trim();
+    }
+    // Buscar la provincia en las opciones del select (por value o texto)
+    if (provName){
+      const opts = Array.from(prov.options);
+      for (const opt of opts){
+        const text = String(opt.textContent||'').trim();
+        const value = String(opt.value||'').trim();
+        if (norm(text) === norm(provName) || norm(value) === norm(provName)){
+          if (prov.value !== opt.value){
+            prov.value = opt.value;
+            try{ prov.dispatchEvent(new Event('change',{bubbles:true})); }catch(_){}
+          }
+          break;
+        }
+      }
+    }
+    // Si existe la función applyAutoMeses y está activa la fianza automática, recalculamos
+    try{
+      const auto = document.getElementById('fianzaAuto');
+      if (typeof applyAutoMeses === 'function' && auto && auto.checked){
+        applyAutoMeses();
+      }
+    }catch(_){}
+  }
+  // Escuchamos tanto input como change y blur para sincronizar
+  loc.addEventListener('input', setProvinciaFromLocalidad);
+  loc.addEventListener('change', setProvinciaFromLocalidad);
+  loc.addEventListener('blur', setProvinciaFromLocalidad);
+});
+</script>
 
   <!-- Schema.org: Product -->
 <script type="application/ld+json">
@@ -526,7 +596,7 @@ button, .chip, .seg label{ touch-action: manipulation; }
     -->
     <div class="container head-wrap">
       <!-- Logotipo: reducido y alineado a la izquierda -->
-      <img class="logo" src="og-contrato-vivienda.png" alt="Generador de contrato de vivienda" />
+      <img class="logo" src="og-contrato-vivienda.png" alt="Generador de contrato de vivienda" loading="lazy" />
       <!-- Título con degradado y distintivo PRO -->
       <h1 class="title"><span class="text">Contrato de Vivienda</span> <span class="badge">PRO</span></h1>
       <!-- Bloque de llamada a la acción: se mantiene intacta la funcionalidad -->
@@ -586,17 +656,24 @@ button, .chip, .seg label{ touch-action: manipulation; }
               <div id="step1" class="form-grid" aria-labelledby="s1">
                 <h3 id="s1" style="grid-column:1/-1;margin:.2rem 0">Datos del contrato</h3>
                 <h3 style="grid-column:1/-1;margin:.2rem 0">Partes del contrato</h3>
-                 <label>Nombre del arrendador
-  <input id="arrendador" name="arrendador" required
-         autocomplete="section-arr name" aria-describedby="e-arrendador" />
-</label>
-<label>DNI/NIE del arrendador
-  <input id="dniArrendador" name="dniArrendador" required
-         autocomplete="off"
-         placeholder="Ej.: 12345678Z o X1234567L" />
-</label>
-<div id="e-arrendador" class="err"></div>
-<div id="e-dniArrendador" class="err"></div>
+                <!-- Datos del arrendador: cada campo obligatorio se agrupa en su propio contenedor con slot de error -->
+                <div class="field">
+                  <label>Nombre del arrendador
+                    <input id="arrendador" name="arrendador" required
+                           autocomplete="section-arr name"
+                           aria-describedby="e-arrendador" />
+                  </label>
+                  <div id="e-arrendador" class="err"></div>
+                </div>
+                <div class="field">
+                  <label>DNI/NIE del arrendador
+                    <input id="dniArrendador" name="dniArrendador" required
+                           autocomplete="off"
+                           placeholder="Ej.: 12345678Z o X1234567L"
+                           aria-describedby="e-dniArrendador" />
+                  </label>
+                  <div id="e-dniArrendador" class="err"></div>
+                </div>
 
 
 <!-- Tipo de persona (Arrendador) + campos de empresa (se muestran solo si es jurídica) -->
@@ -606,25 +683,39 @@ button, .chip, .seg label{ touch-action: manipulation; }
     <option value="juridica">Persona jurídica (empresa)</option>
   </select>
 </label>
-<label class="onlyJ" data-for="arr">Razón social (si es empresa)
-  <input id="razonArr" placeholder="Ej.: Inmobiliaria XYZ, S.L." />
-</label>
-<div class="err"></div><div class="err"></div>
-
-<label class="onlyJ" data-for="arr">CIF/NIF empresa
-  <input id="cifArr" name="cifArr" autocomplete="off" placeholder="Ej.: B12345678" />
-</label>
-<label class="onlyJ" data-for="arr">Representante
-  <input id="repArr" name="repArr" autocomplete="off" placeholder="Nombre y apellidos" />
-</label>
-<div class="err"></div><div class="err"></div>
-<label class="onlyJ" data-for="arr">DNI del representante
-  <input id="dniRepArr" name="dniRepArr" autocomplete="off" placeholder="Ej.: 12345678Z" />
-</label>
+<!-- Campos de empresa para arrendador (solo visibles si elige persona jurídica).
+     Cada campo obligatorio tiene su propio slot de error asociado -->
+<div class="field onlyJ" data-for="arr">
+  <label>Razón social (si es empresa)
+    <input id="razonArr" placeholder="Ej.: Inmobiliaria XYZ, S.L."
+           aria-describedby="e-razonArr" />
+  </label>
+  <div id="e-razonArr" class="err"></div>
+</div>
+<div class="field onlyJ" data-for="arr">
+  <label>CIF/NIF empresa
+    <input id="cifArr" name="cifArr" autocomplete="off" placeholder="Ej.: B12345678"
+           aria-describedby="e-cifArr" />
+  </label>
+  <div id="e-cifArr" class="err"></div>
+</div>
+<div class="field onlyJ" data-for="arr">
+  <label>Representante
+    <input id="repArr" name="repArr" autocomplete="off" placeholder="Nombre y apellidos"
+           aria-describedby="e-repArr" />
+  </label>
+  <div id="e-repArr" class="err"></div>
+</div>
+<div class="field onlyJ" data-for="arr">
+  <label>DNI del representante
+    <input id="dniRepArr" name="dniRepArr" autocomplete="off" placeholder="Ej.: 12345678Z"
+           aria-describedby="e-dniRepArr" />
+  </label>
+  <div id="e-dniRepArr" class="err"></div>
+</div>
 <label>Domicilio arrendador (opcional)
   <input id="domicilioArr" placeholder="C/ …, nº…, localidad" />
 </label>
-<div class="err"></div><div class="err"></div>
 
 <!-- Contacto a efectos de notificaciones -->
 <label>Email arrendador (notificaciones)
@@ -633,69 +724,105 @@ button, .chip, .seg label{ touch-action: manipulation; }
 <label>Teléfono arrendador
   <input id="telArr" inputmode="tel" placeholder="+34 …" />
 </label>
-<div class="err"></div><div class="err"></div>
 
 
-                <label>Nombre del inquilino
-                  <input id="inquilino" name="inquilino" required
-       autocomplete="section-inq name" aria-describedby="e-inq" />
-
+                <!-- Datos del inquilino: campos obligatorios con su propio contenedor y error asociado -->
+                <div class="field">
+                  <label>Nombre del inquilino
+                    <input id="inquilino" name="inquilino" required
+                           autocomplete="section-inq name"
+                           aria-describedby="e-inq" />
+                  </label>
+                  <div id="e-inq" class="err"></div>
+                </div>
+                <div class="field">
+                  <label>DNI/NIE del inquilino
+                    <input id="dniInquilino" name="dniInquilino" required
+                           autocomplete="off"
+                           placeholder="Ej.: 12345678Z o X1234567L"
+                           aria-describedby="e-dni" />
+                  </label>
+                  <div id="e-dni" class="err"></div>
+                </div>
+                <!-- Tipo de persona (Inquilino) -->
+                <label>Tipo de persona (inquilino)
+                  <select id="tipoInquilino">
+                    <option value="fisica" selected>Persona física</option>
+                    <option value="juridica">Persona jurídica (empresa)</option>
+                  </select>
                 </label>
-                <label>DNI/NIE del inquilino
-  <input id="dniInquilino" name="dniInquilino" required
-       autocomplete="off" aria-describedby="e-dni"
-       placeholder="Ej.: 12345678Z o X1234567L" />
-</label>
-                <div id="e-inq" class="err"></div><div id="e-dni" class="err"></div>
-<!-- Tipo de persona (Inquilino) -->
-<label>Tipo de persona (inquilino)
-  <select id="tipoInquilino">
-    <option value="fisica" selected>Persona física</option>
-    <option value="juridica">Persona jurídica (empresa)</option>
-  </select>
-</label>
-<label class="onlyJ" data-for="inq">Razón social (si es empresa)
-  <input id="razonInq" />
-</label>
-<div class="err"></div><div class="err"></div>
-<label class="onlyJ" data-for="inq">CIF/NIF empresa
-  <input id="cifInq" name="cifInq" autocomplete="off" placeholder="Ej.: B12345678" />
-</label>
-<label class="onlyJ" data-for="inq">Representante
-  <input id="repInq" name="repInq" autocomplete="off" placeholder="Nombre y apellidos" /></label>
-<div class="err"></div><div class="err"></div>
-
-<label class="onlyJ" data-for="inq">DNI del representante
-  <input id="dniRepInq" name="dniRepInq" autocomplete="off" placeholder="Ej.: 12345678Z" />
-</label>
+                <!-- Campos de empresa para inquilino (solo visibles si elige persona jurídica) -->
+                <div class="field onlyJ" data-for="inq">
+                  <label>Razón social (si es empresa)
+                    <input id="razonInq"
+                           aria-describedby="e-razonInq" />
+                  </label>
+                    <div id="e-razonInq" class="err"></div>
+                </div>
+                <div class="field onlyJ" data-for="inq">
+                  <label>CIF/NIF empresa
+                    <input id="cifInq" name="cifInq" autocomplete="off" placeholder="Ej.: B12345678"
+                           aria-describedby="e-cifInq" />
+                  </label>
+                  <div id="e-cifInq" class="err"></div>
+                </div>
+                <div class="field onlyJ" data-for="inq">
+                  <label>Representante
+                    <input id="repInq" name="repInq" autocomplete="off" placeholder="Nombre y apellidos"
+                           aria-describedby="e-repInq" />
+                  </label>
+                  <div id="e-repInq" class="err"></div>
+                </div>
+                <div class="field onlyJ" data-for="inq">
+                  <label>DNI del representante
+                    <input id="dniRepInq" name="dniRepInq" autocomplete="off" placeholder="Ej.: 12345678Z"
+                           aria-describedby="e-dniRepInq" />
+                  </label>
+                  <div id="e-dniRepInq" class="err"></div>
+                </div>
 
 <label>Email inquilino (notificaciones)
   <input id="emailInq" type="email" placeholder="ejemplo@mail.com" />
 </label>
-<div class="err"></div><div class="err"></div>
-
 <label>Teléfono inquilino
   <input id="telInq" inputmode="tel" placeholder="+34 …" />
-</label><div class="err"></div><div class="err"></div>
+</label>
 <h3 style="grid-column:1/-1;margin:.2rem 0">Datos de la vivienda</h3>
-<label>Dirección completa
-  <input id="direccion" name="direccion" required
-         autocomplete="section-inmueble street-address" aria-describedby="e-dir" />
-</label>
-<label>Localidad
-  <input id="localidad" name="localidad" required
-         autocomplete="section-inmueble address-level2" aria-describedby="e-loc" />
-</label>
-
+<!-- Dirección completa -->
 <div class="field">
-  <label for="provincia">Provincia</label>
-  <select id="provincia" required></select>
-  <div id="e-provincia" class="err"></div>
+  <label>Dirección completa
+    <input id="direccion" name="direccion" required
+           autocomplete="section-inmueble street-address"
+           aria-describedby="e-dir" />
+  </label>
+  <div id="e-dir" class="err" aria-live="polite"></div>
+</div>
+<!-- Localidad -->
+<div class="field">
+  <label>Localidad
+    <input id="localidad" name="localidad" required autocomplete="address-level2"
+           placeholder="Ej.: Argés" list="dlMunicipios" aria-describedby="e-loc" />
+  </label>
+  <datalist id="dlMunicipios"></datalist>
+  <div id="e-loc" class="err"></div>
+</div>
+<!-- Código postal y provincia (alineados) -->
+<!-- Agrupar ambos campos en sus propios contenedores `.field` para que las ayudas de error queden justo debajo -->
+<div class="field">
+  <label>Código postal
+    <input id="cp" name="cp"
+           inputmode="numeric" maxlength="5" pattern="\d{5}" required
+           placeholder="Ej.: 45122" aria-describedby="e-cp" />
+  </label>
+  <div id="e-cp" class="err"></div>
 </div>
 
-
-<div id="e-dir" class="err" aria-live="polite"></div>
-<div id="e-loc" class="err"></div>
+<div class="field">
+  <label>Provincia
+    <select id="provincia" required aria-describedby="e-provincia"></select>
+  </label>
+  <div id="e-provincia" class="err"></div>
+</div>
 
 
 
@@ -752,28 +879,41 @@ button, .chip, .seg label{ touch-action: manipulation; }
 </label>
 <div class="err"></div><div class="err"></div>
 <h3 style="grid-column:1/-1;margin:.2rem 0">Condiciones económicas</h3>
-<label>Duración (meses)
-                  <input id="duracion" type="number" min="1" required aria-describedby="e-dur" />
-                </label>
-                <div id="e-dur" class="err"></div>
+<!-- Cada condición económica tiene su propio contenedor y slot de error -->
+<div class="field">
+  <label>Duración (meses)
+    <input id="duracion" type="number" min="1" required aria-describedby="e-dur" />
+  </label>
+  <div id="e-dur" class="err"></div>
+</div>
 
+<div class="field">
+  <label>Fecha de inicio
+    <input id="fechaInicio" type="date" required aria-describedby="e-fi" />
+  </label>
+  <div id="e-fi" class="err"></div>
+</div>
 
-                <label>Fecha de inicio
-                  <input id="fechaInicio" type="date" required aria-describedby="e-fi" />
-                </label>
-                <label>Fecha de fin
-                  <input id="fechaFin" type="date" required aria-describedby="e-ff" />
-                </label>
-                <div id="e-fi" class="err"></div><div id="e-ff" class="err"></div>
+<div class="field">
+  <label>Fecha de fin
+    <input id="fechaFin" type="date" required aria-describedby="e-ff" />
+  </label>
+  <div id="e-ff" class="err"></div>
+</div>
 
-                <label>Precio mensual (€)
-                  <input id="renta" type="number" min="0" step="0.01" required aria-describedby="e-renta" />
-                </label>
-<!-- NUEVO: cálculo por meses -->
-<label>Meses de fianza
-  <input id="fianzaMeses" type="number" min="0" step="1" value="1" aria-describedby="e-fianzaMeses">
-  <div class="err" id="e-fianzaMeses"></div>
-</label>
+<div class="field">
+  <label>Precio mensual (€)
+    <input id="renta" type="number" min="0" step="0.01" required aria-describedby="e-renta" />
+  </label>
+  <div id="e-renta" class="err"></div>
+</div>
+
+<div class="field">
+  <label>Meses de fianza
+    <input id="fianzaMeses" type="number" min="0" step="1" value="1" aria-describedby="e-fianzaMeses" />
+  </label>
+  <div id="e-fianzaMeses" class="err"></div>
+</div>
 
 <!-- Toggle AUTO rectangular minimalista -->
 <label class="toggle-field" id="fianzaAutoField" style="grid-column:1/-1">
@@ -781,10 +921,12 @@ button, .chip, .seg label{ touch-action: manipulation; }
   <input type="checkbox" id="fianzaAuto" class="toggle-box" checked>
 </label>
 
-                <label>Fianza (€)
-                  <input id="fianza" type="number" min="0" step="0.01" required aria-describedby="e-fianza" />
-                </label>
-                <div id="e-renta" class="err"></div><div id="e-fianza" class="err"></div>
+<div class="field">
+  <label>Fianza (€)
+    <input id="fianza" type="number" min="0" step="0.01" required aria-describedby="e-fianza" />
+  </label>
+  <div id="e-fianza" class="err"></div>
+</div>
               </div>
               <!-- PASO 2 -->
               <div id="step2" class="form-grid full" style="display:none" aria-labelledby="s2">
@@ -1155,55 +1297,52 @@ const fmtEUR = v => {
 function nearestErrSlot(inputEl){
   if (!inputEl) return null;
 
-  // 1) Mapeo explícito: <div id="e-<id>>…</div>
+  // 1) Slot explícito: <div id="e-<id>>
   const explicit = document.getElementById("e-" + inputEl.id);
   if (explicit) return explicit;
 
-  // 2) Detectar patrón grid: label, label, err, err  (asignar 1er err al 1er label y 2º err al 2º label)
+  // 2) Si el input está dentro de un <label>, intentamos localizar el .err contiguo
   const label = inputEl.closest("label");
   if (label){
+    // Patrón típico: label, label, .err, .err
     const next = label.nextElementSibling;
-    if (next && next.tagName && next.tagName.toUpperCase()==="LABEL"){
+    const isLabel = n => n && n.tagName && n.tagName.toUpperCase() === "LABEL";
+    if (isLabel(next)){
       const firstErr  = next.nextElementSibling;
-      const secondErr = firstErr?.nextElementSibling;
-      if (firstErr?.classList?.contains("err") && secondErr?.classList?.contains("err")){
-        const isSecond = (label.previousElementSibling && label.previousElementSibling.tagName && label.previousElementSibling.tagName.toUpperCase()==="LABEL");
-        return isSecond ? secondErr : firstErr;
+      const secondErr = firstErr ? firstErr.nextElementSibling : null;
+      const isErr = n => n && n.classList && n.classList.contains("err");
+      if (isErr(firstErr) && isErr(secondErr)){
+        const prev = label.previousElementSibling;
+        const prevIsLabel = isLabel(prev);
+        return prevIsLabel ? secondErr : firstErr;
       }
     }
 
-    // 3) Escanear varios hermanos hacia delante (salta <div> “espaciadores”)
+    // Escaneo acotado de hermanos hacia delante
     let probe = label.nextElementSibling;
-    for (let i=0; i<6 && probe; i++, probe = probe.nextElementSibling){
+    for (let i = 0; i < 8 && probe; i++, probe = probe.nextElementSibling){
       if (probe.classList && probe.classList.contains("err")) return probe;
     }
 
-    // 4) (raro) mirar 1–2 hermanos hacia atrás
-    probe = label.previousElementSibling;
-    for (let i=0; i<2 && probe; i++, probe = probe.previousElementSibling){
-      if (probe.classList && probe.classList.contains("err")) return probe;
-    }
-
-    // 5) Fallback: dentro del mismo grid, coge el .err posterior más cercano y vacío
-    const grid = label.parentElement;
+    // Búsqueda dentro de la rejilla del Paso 1
+    const grid = document.getElementById("step1");
     if (grid){
       const errs = Array.from(grid.querySelectorAll(".err"));
-      // uno que esté DESPUÉS de la etiqueta y vacío
+      // Preferir uno que esté después del label y vacío
       const afterEmpty = errs.find(e =>
-  (label.compareDocumentPosition(e) & Node.DOCUMENT_POSITION_FOLLOWING) && !e.textContent.trim()
-);
+        (label.compareDocumentPosition(e) & Node.DOCUMENT_POSITION_FOLLOWING) && !e.textContent.trim()
+      );
       if (afterEmpty) return afterEmpty;
-      // cualquier vacío
+      // Si no, cualquiera vacío
       const anyEmpty = errs.find(e => !e.textContent.trim());
       if (anyEmpty) return anyEmpty;
-      // el primero del grid como último recurso
+      // Último recurso: el primero
       return errs[0] || null;
     }
   }
 
   return null;
 }
-// Crea mapeo explícito e-<id> ⇄ .err para todos los campos del Paso 1
 function wireErrorSlots(){
   const grid = document.getElementById("step1");
   if (!grid) return;
@@ -1313,6 +1452,7 @@ if (tI==="juridica"){
   check("dniInquilino", validateDNIorNIE($("dniInquilino")?.value), "DNI/NIE no válido.");
 }
       check("localidad", !!$("localidad")?.value?.trim());
+      check("cp", /^\d{5}$/.test($("cp")?.value||""), "CP de 5 dígitos.");
       check("provincia", !!$("provincia")?.value?.trim(), "Selecciona una provincia");
       check("duracion", Number($("duracion")?.value)>=1, "Mínimo 1 mes.");
       check("fechaInicio", !!fi);
@@ -1333,6 +1473,12 @@ if (!ok){ scrollToFirstInvalidInStep(); }
   ok = (tA==="juridica") ? true : (el.value.length>=9 && validateDNIorNIE(el.value));
   break;
 }
+
+case "cp": {
+      const v = (el.value||"").trim();
+      ok = /^\d{5}$/.test(v);
+      break;
+    }
 case "dniInquilino": {
   const tI = $("tipoInquilino")?.value || "fisica";
   el.value = (el.value||"").toUpperCase().replace(/\s+/g,"");
@@ -1445,6 +1591,16 @@ setErr(el.id, ok, ok ? "" : errMsg(el.id));
 return ok;
 
     }
+
+function errMsg(id){
+  switch(id){
+    // ...
+    case "cp":          return "CP de 5 dígitos.";
+    // ...
+    default:            return "Campo obligatorio";
+  }
+}
+
     function validateLive(full=false){
   const ids = full
     ? Array.from(document.querySelectorAll('#step1 input, #step1 select, #step1 textarea'))
@@ -1643,7 +1799,7 @@ html += lineaA + lineaI;
 html += `<p><strong>Contacto arrendador:</strong> ${escH(g("emailArr")||"—")} · ${escH(g("telArr")||"—")}</p>`;
 html += `<p><strong>Contacto arrendatario:</strong> ${escH(g("emailInq")||"—")} · ${escH(g("telInq")||"—")}</p>`;
 html += `<p><strong>Dirección de la vivienda arrendada:</strong> ${escH(g("direccion"))}</p>`;
-html += `<p><strong>Localidad:</strong> ${escH(g("localidad"))} — <strong>Provincia:</strong> ${escH(g("provincia"))} — <strong>Duración:</strong> ${escH(g("duracion")||"—")} meses</p>`;
+html += `<p><strong>Localidad:</strong> ${escH(g("localidad"))} — <strong>CP:</strong> ${escH(g("cp")||"—")} — <strong>Provincia:</strong> ${escH(g("provincia"))} — <strong>Duración:</strong> ${escH(g("duracion")||"—")} meses</p>`;
 html += `<p><strong>Fechas:</strong> ${escH(fmtFecha(g("fechaInicio")))} → ${escH(fmtFecha(g("fechaFin")))}</p>`;
 html += `<p><strong>Precio:</strong> ${escH(fmtEUR(g("renta")))} € — <strong>Fianza:</strong> ${escH(fmtEUR(g("fianza")))} €${g("fianzaMeses")?` <em> (${escH(g("fianzaMeses"))} mes/es)</em>`:""}</p>`;
 
@@ -1938,8 +2094,12 @@ if (localStorage.getItem(PERSIST_K) === "1") {
   populate();
 }
 
-renderMandatory(); renderPicker(); countClauses(); toggleAnexEditors();
-progress(); refreshResumen(); refreshPreview(); wireErrorSlots();
+      renderMandatory(); renderPicker(); countClauses(); toggleAnexEditors();
+progress(); refreshResumen(); refreshPreview();
+      // Asignar slots de error explícitos y pintar los obligatorios al cargar
+wireErrorSlots();
+      // Valida todos los campos obligatorios inicialmente para que se marquen en rojo
+validar();
 
 
       // inputs + validación en vivo (todos los campos)
@@ -1959,7 +2119,7 @@ if (["dniArrendador","dniInquilino","dniRepArr","dniRepInq","cifArr","cifInq"].i
         });
         el.addEventListener("blur", ()=> validateField(el));
       });
-      validateLive(); // estado inicial verde/rojo
+      // validateLive(); // desactivado: no pintar en rojo al cargar
 
 // Si cambian datos núcleo, invalida vinculación de pago
 ["tipoArrendador","arrendador","razonArr","cifArr","repArr","dniRepArr",
@@ -2127,7 +2287,7 @@ function toggleJuridica(which){
 
 document.getElementById("tipoArrendador")?.addEventListener("change", ()=>{ 
   toggleJuridica("arr"); saveState(); refreshResumen(); refreshPreview(); 
-  validateLive(true); // << revalida TODO para limpiar avisos viejos
+  // validateLive(true); // desactivado en carga inicial
   renderPicker($("clauseSearch")?.value || "");
 });
 document.getElementById("tipoInquilino")?.addEventListener("change", ()=>{ 
@@ -2138,7 +2298,7 @@ document.getElementById("tipoInquilino")?.addEventListener("change", ()=>{
 
 // Primera pasada
 toggleJuridica("arr"); toggleJuridica("inq");
-validateLive(true);// asegura estado neutro en opcionales y válido en requeridos
+// validateLive(true);// desactivado en carga inicial: no marcar errores aún
 
 
       // radios jurídico/claro → look chip azul
@@ -2971,6 +3131,7 @@ const data = {
   direccion: s("direccion"),
   localidad: s("localidad"),
   provincia: s("provincia"),
+  cp: s("cp"),
 
   // — CEE / mercado —
   refCatastral:s("refCatastral"),
@@ -3076,7 +3237,8 @@ if (data.ceeFecha)    ceeBits.push(`Fecha ${fmtFechaPDF(data.ceeFecha)}`);
     const inmueble = [
       ["Dirección de la vivienda arrendada", data.direccion || "—"],
       ["Localidad", data.localidad || "—"],
-               ["Provincia", data.provincia],
+               ["Código postal", data.cp || "—"], 
+      ["Provincia", data.provincia],
       ["Referencia catastral", data.refCatastral || "—"],
       ["Registro de la Propiedad", reg.length ? reg.join(" · ") : "—"],
       ["Zona de mercado residencial tensionado", data.zonaTensionada ? (data.zonaTensionada==="si"?"Sí":"No") : "—"],
@@ -3411,7 +3573,7 @@ if (wantNotas) {
       }
     }
 
-    // API pública para consola (debe quedar DENTRO del <script>)
+    // API pública para consola (debe quedar DENTRO del <\/script><script>)
     window._generarPDFCore = _generarPDFCore;
     window.generarPDF      = _generarPDFCore;   // consola: await generarPDF();
     window.descargarPDF    = _generarPDFCore;   // alias
@@ -3589,5 +3751,1215 @@ window.__CLAUSES_COMPOSE = function(lang){
 };
 })();
 </script>
+
+<script>
+/* ===== Municipios (datalist) + provincia auto + zona tensionada (ONLINE con filtro CCAA) ===== */
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const norm = (s) => (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const LOC  = $('localidad');
+  const PROV = $('provincia');
+  const ZT   = $('zonaTensionada');
+  const DL   = $('dlMunicipios');
+
+  if (!LOC || !DL || !ZT) return;
+
+  const byName = new Map();
+
+  async function loadMunicipios(){
+    const SOURCES = [
+      '/data/municipios-es.min.json',
+      'data/municipios-es.min.json',
+    ];
+    let records = [];
+    for (const url of SOURCES){
+      try{
+        const res = await fetch(url, {mode:'cors',credentials:'omit'});
+        if (!res.ok) continue;
+        const data = await res.json();
+
+        if (Array.isArray(data) && typeof data[0] === 'string') {
+          records = data.map(v => ({ muni:v, prov:'', ccaa:'' }));
+        } else if (Array.isArray(data)) {
+          records = data.map(o => ({
+            muni: o.m || o.nm || o.municipio || o.nombre || o.name || o.MUNICIPIO || o.muni || '',
+            prov: o.p || o.pr || o.provincia || o.prov || o.PROVINCIA || '',
+            ccaa: o.ccaa || o.cc || o.CCAA || ''
+          })).filter(x => x.muni);
+        } else if (data && Array.isArray(data.municipios)) {
+          records = data.municipios;
+        }
+        if (records.length) break;
+      }catch(_){}
+    }
+
+    DL.innerHTML = '';
+    const frag = document.createDocumentFragment();
+    const seen = new Set();
+    records.forEach(r => {
+      const key = r.muni + '|' + (r.prov||''); if (seen.has(key)) return; seen.add(key);
+      const opt = document.createElement('option');
+      opt.value = r.muni;
+      opt.label = r.prov ? `${r.muni} — ${r.prov}${r.ccaa?` · ${r.ccaa}`:''}` : r.muni;
+      frag.appendChild(opt);
+
+      const k = norm(r.muni);
+      if (!byName.has(k)) byName.set(k, []);
+      byName.get(k).push(r);
+    });
+    DL.appendChild(frag);
+  }
+
+  // crea ztInfo una vez
+  let ztInfo = $('ztInfo');
+  if (!ztInfo){
+    ztInfo = document.createElement('div');
+    ztInfo.id = 'ztInfo';
+    ztInfo.style.cssText = 'font-size:12.5px;color:#475569;margin-top:6px';
+    ZT.parentElement.insertAdjacentElement('afterend', ztInfo);
+  }
+
+  // Consulta online filtrada por CCAA
+  async function fetchZTOnline(q, ccaa){
+    const n = s => (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    const inText = (txt,term) => n(txt||'').includes(n(term||''));
+    const cc = n(ccaa||'');
+
+    const [catTxt, navTxt, boeTxt] = await Promise.all([
+      fetch('https://r.jina.ai/http://habitatge.gencat.cat/ca/ambits/preus-ingressos-i-zones/limit-preu-lloguer/llistat-municipis-zmrt/').then(r=>r.text()).catch(()=>'' ),
+      fetch('https://r.jina.ai/https://www.navarra.es/es/-/nota-prensa/navarra-declara-oficialmente-21-municipios-como-zona-de-mercado-tensionado').then(r=>r.text()).catch(()=>'' ),
+      fetch('https://r.jina.ai/https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-15728').then(r=>r.text()).catch(()=>'' )
+    ]);
+
+    let tension = null;
+    if (!tension && cc === 'cataluna' && inText(catTxt,q)) {
+      tension = { ccaa:'Cataluña', fuente:'Generalitat — ZMRT',
+                  url:'https://habitatge.gencat.cat/ca/ambits/preus-ingressos-i-zones/limit-preu-lloguer/llistat-municipis-zmrt/' };
+    }
+    if (!tension && cc === 'navarra' && inText(navTxt,q)) {
+      tension = { ccaa:'Navarra', fuente:'Gobierno de Navarra',
+                  url:'https://www.navarra.es/es/-/nota-prensa/navarra-declara-oficialmente-21-municipios-como-zona-de-mercado-tensionado' };
+    }
+    if (!tension && (cc==='galicia' || cc.includes('vasco') || cc==='navarra') && inText(boeTxt,q)) {
+      tension = { ccaa: (cc==='galicia'?'Galicia': cc.includes('vasco')?'País Vasco':'España'),
+                  fuente:'BOE-A-2025-15728',
+                  url:'https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-15728' };
+    }
+    return { tension };
+  }
+
+  async function setZTFromMunicipio(muni, ccaa){
+    if (!muni){ ztInfo.textContent=''; return; }
+    const cand = byName.get(norm(muni)) || [];
+    const ccaaHint = ccaa || (cand[0]?.ccaa || '');
+    ztInfo.textContent = 'Consultando fuentes oficiales…';
+    try{
+      const info = await fetchZTOnline(muni, ccaaHint);
+      if (info?.tension){
+        ZT.value = 'si';
+        ztInfo.innerHTML = `Zona tensionada: <b>Sí</b>. Fuente: <a href="${info.tension.url}" target="_blank" rel="noopener">${info.tension.fuente}</a>.`;
+      } else {
+        ZT.value = 'no';
+        // No se encontró la zona tensionada: dejamos ztInfo vacío y
+        // delegamos la presentación de la ayuda a renderZT(), que mostrará
+        // los enlaces diferenciados y el resumen de Wikipedia de la localidad.
+        ztInfo.textContent = '';
+        try {
+          const provName = (typeof PROV !== 'undefined' && PROV) ? PROV.value : (document.getElementById('provincia')?.value || '');
+          renderZT(muni, provName);
+        } catch (_) {}
+      }
+      try{ ZT.dispatchEvent(new Event('change',{bubbles:true})); }catch(_){}
+    }catch(_){ ztInfo.textContent='No se pudo consultar ahora. Puedes marcarlo manualmente.'; }
+  }
+
+  function autoSetProvincia(){
+    const v = (LOC.value||'').trim(); if (!v){ ztInfo.textContent=''; return; }
+    const cand = byName.get(norm(v)) || [];
+    if (cand.length && PROV){
+      const want = String(cand[0].prov||'');
+      const opt = Array.from(PROV.options).find(o => norm(o.value)===norm(want) || norm(o.textContent)===norm(want));
+      if (opt){ PROV.value = opt.value; try{ PROV.dispatchEvent(new Event('change',{bubbles:true})); }catch(_){} }
+    }
+    void setZTFromMunicipio(v, (byName.get(norm(v))||[])[0]?.ccaa || '');
+  }
+
+  // listeners (UNO de cada)
+  LOC.addEventListener('input', autoSetProvincia);
+  LOC.addEventListener('change', autoSetProvincia);
+  LOC.addEventListener('blur',   autoSetProvincia);
+
+  // carga inicial
+  loadMunicipios().then(autoSetProvincia);
+})();
+</script>
+
+
+
+<script>
+// ===== ZONAS TENSIONADAS + MUNICIPIOS (Bloque único y limpio) =====
+(() => {
+  const $ = s => document.querySelector(s);
+  const norm = s => (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const LOC_ID = 'localidad', PROV_ID = 'provincia', ZT_ID = 'zonaTensionada';
+
+  // --- Tabla Provincia -> CCAA (para derivar comunidad cuando el JSON no la traiga) ---
+  const PROV_TO_CCAA = {
+    "a coruña":"galicia","lugo":"galicia","ourense":"galicia","pontevedra":"galicia",
+    "asturias":"asturias",
+    "cantabria":"cantabria",
+    "alava":"pais vasco","Álava":"pais vasco","alava/áraba":"pais vasco","gipuzkoa":"pais vasco","bizkaia":"pais vasco",
+    "navarra":"navarra",
+    "la rioja":"la rioja",
+    "huesca":"aragon","zaragoza":"aragon","teruel":"aragon",
+    "barcelona":"cataluna","girona":"cataluna","lleida":"cataluna","tarragona":"cataluna",
+    "madrid":"madrid",
+    "avila":"castilla y leon","ávila":"castilla y leon","burgos":"castilla y leon","leon":"castilla y leon","león":"castilla y leon","palencia":"castilla y leon","salamanca":"castilla y leon","segovia":"castilla y leon","soria":"castilla y leon","valladolid":"castilla y leon","zamora":"castilla y leon",
+    "albacete":"castilla-la mancha","ciudad real":"castilla-la mancha","cuenca":"castilla-la mancha","guadalajara":"castilla-la mancha","toledo":"castilla-la mancha",
+    "badajoz":"extremadura","caceres":"extremadura","cáceres":"extremadura",
+    "sevilla":"andalucia","cadiz":"andalucia","cádiz":"andalucia","cordoba":"andalucia","córdoba":"andalucia","huelva":"andalucia","jaen":"andalucia","jaén":"andalucia","granada":"andalucia","almeria":"andalucia","almería":"andalucia","malaga":"andalucia","málaga":"andalucia",
+    "alicante":"comunitat valenciana","castellon":"comunitat valenciana","castellón":"comunitat valenciana","valencia":"comunitat valenciana",
+    "murcia":"murcia",
+    "illes balears":"illes balears","islas baleares":"illes balears","balears":"illes balears",
+    "las palmas":"canarias","santa cruz de tenerife":"canarias",
+    "ceuta":"ceuta","melilla":"melilla"
+  };
+
+  // --- Fuente por CCAA (solo 1 URL por consulta) ---
+  function pickSource(ccaa){
+    const cc = norm(ccaa);
+    if (cc === 'cataluna') {
+      return { url:'https://habitatge.gencat.cat/ca/ambits/preus-ingressos-i-zones/limit-preu-lloguer/llistat-municipis-zmrt/', fuente:'Generalitat — ZMRT' };
+    }
+    if (cc === 'navarra') {
+      return { url:'https://www.navarra.es/es/-/nota-prensa/navarra-declara-oficialmente-21-municipios-como-zona-de-mercado-tensionado', fuente:'Gobierno de Navarra' };
+    }
+    if (cc === 'galicia' || cc.includes('vasco') || cc === 'navarra') {
+      // BOE 2025 (A Coruña, Donostia y Navarra)
+      return { url:'https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-15728', fuente:'BOE-A-2025-15728' };
+    }
+    return null;
+  }
+
+  // --- Carga de municipios local (/data/municipios-es.min.json) ---
+  const byName = new Map(); // norm(muni) -> [{muni,prov,ccaa?}]
+  const dl = document.getElementById('dlMunicipios');
+  async function loadMunicipios(){
+    if (!dl) return;
+    dl.innerHTML = "";
+    byName.clear();
+
+    const tryPaths = ["data/municipios-es.min.json","./data/municipios-es.min.json","municipios-es.min.json","./municipios-es.min.json"];
+    let data = null;
+    for (const p of tryPaths){
+      try{
+        const r = await fetch(p, {cache:'no-store'});
+        if (r.ok) { data = await r.json(); break; }
+      }catch{}
+    }
+    if (!data) return;
+
+    const arr = Array.isArray(data) ? data : (Array.isArray(data?.municipios) ? data.municipios : []);
+    const rows = arr.map(x => ({
+      muni: x.m || x.nm || x.muni || x.nombre || x.municipio || '',
+      prov: x.p || x.pr || x.prov || x.provincia || '',
+      ccaa: x.cc || x.ccaa || x.comunidad || ''
+    })).filter(r => r.muni && (r.prov || r.ccaa));
+
+    // poblar índice y datalist
+    rows.forEach(r => {
+      const k = norm(r.muni);
+      const list = byName.get(k) || [];
+      // completar ccaa desde provincia si falta
+      const cc = r.ccaa || PROV_TO_CCAA[norm(r.prov)] || '';
+      list.push({muni:r.muni, prov:r.prov, ccaa: cc});
+      byName.set(k, list);
+    });
+
+    // datalist (único)
+    const seen = new Set();
+    const opts = [];
+    rows.forEach(r => {
+      const k = r.muni + '|' + r.prov;
+      if (seen.has(k)) return; seen.add(k);
+      // Para capitales de provincia (municipio y provincia iguales), solo mostramos el municipio
+      const isCapital = norm(r.muni) === norm(r.prov);
+      const optionValue = isCapital ? r.muni : `${r.muni} — ${r.prov}`;
+      opts.push(`<option value="${optionValue}">`);
+    });
+    dl.innerHTML = opts.join("");
+  }
+
+  // --- Zonas tensionadas (1 fetch, caché, abort, 429 controlado) ---
+  const ztCache = new Map();
+  let aborter = null;
+
+  async function fetchZTOnline(muni, ccaa){
+    const key = norm(muni)+'|'+norm(ccaa||'');
+    if (ztCache.has(key)) return ztCache.get(key);
+
+    const src = pickSource(ccaa);
+    if (!src) { const res = { tension:null }; ztCache.set(key,res); return res; }
+
+    try {
+      if (aborter) aborter.abort();
+      aborter = new AbortController();
+      const proxied = 'https://r.jina.ai/' + src.url.replace(/^https?:\/\//,'');
+      const resp = await fetch(proxied, { signal: aborter.signal });
+      if (resp.status === 429) throw new Error('RATE_LIMIT');
+      const txt = await resp.text();
+      const hit = norm(txt).includes(norm(muni));
+      const res = hit ? { tension:{ ccaa, fuente:src.fuente, url:src.url } } : { tension:null };
+      ztCache.set(key, res);
+      return res;
+    } catch(e){
+      if (e.name === 'AbortError') return { tension:null };
+      if (e.message === 'RATE_LIMIT') return { tension:null, rateLimited:true };
+      return { tension:null };
+    }
+  }
+
+  // --- UI wiring limpio (elimina posibles listeners previos) ---
+  const OLD = document.getElementById(LOC_ID);
+  if (!OLD) return;
+  const NEW = OLD.cloneNode(true);
+  OLD.replaceWith(NEW);
+
+  const LOC = NEW;
+  const PROV = document.getElementById(PROV_ID);
+  const ZT   = document.getElementById(ZT_ID);
+
+  let ztInfo = document.getElementById('ztInfo');
+  if (!ztInfo){
+    ztInfo = document.createElement('div');
+    ztInfo.id = 'ztInfo';
+    ztInfo.style.cssText = 'font-size:12.5px;color:#475569;margin-top:6px';
+    ZT?.parentElement?.insertAdjacentElement('afterend', ztInfo);
+  }
+
+  function parseMuniInput(v){
+    // Acepta "Municipio — Provincia" del datalist o solo municipio
+    const s = String(v||'').split('—').map(x=>x.trim());
+    return { muni:s[0]||'', provHint:s[1]||'' };
+  }
+
+  function autoSetProvincia(){
+    const {muni, provHint} = parseMuniInput(LOC.value);
+    if (!muni) { ztInfo.textContent=''; return; }
+    const cand = byName.get(norm(muni)) || [];
+    const rec  = cand.find(r => !provHint || norm(r.prov)===norm(provHint)) || cand[0];
+
+    if (rec?.prov && PROV) {
+      PROV.value = rec.prov;
+      try{ PROV.dispatchEvent(new Event('change',{bubbles:true})); }catch{}
+    }
+    setZTFromMunicipio(muni, rec?.ccaa || PROV_TO_CCAA[norm(rec?.prov||'')] || '');
+  }
+
+  async function setZTFromMunicipio(muni, ccaa){
+    if (!ZT) return;
+    ztInfo.textContent = 'Consultando fuentes oficiales…';
+    const info = await fetchZTOnline(muni, ccaa);
+    if (info?.tension){
+      ZT.value = 'si';
+      ztInfo.innerHTML = `Zona tensionada: <b>Sí</b>. Fuente: <a href="${info.tension.url}" target="_blank" rel="noopener">${info.tension.fuente}</a>.`;
+    } else {
+      ZT.value = 'no';
+      // Si no se encuentra la zona tensionada, limpiamos ztInfo y utilizamos
+      // renderZT() para mostrar enlaces y resumen de Wikipedia.
+      ztInfo.textContent = '';
+      try {
+        const provName = (typeof PROV !== 'undefined' && PROV) ? PROV.value : (document.getElementById('provincia')?.value || '');
+        renderZT(muni, provName);
+      } catch (_) {}
+    }
+    try{ ZT.dispatchEvent(new Event('change',{bubbles:true})); }catch{}
+  }
+
+  // Listeners limpios
+  LOC.addEventListener('change', autoSetProvincia);
+  LOC.addEventListener('blur', autoSetProvincia);
+
+  // Arranque: carga municipios y si hay valor, completa
+  loadMunicipios().then(()=>{
+    if (LOC.value) autoSetProvincia();
+  });
+})();
+</script>
+
+
+
+
+
+
+
+<!-- === OVERRIDE ÚNICO: Municipios + Zonas Tensionadas (no rompe nada previo) === -->
+<script>
+(()=>{
+  'use strict';
+  const norm = s => (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
+  const LOC_ID='localidad', PROV_ID='provincia', ZT_ID='zonaTensionada', DL_ID='dlMunicipios_final';
+
+  const LOC_OLD = document.getElementById(LOC_ID);
+  const PROV    = document.getElementById(PROV_ID);
+  const ZT      = document.getElementById(ZT_ID);
+  if (!LOC_OLD || !PROV || !ZT) return;
+
+  // Clonamos el input para eliminar listeners viejos sin tocar el resto del DOM
+  const LOC = LOC_OLD.cloneNode(true);
+  LOC.value = LOC_OLD.value;
+  LOC_OLD.replaceWith(LOC);
+
+  // Nuestro datalist aislado
+  let DL = document.getElementById(DL_ID);
+  if (!DL) { DL = document.createElement('datalist'); DL.id = DL_ID; document.body.appendChild(DL); }
+  LOC.setAttribute('list', DL_ID);
+
+  // Slot de info ZT (reutiliza #ztInfo si existe, si no lo crea junto a ZT)
+  let ztInfo = document.getElementById('ztInfo');
+  if (!ztInfo) {
+    ztInfo = document.createElement('div');
+    ztInfo.id = 'ztInfo';
+    ztInfo.style.cssText = 'font-size:12.5px;color:#475569;margin-top:6px';
+    ZT.parentElement.insertAdjacentElement('afterend', ztInfo);
+  }
+
+  // Provincia -> CCAA (normalizado)
+  const P2C = {
+    "a coruna":"galicia","coruna":"galicia","la coruna":"galicia","lugo":"galicia","ourense":"galicia","orense":"galicia","pontevedra":"galicia",
+    "alava":"pais vasco","araba":"pais vasco","bizkaia":"pais vasco","vizcaya":"pais vasco","gipuzkoa":"pais vasco","guipuzcoa":"pais vasco",
+    "navarra":"navarra","nafarroa":"navarra",
+    "barcelona":"cataluna","girona":"cataluna","gerona":"cataluna","lleida":"cataluna","lerida":"cataluna","tarragona":"cataluna",
+    "madrid":"comunidad de madrid",
+    "albacete":"castilla-la mancha","ciudad real":"castilla-la mancha","cuenca":"castilla-la mancha","guadalajara":"castilla-la mancha","toledo":"castilla-la mancha",
+    "sevilla":"andalucia","cadiz":"andalucia","cádiz":"andalucia","cordoba":"andalucia","córdoba":"andalucia","huelva":"andalucia","jaen":"andalucia","jaén":"andalucia","granada":"andalucia","almeria":"andalucia","almería":"andalucia","malaga":"andalucia","málaga":"andalucia",
+    "alicante":"comunitat valenciana","alacant":"comunitat valenciana","castellon":"comunitat valenciana","castellón":"comunitat valenciana","valencia":"comunitat valenciana",
+    "murcia":"region de murcia",
+    "illes balears":"illes balears","islas baleares":"illes balears","balears":"illes balears",
+    "las palmas":"canarias","santa cruz de tenerife":"canarias",
+    "avila":"castilla y leon","ávila":"castilla y leon","burgos":"castilla y leon","leon":"castilla y leon","león":"castilla y leon","palencia":"castilla y leon","salamanca":"castilla y leon","segovia":"castilla y leon","soria":"castilla y leon","valladolid":"castilla y leon","zamora":"castilla y leon",
+    "huesca":"aragon","zaragoza":"aragon","teruel":"aragon",
+    "asturias":"principado de asturias","cantabria":"cantabria","la rioja":"la rioja",
+    "ceuta":"ceuta","melilla":"melilla"
+  };
+
+  // Data structures
+  const byName = new Map(); // norm(municipio) -> [{muni,prov,ccaa}]
+
+  async function loadMunicipios(){
+    const tryPaths = ['data/municipios-es.min.json','/data/municipios-es.min.json'];
+    let data = null;
+    for (const u of tryPaths){
+      try{
+        const r = await fetch(u, { cache:'no-store' });
+        if (r.ok) { data = await r.json(); break; }
+      }catch{}
+    }
+    if (!Array.isArray(data)) { console.warn('[Municipios] no cargó JSON local'); return; }
+
+    // Normaliza: aceptamos {m,p} o {municipio,provincia,ccaa}
+    const rows = data.map(x => ({
+      muni: x.m || x.municipio || x.name || '',
+      prov: x.p || x.provincia || x.prov || '',
+      ccaa: x.ccaa || ''
+    })).filter(r => r.muni && r.prov);
+
+    // Index + datalist aislado
+    byName.clear();
+    const opts = [];
+    const seen = new Set();
+    rows.forEach(r => {
+      const key = norm(r.muni);
+      if (!byName.has(key)) byName.set(key, []);
+      const cc = r.ccaa || P2C[norm(r.prov)] || '';
+      byName.get(key).push({ muni:r.muni, prov:r.prov, ccaa:cc });
+
+      const optKey = r.muni+'|'+r.prov;
+        if (!seen.has(optKey)) {
+        seen.add(optKey);
+        // Para capitales de provincia, solo mostramos el municipio como sugerencia
+        const isCapital = norm(r.muni) === norm(r.prov);
+        const optionValue = isCapital ? r.muni : `${r.muni} — ${r.prov}`;
+        opts.push(`<option value="${optionValue}"></option>`);
+      }
+    });
+    DL.innerHTML = opts.join('');
+  }
+
+  // --- Zonas tensionadas ---
+  function pickSource(ccaa){
+    const cc = norm(ccaa);
+    if (cc === 'cataluna') return {fuente:'Generalitat — ZMRT', url:'https://habitatge.gencat.cat/ca/ambits/preus-ingressos-i-zones/limit-preu-lloguer/llistat-municipis-zmrt/'};
+    if (cc === 'navarra')  return {fuente:'Gobierno de Navarra', url:'https://www.navarra.es/es/-/nota-prensa/navarra-declara-oficialmente-21-municipios-como-zona-de-mercado-tensionado'};
+    if (cc === 'galicia' || cc.includes('vasco')) return {fuente:'BOE-A-2025-15728', url:'https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-15728'};
+    return null;
+  }
+
+  const ztCache = new Map();
+  let aborter = null, lastToken = 0;
+
+  async function fetchZTOnline(muni, ccaa){
+    const key = norm(muni)+'|'+norm(ccaa||'');
+    if (ztCache.has(key)) return ztCache.get(key);
+    const src = pickSource(ccaa);
+    if (!src){ const res = {tension:null}; ztCache.set(key, res); return res; }
+
+    try{
+      if (aborter) aborter.abort();
+      aborter = new AbortController();
+      const proxied = 'https://r.jina.ai/' + src.url.replace(/^https?:\/\//,'');
+      const resp = await fetch(proxied, { signal: aborter.signal });
+      if (!resp.ok){ const res = {tension:null}; ztCache.set(key,res); return res; }
+      const txt = await resp.text();
+      const hit = norm(txt).includes(norm(muni));
+      const out = hit ? { tension:{ ccaa, fuente:src.fuente, url:src.url } } : { tension:null };
+      ztCache.set(key, out);
+      return out;
+    }catch(e){
+      if (e.name === 'AbortError') return {tension:null};
+      return {tension:null};
+    }
+  }
+
+  function parseInput(v){
+    const parts = String(v||'').split('—').map(s=>s.trim());
+    return { muni: parts[0]||'', provHint: parts[1]||'' };
+  }
+
+  function autoSetProvincia(){
+    const {muni, provHint} = parseInput(LOC.value);
+    if (!muni){ ztInfo.textContent=''; return; }
+    const cand = byName.get(norm(muni)) || [];
+    const rec  = cand.find(r => !provHint || norm(r.prov)===norm(provHint)) || cand[0];
+    if (rec?.prov && PROV){
+      const want = rec.prov;
+      const opt = Array.from(PROV.options).find(o => norm(o.value)===norm(want) || norm(o.textContent)===norm(want));
+      if (opt) PROV.value = opt.value;
+    }
+    void setZTFromMunicipio(muni, rec?.ccaa || P2C[norm(rec?.prov||'')] || '');
+  }
+
+  async function setZTFromMunicipio(muni, ccaa){
+    const token = ++lastToken;
+    ztInfo.textContent = 'Consultando fuentes oficiales…';
+    const info = await fetchZTOnline(muni, ccaa);
+    if (token !== lastToken) return; // evita pintar resultados viejos
+
+    if (info?.tension){
+      ZT.value = 'si';
+      ztInfo.innerHTML = `Zona tensionada: <b>Sí</b>. Fuente: <a href="${info.tension.url}" target="_blank" rel="noopener">${info.tension.fuente}</a>.`;
+    } else {
+      ZT.value = 'no';
+      // Si no se encuentra la zona tensionada, no pintamos en ztInfo; delegamos
+      // la presentación a renderZT() que incluye enlaces y resumen de Wikipedia.
+      ztInfo.textContent = '';
+      try {
+        // Utilizamos la provincia actual para enriquecer el mensaje de renderZT()
+        const provName = (typeof PROV !== 'undefined' && PROV) ? PROV.value : (document.getElementById('provincia')?.value || '');
+        renderZT(muni, provName);
+      } catch (_) {}
+    }
+    try{ ZT.dispatchEvent(new Event('change',{bubbles:true})); }catch{}
+  }
+
+  LOC.addEventListener('change', autoSetProvincia);
+  LOC.addEventListener('blur',   autoSetProvincia);
+
+  // Carga municipios y, si ya hay valor, completa
+  loadMunicipios().then(()=>{ if (LOC.value) autoSetProvincia(); });
+})();
+</script>
+<!-- === FIN OVERRIDE === -->
+
+
+<!-- === BLOQUE ÚNICO: Autocomplete de municipios + Zonas tensionadas === -->
+<script>
+(function(){
+  // Utilidades
+  const $ = (id) => document.getElementById(id);
+  const norm = (s) => String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
+
+  // IDs existentes en el HTML
+  const LOC_ID = "localidad";
+  const PROV_ID = "provincia";
+  const ZT_ID   = "zonaTensionada"; // opcional
+  const DL_ID   = "dlMunicipios";
+
+  // Intenta varias rutas locales para /data/municipios-es.min.json
+  async function loadMunicipios(){
+    const tryPaths = [
+      "data/municipios-es.min.json",
+      "./data/municipios-es.min.json",
+      "/data/municipios-es.min.json",
+      "municipios-es.min.json",
+      "./municipios-es.min.json"
+    ];
+    let data = null, tried = [];
+    for (const p of tryPaths){
+      try {
+        tried.push(p);
+        const r = await fetch(p, { cache: "no-store" });
+        if (r.ok) { data = await r.json(); break; }
+      } catch {}
+    }
+    if (!Array.isArray(data)){
+      console.warn("[Municipios] No se pudo cargar el JSON. Probado:", tried.join(", "));
+      return [];
+    }
+    // Normaliza
+    return data.map(x => ({
+      muni: x.m || x.municipio || x.name || "",
+      prov: x.p || x.provincia || x.prov || "",
+      ccaa: x.ccaa || x.autonomia || ""
+    })).filter(r => r.muni && r.prov);
+  }
+
+  function ensureDatalist(){
+    let dl = document.getElementById(DL_ID);
+    if (!dl){
+      dl = document.createElement("datalist");
+      dl.id = DL_ID;
+      document.body.appendChild(dl);
+    }
+    const loc = $(LOC_ID);
+    if (loc) loc.setAttribute("list", DL_ID);
+    return dl;
+  }
+
+  function pickCCAAByProv(prov){
+    const p = norm(prov);
+    const P2C = {
+      "alava":"país vasco","araba":"país vasco","bizkaia":"país vasco","vizcaya":"país vasco","gipuzkoa":"país vasco","guipuzcoa":"país vasco",
+      "a coruna":"galicia","coruna":"galicia","lugo":"galicia","ourense":"galicia","pontevedra":"galicia",
+      "barcelona":"cataluña","girona":"cataluña","gerona":"cataluña","lleida":"cataluña","lerida":"cataluña","tarragona":"cataluña",
+      "navarra":"navarra","nafarroa":"navarra",
+      "madrid":"comunidad de madrid","sevilla":"andalucía","valencia":"comunidad valenciana","alicante":"comunidad valenciana","castellon":"comunidad valenciana","castellón":"comunidad valenciana",
+      "huesca":"aragon","zaragoza":"aragon","teruel":"aragon",
+      "asturias":"principado de asturias","cantabria":"cantabria","la rioja":"la rioja",
+      "albacete":"castilla-la mancha","ciudad real":"castilla-la mancha","cuenca":"castilla-la mancha","guadalajara":"castilla-la mancha","toledo":"castilla-la mancha",
+      "ceuta":"ceuta","melilla":"melilla"
+    };
+    return P2C[p] || "";
+  }
+
+  // --- Zonas tensionadas ---
+  function pickZTSource(ccaa){
+    const c = norm(ccaa);
+    if (c === "cataluna") return {fuente:"Generalitat — ZMRT", url:"https://habitatge.gencat.cat/ca/ambits/preus-ingressos-i-zones/limit-preu-lloguer/llistat-municipis-zmrt/"};
+    if (c === "navarra")  return {fuente:"Gobierno de Navarra", url:"https://www.navarra.es/es/-/nota-prensa/navarra-declara-oficialmente-21-municipios-como-zona-de-mercado-tensionado"};
+    if (c === "galicia" || c.includes("vasco")) return {fuente:"BOE-A-2025-15728", url:"https://www.boe.es/diario_boe/txt.php?id=BOE-A-2025-15728"};
+    return null;
+  }
+
+  const ztInfoEl = (()=>{
+    let el = document.getElementById("ztInfo");
+    if (!el){
+      el = document.createElement("div");
+      el.id = "ztInfo";
+      el.className = "help";
+      const zt = $(ZT_ID);
+      if (zt && zt.parentElement) zt.parentElement.appendChild(el);
+      else document.body.appendChild(el);
+    }
+    return el;
+  })();
+
+  async function setZTFromMunicipio(muni, prov){
+    const ZT = $(ZT_ID);
+    if (!ZT) return; // campo opcional
+    const ccaa = pickCCAAByProv(prov);
+    const src = pickZTSource(ccaa);
+    if (src){
+      ZT.value = "si"; // optimista si la CCAA tiene norma activa
+      ztInfoEl.innerHTML = `Zona tensionada: <b>posible</b> en ${ccaa || "su CCAA"}. Fuente: <a href="${src.url}" target="_blank" rel="noopener">${src.fuente}</a>. Verifica en el <a href="${MIVAU}" target="_blank" rel="noopener">visor oficial del MIVAU</a>.`;
+      // Eliminamos cualquier ayuda previa mostrada por renderZT(), para evitar mensajes duplicados.
+      const help = document.getElementById('ztHelp');
+      if (help) help.remove();
+    }else{
+      ZT.value = "no";
+      // Limpiamos el ztInfoEl y delegamos la visualización a renderZT(), que incluye
+      // los enlaces diferenciados y el resumen de Wikipedia.
+      ztInfoEl.textContent = '';
+      try {
+        renderZT(muni, prov || '');
+      } catch (_) {}
+    }
+    try{ ZT.dispatchEvent(new Event("change",{bubbles:true})); }catch{}
+  }
+
+  function autoSetProvincia(){
+    const LOC = $(LOC_ID), PROV = $(PROV_ID);
+    if (!LOC || !PROV) return;
+    const raw = String(LOC.value||"");
+    const muniOnly = raw.split("—")[0].trim(); // soporta "Municipio — Provincia"
+    const key = norm(muniOnly);
+    if (window.__MUNI_IDX && window.__MUNI_IDX[key] && window.__MUNI_IDX[key][0]){
+      const prov = window.__MUNI_IDX[key][0].prov || "";
+      if (prov && (!PROV.value || norm(PROV.value)!==norm(prov))){
+        PROV.value = prov;
+        try{ PROV.dispatchEvent(new Event("change",{bubbles:true})); }catch{}
+      }
+      setZTFromMunicipio(muniOnly, prov);
+    }
+  }
+
+  async function setup(){
+    const rows = await loadMunicipios();
+    const dl = ensureDatalist();
+    // Indexación y opciones
+    window.__MUNI_IDX = window.__MUNI_IDX || {};
+    const idx = window.__MUNI_IDX;
+    const seen = new Set();
+    const opts = [];
+    for (const r of rows){
+      const key = norm(r.muni);
+      if (!idx[key]) idx[key] = [];
+      idx[key].push({ muni:r.muni, prov:r.prov, ccaa:r.ccaa || pickCCAAByProv(r.prov) });
+      const optKey = r.muni + "|" + r.prov;
+      if (!seen.has(optKey)){
+        seen.add(optKey);
+        // Para capitales de provincia, solo sugerimos el municipio
+        const isCapital = norm(r.muni) === norm(r.prov);
+        const optionValue = isCapital ? r.muni : `${r.muni} — ${r.prov}`;
+        opts.push(`<option value="${optionValue}"></option>`);
+      }
+    }
+    dl.innerHTML = opts.join("");
+
+    // Si no hay provincias cargadas, poblar select con las del dataset
+    const PROV = $(PROV_ID);
+    if (PROV && PROV.options.length <= 1){
+      const provs = Array.from(new Set(rows.map(r => r.prov))).sort((a,b)=>a.localeCompare(b,"es"));
+      PROV.innerHTML = `<option value="">— Selecciona —</option>` + provs.map(p=>`<option value="${p}">${p}</option>`).join("");
+    }
+
+    // Listeners
+    const LOC = $(LOC_ID);
+    if (LOC){
+      LOC.addEventListener("change", autoSetProvincia);
+      LOC.addEventListener("blur", autoSetProvincia);
+    }
+
+    // Primera auto-deducción si hay valor
+    if (LOC && LOC.value) autoSetProvincia();
+  }
+
+  // Arranca
+  try { setup(); } catch(e){ console.warn("Autocomplete municipios no pudo iniciar:", e); }
+})();
+</script>
+<!-- === FIN BLOQUE ÚNICO === -->
+
+<!-- === PATCH MUNI/PROV/ZT — estable, sin tocar el resto === -->
+<style>
+  /* Ayuda contextual: va debajo del campo y no desordena la rejilla */
+  .form-grid .help{ grid-column:1/-1; font-size:12.5px; color:#475569; margin-top:-6px; margin-bottom:4px }
+  /* Estilizado de enlaces en mensajes de zona tensionada (ayuda).
+     Subrayamos los enlaces y cambiamos su color al pasar el ratón para que
+     sean visibles y se perciban como enlaces interactivos. */
+  .help a {
+    text-decoration: underline;
+    color: #0066cc;
+    transition: color 0.2s ease-in-out;
+  }
+  .help a:hover {
+    color: #004799;
+  }
+</style>
+<script>
+(function(){
+  if (window.__MUNI_ZT_PATCH_V3) return;  // singleton
+  window.__MUNI_ZT_PATCH_V3 = true;
+
+  const $ = (id)=>document.getElementById(id);
+  const norm = (s)=> String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
+
+  const LOC_ID = "localidad";
+  const PROV_ID= "provincia";
+  const DL_ID  = "dlMunicipios";
+  const ZT_SELECT_ID = "zonaTensionada";
+
+  // 1) Reubicar "Provincia" junto a "Código postal" SIN tocar el resto
+  function moveProvinciaNextToCP(){
+    const grid = document.querySelector(".form-grid");
+    if (!grid) return;
+
+    const labels = Array.from(grid.querySelectorAll("label"));
+    const cpLabel = labels.find(l => /c[oó]digo\s*postal/i.test(l.textContent||""));
+    const provSelect = $(PROV_ID);
+
+    if (!cpLabel || !provSelect) return;
+
+    // Si ambos campos ya están dentro de sus propios wrappers .field, no hacemos nada
+    const cpWrap  = cpLabel.closest('.field');
+    const provWrap= provSelect.closest('.field');
+    if (cpWrap && provWrap) return;
+
+    // ¿"Provincia" viene envuelta en <div class="field">...? La quitamos para reinsertarla
+    const provFieldDiv = provSelect.closest(".field");
+    if (provFieldDiv) provFieldDiv.remove();
+
+    // ¿Ya existe un label "Provincia" a su bola? lo quitamos para reinsertar
+    const provLabelOld = labels.find(l => /provincia/i.test(l.textContent||"") && l.contains(provSelect));
+    if (provLabelOld) provLabelOld.remove();
+    const provErrOld = $("#e-provincia"); if (provErrOld) provErrOld.remove();
+
+    // Construimos label + err homogéneo
+    const provLabel = document.createElement("label");
+    provLabel.innerHTML = 'Provincia';
+    provLabel.appendChild(provSelect);
+    const provErr = document.createElement("div");
+    provErr.id = "e-provincia";
+    provErr.className = "err";
+
+    // Insertamos la Provincia para que la etiqueta quede junto al Código postal en la misma fila
+    const cpErr = grid.querySelector("#e-cp");
+    if (cpErr) {
+      // coloca la etiqueta de provincia inmediatamente tras la de CP
+      cpLabel.after(provLabel);
+      // y su slot de error inmediatamente tras el error de CP para que cada mensaje quede bajo su campo
+      cpErr.after(provErr);
+    } else {
+      // si no hay slot explícito para CP, inserta ambos a continuación del label
+      cpLabel.after(provLabel, provErr);
+    }
+  }
+
+  // 2) Crear datalist para municipios y que capitales vayan primero
+  function ensureDatalist(){
+    let dl = document.getElementById(DL_ID);
+    if (!dl) {
+      dl = document.createElement("datalist");
+      dl.id = DL_ID;
+      document.body.appendChild(dl);
+    }
+    const loc = $(LOC_ID);
+    if (loc) loc.setAttribute("list", DL_ID);
+  }
+
+  // 3) Cargar municipios UNA sola vez (adiós a los 200/304 repetidos)
+  async function ensureMunicipios(){
+    if (window.__MUNI_LOADED) return window.__MUNI_LOADED;
+    window.__MUNI_LOADED = (async ()=>{
+      const candidates = ["data/municipios-es.min.json","./data/municipios-es.min.json","/data/municipios-es.min.json"];
+      let data = null;
+      for (const url of candidates){
+        try { const r = await fetch(url, { cache:"no-store" }); if (r.ok){ data = await r.json(); break; } } catch{}
+      }
+      if (!Array.isArray(data)) return [];
+      const rows = data.map(x => ({
+        muni: x.m || x.municipio || x.name || "",
+        prov: x.p || x.provincia || x.prov || "",
+        ccaa: x.ccaa || x.autonomia || ""
+      })).filter(r => r.muni && r.prov);
+
+      // Índice por municipio (normalizado) para auto-set de provincia
+      const idx = {};
+      for (const r of rows){
+        const k = norm(r.muni);
+        (idx[k] ||= []).push(r);
+      }
+      window.__MUNI_IDX = idx;
+      return rows;
+    })();
+    return window.__MUNI_LOADED;
+  }
+
+  // 4) Construir datalist (capitals first) — “Toledo” → “Toledo — Toledo” sale arriba
+  async function buildDatalist(){
+    const dl = document.getElementById(DL_ID);
+    if (!dl || dl.dataset.built === "1") return;
+    const rows = await ensureMunicipios();
+    if (!rows.length) return;
+
+    const isCap = (r)=> norm(r.muni) === norm(r.prov);
+    const seen = new Set(), capitals=[], others=[];
+    for (const r of rows){
+      const key = r.muni + "—" + r.prov;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      (isCap(r) ? capitals : others).push(r);
+    }
+    capitals.sort((a,b)=> a.muni.localeCompare(b.muni,"es"));
+    others.sort((a,b)=> a.muni.localeCompare(b.muni,"es"));
+
+    dl.innerHTML = capitals.concat(others)
+      .map(r => {
+        // Para capitales de provincia, no repetimos el nombre de la provincia
+        const cap = isCap(r);
+        const optionValue = cap ? r.muni : `${r.muni} — ${r.prov}`;
+        return `<option value="${optionValue}"></option>`;
+      })
+      .join("");
+    dl.dataset.built = "1";
+  }
+
+  // 5) Rellenar <select id="provincia"> si venía vacío
+  function ensureProvinciaOptions(rows){
+    const prov = $(PROV_ID);
+    if (!prov) return;
+    if (prov.options && prov.options.length > 1) return;
+    const list = Array.from(new Set(rows.map(r=>r.prov))).sort((a,b)=>a.localeCompare(b,"es"));
+    prov.innerHTML = '<option value="">Selecciona…</option>' + list.map(p=>`<option value="${p}">${p}</option>`).join("");
+  }
+
+  // 6) Auto-ajustar provincia al elegir municipio
+  function syncProvinciaFromLocalidad(){
+    const loc = $(LOC_ID), prov = $(PROV_ID);
+    if (!loc || !prov || !window.__MUNI_IDX) return;
+    const raw = (loc.value || "").split("—")[0].trim();
+    const k = norm(raw);
+    const list = window.__MUNI_IDX[k];
+    if (list && list.length){
+      const first = list[0];
+      if (norm(prov.value) !== norm(first.prov)){
+        prov.value = first.prov;
+        try{ prov.dispatchEvent(new Event("change",{bubbles:true})); }catch{}
+      }
+      renderZT(raw, first.prov);
+    }
+  }
+
+  // 7) Zonas tensionadas — ayuda DEBAJO con enlaces útiles
+  function ccaaByProv(p){
+    const x = norm(p);
+    const map = {
+      "alava":"pais vasco","araba":"pais vasco","vizcaya":"pais vasco","bizkaia":"pais vasco","guipuzcoa":"pais vasco","gipuzkoa":"pais vasco",
+      "a coruna":"galicia","coruna":"galicia","lugo":"galicia","ourense":"galicia","pontevedra":"galicia",
+      "barcelona":"cataluna","girona":"cataluna","gerona":"cataluna","lleida":"cataluna","lerida":"cataluna","tarragona":"cataluna",
+      "navarra":"navarra","nafarroa":"navarra",
+      "madrid":"comunidad de madrid",
+      "sevilla":"andalucia","cadiz":"andalucia","cordoba":"andalucia","granada":"andalucia","huelva":"andalucia","jaen":"andalucia","malaga":"andalucia","almeria":"andalucia",
+      "valencia":"comunidad valenciana","alicante":"comunidad valenciana","castellon":"comunidad valenciana","castellón":"comunidad valenciana",
+      "huesca":"aragon","zaragoza":"aragon","teruel":"aragon",
+      "asturias":"principado de asturias","cantabria":"cantabria","la rioja":"la rioja",
+      "albacete":"castilla-la mancha","ciudad real":"castilla-la mancha","cuenca":"castilla-la mancha","guadalajara":"castilla-la mancha","toledo":"castilla-la mancha",
+      "caceres":"extremadura","badajoz":"extremadura",
+      "illes balears":"illes balears","islas baleares":"illes balears",
+      "murcia":"region de murcia",
+      "palencia":"castilla y leon","burgos":"castilla y leon","leon":"castilla y leon","soria":"castilla y leon","zamora":"castilla y leon","valladolid":"castilla y leon","segovia":"castilla y leon","avila":"castilla y leon","salamanca":"castilla y leon",
+      "las palmas":"canarias","santa cruz de tenerife":"canarias",
+      "ceuta":"ceuta","melilla":"melilla"
+    };
+    return map[x] || "";
+  }
+  function regionalPortal(ccaa){
+    const c = norm(ccaa);
+    const links = {
+      "cataluna":"https://habitatge.gencat.cat/",
+      "navarra":"https://www.navarra.es/es/vivienda",
+      "comunidad de madrid":"https://www.madrid.org/",
+      "andalucia":"https://www.juntadeandalucia.es/servicios/areas/vivienda.html",
+      "comunidad valenciana":"https://habitatge.gva.es/",
+      "aragon":"https://www.aragon.es/temas/vivienda",
+      "galicia":"https://igvs.xunta.gal/",
+      "pais vasco":"https://www.etxebide.euskadi.eus/",
+      "castilla-la mancha":"https://www.castillalamancha.es/gobierno/fomento/actuaciones/ciudad/vivienda",
+      "castilla y leon":"https://www.jcyl.es/",
+      "principado de asturias":"https://www.asturias.es/vivienda",
+      "cantabria":"https://www.viviendadecantabria.es/",
+      "la rioja":"https://www.larioja.org/vivienda",
+      "illes balears":"https://www.caib.es/sites/ibavi/es/",
+      "region de murcia":"https://www.carm.es/web/pagina?IDCONTENIDO=116&IDTIPO=100&RASTRO=c672$m117,120",
+      "canarias":"https://www.gobiernodecanarias.org/vivienda/",
+      "extremadura":"https://www.juntaex.es/w/plan-de-vivienda",
+      "ceuta":"https://www.ceuta.es/",
+      "melilla":"https://www.melilla.es/"
+    };
+    return links[c] || "";
+  }
+
+  // Obtiene un breve extracto de Wikipedia para un municipio dado. Utiliza la API REST v1
+  // de Wikipedia en español. Devuelve una cadena vacía si no hay extracto disponible.
+  function fetchWikiSummary(muni){
+    const term = String(muni||'').trim();
+    if (!term) return Promise.resolve('');
+    const url = `https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(term)}`;
+    return fetch(url).then(r => {
+      if (!r.ok) return '';
+      return r.json().then(data => data.extract || '');
+    }).catch(()=> '');
+  }
+  // Enlace actualizado al visor oficial del MIVAU para zonas de mercado residencial tensionado
+  const MIVAU = "https://www.mivau.gob.es/vivienda/alquila-bien-es-tu-derecho/serpavi/consultar-zonas-de-mercado-residencial-tensionado";
+  function renderZT(muni, provName){
+    // Aseguramos bloque de ayuda BAJO el campo
+    let ztLabel = Array.from(document.querySelectorAll(".form-grid label"))
+      .find(l => /zona\s+tensionada/i.test(l.textContent||"") && l.querySelector("#"+ZT_SELECT_ID));
+    if (!ztLabel) return;
+    let help = document.getElementById("ztHelp");
+    if (!help){
+      help = document.createElement("div");
+      help.id = "ztHelp";
+      help.className = "help";
+      help.style.gridColumn = "1 / -1";
+      ztLabel.after(help);
+    }
+    const ccaa = ccaaByProv(provName||"");
+    const reg = ccaa ? regionalPortal(ccaa) : "";
+    const parts = [];
+    if (reg) parts.push(`Portal vivienda CCAA: <a href="${reg}" target="_blank" rel="noopener">${ccaa}</a>`);
+    parts.push(`<a href="${MIVAU}" target="_blank" rel="noopener">Visor Zonas tensionadas (MIVAU)</a>`);
+    help.innerHTML = `Zona tensionada: <b>${ccaa ? "verificar" : "no confirmada"}</b>. ${parts.join(" · ")}`;
+    // Si no se confirma la zona tensionada, mostramos un breve resumen de Wikipedia de la localidad
+    // y mantenemos los enlaces a la comunidad y al visor oficial de MIVAU. Utilizamos la API de
+    // Wikipedia para obtener un extracto y escapamos caracteres HTML para evitar XSS.
+    if (!ccaa && muni) {
+      fetchWikiSummary(muni).then(summary => {
+        if (summary) {
+          const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+          help.innerHTML += `<br><span class="wiki-summary">${esc(summary)}</span>`;
+        }
+      });
+    }
+  }
+
+  // 8) Wiring mínimo
+  function wire(){
+    const loc = $(LOC_ID), prov = $(PROV_ID);
+    if (loc && !loc.dataset.wired){
+      loc.addEventListener("change", syncProvinciaFromLocalidad);
+      loc.addEventListener("blur", syncProvinciaFromLocalidad);
+      loc.dataset.wired = "1";
+    }
+    if (prov && !prov.dataset.ztwired){
+      prov.addEventListener("change", ()=> renderZT((($(LOC_ID)?.value)||"").split("—")[0].trim(), prov.value));
+      prov.dataset.ztwired = "1";
+    }
+  }
+
+  // 9) Init
+  (async function init(){
+    moveProvinciaNextToCP();
+    ensureDatalist();
+    wire();
+
+    const rows = await ensureMunicipios();
+    await buildDatalist();
+    ensureProvinciaOptions(rows);
+
+    if ($(LOC_ID)?.value) syncProvinciaFromLocalidad();
+    if ($(PROV_ID)?.value) renderZT(($(LOC_ID)?.value||"").split("—")[0].trim(), $(PROV_ID).value);
+  })();
+})();
+</script>
+<!-- === FIN PATCH === -->
+
+
+
+<script>
+(function(){
+  if (window.__ZT_REALCHECK_V1) return;
+  window.__ZT_REALCHECK_V1 = true;
+
+  const $ = (id)=>document.getElementById(id);
+  const norm = (s)=> String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
+
+  // URL oficial (actualizada) al portal del MIVAU
+  const MIVAU_URL = "https://www.mivau.gob.es/vivienda/alquila-bien-es-tu-derecho/serpavi/consultar-zonas-de-mercado-residencial-tensionado";
+
+  function ccaaByProv(p){
+    const x = norm(p);
+    const map = {
+      "alava":"pais vasco","araba":"pais vasco","vizcaya":"pais vasco","bizkaia":"pais vasco","guipuzcoa":"pais vasco","gipuzkoa":"pais vasco",
+      "a coruna":"galicia","coruna":"galicia","lugo":"galicia","ourense":"galicia","pontevedra":"galicia",
+      "barcelona":"cataluna","girona":"cataluna","gerona":"cataluna","lleida":"cataluna","lerida":"cataluna","tarragona":"cataluna",
+      "navarra":"navarra","nafarroa":"navarra",
+      "madrid":"comunidad de madrid",
+      "sevilla":"andalucia","cadiz":"andalucia","cordoba":"andalucia","granada":"andalucia","huelva":"andalucia","jaen":"andalucia","malaga":"andalucia","almeria":"andalucia",
+      "valencia":"comunidad valenciana","alicante":"comunidad valenciana","castellon":"comunidad valenciana","castellón":"comunidad valenciana",
+      "huesca":"aragon","zaragoza":"aragon","teruel":"aragon",
+      "asturias":"principado de asturias","cantabria":"cantabria","la rioja":"la rioja",
+      "albacete":"castilla-la mancha","ciudad real":"castilla-la mancha","cuenca":"castilla-la mancha","guadalajara":"castilla-la mancha","toledo":"castilla-la mancha",
+      "caceres":"extremadura","badajoz":"extremadura",
+      "illes balears":"illes balears","islas baleares":"illes balears",
+      "murcia":"region de murcia",
+      "palencia":"castilla y leon","burgos":"castilla y leon","leon":"castilla y leon","soria":"castilla y leon","zamora":"castilla y leon","valladolid":"castilla y leon","segovia":"castilla y leon","avila":"castilla y leon","salamanca":"castilla y leon",
+      "las palmas":"canarias","santa cruz de tenerife":"canarias",
+      "ceuta":"ceuta","melilla":"melilla"
+    };
+    return map[x] || "";
+  }
+  function regionalPortal(ccaa){
+    const c = norm(ccaa);
+    const links = {
+      "cataluna":"https://habitatge.gencat.cat/",
+      "navarra":"https://www.navarra.es/es/vivienda",
+      "comunidad de madrid":"https://www.madrid.org/",
+      "andalucia":"https://www.juntadeandalucia.es/servicios/areas/vivienda.html",
+      "comunidad valenciana":"https://habitatge.gva.es/",
+      "aragon":"https://www.aragon.es/temas/vivienda",
+      "galicia":"https://igvs.xunta.gal/",
+      "pais vasco":"https://www.etxebide.euskadi.eus/",
+      "castilla-la mancha":"https://www.castillalamancha.es/gobierno/fomento/actuaciones/ciudad/vivienda",
+      "castilla y leon":"https://www.jcyl.es/",
+      "principado de asturias":"https://www.asturias.es/vivienda",
+      "cantabria":"https://www.viviendadecantabria.es/",
+      "la rioja":"https://www.larioja.org/vivienda",
+      "illes balears":"https://www.caib.es/sites/ibavi/es/",
+      "region de murcia":"https://www.carm.es/web/pagina?IDCONTENIDO=116&IDTIPO=100&RASTRO=c672$m117,120",
+      "canarias":"https://www.gobiernodecanarias.org/vivienda/",
+      "extremadura":"https://www.juntaex.es/w/plan-de-vivienda",
+      "ceuta":"https://www.ceuta.es/",
+      "melilla":"https://www.melilla.es/"
+    };
+    return links[c] || "";
+  }
+
+  // Coloca/actualiza el bloque de ayuda justo DEBAJO del <label> de Zona tensionada
+  function getHelpEl(){
+    const ztSel = document.getElementById("zonaTensionada");
+    if (!ztSel) return null;
+    const ztLabel = ztSel.closest("label");
+    if (!ztLabel) return null;
+
+    let help = document.getElementById("ztHelp");
+    if (!help){
+      help = document.createElement("div");
+      help.id = "ztHelp";
+      help.className = "help";
+      help.style.gridColumn = "1 / -1";
+      ztLabel.after(help);
+    }
+    return help;
+  }
+
+  // Lee municipio/provincia actuales (del input con "—" opcional)
+  function currentLoc(){
+    const rawLoc = (document.getElementById("localidad")?.value || "");
+    const muni = rawLoc.split("—")[0].trim() || rawLoc.trim();
+    const prov = document.getElementById("provincia")?.value || "";
+    return { muni, prov };
+  }
+
+  // Busca un fichero local con la “foto” oficial de zonas tensionadas (si existe)
+  // Formato esperado (array):
+  // [ { "muni":"Toledo", "prov":"Toledo", "ccaa":"Castilla-La Mancha", "zt":true, "src":"https://...", "updated":"2025-06-12" }, ... ]
+  async function loadZTIndex(){
+  // Modo LITE: no se carga índice local; evitamos 404 en consola
+  // Si en el futuro añades un fichero local (data/zt.json, etc.),
+  // puedes restaurar el loader anterior.
+  return [];
+}
+
+
+  function render(help, info){
+
+    const { muni, prov } = currentLoc();
+    const ccaa = ccaaByProv(prov);
+    const reg  = ccaa ? regionalPortal(ccaa) : "";
+    const baseLinks = [
+      `<a href="${MIVAU_URL}" target="_blank" rel="noopener">Visor Zonas tensionadas (MIVAU)</a>`,
+      reg ? `Portal CCAA: <a href="${reg}" target="_blank" rel="noopener">${ccaa}</a>` : ""
+    ].filter(Boolean).join(" · ");
+
+    if (info){
+      // Zona tensionada encontrada o descartada en el índice local. Indicamos sí/no,
+      // adjuntando la fuente y la fecha de actualización cuando existen.
+      const badge = info.zt ? `<b style="color:#16a34a">Sí</b>` : `<b style="color:#b91c1c">No</b>`;
+      const src = info.src ? ` · <a href="${info.src}" target="_blank" rel="noopener">Fuente oficial</a>` : "";
+      const upd = info.updated ? ` · <span style="color:#64748b">(${info.updated})</span>` : "";
+      help.innerHTML = `Zona tensionada: ${badge}${upd}${src}<br>${baseLinks}`;
+    } else {
+      // Zona tensionada no confirmada automáticamente: mostramos enlaces útiles y
+      // añadimos un breve resumen de la localidad desde Wikipedia, si está disponible.
+      help.innerHTML = `Zona tensionada: <b>${ccaa ? 'verificar' : 'no confirmada'}</b>.<br>${baseLinks}`;
+      // Inserta resumen de Wikipedia si existe término de municipio y no hay confirmación.
+      if (muni) {
+        try {
+          fetchWikiSummary(muni).then(summary => {
+            if (summary) {
+              const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+              help.innerHTML += `<br><span class="wiki-summary">${esc(summary)}</span>`;
+            }
+          });
+        } catch (_) {}
+      }
+    }
+  }
+
+  let __ZT_CACHE = null;
+  async function checkAndRender(){
+    const help = getHelpEl(); if (!help) return;
+    const { muni, prov } = currentLoc();
+    if (!muni || !prov){ render(help, null); return; }
+
+    if (!__ZT_CACHE) __ZT_CACHE = await loadZTIndex();
+    const key = (r)=> norm(r.muni) + "|" + norm(r.prov);
+    const k = norm(muni) + "|" + norm(prov);
+    const hit = __ZT_CACHE.find(r => key(r) === k);
+
+    render(help, hit || null);
+  }
+
+  document.addEventListener("DOMContentLoaded", ()=>{
+    // re-render ante cambios relevantes
+    ["localidad","provincia","zonaTensionada"].forEach(id=>{
+      const el = document.getElementById(id);
+      el && el.addEventListener("change", checkAndRender);
+      el && el.addEventListener("blur",   checkAndRender);
+      el && el.addEventListener("input",  checkAndRender);
+    });
+    // primer pintado
+    checkAndRender();
+  });
+})();
+
+
+/* === PATCH UI SPLIT ZT/CEE V2 (CLEAN) === */
+(function(){
+  if (window.__SPLIT_ZT_CEE_V2) return; window.__SPLIT_ZT_CEE_V2 = true;
+  function $(id){ return document.getElementById(id); }
+  function el(tag, attrs={}, html=""){
+    const n = document.createElement(tag);
+    Object.entries(attrs||{}).forEach(([k,v])=>{
+      if (k==="class") n.className=v;
+      else if (k==="style" && typeof v==="object") Object.assign(n.style, v);
+      else n.setAttribute(k,v);
+    });
+    if (html) n.innerHTML = html;
+    return n;
+  }
+  function findLabelFor(inputId){
+    const inp = $(inputId); if (!inp) return null;
+    let node = inp.closest("label"); if (node) return node;
+    const labels = document.querySelectorAll("#step1 label");
+    for (const l of labels){ if (l.contains(inp)) return l; }
+    return null;
+  }
+  function insertBefore(node, ref){ ref.parentNode.insertBefore(node, ref); }
+  function insertAfter(node, ref){ ref.parentNode.insertBefore(node, ref.nextSibling); }
+
+  document.addEventListener("DOMContentLoaded", function(){
+    const lblZT  = findLabelFor("zonaTensionada");
+    const lblCEE = findLabelFor("ceeLetra") || findLabelFor("ceeRegistro") || findLabelFor("ceeFecha");
+
+    if (lblZT){
+      const prev = lblZT.previousElementSibling;
+      if (prev && /^H3$/i.test(prev.tagName) && /CEE/i.test(prev.textContent)) prev.remove();
+
+      const h3a = el("h3", {style:{gridColumn:"1 / -1", margin:".2rem 0"}}, "Situación del mercado (opcional)");
+      insertBefore(h3a, lblZT);
+
+      let help = document.getElementById("ztHelp");
+      if (help && help.previousElementSibling !== lblZT){ help.remove(); help = null; }
+      if (!help){
+        help = el("div", { id:"ztHelp", class:"help" });
+        help.style.gridColumn = "1 / -1";
+        insertAfter(help, lblZT);
+      }
+    }
+
+    if (lblCEE){
+      const h3b = el("h3", {style:{gridColumn:"1 / -1", margin:".2rem 0"}}, "Certificado energético (CEE)");
+      insertBefore(h3b, lblCEE);
+    }
+  });
+})();
+</script>
+<!-- === END PATCH UI SPLIT ZT/CEE V2 (CLEAN) === -->
+
+
+
 </body>
 </html>
