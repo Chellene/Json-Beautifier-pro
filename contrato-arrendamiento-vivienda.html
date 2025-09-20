@@ -1,71 +1,355 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Contrato de arrendamiento de vivienda habitual PDF (2025) | JSON Beautifier PRO</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Descarga un contrato de arrendamiento de vivienda en PDF, legal y editable. Cumple la Ley de Arrendamientos Urbanos en España. Solo 1 € sin registro.">
-  <meta name="keywords" content="contrato arrendamiento vivienda, modelo contrato alquiler 2025, contrato legal PDF, alquiler entre particulares, ley arrendamientos urbanos">
-  <link rel="canonical" href="https://www.jsonbeautifierpro.com/contrato-arrendamiento-vivienda.html">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header class="main-header">
-    <div style="display: flex; align-items: center; gap: 1rem;">
-      <img src="logo.svg" class="logo" alt="Logo JSON Beautifier Pro">
-      <h1>Contrato Vivienda <span class="pro-badge">PRO</span></h1>
-    </div>
-  </header>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Contrato de arrendamiento de vivienda | Portal de contratos pro</title>
+    <meta name="description" content="Guía completa del contrato de arrendamiento de vivienda en España: conoce sus partes, cláusulas esenciales y consejos para un alquiler seguro." />
+    <meta name="keywords" content="contrato arrendamiento vivienda, alquiler, cláusulas, duración, fianza, renta, LAU" />
+    <meta name="keywords" content="contrato arrendamiento vivienda, alquiler de vivienda, cláusulas contrato, fianza, renta, LAU" />
+    <meta property="og:title" content="Contrato de arrendamiento de vivienda | Portal de contratos pro" />
+    <meta property="og:description" content="Descubre las cláusulas esenciales de un contrato de arrendamiento de vivienda: identificación de las partes, objeto, duración, renta, fianza, derechos y obligaciones, según la LAU." />
+    <meta property="og:image" content="og-contrato-vivienda.png" />
+    <meta property="og:url" content="contrato-arrendamiento-vivienda.html" />
+    <meta property="og:type" content="article" />
+    <link rel="icon" href="og-contrato-vivienda.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Manrope:wght@800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+      :root {
+        /* Paleta inspirada en el portal principal */
+        --bg: #f6f8fc;
+        --fg: #0f172a;
+        --panel: #ffffff;
+        --border: #e3e9f6;
+        --radius: 16px;
+        --shadow: 0 14px 36px rgba(23, 30, 70, 0.08);
+        --brand1: #0ea5e9;
+        --brand2: #6366f1;
+        --brand3: #22c55e;
+        --grad: linear-gradient(
+          90deg,
+          color-mix(in oklab, var(--brand1) 78%, white),
+          color-mix(in oklab, var(--brand2) 74%, white) 45%,
+          color-mix(in oklab, var(--brand3) 74%, white)
+        );
+      }
+      html[data-theme='dark'] {
+        --bg: #0b1220;
+        --fg: #e5e9f5;
+        --panel: #0f172a;
+        --border: #22304a;
+        --shadow: 0 14px 36px rgba(0, 0, 0, 0.4);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+        line-height: 1.6;
+      }
+      a {
+        color: #1f2a60;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      html[data-theme='dark'] a {
+        color: #8bb2ff;
+      }
+      html[data-theme='dark'] a:hover {
+        color: #a8c3ff;
+      }
+      header.main-header {
+        position: sticky;
+        top: 0;
+        z-index: 80;
+        background: linear-gradient(180deg, var(--panel), rgba(255, 255, 255, 0.94));
+        backdrop-filter: saturate(140%) blur(8px);
+        border-bottom: 1px solid var(--border);
+        padding: 10px 0;
+      }
+      .wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .brand img {
+        height: 60px;
+      }
+      .brand-title {
+        margin: 0;
+        font-size: clamp(26px, 3.6vw, 38px);
+        background: var(--grad);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-weight: 900;
+        letter-spacing: 0.2px;
+        font-family: Manrope, Inter;
+      }
 
-  <main class="main">
-    <section class="main-card">
-      <div class="input-panel">
-        <h2>Contrato de arrendamiento de vivienda habitual (España)</h2>
-        <p>Completa el formulario y genera un <strong>contrato de arrendamiento en PDF</strong> válido para alquilar una vivienda entre particulares. Es editable, profesional y cumple con la ley española. Descárgalo por solo <strong>1 €</strong>.</p>
-        <a href="contrato-alquiler.html" class="btn-paypal" style="display:inline-block; margin-top:1.6em;">Ir al generador de contrato</a>
-        <p style="margin-top:1.2em; font-size:0.9em; color:#888;">Te lleva al formulario editable con vista previa protegida</p>
+      /* Enlaces de navegación en el encabezado */
+      .nav-links {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+      }
+      .nav-links a {
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+      .theme-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid #cfd7e6;
+        background: #fff;
+        border-radius: 12px;
+        padding: 0.5rem 0.7rem;
+        font-weight: 800;
+        cursor: pointer;
+        font-size: 13px;
+        transition: 0.16s ease;
+      }
+      html[data-theme='dark'] .theme-btn {
+        background: #0f172a;
+        color: var(--fg);
+        border-color: #334155;
+      }
+      main {
+        padding: 20px 16px;
+      }
+      .section {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        margin: 20px auto;
+        max-width: 900px;
+        padding: 24px;
+      }
+      .section h2 {
+        font-family: Manrope, Inter;
+        font-weight: 900;
+        margin-top: 0;
+        margin-bottom: 12px;
+        font-size: 1.6rem;
+      }
+      .section h3 {
+        font-family: Manrope, Inter;
+        font-weight: 800;
+        margin-top: 16px;
+        margin-bottom: 8px;
+        font-size: 1.25rem;
+      }
+      .section ul {
+        padding-left: 1.2rem;
+        margin: 0;
+      }
+      .section li {
+        margin-bottom: 0.6rem;
+      }
+      footer {
+        background: var(--panel);
+        border-top: 1px solid var(--border);
+        padding: 16px;
+        text-align: center;
+        font-size: 13px;
+      }
+      footer nav a {
+        margin: 0 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="wrap">
+        <div class="brand">
+          <a href="index.html"><img src="og-contrato-vivienda.png" alt="Logo Portal de contratos" /></a>
+          <h1 class="brand-title">Portal de contratos pro</h1>
+        </div>
+        <div class="nav-links">
+          <a href="index.html">Inicio</a>
+          <a href="contrato-alquiler.html">Generador de contrato</a>
+        </div>
+        <button id="themeBtn" class="theme-btn" type="button">
+          <i class="fa-solid fa-circle-half-stroke"></i>
+          <span>Tema</span>
+        </button>
       </div>
-    </section>
-
-    <section class="info-block" style="margin-top:3em;">
-      <h2>¿Buscas un contrato de arrendamiento de vivienda listo para firmar?</h2>
-      <p>Este modelo está adaptado a la <strong>Ley de Arrendamientos Urbanos</strong> y pensado para alquiler de <strong>viviendas habituales en España</strong>. Incluye todos los datos esenciales y cláusulas legales para proteger a ambas partes.</p>
-
-      <h3>Incluye:</h3>
-      <ul>
-        <li>✅ Datos de arrendador e inquilino</li>
-        <li>✅ Dirección y duración del alquiler</li>
-        <li>✅ Renta mensual, fianza y forma de pago</li>
-        <li>✅ Cláusulas legales según ley española</li>
-        <li>✅ Documento PDF profesional descargable</li>
-      </ul>
-
-      <h3>Palabras clave por las que puedes haber llegado aquí:</h3>
-      <ul>
-        <li>Contrato de arrendamiento de vivienda habitual 2025</li>
-        <li>Modelo contrato alquiler piso particular PDF</li>
-        <li>Contrato alquiler vivienda legal España</li>
-        <li>Plantilla contrato arrendamiento para imprimir</li>
-        <li>Contrato alquiler entre particulares sin inmobiliaria</li>
-      </ul>
-
-      <h3>¿Cuánto cuesta?</h3>
-      <p>El contrato se puede previsualizar gratis y descargar en PDF por solo <strong>1 €</strong>, sin necesidad de crear cuenta ni dejar tus datos.</p>
-
-      <p style="margin-top:1.8em; font-size:0.95em; color:#666;">
-        Última actualización: Julio 2025 · Válido para toda España · JSON Beautifier PRO
-      </p>
-    </section>
-  </main>
-
-  <footer style="text-align: center; font-size: 0.9em; margin-top: 4rem;">
-    <p>
-      <a href="/aviso-legal.html">Aviso legal</a> · 
-      <a href="/privacidad-contrato.html">Privacidad</a> · 
-      <a href="/cookies.html">Cookies</a> · 
-      <a href="/contacto.html">Contacto</a>
-    </p>
-    <p style="margin-top: 0.5rem; font-size: 0.85em; color: #888;">JSON Beautifier Pro © 2025</p>
-  </footer>
-</body>
+    </header>
+    <main>
+      <section class="section">
+        <h2>Introducción</h2>
+        <p>
+          El contrato de arrendamiento de vivienda es el documento que regula
+          la cesión de uso de una vivienda a cambio de una renta. Su
+          formalización por escrito protege a arrendador y arrendatario
+          evitando malentendidos y permite hacer valer sus derechos.
+        </p>
+        <p>
+          A continuación resumimos las principales cláusulas que debe contener
+          cualquier contrato de alquiler de vivienda conforme a la Ley de
+          Arrendamientos Urbanos (LAU) y a las recomendaciones del Ministerio
+          de Vivienda.
+        </p>
+      </section>
+      <section class="section">
+        <h2>Cláusulas esenciales</h2>
+        <h3>Identificación de las partes</h3>
+        <p>
+          El contrato debe detallar quién es el propietario (arrendador) y quién
+          el inquilino (arrendatario). Conviene recoger nombre completo,
+          documento de identidad y domicilio de todos los titulares, así como
+          identificar a las personas que convivirán en la vivienda.
+        </p>
+        <h3>Objeto y descripción de la vivienda</h3>
+        <p>
+          La vivienda ha de describirse de forma clara: dirección, superficie,
+          planta, anejos (garaje, trastero) y, en su caso, inventario de
+          mobiliario. También es recomendable incluir la referencia catastral y
+          adjuntar el certificado de eficiencia energética.
+        </p>
+        <h3>Duración y prórroga</h3>
+        <p>
+          Las partes pueden acordar cualquier duración. Si el plazo es inferior
+          a cinco años (o siete si el arrendador es persona jurídica), la LAU
+          prevé que el contrato se prorrogue automáticamente por anualidades
+          hasta alcanzar esos plazos. El inquilino podrá evitar la prórroga si
+          lo comunica con un mínimo de 30 días de antelación.
+        </p>
+        <h3>Renta y gastos</h3>
+        <p>
+          La renta se fija libremente y debe constar la cuantía, el método de
+          pago y la fecha de abono. Es aconsejable señalar si en ese importe
+          se incluyen gastos de comunidad, tributos o suministros, así como el
+          índice o criterio de actualización anual.
+        </p>
+        <h3>Fianza y garantías</h3>
+        <p>
+          La fianza obligatoria equivale a una mensualidad de renta y se paga
+          al firmar el contrato. No se actualiza durante los cinco primeros
+          años (siete si el arrendador es empresa) y debe depositarse en el
+          registro autonómico competente. Las garantías adicionales no pueden
+          superar dos mensualidades.
+        </p>
+        <h3>Derechos y obligaciones</h3>
+        <p>
+          El arrendador puede recuperar la vivienda para sí o sus familiares
+          directos si lo pacta y avisa con la antelación legal. El inquilino
+          puede desistir del contrato tras seis meses de vigencia comunicándolo
+          con 30 días y, en su caso, indemnizando una parte proporcional. El
+          contrato también debe regular el uso responsable, las obras
+          consentidas, la conservación y las causas de resolución, como el
+          impago o el subarriendo no consentido.
+        </p>
+      </section>
+      <section class="section">
+        <h2>Consejos para un alquiler seguro</h2>
+        <ul>
+          <li>Redacta siempre el contrato por escrito y utiliza un modelo actualizado.</li>
+          <li>Realiza un inventario del mobiliario y del estado de la vivienda.</li>
+          <li>Deposita la fianza en el organismo autonómico y guarda el resguardo.</li>
+          <li>Comprueba la vigencia del certificado de eficiencia energética.</li>
+          <li>Verifica si tu municipio está en zona de mercado tensionado para conocer las limitaciones de renta.</li>
+        </ul>
+        <p>
+          Puedes agilizar la redacción del contrato utilizando nuestro
+          <a href="contrato-alquiler.html">generador de contrato</a>, que te
+          guía paso a paso y genera un PDF listo para firmar.
+        </p>
+      </section>
+    </main>
+    <footer>
+      <nav>
+        <a href="index.html">Inicio</a> |
+        <a href="contrato-alquiler.html">Generador de contrato</a> |
+        <a href="como-hacer-contrato-alquiler.html">Cómo hacer un contrato</a> |
+        <a href="modelo-contrato-alquiler.html">Modelo de contrato</a> |
+        <a href="aviso-legal.html">Aviso legal</a> |
+        <a href="privacidad-contrato.html">Privacidad</a> |
+        <a href="cookies.html">Cookies</a>
+      </nav>
+      <p>© Portal de contratos pro - 2025</p>
+    </footer>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const btn = document.getElementById('themeBtn');
+        const htmlEl = document.documentElement;
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+          htmlEl.setAttribute('data-theme', saved);
+        }
+        btn.addEventListener('click', () => {
+          const current = htmlEl.getAttribute('data-theme') || 'light';
+          const next = current === 'dark' ? 'light' : 'dark';
+          htmlEl.setAttribute('data-theme', next);
+          localStorage.setItem('theme', next);
+        });
+      });
+    </script>
+    <!-- Datos estructurados para SEO -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Contrato de arrendamiento de vivienda",
+        "description": "Guía completa que explica las cláusulas esenciales de un contrato de arrendamiento de vivienda en España: identificación de las partes, objeto, duración, renta, fianza, derechos y obligaciones, y consejos para un alquiler seguro.",
+        "image": "og-contrato-vivienda.png",
+        "author": {
+          "@type": "Organization",
+          "name": "Portal de contratos pro"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Portal de contratos pro",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "og-contrato-vivienda.png"
+          }
+        },
+        "inLanguage": "es",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "contrato-arrendamiento-vivienda.html"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "headline": "Contrato de arrendamiento de vivienda",
+        "description": "Guía completa sobre el contrato de arrendamiento de vivienda en España.",
+        "author": {
+          "@type": "Organization",
+          "name": "Portal de contratos pro"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Portal de contratos pro"
+        },
+        "datePublished": "2025-09-18",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "contrato-arrendamiento-vivienda.html"
+        }
+      }
+    </script>
+  </body>
 </html>

@@ -1,74 +1,328 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Modelo de Contrato de Alquiler Editable en PDF (2025) | JSON Beautifier PRO</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Descarga un modelo de contrato de alquiler editable en PDF válido en España. Rellena los datos online y obtén tu contrato profesional por solo 1 €.">
-  <meta name="keywords" content="modelo contrato alquiler 2025, contrato alquiler editable PDF, plantilla contrato alquiler entre particulares, contrato vivienda España">
-  <link rel="canonical" href="https://www.jsonbeautifierpro.com/modelo-contrato-alquiler.html">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header class="main-header">
-    <div style="display: flex; align-items: center; gap: 1rem;">
-      <img src="logo.svg" class="logo" alt="Logo JSON Beautifier Pro">
-      <h1>Modelo Contrato Alquiler <span class="pro-badge">PRO</span></h1>
-    </div>
-  </header>
-
-  <main class="main">
-    <section class="main-card">
-      <div class="input-panel">
-        <h2>Generador de contrato editable en PDF</h2>
-        <p>Completa los datos del arrendador, inquilino, duración y condiciones del alquiler. Obtendrás un <strong>contrato de arrendamiento legal en PDF</strong> listo para firmar tras pagar solo 1 €.</p>
-        <a href="contrato-alquiler.html" class="btn-paypal" style="display:inline-block; margin-top:1.6em;">Ir al generador de contrato</a>
-        <p style="margin-top:1.2em; font-size:0.9em; color:#888;">Redirige al formulario completo y vista previa protegida</p>
+<html lang="es" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Modelo de contrato de alquiler | Portal de contratos pro</title>
+    <meta
+      name="description"
+      content="Descubre qué debe incluir un modelo de contrato de alquiler: partes, objeto, duración, renta, fianza y otros aspectos. Enlazamos a recursos oficiales y te sugerimos nuestro generador para personalizar tu documento."
+    />
+    <meta
+      name="keywords"
+      content="modelo contrato alquiler, plantilla contrato de arrendamiento, estructura contrato de alquiler, renta y fianza, cláusulas alquiler"
+    />
+    <meta property="og:title" content="Modelo de contrato de alquiler | Portal de contratos pro" />
+    <meta
+      property="og:description"
+      content="Explicamos cómo es un modelo de contrato de alquiler de vivienda y qué cláusulas esenciales debe contener. Incluimos enlaces a guías oficiales y nuestro generador de contrato."
+    />
+    <meta property="og:image" content="og-contrato-vivienda.png" />
+    <meta property="og:url" content="modelo-contrato-alquiler.html" />
+    <meta property="og:type" content="article" />
+    <link rel="icon" href="og-contrato-vivienda.png" type="image/png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Manrope:wght@800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      integrity="sha512-I65ZSCp6fr6YAPmuOTkEI1mlU8gn8z5MkoeDkFyjZsQE/EfZdr69CBTGa8IyPrKVW9P4QCrEGLhxm1kH60NK4g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      :root {
+        --bg: #f6f8fc;
+        --fg: #0f172a;
+        --panel: #ffffff;
+        --border: #e3e9f6;
+        --radius: 16px;
+        --shadow: 0 14px 36px rgba(23, 30, 70, 0.08);
+        --brand1: #0ea5e9;
+        --brand2: #6366f1;
+        --brand3: #22c55e;
+        --grad: linear-gradient(
+          90deg,
+          color-mix(in oklab, var(--brand1) 78%, white),
+          color-mix(in oklab, var(--brand2) 74%, white) 45%,
+          color-mix(in oklab, var(--brand3) 74%, white)
+        );
+      }
+      html[data-theme='dark'] {
+        --bg: #0b1220;
+        --fg: #e5e9f5;
+        --panel: #0f172a;
+        --border: #22304a;
+        --shadow: 0 14px 36px rgba(0, 0, 0, 0.4);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+        line-height: 1.6;
+      }
+      a {
+        color: #1f2a60;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      html[data-theme='dark'] a {
+        color: #8bb2ff;
+      }
+      html[data-theme='dark'] a:hover {
+        color: #a8c3ff;
+      }
+      header.main-header {
+        position: sticky;
+        top: 0;
+        z-index: 80;
+        background: linear-gradient(180deg, var(--panel), rgba(255, 255, 255, 0.94));
+        backdrop-filter: saturate(140%) blur(8px);
+        border-bottom: 1px solid var(--border);
+        padding: 10px 0;
+      }
+      .wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .brand img {
+        height: 60px;
+      }
+      .brand-title {
+        margin: 0;
+        font-size: clamp(26px, 3.6vw, 38px);
+        background: var(--grad);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-weight: 900;
+        letter-spacing: 0.2px;
+        font-family: Manrope, Inter;
+      }
+      .nav-links {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+      }
+      .nav-links a {
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+      .theme-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border: 1px solid #cfd7e6;
+        background: #fff;
+        border-radius: 12px;
+        padding: 0.5rem 0.7rem;
+        font-weight: 800;
+        cursor: pointer;
+        font-size: 13px;
+        transition: 0.16s ease;
+      }
+      html[data-theme='dark'] .theme-btn {
+        background: #0f172a;
+        color: var(--fg);
+        border-color: #334155;
+      }
+      main {
+        padding: 20px 16px;
+      }
+      .section {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        margin: 20px auto;
+        max-width: 900px;
+        padding: 24px;
+      }
+      .section h2 {
+        font-family: Manrope, Inter;
+        font-weight: 900;
+        margin-top: 0;
+        margin-bottom: 12px;
+        font-size: 1.7rem;
+      }
+      .section h3 {
+        font-family: Manrope, Inter;
+        font-weight: 800;
+        margin-top: 16px;
+        margin-bottom: 8px;
+        font-size: 1.3rem;
+      }
+      .section ul {
+        padding-left: 1.2rem;
+        margin: 0;
+      }
+      .section ul li {
+        margin-bottom: 0.7rem;
+      }
+      footer {
+        background: var(--panel);
+        border-top: 1px solid var(--border);
+        padding: 16px;
+        text-align: center;
+        font-size: 13px;
+      }
+      footer nav a {
+        margin: 0 8px;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="wrap">
+        <div class="brand">
+          <a href="index.html"><img src="og-contrato-vivienda.png" alt="Logo Portal de contratos" /></a>
+          <h1 class="brand-title">Portal de contratos pro</h1>
+        </div>
+        <div class="nav-links">
+          <a href="index.html">Inicio</a>
+          <a href="contrato-alquiler.html">Generador de contrato</a>
+        </div>
+        <button id="themeBtn" class="theme-btn" type="button">
+          <i class="fa-solid fa-circle-half-stroke"></i>
+          <span>Tema</span>
+        </button>
       </div>
-    </section>
-
-    <section class="info-block" style="margin-top:3em;">
-      <h2>Plantilla de contrato de alquiler para particulares (España 2025)</h2>
-      <p>Este <strong>modelo editable de contrato de arrendamiento</strong> está diseñado para alquiler de viviendas habituales entre particulares en España. Incluye cláusulas legales, firma de ambas partes y posibilidad de personalizar cada detalle.</p>
-
-      <h3>Incluye:</h3>
-      <ul>
-        <li>✅ Datos del propietario e inquilino</li>
-        <li>✅ Dirección del inmueble alquilado</li>
-        <li>✅ Fechas de inicio y fin del contrato</li>
-        <li>✅ Cláusulas legales obligatorias y adicionales</li>
-        <li>✅ PDF profesional para imprimir o firmar online</li>
-      </ul>
-
-      <h3>¿Por qué este contrato es útil?</h3>
-      <p>Evita problemas legales o malentendidos. Este contrato cumple con la Ley de Arrendamientos Urbanos vigente en España y sirve como garantía para ambas partes.</p>
-
-      <h3>Palabras clave por las que puedes haber llegado aquí:</h3>
-      <ul>
-        <li>modelo contrato alquiler entre particulares España</li>
-        <li>contrato alquiler editable PDF sin registro</li>
-        <li>contrato arrendamiento vivienda legal 2025</li>
-        <li>plantilla de contrato alquiler para imprimir</li>
-        <li>contrato alquiler particular en PDF con cláusulas</li>
-      </ul>
-
-      <h3>¿Cuánto cuesta?</h3>
-      <p>Visualizar es gratis. Puedes descargar el contrato completo en PDF por solo <strong>1 €</strong>. Sin registro ni datos personales.</p>
-
-      <p style="margin-top:1.8em; font-size:0.95em; color:#666;">
-        Última actualización: Julio 2025 · Contrato válido para toda España · Generado con JSON Beautifier PRO
-      </p>
-    </section>
-  </main>
-
-  <footer style="text-align: center; font-size: 0.9em; margin-top: 4rem;">
-    <p>
-      <a href="/aviso-legal.html">Aviso legal</a> · 
-      <a href="/privacidad-contrato.html">Privacidad</a> · 
-      <a href="/cookies.html">Cookies</a> · 
-      <a href="/contacto.html">Contacto</a>
-    </p>
-    <p style="margin-top: 0.5rem; font-size: 0.85em; color: #888;">JSON Beautifier Pro © 2025</p>
-  </footer>
-</body>
+    </header>
+    <main>
+      <section class="section">
+        <h2>¿Por qué utilizar un modelo?</h2>
+        <p>
+          Un modelo de contrato de alquiler es una plantilla que recoge las
+          cláusulas básicas de un arrendamiento de vivienda. Utilizar un modelo
+          oficial o actualizado te ayuda a cumplir la Ley de Arrendamientos
+          Urbanos (LAU) y a evitar olvidos importantes. Sin embargo, cada
+          arrendamiento es distinto y conviene adaptar la plantilla a tu
+          situación concreta.
+        </p>
+        <p>
+          El Ministerio de Vivienda ofrece una guía y un modelo orientativo.
+          Te recomendamos revisar esos recursos y personalizar el contenido con
+          los datos específicos de tu inmueble y las condiciones pactadas.
+        </p>
+      </section>
+      <section class="section">
+        <h2>Estructura básica de un contrato de alquiler</h2>
+        <ul>
+          <li><strong>Partes contratantes.</strong> Incluye nombre y datos de contacto del arrendador y del arrendatario, así como de todas las personas que convivirán en la vivienda.</li>
+          <li><strong>Objeto del contrato.</strong> Describe la vivienda: dirección, superficie y anexos (garaje, trastero). Cita la referencia catastral y adjunta un inventario de muebles si procede.</li>
+          <li><strong>Duración y prórroga.</strong> Especifica la fecha de inicio y de fin del arrendamiento. Los contratos inferiores a cinco años (siete si el arrendador es empresa) se prorrogan automáticamente por plazos anuales.</li>
+          <li><strong>Renta y forma de pago.</strong> Indica el importe mensual, la fecha y el método de pago (transferencia, domiciliación). Explica si el precio incluye gastos como comunidad o suministros y cómo se actualizará.</li>
+          <li><strong>Fianza y garantías.</strong> La fianza mínima es de una mensualidad y debe depositarse en el registro autonómico. Las garantías adicionales (avales, depósitos) no deben superar dos mensualidades.</li>
+          <li><strong>Derechos y obligaciones.</strong> Regula el uso adecuado de la vivienda, el mantenimiento, las obras permitidas, la facultad del arrendador de recuperar la vivienda para uso propio, la posibilidad de desistimiento del inquilino y otros acuerdos.</li>
+          <li><strong>Causas de resolución.</strong> Incluye los supuestos en los que el contrato puede extinguirse antes de su vencimiento (impago, daños, subarrendamiento no autorizado, etc.).</li>
+          <li><strong>Anexos.</strong> Adjunta inventarios, certificados energéticos, planos y cualquier otro documento complementario.
+          </li>
+        </ul>
+      </section>
+      <section class="section">
+        <h2>Recursos y modelos oficiales</h2>
+        <p>
+          Para garantizar que tu contrato cumple la normativa vigente, puedes
+          consultar la
+          <a href="https://www.mivau.gob.es/" target="_blank" rel="noopener">guía del Ministerio de Vivienda</a>
+          y descargar su
+          <a href="https://www.mivau.gob.es/" target="_blank" rel="noopener">modelo orientativo de contrato de alquiler</a>.
+          También encontrarás modelos en el portal de la comunidad autónoma y en
+          asociaciones de consumidores.
+        </p>
+        <p>
+          Recuerda que estos modelos son orientativos: adapta las cláusulas a
+          las condiciones pactadas con tu arrendador o arrendatario, y
+          confirma si tu municipio se encuentra en zona de mercado tensionado,
+          ya que podría haber limitaciones de renta.
+        </p>
+        <p>
+          Para personalizar tu contrato de forma guiada, usa nuestro
+          <a href="contrato-alquiler.html">generador de contrato</a>. Con él
+          introducirás todos los datos de forma sencilla y obtendrás un PDF
+          listo para firmar.
+        </p>
+      </section>
+    </main>
+    <footer>
+      <nav>
+        <a href="index.html">Inicio</a>
+        |
+        <a href="contrato-alquiler.html">Generador de contrato</a>
+        |
+        <a href="contrato-arrendamiento-vivienda.html">Guía de arrendamiento</a>
+        |
+        <a href="como-hacer-contrato-alquiler.html">Cómo hacer un contrato</a>
+        |
+        <a href="aviso-legal.html">Aviso legal</a>
+        |
+        <a href="privacidad-contrato.html">Privacidad</a>
+        |
+        <a href="cookies.html">Cookies</a>
+      </nav>
+      <p>© Portal de contratos pro - 2025</p>
+    </footer>
+    <script>
+      // Tema oscuro/claro
+      const themeBtn = document.getElementById('themeBtn');
+      const root = document.documentElement;
+      function setTheme(t) {
+        root.setAttribute('data-theme', t);
+        localStorage.setItem('theme', t);
+      }
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark') setTheme('dark');
+      themeBtn.addEventListener('click', () => {
+        const newTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        setTheme(newTheme);
+      });
+    </script>
+    <!-- Datos estructurados -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Modelo de contrato de alquiler",
+        "description": "Descubre qué debe incluir un modelo de contrato de alquiler de vivienda: partes, objeto, duración, renta, fianza y derechos. Consulta recursos oficiales y crea tu propio documento.",
+        "image": "og-contrato-vivienda.png",
+        "author": {
+          "@type": "Organization",
+          "name": "Portal de contratos pro"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Portal de contratos pro",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "og-contrato-vivienda.png"
+          }
+        },
+        "inLanguage": "es",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "modelo-contrato-alquiler.html"
+        }
+      }
+    </script>
+  </body>
 </html>
