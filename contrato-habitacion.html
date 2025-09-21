@@ -2340,6 +2340,27 @@ if (typeof detectPresetFromSelection === "function" && typeof markPresetChip ===
 })();
 </script>
 
+<script>
+(function(){
+  const TYPE = 'habitacion';      // en contrato-habitacion.html usa 'habitacion'
+  // Guarda la URL exacta del contrato y su tipo para esta pestaña
+  try {
+    sessionStorage.setItem('lastContractURL', location.pathname + location.search);
+    sessionStorage.setItem('lastContractType', TYPE);
+  } catch(e){}
+  // Añade from=TYPE y return=<URL actual> a todos los enlaces legales
+  const current = location.pathname + location.search;
+  document.querySelectorAll('a[href$=\"aviso-legal.html\"], a[href$=\"privacidad-contrato.html\"], a[href$=\"cookies.html\"], a[href$=\"contacto.html\"]').forEach(a => {
+    try {
+      const u = new URL(a.getAttribute('href'), location.href);
+      u.searchParams.set('from', TYPE);
+      u.searchParams.set('return', current);
+      a.setAttribute('href', u.href);
+    } catch(e){}
+  });
+})();
+</script>
+
 
 
 </body>
