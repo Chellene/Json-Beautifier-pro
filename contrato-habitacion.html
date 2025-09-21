@@ -433,8 +433,18 @@ button, .chip, .seg label{ touch-action: manipulation; }
       <!-- CTA original sin modificaciones de funcionalidad -->
       <div class="cta">
         <p>¿Necesitas un contrato de vivienda?</p>
-        <button class="btn btn-primary" type="button" onclick="location.href='contrato-alquiler.html'"><i class="fa-solid fa-house"></i> Ir a contrato de vivienda</button>
-        <div class="trust" style="margin-top:8px">
+<div class="btn-group" style="display:flex; gap:8px;">
+  <button class="btn btn-primary" type="button" onclick="location.href='contrato-alquiler.html'">
+    <i class="fa-solid fa-house"></i> Ir a contrato de vivienda
+  </button>
+  <!-- Nuevo botón al portal -->
+  <button class="btn btn-primary" type="button" onclick="location.href='index.html'">
+    <i class="fa-solid fa-house"></i> Portal de contratos
+  </button>
+</div>
+<div class="trust" style="margin-top:8px">
+
+
           <span class="chip"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> Pago seguro</span>
           <span class="chip"><i class="fa-solid fa-brain" aria-hidden="true"></i> Todo en tu navegador</span>
           <span class="chip"><i class="fa-solid fa-file-signature" aria-hidden="true"></i> PDF estilo notaría</span>

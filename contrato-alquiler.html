@@ -602,8 +602,12 @@ button, .chip, .seg label{ touch-action: manipulation; }
       <!-- Bloque de llamada a la acción: se mantiene intacta la funcionalidad -->
       <div class="cta">
         <p>¿Necesitas un contrato de habitación?</p>
-        <button class="btn btn-primary" type="button" onclick="location.href='contrato-habitacion.html'">Ir a contrato de habitación</button>
-        <div class="trust" style="margin-top:8px">
+<div class="btn-group" style="display:flex; gap:8px;">
+  <button class="btn btn-primary" type="button" onclick="location.href='contrato-habitacion.html'">Ir a contrato de habitación</button>
+  <!-- Nuevo botón al portal -->
+  <button class="btn btn-primary" type="button" onclick="location.href='index.html'">Portal de contratos</button>
+</div>
+<div class="trust" style="margin-top:8px">
           <span class="chip">
             <!-- Escudo -->
             <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" role="img">
